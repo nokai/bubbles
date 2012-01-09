@@ -207,6 +207,7 @@
         return;
     }
     
+    // DW: "_servicesFound" always contains "self"'s service, this helps to show a list of all peers.
     [_servicesFound addObject:netService];
     DLog(@"NSNetServiceBrowserDelegate didFindService %@", self.servicesFound);
     if (![netService.name isEqualToString:self.service.name]) {

@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "PeersViewController.h"
 
 @implementation ViewController
 @synthesize bubble;
@@ -84,6 +85,15 @@
 - (IBAction)sendImage:(id)sender {
     [self.bubble broadcastMessage:[WDMessage messageWithImage:imageMessage.image]];
     [textMessage resignFirstResponder];
+}
+
+- (IBAction)showPeers:(id)sender {
+    PeersViewController *vc = [[PeersViewController alloc] initWithNibName:@"PeersViewController" bundle:nil];
+    vc.currentService = self.bubble.service;
+    vc.peers = self.bubble.servicesFound;
+    
+    UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentModalViewController:nv animated:YES];
 }
 
 #pragma mark - Events

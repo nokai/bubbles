@@ -22,6 +22,8 @@
 		C1CFCD3114B986CB008A1B1F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1CFCD2D14B986CB008A1B1F /* Default@2x.png */; };
 		C1CFCD3214B986CB008A1B1F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C1CFCD2E14B986CB008A1B1F /* Icon.png */; };
 		C1CFCD3314B986CB008A1B1F /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1CFCD2F14B986CB008A1B1F /* Icon@2x.png */; };
+		C1F80FC614BA7A1B006F0779 /* PeersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F80FC414BA7A1B006F0779 /* PeersViewController.m */; };
+		C1F80FC714BA7A1B006F0779 /* PeersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F80FC514BA7A1B006F0779 /* PeersViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,9 @@
 		C1CFCD2D14B986CB008A1B1F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		C1CFCD2E14B986CB008A1B1F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
 		C1CFCD2F14B986CB008A1B1F /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = SOURCE_ROOT; };
+		C1F80FC314BA7A1B006F0779 /* PeersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeersViewController.h; path = Bubbles/PeersViewController.h; sourceTree = SOURCE_ROOT; };
+		C1F80FC414BA7A1B006F0779 /* PeersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeersViewController.m; path = Bubbles/PeersViewController.m; sourceTree = SOURCE_ROOT; };
+		C1F80FC514BA7A1B006F0779 /* PeersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeersViewController.xib; path = Bubbles/PeersViewController.xib; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +137,9 @@
 				C1CFCD2014B985D2008A1B1F /* ViewController.h */,
 				C1CFCD2114B985D2008A1B1F /* ViewController.m */,
 				C1CFCD1D14B985CC008A1B1F /* ViewController.xib */,
+				C1F80FC314BA7A1B006F0779 /* PeersViewController.h */,
+				C1F80FC414BA7A1B006F0779 /* PeersViewController.m */,
+				C1F80FC514BA7A1B006F0779 /* PeersViewController.xib */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
@@ -199,6 +207,7 @@
 				C1CFCD3114B986CB008A1B1F /* Default@2x.png in Resources */,
 				C1CFCD3214B986CB008A1B1F /* Icon.png in Resources */,
 				C1CFCD3314B986CB008A1B1F /* Icon@2x.png in Resources */,
+				C1F80FC714BA7A1B006F0779 /* PeersViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +224,7 @@
 				C1CFCD1714B98552008A1B1F /* WDMessage.m in Sources */,
 				C1CFCD1C14B985AE008A1B1F /* main.m in Sources */,
 				C1CFCD2214B985D2008A1B1F /* ViewController.m in Sources */,
+				C1F80FC614BA7A1B006F0779 /* PeersViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
