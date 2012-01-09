@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "WDBubble.h"
+#import "PasswordViewController.h"
 
-@interface ViewController : UIViewController <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, WDBubbleDelegate>
+@interface ViewController : UIViewController <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, PasswordViewControllerDelegate, WDBubbleDelegate>
 
 @property (nonatomic, retain) WDBubble *bubble;
+
 @property (nonatomic, retain) IBOutlet UITextField *textMessage;
 @property (nonatomic, retain) IBOutlet UIImageView *imageMessage;
+@property (nonatomic, retain) PasswordViewController *passwordViewController;
 
 @end

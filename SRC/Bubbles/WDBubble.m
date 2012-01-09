@@ -50,7 +50,8 @@
 @end
 
 @implementation WDBubble
-@synthesize service, browser, socketListen, socketSender, servicesFound = _servicesFound;
+@synthesize service, browser, netServiceType;
+@synthesize socketListen, socketSender, servicesFound = _servicesFound;
 @synthesize delegate;
 
 #pragma mark - Private Methods
@@ -87,10 +88,15 @@
     self.socketSender.delegate = self;
 }
 
-- (void)publishService {
+- (void)publishServiceWithPassword:(NSString *)pwd {
     DLog(@"WDBubbleService publishService <%@>%@ port %i", self.service.name, self.socketListen, self.socketListen.localPort);
+    if ([pwd isEqualToString:@""]) {
+        self.netServiceType = kWDBubbleWebServiceType;
+    } else {
+        self.netServiceType = [NSString stringWithFormat:@"_bubbles_%@._tcp.", pwd];
+    }
     self.service = [[NSNetService alloc] initWithDomain:@""
-                                                   type:@"_bubbles._tcp"
+                                                   type:self.netServiceType
                                                    name:[[UIDevice currentDevice] name]
                                                    port:self.socketListen.localPort];
     self.service.delegate = self;
@@ -102,7 +108,7 @@
     DLog(@"WDBubbleService browseServices");
     self.browser = [[NSNetServiceBrowser alloc] init];
     self.browser.delegate = self;
-    [self.browser searchForServicesOfType:kWDBubbleWebServiceType inDomain:kWDBubbleInitialDomain];
+    [self.browser searchForServicesOfType:self.netServiceType inDomain:kWDBubbleInitialDomain];
 }
 
 - (void)broadcastMessage:(WDMessage *)msg {
@@ -117,6 +123,14 @@
             [self connectService:s];
         }
     }
+}
+
+- (void)stopService {
+    [self.service stop];
+    [self.service release];
+    self.service = nil;
+    
+    self.netServiceType = nil;
 }
 
 #pragma mark NSNetServiceDelegate

@@ -11,7 +11,7 @@
 
 @implementation ViewController
 @synthesize bubble;
-@synthesize textMessage, imageMessage;
+@synthesize textMessage, imageMessage, passwordViewController;
 
 - (void)didReceiveMemoryWarning
 {
@@ -29,8 +29,13 @@
     self.bubble = [[WDBubble alloc] init];
     self.bubble.delegate = self;
     [self.bubble initSocket];
-    [self.bubble publishService];
-    [self.bubble browseServices];
+    //[self.bubble publishServiceWithPassword:<#(NSString *)#>];
+    //[self.bubble browseServices];
+    
+    // DW: password view
+    self.passwordViewController = [[PasswordViewController alloc] initWithNibName:@"PasswordViewController" bundle:nil];
+    self.passwordViewController.delegate = self;
+    [self.view addSubview:self.passwordViewController.view];
 }
 
 - (void)viewDidUnload
@@ -70,7 +75,7 @@
 
 - (IBAction)sendText:(id)sender {
     [self.bubble broadcastMessage:[WDMessage messageWithText:textMessage.text]];
-    [textMessage resignFirstResponder];
+    [self.textMessage resignFirstResponder];
 }
 
 - (IBAction)selectImage:(id)sender {
@@ -83,8 +88,8 @@
 }
 
 - (IBAction)sendImage:(id)sender {
-    [self.bubble broadcastMessage:[WDMessage messageWithImage:imageMessage.image]];
-    [textMessage resignFirstResponder];
+    [self.bubble broadcastMessage:[WDMessage messageWithImage:self.imageMessage.image]];
+    [self.textMessage resignFirstResponder];
 }
 
 - (IBAction)showPeers:(id)sender {
@@ -95,21 +100,26 @@
     [self presentModalViewController:nv animated:YES];
 }
 
+- (IBAction)logout:(id)sender {
+    [self.view addSubview:self.passwordViewController.view];
+    [self.bubble stopService];
+}
+
 #pragma mark - Events
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [textMessage resignFirstResponder];
+    [self.textMessage resignFirstResponder];
 }
 
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-	[textMessage resignFirstResponder];
+	[self.textMessage resignFirstResponder];
     return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	[textMessage resignFirstResponder];
+	[self.textMessage resignFirstResponder];
     return YES;
 }
 
@@ -117,12 +127,12 @@
 
 - (void)didReceiveText:(NSString *)text {
     DLog(@"VC didReceiveText %@", text);
-    textMessage.text = text;
+    self.textMessage.text = text;
 }
 
 - (void)didReceiveImage:(UIImage *)image {
     DLog(@"VC didReceiveImage %@", image);
-    imageMessage.image = image;
+    self.imageMessage.image = image;
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -130,13 +140,20 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
     DLog(@"VC didFinishPickingMediaWithInfo %@", image);
-    imageMessage.image = image;
+    self.imageMessage.image = image;
     
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark - PasswordViewControllerDelegate
+
+- (void)didInputPassword:(NSString *)pwd {
+    [self.bubble publishServiceWithPassword:pwd];
+    [self.bubble browseServices];
 }
 
 @end
