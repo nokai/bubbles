@@ -10,9 +10,13 @@
 #import "AsyncSocket.h"
 #import "WDMessage.h"
 
-#define kWebServiceType @"_bubbles._tcp."
-#define kInitialDomain  @""
-#define kTimeOut        5
+// DW: network
+#define kWDBubbleWebServiceType @"_bubbles._tcp."
+#define kWDBubbleInitialDomain  @""
+#define kWDBubbleTimeOut        5
+
+// DW: notifications
+#define kWDBubbleNotification   @"kWDBubbleNotification"
 
 @protocol WDBubbleDelegate
 - (void)didReceiveText:(NSString *)text;

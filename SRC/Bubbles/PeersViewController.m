@@ -9,7 +9,7 @@
 #import "PeersViewController.h"
 
 @implementation PeersViewController
-@synthesize dismissButton, currentService, peers;
+@synthesize dismissButton, bubble;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -42,6 +42,11 @@
     
     self.title = @"Peers";
     self.navigationItem.rightBarButtonItem = self.dismissButton;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(servicesUpdated:) 
+                                                 name:kWDBubbleNotification
+                                               object:nil];
 }
 
 - (void)viewDidUnload
@@ -88,7 +93,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.peers.count;
+    return self.bubble.servicesFound.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -101,9 +106,9 @@
     }
     
     // Configure the cell...
-    NSNetService *t = [self.peers objectAtIndex:indexPath.row];
+    NSNetService *t = [self.bubble.servicesFound objectAtIndex:indexPath.row];
     
-    if ([t.name isEqualToString:self.currentService.name]) {
+    if ([t.name isEqualToString:self.bubble.service.name]) {
         cell.textLabel.text = [t.name stringByAppendingString:@" (local)"];
     } else {
         cell.textLabel.text = t.name;
@@ -169,6 +174,12 @@
 
 - (IBAction)dismiss:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark - NC
+
+- (void)servicesUpdated:(NSNotification *)notification {
+    [self.tableView reloadData];
 }
 
 @end

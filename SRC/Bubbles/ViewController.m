@@ -89,8 +89,7 @@
 
 - (IBAction)showPeers:(id)sender {
     PeersViewController *vc = [[PeersViewController alloc] initWithNibName:@"PeersViewController" bundle:nil];
-    vc.currentService = self.bubble.service;
-    vc.peers = self.bubble.servicesFound;
+    vc.bubble = self.bubble;
     
     UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentModalViewController:nv animated:YES];

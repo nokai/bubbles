@@ -102,7 +102,7 @@
     DLog(@"WDBubbleService browseServices");
     self.browser = [[NSNetServiceBrowser alloc] init];
     self.browser.delegate = self;
-    [self.browser searchForServicesOfType:kWebServiceType inDomain:kInitialDomain];
+    [self.browser searchForServicesOfType:kWDBubbleWebServiceType inDomain:kWDBubbleInitialDomain];
 }
 
 - (void)broadcastMessage:(WDMessage *)msg {
@@ -149,19 +149,19 @@
     DLog(@"AsyncSocketDelegate didAcceptNewSocket %@: %@", sock, newSocket);
     
     // DW: this "newSocket" is connected to remote's "socketSender", use it to read data then.
-    [newSocket readDataWithTimeout:kTimeOut tag:0];
+    [newSocket readDataWithTimeout:kWDBubbleTimeOut tag:0];
     _dataBuffer = [[NSMutableData alloc] init];
 }
 
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     //DLog(@"AsyncSocketDelegate didReadData %@: %@", sock, data);
     [_dataBuffer appendData:data];
-    [sock readDataWithTimeout:kTimeOut tag:0];
+    [sock readDataWithTimeout:kWDBubbleTimeOut tag:0];
 }
 
 - (void)onSocket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err {
     DLog(@"AsyncSocketDelegate willDisconnectWithError %@: %@", sock, err);
-    [sock readDataWithTimeout:kTimeOut tag:0];
+    [sock readDataWithTimeout:kWDBubbleTimeOut tag:0];
 }
 
 - (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port {
@@ -170,7 +170,7 @@
     // DW: after connected, "socketSender" will send data.
     if ([sock isEqual:self.socketSender]) {
         NSData *t = [NSKeyedArchiver archivedDataWithRootObject:_currentMessage];
-        [sock writeData:t withTimeout:kTimeOut tag:0];
+        [sock writeData:t withTimeout:kWDBubbleTimeOut tag:0];
     }
 }
 
@@ -214,6 +214,14 @@
         DLog(@"NSNetServiceBrowserDelegate didFindService resolve %@ : %@", netService.name, self.service.name);
         [self resolveService:netService];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kWDBubbleNotification object:nil];
+}
+
+- (void)netServiceBrowser:(NSNetServiceBrowser*)netServiceBrowser didRemoveService:(NSNetService*)netService moreComing:(BOOL)moreComing {
+	[_servicesFound removeObject:netService];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kWDBubbleNotification object:nil];
 }
 
 @end

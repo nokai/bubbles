@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WDBubble.h"
 
 @interface PeersViewController : UITableViewController
 
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *dismissButton;
 
-@property (nonatomic, retain) NSNetService *currentService;
-@property (nonatomic, retain) NSArray *peers;
+@property (nonatomic, retain) WDBubble *bubble;
 
 @end
