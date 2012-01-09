@@ -16,7 +16,7 @@
 
 @protocol WDBubbleDelegate
 - (void)didReceiveText:(NSString *)text;
-- (void)didReceiveImage:(NSString *)image;
+- (void)didReceiveImage:(UIImage *)image;
 @end
 
 @interface WDBubble : NSObject <AsyncSocketDelegate, NSNetServiceDelegate, NSNetServiceBrowserDelegate> {

@@ -82,7 +82,7 @@
 }
 
 - (IBAction)sendImage:(id)sender {
-    [self.bubble broadcastMessage:[WDMessage messageWithText:textMessage.text]];
+    [self.bubble broadcastMessage:[WDMessage messageWithImage:imageMessage.image]];
     [textMessage resignFirstResponder];
 }
 
@@ -111,8 +111,9 @@
     textMessage.text = text;
 }
 
-- (void)didReceiveImage:(NSString *)image {
+- (void)didReceiveImage:(UIImage *)image {
     DLog(@"VC didReceiveImage %@", image);
+    imageMessage.image = image;
 }
 
 #pragma mark - UIImagePickerControllerDelegate

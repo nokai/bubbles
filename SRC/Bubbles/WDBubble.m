@@ -154,7 +154,7 @@
 }
 
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
-    DLog(@"AsyncSocketDelegate didReadData %@: %@", sock, data);
+    //DLog(@"AsyncSocketDelegate didReadData %@: %@", sock, data);
     [_dataBuffer appendData:data];
     [sock readDataWithTimeout:kTimeOut tag:0];
 }
@@ -169,7 +169,8 @@
     
     // DW: after connected, "socketSender" will send data.
     if ([sock isEqual:self.socketSender]) {
-        [sock writeData:_currentMessage.content withTimeout:kTimeOut tag:0];
+        NSData *t = [NSKeyedArchiver archivedDataWithRootObject:_currentMessage];
+        [sock writeData:t withTimeout:kTimeOut tag:0];
     }
 }
 
@@ -185,7 +186,17 @@
     //[sock disconnectAfterReadingAndWriting];
     
     if (_dataBuffer != nil) {
-        [self.delegate didReceiveText:[[NSString alloc] initWithData:_dataBuffer encoding:NSUTF8StringEncoding]];
+        WDMessage *t = [NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer];
+        if (t.type == WDMessageTypeText) {
+            [self.delegate didReceiveText:[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding]];
+        } else if (t.type == WDMessageTypeImage) {
+            UIImage *ti = [[UIImage alloc] initWithData:t.content];
+            [self.delegate didReceiveImage:ti];
+        }
+        
+        // DW: Clean up.
+        [_dataBuffer release];
+        _dataBuffer = nil;
     }
 }
 

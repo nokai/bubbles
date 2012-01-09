@@ -8,6 +8,11 @@
 
 #import "WDMessage.h"
 
+#define kWDMessageSender    @"kWDMessageSender"
+#define kWDMessageTime      @"kWDMessageTime"
+#define kWDMessageContent   @"kWDMessageContent"
+#define kWDMessageType      @"kWDMessageType"
+
 @implementation WDMessage
 @synthesize sender, time, content, type;
 
@@ -30,11 +35,19 @@
 #pragma mark - NSCoding
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
-    
+    [encoder encodeObject:self.sender forKey:kWDMessageSender];
+    [encoder encodeObject:self.time forKey:kWDMessageTime];
+    [encoder encodeObject:self.content forKey:kWDMessageContent];
+    [encoder encodeInteger:type forKey:kWDMessageType];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
-    return nil;
+    self = [super init];
+    self.sender = [decoder decodeObjectForKey:kWDMessageSender];
+    self.time = [decoder decodeObjectForKey:kWDMessageTime];
+    self.content = [decoder decodeObjectForKey:kWDMessageContent];
+    self.type = [decoder decodeIntegerForKey:kWDMessageType];
+    return self;
 }
 
 @end
