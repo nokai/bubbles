@@ -11,6 +11,16 @@
 		C121946614B591D700159A9F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121946514B591D700159A9F /* Foundation.framework */; };
 		C121946814B591D700159A9F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121946714B591D700159A9F /* CoreGraphics.framework */; };
 		C121949A14B5A9FC00159A9F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121949914B5A9FB00159A9F /* CFNetwork.framework */; };
+		C1C9371314BB1766005E0EAA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1C9371214BB1766005E0EAA /* Cocoa.framework */; };
+		C1C9371D14BB1766005E0EAA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1C9371B14BB1766005E0EAA /* InfoPlist.strings */; };
+		C1C9371F14BB1766005E0EAA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C9371E14BB1766005E0EAA /* main.m */; };
+		C1C9372314BB1766005E0EAA /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C1C9372114BB1766005E0EAA /* Credits.rtf */; };
+		C1C9372614BB1766005E0EAA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C9372514BB1766005E0EAA /* AppDelegate.m */; };
+		C1C9372914BB1766005E0EAA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1C9372714BB1766005E0EAA /* MainMenu.xib */; };
+		C1C9372E14BB17C3005E0EAA /* Icon-Mac.icns in Resources */ = {isa = PBXBuildFile; fileRef = C1C9372D14BB17C3005E0EAA /* Icon-Mac.icns */; };
+		C1C9373514BB204D005E0EAA /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CFCD0F14B98552008A1B1F /* AsyncSocket.m */; };
+		C1C9373714BB204D005E0EAA /* WDBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CFCD1114B98552008A1B1F /* WDBubble.m */; };
+		C1C9373914BB204D005E0EAA /* WDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CFCD1314B98552008A1B1F /* WDMessage.m */; };
 		C1CFCD1414B98552008A1B1F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CFCD0D14B98552008A1B1F /* AppDelegate.m */; };
 		C1CFCD1514B98552008A1B1F /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CFCD0F14B98552008A1B1F /* AsyncSocket.m */; };
 		C1CFCD1614B98552008A1B1F /* WDBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CFCD1114B98552008A1B1F /* WDBubble.m */; };
@@ -34,6 +44,20 @@
 		C121946514B591D700159A9F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C121946714B591D700159A9F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		C121949914B5A9FB00159A9F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		C1C9371014BB1766005E0EAA /* BubblesOnMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BubblesOnMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1C9371214BB1766005E0EAA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		C1C9371514BB1766005E0EAA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		C1C9371614BB1766005E0EAA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		C1C9371714BB1766005E0EAA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C1C9371A14BB1766005E0EAA /* BubblesOnMac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BubblesOnMac-Info.plist"; sourceTree = "<group>"; };
+		C1C9371C14BB1766005E0EAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C1C9371E14BB1766005E0EAA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C1C9372014BB1766005E0EAA /* BubblesOnMac-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BubblesOnMac-Prefix.pch"; sourceTree = "<group>"; };
+		C1C9372214BB1766005E0EAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		C1C9372414BB1766005E0EAA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C1C9372514BB1766005E0EAA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C1C9372814BB1766005E0EAA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		C1C9372D14BB17C3005E0EAA /* Icon-Mac.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Icon-Mac.icns"; sourceTree = "<group>"; };
 		C1CFCD0C14B98552008A1B1F /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Bubbles/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		C1CFCD0D14B98552008A1B1F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Bubbles/AppDelegate.m; sourceTree = SOURCE_ROOT; };
 		C1CFCD0E14B98552008A1B1F /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = Bubbles/AsyncSocket.h; sourceTree = SOURCE_ROOT; };
@@ -72,13 +96,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C1C9370D14BB1766005E0EAA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C1C9371314BB1766005E0EAA /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		C121945414B591D700159A9F = {
 			isa = PBXGroup;
 			children = (
+				C1C9372D14BB17C3005E0EAA /* Icon-Mac.icns */,
 				C121946914B591D700159A9F /* Bubbles */,
+				C1C9371814BB1766005E0EAA /* BubblesOnMac */,
 				C121946214B591D700159A9F /* Frameworks */,
 				C121946014B591D700159A9F /* Products */,
 			);
@@ -88,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				C121945F14B591D700159A9F /* Bubbles.app */,
+				C1C9371014BB1766005E0EAA /* BubblesOnMac.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,6 +134,8 @@
 				C121946514B591D700159A9F /* Foundation.framework */,
 				C121949914B5A9FB00159A9F /* CFNetwork.framework */,
 				C121946714B591D700159A9F /* CoreGraphics.framework */,
+				C1C9371214BB1766005E0EAA /* Cocoa.framework */,
+				C1C9371414BB1766005E0EAA /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -130,6 +167,39 @@
 				C1CFCD1814B985AE008A1B1F /* Bubbles-Info.plist */,
 				C1CFCD1914B985AE008A1B1F /* Bubbles-Prefix.pch */,
 				C1CFCD1A14B985AE008A1B1F /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C1C9371414BB1766005E0EAA /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C1C9371514BB1766005E0EAA /* AppKit.framework */,
+				C1C9371614BB1766005E0EAA /* CoreData.framework */,
+				C1C9371714BB1766005E0EAA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		C1C9371814BB1766005E0EAA /* BubblesOnMac */ = {
+			isa = PBXGroup;
+			children = (
+				C1C9372414BB1766005E0EAA /* AppDelegate.h */,
+				C1C9372514BB1766005E0EAA /* AppDelegate.m */,
+				C1C9372714BB1766005E0EAA /* MainMenu.xib */,
+				C1C9371914BB1766005E0EAA /* Supporting Files */,
+			);
+			path = BubblesOnMac;
+			sourceTree = "<group>";
+		};
+		C1C9371914BB1766005E0EAA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C1C9371A14BB1766005E0EAA /* BubblesOnMac-Info.plist */,
+				C1C9371B14BB1766005E0EAA /* InfoPlist.strings */,
+				C1C9371E14BB1766005E0EAA /* main.m */,
+				C1C9372014BB1766005E0EAA /* BubblesOnMac-Prefix.pch */,
+				C1C9372114BB1766005E0EAA /* Credits.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -179,6 +249,23 @@
 			productReference = C121945F14B591D700159A9F /* Bubbles.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C1C9370F14BB1766005E0EAA /* BubblesOnMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C1C9372A14BB1766005E0EAA /* Build configuration list for PBXNativeTarget "BubblesOnMac" */;
+			buildPhases = (
+				C1C9370C14BB1766005E0EAA /* Sources */,
+				C1C9370D14BB1766005E0EAA /* Frameworks */,
+				C1C9370E14BB1766005E0EAA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BubblesOnMac;
+			productName = BubblesOnMac;
+			productReference = C1C9371014BB1766005E0EAA /* BubblesOnMac.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -201,6 +288,7 @@
 			projectRoot = "";
 			targets = (
 				C121945E14B591D700159A9F /* Bubbles */,
+				C1C9370F14BB1766005E0EAA /* BubblesOnMac */,
 			);
 		};
 /* End PBXProject section */
@@ -217,6 +305,17 @@
 				C1CFCD3314B986CB008A1B1F /* Icon@2x.png in Resources */,
 				C1F80FC714BA7A1B006F0779 /* PeersViewController.xib in Resources */,
 				C1F80FDE14BA84A6006F0779 /* PasswordViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C1C9370E14BB1766005E0EAA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C1C9371D14BB1766005E0EAA /* InfoPlist.strings in Resources */,
+				C1C9372314BB1766005E0EAA /* Credits.rtf in Resources */,
+				C1C9372914BB1766005E0EAA /* MainMenu.xib in Resources */,
+				C1C9372E14BB17C3005E0EAA /* Icon-Mac.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,9 +337,45 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C1C9370C14BB1766005E0EAA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C1C9373514BB204D005E0EAA /* AsyncSocket.m in Sources */,
+				C1C9373714BB204D005E0EAA /* WDBubble.m in Sources */,
+				C1C9373914BB204D005E0EAA /* WDMessage.m in Sources */,
+				C1C9371F14BB1766005E0EAA /* main.m in Sources */,
+				C1C9372614BB1766005E0EAA /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		C1C9371B14BB1766005E0EAA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C1C9371C14BB1766005E0EAA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		C1C9372114BB1766005E0EAA /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C1C9372214BB1766005E0EAA /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		C1C9372714BB1766005E0EAA /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C1C9372814BB1766005E0EAA /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 		C1CFCD1D14B985CC008A1B1F /* ViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -305,6 +440,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bubbles/Bubbles-Prefix.pch";
 				INFOPLIST_FILE = "Bubbles/Bubbles-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_CFLAGS = "-DDEBUG";
 				PRODUCT_NAME = Bubbles;
 				PROVISIONING_PROFILE = "BD55D568-BFE6-4811-842A-F98BDF2806A9";
@@ -320,8 +456,53 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bubbles/Bubbles-Prefix.pch";
 				INFOPLIST_FILE = "Bubbles/Bubbles-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = Bubbles;
 				PROVISIONING_PROFILE = "BD55D568-BFE6-4811-842A-F98BDF2806A9";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C1C9372B14BB1766005E0EAA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BubblesOnMac/BubblesOnMac-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "BubblesOnMac/BubblesOnMac-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C1C9372C14BB1766005E0EAA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BubblesOnMac/BubblesOnMac-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "BubblesOnMac/BubblesOnMac-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -346,6 +527,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		C1C9372A14BB1766005E0EAA /* Build configuration list for PBXNativeTarget "BubblesOnMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C1C9372B14BB1766005E0EAA /* Debug */,
+				C1C9372C14BB1766005E0EAA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

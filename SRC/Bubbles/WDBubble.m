@@ -1,5 +1,5 @@
 //
-//  WDBubbleService.m
+//  WDBubble.m
 //  LearnBonjour
 //
 //  Created by 王 得希 on 12-1-5.
@@ -7,6 +7,7 @@
 //
 
 #import "WDBubble.h"
+#include <ifaddrs.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -51,10 +52,43 @@
 
 @implementation WDBubble
 @synthesize service, browser, netServiceType;
-@synthesize socketListen, socketSender, servicesFound = _servicesFound;
+@synthesize socketListen, socketConnect, servicesFound = _servicesFound;
 @synthesize delegate;
 
 #pragma mark - Private Methods
+
+- (NSString *)getIPAddress { 
+    
+    NSString *address = @"error"; 
+    struct ifaddrs *interfaces = NULL; 
+    struct ifaddrs *temp_addr = NULL; 
+    int success = 0; 
+    // retrieve the current interfaces - returns 0 on success
+    success = getifaddrs(&interfaces); 
+    
+    if (success == 0) { 
+        // Loop through linked list of interfaces 
+        
+        temp_addr = interfaces; 
+        while(temp_addr != NULL) { 
+            
+            if(temp_addr->ifa_addr->sa_family == AF_INET) {
+                // Check if interface is en0 which is the wifi connection on the iPhone
+                
+                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) { 
+                    // Get NSString from C String 
+                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)]; 
+                } 
+            }
+            
+            temp_addr = temp_addr->ifa_next; 
+        }
+    } 
+    
+    // Free memory 
+    freeifaddrs(interfaces);
+    return address;
+}
 
 - (void)resolveService:(NSNetService *)s {
     s.delegate = self;
@@ -66,14 +100,20 @@
     //const struct sockaddr_in *a = (const struct sockaddr_in *)d;
     NSData *t = [s.addresses objectAtIndex:0];
     DLog(@"WDBubble connectService %@ addr %@:%i", s, [t host], [t port]);
-    DLog(@"WDBubble connectService sender %@:%i", s.name, s.port);
-    [self.socketSender connectToHost:[t host] onPort:[t port] error:nil];
+    
+    if ([self.socketConnect isConnected]) {
+        AsyncSocket *sc = [[AsyncSocket alloc] init];
+        sc.delegate = self;
+        [sc connectToHost:[t host] onPort:[t port] error:nil];
+    } else {
+        [self.socketConnect connectToHost:[t host] onPort:[t port] error:nil];
+    }
 }
 
 #pragma mark - Publice Methods
 
 - (void)initSocket {
-    DLog(@"WDBubbleService initSocket");
+    DLog(@"WDBubble initSocket");
     
     _currentMessage = nil;
     _dataBuffer = nil;
@@ -84,28 +124,38 @@
     [self.socketListen acceptOnPort:0 error:nil];
     
     // DW: connect to remote sockets (which are created by remote's "socketListen") and send them data.
-    self.socketSender = [[AsyncSocket alloc] init];
-    self.socketSender.delegate = self;
+    // Following sockets like it will become temp vars
+    self.socketConnect = [[AsyncSocket alloc] init];
+    self.socketConnect.delegate = self;
 }
 
 - (void)publishServiceWithPassword:(NSString *)pwd {
-    DLog(@"WDBubbleService publishService <%@>%@ port %i", self.service.name, self.socketListen, self.socketListen.localPort);
+    DLog(@"WDBubble publishService <%@>%@ port %i", self.service.name, self.socketListen, self.socketListen.localPort);
     if ([pwd isEqualToString:@""]) {
         self.netServiceType = kWDBubbleWebServiceType;
     } else {
         self.netServiceType = [NSString stringWithFormat:@"_bubbles_%@._tcp.", pwd];
     }
+    
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
     self.service = [[NSNetService alloc] initWithDomain:@""
                                                    type:self.netServiceType
                                                    name:[[UIDevice currentDevice] name]
                                                    port:self.socketListen.localPort];
+#elif TARGET_OS_MAC
+    self.service = [[NSNetService alloc] initWithDomain:@""
+                                                   type:self.netServiceType
+                                                   name:[[NSHost currentHost] localizedName]
+                                                   port:self.socketListen.localPort];
+#endif
+    
     self.service.delegate = self;
     [self.service publish];
 }
 
 - (void)browseServices {
     _servicesFound = [[NSMutableArray alloc] init];
-    DLog(@"WDBubbleService browseServices");
+    DLog(@"WDBubble browseServices");
     self.browser = [[NSNetServiceBrowser alloc] init];
     self.browser.delegate = self;
     [self.browser searchForServicesOfType:self.netServiceType inDomain:kWDBubbleInitialDomain];
@@ -138,11 +188,11 @@
 // Publish
 
 - (void)netServiceWillPublish:(NSNetService *)sender {
-    DLog(@"NSNetServiceDelegate netServiceWillPublish");
+    //DLog(@"NSNetServiceDelegate netServiceWillPublish");
 }
 
 - (void)netServiceDidPublish:(NSNetService *)sender {
-    DLog(@"NSNetServiceDelegate netServiceDidPublish %@, %i", self.service, self.service.port);
+    //DLog(@"NSNetServiceDelegate netServiceDidPublish %@, %i", self.service, self.service.port);
 }
 
 - (void)netService:(NSNetService *)sender didNotPublish:(NSDictionary *)errorDict {
@@ -163,8 +213,9 @@
     DLog(@"AsyncSocketDelegate didAcceptNewSocket %@: %@", sock, newSocket);
     
     // DW: this "newSocket" is connected to remote's "socketSender", use it to read data then.
-    [newSocket readDataWithTimeout:kWDBubbleTimeOut tag:0];
+    // It is the very first place to read data.
     _dataBuffer = [[NSMutableData alloc] init];
+    [newSocket readDataWithTimeout:kWDBubbleTimeOut tag:0];
 }
 
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
@@ -179,12 +230,14 @@
 }
 
 - (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port {
-    DLog(@"AsyncSocketDelegate didConnectToHost %@ (l%@, c %@)", sock, self.socketListen, self.socketSender);
+    //DLog(@"AsyncSocketDelegate didConnectToHost %@ (l%@)", sock, self.socketListen);
     
     // DW: after connected, "socketSender" will send data.
-    if ([sock isEqual:self.socketSender]) {
+    DLog(@"AsyncSocketDelegate didConnectToHost IP %@ : %@", sock.localHost, socketConnect.localHost);
+    if ([sock.localHost isEqualToString:socketConnect.localHost]) {
         NSData *t = [NSKeyedArchiver archivedDataWithRootObject:_currentMessage];
         [sock writeData:t withTimeout:kWDBubbleTimeOut tag:0];
+        //DLog(@"AsyncSocketDelegate didConnectToHost writing %@", t);
     }
 }
 
@@ -197,18 +250,21 @@
 
 - (void)onSocketDidDisconnect:(AsyncSocket *)sock {
     DLog(@"AsyncSocketDelegate onSocketDidDisconnect %@", sock);
-    //[sock disconnectAfterReadingAndWriting];
     
     if (_dataBuffer != nil) {
         WDMessage *t = [NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer];
         if (t.type == WDMessageTypeText) {
             [self.delegate didReceiveText:[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding]];
         } else if (t.type == WDMessageTypeImage) {
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
             UIImage *ti = [[UIImage alloc] initWithData:t.content];
+#elif TARGET_OS_MAC
+            NSImage *ti = [[NSImage alloc] initWithData:t.content];
+#endif
             [self.delegate didReceiveImage:ti];
         }
         
-        // DW: Clean up.
+        // DW: clean up
         [_dataBuffer release];
         _dataBuffer = nil;
     }

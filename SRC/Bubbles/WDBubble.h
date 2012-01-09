@@ -20,7 +20,13 @@
 
 @protocol WDBubbleDelegate
 - (void)didReceiveText:(NSString *)text;
+
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 - (void)didReceiveImage:(UIImage *)image;
+#elif TARGET_OS_MAC
+- (void)didReceiveImage:(NSImage *)image;
+#endif
+
 @end
 
 @interface WDBubble : NSObject <AsyncSocketDelegate, NSNetServiceDelegate, NSNetServiceBrowserDelegate> {
@@ -32,8 +38,8 @@
     
     // DW: sockets
 	AsyncSocket *_socketListen;
-    AsyncSocket *_socketSender;
-
+    AsyncSocket *_socketConnect; // DW: the first connect socket, used to determine local or not
+    
     // DW: Message
     WDMessage *_currentMessage;
     NSMutableData *_dataBuffer;
@@ -43,7 +49,7 @@
 @property (nonatomic, retain) NSNetServiceBrowser *browser;
 @property (nonatomic, retain) NSString *netServiceType;
 @property (nonatomic, retain) AsyncSocket *socketListen;
-@property (nonatomic, retain) AsyncSocket *socketSender;
+@property (nonatomic, retain) AsyncSocket *socketConnect;
 @property (nonatomic, retain) NSArray *servicesFound;
 @property (nonatomic, retain) id<WDBubbleDelegate> delegate;
 

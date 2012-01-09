@@ -27,6 +27,11 @@ typedef NSUInteger WDMessageType;
 @property (nonatomic, assign) NSUInteger type;
 
 + (id)messageWithText:(NSString *)text;
+
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 + (id)messageWithImage:(UIImage *)image;
+#elif TARGET_OS_MAC
++ (id)messageWithImage:(NSImage *)image;
+#endif
 
 @end

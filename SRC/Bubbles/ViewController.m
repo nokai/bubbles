@@ -138,6 +138,14 @@
     UISwitch *s = (UISwitch *)sender;
     [[NSUserDefaults standardUserDefaults] setBool:s.on forKey:kUserDefaultsUsePassword];
     self.logoutButton.hidden = !s.on;
+    
+    if (s.on) {
+        [self logout:nil];
+    } else {
+        [self.bubble stopService];
+        [self.bubble publishServiceWithPassword:@""];
+        [self.bubble browseServices];
+    }
 }
 
 #pragma mark - Events
@@ -174,7 +182,10 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    DLog(@"VC didFinishPickingMediaWithInfo %@", image);
+    DLog(@"VC didFinishPickingMediaWithInfo %@ %@ %@", 
+         [info valueForKey:UIImagePickerControllerMediaType], 
+         [info valueForKey:UIImagePickerControllerOriginalImage], 
+         [info valueForKey:UIImagePickerControllerMediaURL]);
     self.imageMessage.image = image;
     
     [self dismissModalViewControllerAnimated:YES];

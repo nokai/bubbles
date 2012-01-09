@@ -24,6 +24,7 @@
     return m;
 }
 
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 + (id)messageWithImage:(UIImage *)image {
     WDMessage *m = [[WDMessage alloc] init];
     m.content = UIImagePNGRepresentation(image);
@@ -31,6 +32,15 @@
     m.type = WDMessageTypeImage;
     return m;
 }
+#elif TARGET_OS_MAC
++ (id)messageWithImage:(NSImage *)image {
+    WDMessage *m = [[WDMessage alloc] init];
+    m.content = [image TIFFRepresentation];
+    m.time = [NSDate date];
+    m.type = WDMessageTypeImage;
+    return m;
+}
+#endif
 
 #pragma mark - NSCoding
 
