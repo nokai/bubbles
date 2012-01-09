@@ -70,6 +70,10 @@
 #pragma mark - IBOutlets
 
 - (IBAction)go:(id)sender {
+    if ([self.password.text isEqualToString:@""]) {
+        return;
+    }
+    
     [self.delegate didInputPassword:self.password.text];
     self.password.text = @"";
     [self.view removeFromSuperview];

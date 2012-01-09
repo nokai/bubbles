@@ -11,7 +11,7 @@
 
 @implementation ViewController
 @synthesize bubble;
-@synthesize textMessage, imageMessage, passwordViewController;
+@synthesize textMessage, imageMessage, logoutButton, switchUsePassword, passwordViewController;
 
 - (void)didReceiveMemoryWarning
 {
@@ -26,16 +26,28 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    // DW: user defauts
+    NSDictionary *t = [NSDictionary dictionaryWithObject:@"YES" forKey:kUserDefaultsUsePassword];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:t];
+    
     self.bubble = [[WDBubble alloc] init];
     self.bubble.delegate = self;
     [self.bubble initSocket];
-    //[self.bubble publishServiceWithPassword:<#(NSString *)#>];
-    //[self.bubble browseServices];
     
     // DW: password view
     self.passwordViewController = [[PasswordViewController alloc] initWithNibName:@"PasswordViewController" bundle:nil];
     self.passwordViewController.delegate = self;
-    [self.view addSubview:self.passwordViewController.view];
+    
+    // DW: use password or not
+    BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
+    if (usePassword) {
+        [self.view addSubview:self.passwordViewController.view];
+    } else {
+        [self.bubble publishServiceWithPassword:@""];
+        [self.bubble browseServices];
+    }
+    self.logoutButton.hidden = !usePassword;
+    [self.switchUsePassword setOn:usePassword];
 }
 
 - (void)viewDidUnload
@@ -71,6 +83,14 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    if (error != nil) {
+        
+    } else {
+        DLog(@"VC Image %@ saved.", image);
+    }
+}
+
 #pragma mark - IBOultets
 
 - (IBAction)sendText:(id)sender {
@@ -84,6 +104,15 @@
         t.delegate = self;
         [self presentModalViewController:t animated:YES];
         [t release];
+    }
+}
+
+- (IBAction)saveImage:(id)sender {
+    if (imageMessage.image) {
+        UIImageWriteToSavedPhotosAlbum(imageMessage.image, 
+                                       self, 
+                                       @selector(image:didFinishSavingWithError:contextInfo:), 
+                                       nil);
     }
 }
 
@@ -105,6 +134,12 @@
     [self.bubble stopService];
 }
 
+- (IBAction)triggerUsePassword:(id)sender {
+    UISwitch *s = (UISwitch *)sender;
+    [[NSUserDefaults standardUserDefaults] setBool:s.on forKey:kUserDefaultsUsePassword];
+    self.logoutButton.hidden = !s.on;
+}
+
 #pragma mark - Events
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -114,12 +149,12 @@
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-	[self.textMessage resignFirstResponder];
+    [self.textMessage resignFirstResponder];
     return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	[self.textMessage resignFirstResponder];
+    [self.textMessage resignFirstResponder];
     return YES;
 }
 
