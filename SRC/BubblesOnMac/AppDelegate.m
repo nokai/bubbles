@@ -53,4 +53,8 @@
     self.imageMessage.image = image;
 }
 
+#pragma mark - NSOutlineViewDelegate
+
+#pragma mark - NSOutlineViewDataSource
+
 @end

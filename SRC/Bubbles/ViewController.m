@@ -27,7 +27,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     // DW: user defauts
-    NSDictionary *t = [NSDictionary dictionaryWithObject:@"YES" forKey:kUserDefaultsUsePassword];
+    NSDictionary *t = [NSDictionary dictionaryWithObject:@"NO" forKey:kUserDefaultsUsePassword];
     [[NSUserDefaults standardUserDefaults] registerDefaults:t];
     
     self.bubble = [[WDBubble alloc] init];
