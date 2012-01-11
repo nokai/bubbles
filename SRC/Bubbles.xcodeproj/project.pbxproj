@@ -57,7 +57,7 @@
 		C1C9372414BB1766005E0EAA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C1C9372514BB1766005E0EAA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C1C9372814BB1766005E0EAA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		C1C9372D14BB17C3005E0EAA /* Icon-Mac.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Icon-Mac.icns"; sourceTree = "<group>"; };
+		C1C9372D14BB17C3005E0EAA /* Icon-Mac.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Icon-Mac.icns"; path = "../Icon-Mac.icns"; sourceTree = "<group>"; };
 		C1CFCD0C14B98552008A1B1F /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Bubbles/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		C1CFCD0D14B98552008A1B1F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Bubbles/AppDelegate.m; sourceTree = SOURCE_ROOT; };
 		C1CFCD0E14B98552008A1B1F /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = Bubbles/AsyncSocket.h; sourceTree = SOURCE_ROOT; };
@@ -110,7 +110,7 @@
 		C121945414B591D700159A9F = {
 			isa = PBXGroup;
 			children = (
-				C1C9372D14BB17C3005E0EAA /* Icon-Mac.icns */,
+				C1E624CF14BD93A80010F395 /* Common */,
 				C121946914B591D700159A9F /* Bubbles */,
 				C1C9371814BB1766005E0EAA /* BubblesOnMac */,
 				C121946214B591D700159A9F /* Frameworks */,
@@ -143,19 +143,13 @@
 		C121946914B591D700159A9F /* Bubbles */ = {
 			isa = PBXGroup;
 			children = (
+				C1E624D114BD940B0010F395 /* iPad */,
+				C1E624D014BD94020010F395 /* iPhone */,
+				C121946A14B591D700159A9F /* Supporting Files */,
 				C1CFCD2C14B986CB008A1B1F /* Default.png */,
 				C1CFCD2D14B986CB008A1B1F /* Default@2x.png */,
 				C1CFCD2E14B986CB008A1B1F /* Icon.png */,
 				C1CFCD2F14B986CB008A1B1F /* Icon@2x.png */,
-				C121946A14B591D700159A9F /* Supporting Files */,
-				C1CFCD0314B98426008A1B1F /* Mac */,
-				C1CFCD0214B98419008A1B1F /* iOS */,
-				C1CFCD0E14B98552008A1B1F /* AsyncSocket.h */,
-				C1CFCD0F14B98552008A1B1F /* AsyncSocket.m */,
-				C1CFCD1014B98552008A1B1F /* WDBubble.h */,
-				C1CFCD1114B98552008A1B1F /* WDBubble.m */,
-				C1CFCD1214B98552008A1B1F /* WDMessage.h */,
-				C1CFCD1314B98552008A1B1F /* WDMessage.m */,
 			);
 			name = Bubbles;
 			path = LearnBonjour;
@@ -184,10 +178,11 @@
 		C1C9371814BB1766005E0EAA /* BubblesOnMac */ = {
 			isa = PBXGroup;
 			children = (
+				C1C9371914BB1766005E0EAA /* Supporting Files */,
+				C1C9372D14BB17C3005E0EAA /* Icon-Mac.icns */,
 				C1C9372414BB1766005E0EAA /* AppDelegate.h */,
 				C1C9372514BB1766005E0EAA /* AppDelegate.m */,
 				C1C9372714BB1766005E0EAA /* MainMenu.xib */,
-				C1C9371914BB1766005E0EAA /* Supporting Files */,
 			);
 			path = BubblesOnMac;
 			sourceTree = "<group>";
@@ -204,7 +199,20 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		C1CFCD0214B98419008A1B1F /* iOS */ = {
+		C1E624CF14BD93A80010F395 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				C1CFCD0E14B98552008A1B1F /* AsyncSocket.h */,
+				C1CFCD0F14B98552008A1B1F /* AsyncSocket.m */,
+				C1CFCD1014B98552008A1B1F /* WDBubble.h */,
+				C1CFCD1114B98552008A1B1F /* WDBubble.m */,
+				C1CFCD1214B98552008A1B1F /* WDMessage.h */,
+				C1CFCD1314B98552008A1B1F /* WDMessage.m */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		C1E624D014BD94020010F395 /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
 				C1CFCD0C14B98552008A1B1F /* AppDelegate.h */,
@@ -219,14 +227,14 @@
 				C1F80FDB14BA84A6006F0779 /* PasswordViewController.m */,
 				C1F80FDC14BA84A6006F0779 /* PasswordViewController.xib */,
 			);
-			name = iOS;
+			name = iPhone;
 			sourceTree = "<group>";
 		};
-		C1CFCD0314B98426008A1B1F /* Mac */ = {
+		C1E624D114BD940B0010F395 /* iPad */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = Mac;
+			name = iPad;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -440,10 +448,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bubbles/Bubbles-Prefix.pch";
 				INFOPLIST_FILE = "Bubbles/Bubbles-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DDEBUG";
 				PRODUCT_NAME = Bubbles;
 				PROVISIONING_PROFILE = "BD55D568-BFE6-4811-842A-F98BDF2806A9";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -456,9 +465,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bubbles/Bubbles-Prefix.pch";
 				INFOPLIST_FILE = "Bubbles/Bubbles-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Bubbles;
 				PROVISIONING_PROFILE = "BD55D568-BFE6-4811-842A-F98BDF2806A9";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -535,6 +545,7 @@
 				C1C9372C14BB1766005E0EAA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
