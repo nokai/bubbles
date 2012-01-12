@@ -182,10 +182,6 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    DLog(@"VC didFinishPickingMediaWithInfo %@ %@ %@", 
-         [info valueForKey:UIImagePickerControllerMediaType], 
-         [info valueForKey:UIImagePickerControllerOriginalImage], 
-         [info valueForKey:UIImagePickerControllerMediaURL]);
     self.imageMessage.image = image;
     
     [self dismissModalViewControllerAnimated:YES];
