@@ -9,12 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "WDBubble.h"
 
-@interface AppDelegate : NSObject <NSOutlineViewDelegate, NSOutlineViewDataSource, NSApplicationDelegate, WDBubbleDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
-@property (nonatomic, retain) IBOutlet NSTextField *textMessage;
-@property (nonatomic, retain) IBOutlet NSImageView *imageMessage;
-
-@property (nonatomic, retain) WDBubble *bubble;
-
 @end

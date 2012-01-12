@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0354C96014BDC3F700417697 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C95F14BDC3F700417697 /* MainViewController.m */; };
+		0354C9AB14BDE4FA00417697 /* PasswordMacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */; };
+		0354C9AD14BDE51800417697 /* PasswordWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0354C9AC14BDE51800417697 /* PasswordWindowView.xib */; };
+		03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C121946414B591D700159A9F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121946314B591D700159A9F /* UIKit.framework */; };
 		C121946614B591D700159A9F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121946514B591D700159A9F /* Foundation.framework */; };
 		C121946814B591D700159A9F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121946714B591D700159A9F /* CoreGraphics.framework */; };
 		C121949A14B5A9FC00159A9F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121949914B5A9FB00159A9F /* CFNetwork.framework */; };
-		C1C9371314BB1766005E0EAA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1C9371214BB1766005E0EAA /* Cocoa.framework */; };
 		C1C9371D14BB1766005E0EAA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1C9371B14BB1766005E0EAA /* InfoPlist.strings */; };
 		C1C9371F14BB1766005E0EAA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C9371E14BB1766005E0EAA /* main.m */; };
 		C1C9372314BB1766005E0EAA /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C1C9372114BB1766005E0EAA /* Credits.rtf */; };
@@ -39,13 +42,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0354C95E14BDC3F700417697 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		0354C95F14BDC3F700417697 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		0354C9A914BDE4FA00417697 /* PasswordMacViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = PasswordMacViewController.h; sourceTree = "<group>"; };
+		0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordMacViewController.m; sourceTree = "<group>"; };
+		0354C9AC14BDE51800417697 /* PasswordWindowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordWindowView.xib; sourceTree = "<group>"; };
+		03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		C121945F14B591D700159A9F /* Bubbles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bubbles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C121946314B591D700159A9F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C121946514B591D700159A9F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C121946714B591D700159A9F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		C121949914B5A9FB00159A9F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C1C9371014BB1766005E0EAA /* BubblesOnMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BubblesOnMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C1C9371214BB1766005E0EAA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		C1C9371514BB1766005E0EAA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		C1C9371614BB1766005E0EAA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C1C9371714BB1766005E0EAA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -100,7 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1C9371314BB1766005E0EAA /* Cocoa.framework in Frameworks */,
+				03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,11 +138,11 @@
 		C121946214B591D700159A9F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */,
 				C121946314B591D700159A9F /* UIKit.framework */,
 				C121946514B591D700159A9F /* Foundation.framework */,
 				C121949914B5A9FB00159A9F /* CFNetwork.framework */,
 				C121946714B591D700159A9F /* CoreGraphics.framework */,
-				C1C9371214BB1766005E0EAA /* Cocoa.framework */,
 				C1C9371414BB1766005E0EAA /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -187,6 +195,11 @@
 				C1C9372414BB1766005E0EAA /* AppDelegate.h */,
 				C1C9372514BB1766005E0EAA /* AppDelegate.m */,
 				C1C9372714BB1766005E0EAA /* MainMenu.xib */,
+				0354C95E14BDC3F700417697 /* MainViewController.h */,
+				0354C95F14BDC3F700417697 /* MainViewController.m */,
+				0354C9A914BDE4FA00417697 /* PasswordMacViewController.h */,
+				0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */,
+				0354C9AC14BDE51800417697 /* PasswordWindowView.xib */,
 				C1C9371914BB1766005E0EAA /* Supporting Files */,
 			);
 			path = BubblesOnMac;
@@ -316,6 +329,7 @@
 				C1C9372314BB1766005E0EAA /* Credits.rtf in Resources */,
 				C1C9372914BB1766005E0EAA /* MainMenu.xib in Resources */,
 				C1C9372E14BB17C3005E0EAA /* Icon-Mac.icns in Resources */,
+				0354C9AD14BDE51800417697 /* PasswordWindowView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +360,8 @@
 				C1C9373914BB204D005E0EAA /* WDMessage.m in Sources */,
 				C1C9371F14BB1766005E0EAA /* main.m in Sources */,
 				C1C9372614BB1766005E0EAA /* AppDelegate.m in Sources */,
+				0354C96014BDC3F700417697 /* MainViewController.m in Sources */,
+				0354C9AB14BDE4FA00417697 /* PasswordMacViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,7 +493,7 @@
 				GCC_PREFIX_HEADER = "BubblesOnMac/BubblesOnMac-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "BubblesOnMac/BubblesOnMac-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -500,7 +516,7 @@
 				GCC_PREFIX_HEADER = "BubblesOnMac/BubblesOnMac-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "BubblesOnMac/BubblesOnMac-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -535,6 +551,7 @@
 				C1C9372C14BB1766005E0EAA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
