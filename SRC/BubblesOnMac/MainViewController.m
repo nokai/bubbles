@@ -33,7 +33,6 @@
                                                  selector:@selector(servicesUpdated:) 
                                                      name:kWDBubbleNotification
                                                    object:nil];
-        
     }
     return self;
 }
@@ -59,10 +58,47 @@
 
 - (IBAction)saveImage:(id)sender {
     
+    if (_imageMessage.image) {
+
+        NSSavePanel *savePanel = [NSSavePanel savePanel];
+    
+        //for test ,only two types
+        [savePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"png",@"jpg",nil]];
+        [savePanel setTitle:@"Save"];
+        [savePanel setPrompt:@"Save"];
+        [savePanel setNameFieldLabel:@"Save picture to:"];
+    
+        if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+            NSURL *url = [savePanel URL];
+            
+            NSData *imageData = [_imageMessage.image TIFFRepresentation];
+            NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
+            NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
+            imageData = [imageRep representationUsingType:NSJPEGFileType properties:imageProps];
+            [imageData writeToURL:url atomically:NO];  
+        }
+    }
 }
 
 - (IBAction)sendImage:(id)sender {
     
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    
+    //jpg and png is just for test ....
+	[openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"png",@"jpg",nil]];
+	[openPanel setTitle:@"Choose a picture"];
+	[openPanel setPrompt:@"Browse"];
+	[openPanel setNameFieldLabel:@"Choose a picture:"];
+     
+    if ([openPanel runModal] == NSFileHandlingPanelOKButton)
+    {
+        NSURL *url = [openPanel URL];//the path of your selected photo
+        NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
+        [_imageMessage setImage:image];
+        [image release];
+        
+        [_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
+    }
 }
 
 - (IBAction)clickBox:(id)sender {
