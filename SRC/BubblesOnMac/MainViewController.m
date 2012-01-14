@@ -173,7 +173,6 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     
 }
 
-
 #pragma mark - 
 #pragma mark Private
 
