@@ -110,6 +110,14 @@
     }
 }
 
+- (void)timerCheckProgress:(NSTimer*)theTimer {
+    //if (self.socketConnect.isConnected) {
+    NSLog(@"WDBubble timerCheckProgress");
+    //NSLog(@"WDBubble timerCheckProgress %f", [self.socketConnect progressOfWriteReturningTag:nil bytesDone:nil total:nil]);
+    //}
+    
+}
+
 #pragma mark - Publice Methods
 
 - (void)initSocket {
@@ -163,6 +171,11 @@
 
 - (void)broadcastMessage:(WDMessage *)msg {
     _currentMessage = [msg retain];
+    
+    // DW: timer
+    _timer = [[NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(timerCheckProgress:) userInfo:nil repeats:YES] retain];
+    [_timer fire];
+    
     for (NSNetService *s in self.servicesFound) {
         if ([s.name isEqualToString:self.service.name])
             continue;
@@ -216,6 +229,10 @@
     // It is the very first place to read data.
     _dataBuffer = [[NSMutableData alloc] init];
     [newSocket readDataWithTimeout:kWDBubbleTimeOut tag:0];
+    
+    _socketReceive = [newSocket retain];
+    _timer = [[NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(timerCheckProgress) userInfo:nil repeats:YES] retain];
+    [_timer fire];
 }
 
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
@@ -252,6 +269,8 @@
     DLog(@"AsyncSocketDelegate onSocketDidDisconnect %@", sock);
     
     if (_dataBuffer != nil) {
+        // DW: a receive socket
+        
         WDMessage *t = [NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer];
         if (t.type == WDMessageTypeText) {
             [self.delegate didReceiveText:[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding]];
@@ -268,6 +287,10 @@
         [_dataBuffer release];
         _dataBuffer = nil;
     }
+    
+    [_timer invalidate];
+    [_timer release];
+    _timer = nil;
 }
 
 #pragma mark NSNetServiceBrowserDelegate

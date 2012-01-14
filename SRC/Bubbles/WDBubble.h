@@ -39,10 +39,14 @@
     // DW: sockets
 	AsyncSocket *_socketListen;
     AsyncSocket *_socketConnect; // DW: the first connect socket, used to determine local or not
+    AsyncSocket *_socketReceive;
     
     // DW: Message
     WDMessage *_currentMessage;
     NSMutableData *_dataBuffer;
+    
+    // 20120114 DW: timer to check progress
+    NSTimer *_timer;
 }
 
 @property (nonatomic, retain) NSNetService *service;
