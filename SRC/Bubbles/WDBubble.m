@@ -173,8 +173,8 @@
     _currentMessage = [msg retain];
     
     // DW: timer
-    _timer = [[NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(timerCheckProgress:) userInfo:nil repeats:YES] retain];
-    [_timer fire];
+    //_timer = [[NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(timerCheckProgress:) userInfo:nil repeats:YES] retain];
+    //[_timer fire];
     
     for (NSNetService *s in self.servicesFound) {
         if ([s.name isEqualToString:self.service.name])
@@ -231,8 +231,8 @@
     [newSocket readDataWithTimeout:kWDBubbleTimeOut tag:0];
     
     _socketReceive = [newSocket retain];
-    _timer = [[NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(timerCheckProgress) userInfo:nil repeats:YES] retain];
-    [_timer fire];
+    //_timer = [[NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(timerCheckProgress) userInfo:nil repeats:YES] retain];
+    //[_timer fire];
 }
 
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
@@ -288,9 +288,11 @@
         _dataBuffer = nil;
     }
     
+    /*
     [_timer invalidate];
     [_timer release];
     _timer = nil;
+     */
 }
 
 #pragma mark NSNetServiceBrowserDelegate
