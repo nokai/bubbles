@@ -44,7 +44,7 @@
 /* Begin PBXFileReference section */
 		0354C95E14BDC3F700417697 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		0354C95F14BDC3F700417697 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		0354C9A914BDE4FA00417697 /* PasswordMacViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = PasswordMacViewController.h; sourceTree = "<group>"; };
+		0354C9A914BDE4FA00417697 /* PasswordMacViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordMacViewController.h; sourceTree = "<group>"; };
 		0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordMacViewController.m; sourceTree = "<group>"; };
 		0354C9AC14BDE51800417697 /* PasswordWindowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordWindowView.xib; sourceTree = "<group>"; };
 		03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
@@ -461,14 +461,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Dexi Wang (67KBMLGLDE)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dexi Wang (YM3GXTB54P)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bubbles/Bubbles-Prefix.pch";
 				INFOPLIST_FILE = "Bubbles/Bubbles-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DDEBUG";
 				PRODUCT_NAME = Bubbles;
-				PROVISIONING_PROFILE = "BD55D568-BFE6-4811-842A-F98BDF2806A9";
+				PROVISIONING_PROFILE = "08BC7396-6688-45B6-B9E2-2C699836BA3D";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -478,13 +478,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Dexi Wang (67KBMLGLDE)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dexi Wang (YM3GXTB54P)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bubbles/Bubbles-Prefix.pch";
 				INFOPLIST_FILE = "Bubbles/Bubbles-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Bubbles;
-				PROVISIONING_PROFILE = "BD55D568-BFE6-4811-842A-F98BDF2806A9";
+				PROVISIONING_PROFILE = "08BC7396-6688-45B6-B9E2-2C699836BA3D";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

@@ -52,7 +52,7 @@
 
 @implementation WDBubble
 @synthesize service, browser, netServiceType;
-@synthesize socketListen, socketConnect, servicesFound = _servicesFound;
+@synthesize socketListen, servicesFound = _servicesFound;
 @synthesize delegate;
 
 #pragma mark - Private Methods
@@ -101,13 +101,12 @@
     NSData *t = [s.addresses objectAtIndex:0];
     DLog(@"WDBubble connectService %@ addr %@:%i", s, [t host], [t port]);
     
-    if ([self.socketConnect isConnected]) {
-        AsyncSocket *sc = [[AsyncSocket alloc] init];
-        sc.delegate = self;
-        [sc connectToHost:[t host] onPort:[t port] error:nil];
-    } else {
-        [self.socketConnect connectToHost:[t host] onPort:[t port] error:nil];
-    }
+    // 20120115 DW: isConnected is always not reliable, do not use it
+    AsyncSocket *sc = [[AsyncSocket alloc] init];
+    sc.delegate = self;
+    [sc connectToHost:[t host] onPort:[t port] error:nil];
+    [_socketConnect addObject:sc];
+    [sc release];
 }
 
 - (void)timerCheckProgress:(NSTimer*)theTimer {
@@ -133,8 +132,9 @@
     
     // DW: connect to remote sockets (which are created by remote's "socketListen") and send them data.
     // Following sockets like it will become temp vars
-    self.socketConnect = [[AsyncSocket alloc] init];
-    self.socketConnect.delegate = self;
+    //self.socketConnect = [[AsyncSocket alloc] init];
+    //self.socketConnect.delegate = self;
+    _socketConnect = [[NSMutableArray alloc] init];
 }
 
 - (void)publishServiceWithPassword:(NSString *)pwd {
@@ -250,8 +250,12 @@
     //DLog(@"AsyncSocketDelegate didConnectToHost %@ (l%@)", sock, self.socketListen);
     
     // DW: after connected, "socketSender" will send data.
-    DLog(@"AsyncSocketDelegate didConnectToHost IP %@ : %@", sock.localHost, socketConnect.localHost);
-    if ([sock.localHost isEqualToString:socketConnect.localHost]) {
+    //AsyncSocket *sc = [_socketConnect objectAtIndex:0];
+    //DLog(@"AsyncSocketDelegate didConnectToHost IP %@ : %@", sock.localHost, sc.localHost);
+    //if ([sock.localHost isEqualToString:sc.localHost]) {
+    if (_socketConnect.count > 0) {
+        // DW: a sender
+        
         NSData *t = [NSKeyedArchiver archivedDataWithRootObject:_currentMessage];
         [sock writeData:t withTimeout:kWDBubbleTimeOut tag:0];
         //DLog(@"AsyncSocketDelegate didConnectToHost writing %@", t);
@@ -286,12 +290,14 @@
         // DW: clean up
         [_dataBuffer release];
         _dataBuffer = nil;
+    } else {
+        [_socketConnect removeObject:sock];
     }
     
     /*
-    [_timer invalidate];
-    [_timer release];
-    _timer = nil;
+     [_timer invalidate];
+     [_timer release];
+     _timer = nil;
      */
 }
 
