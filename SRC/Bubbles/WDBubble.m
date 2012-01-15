@@ -111,8 +111,13 @@
 }
 
 - (void)timerCheckProgress:(NSTimer*)theTimer {
-    //if (self.socketConnect.isConnected) {
-    //}
+    _pertangeIndicatior = [_socketReceive progressOfReadReturningTag:nil bytesDone:nil total:nil];
+    DLog(@"percent is %f",_pertangeIndicatior);
+    if (_pertangeIndicatior == 1.0) {
+        [_timer invalidate];
+        [_timer release];
+        _timer = nil;
+    }
 }
 
 #pragma mark - Publice Methods
@@ -172,7 +177,7 @@
     
     // DW: timer
     _timer = [[NSTimer scheduledTimerWithTimeInterval:-1 target:self selector:@selector(timerCheckProgress:) userInfo:nil repeats:YES] retain];
-    [_timer fire];
+    //[_timer fire];
     
     for (NSNetService *s in self.servicesFound) {
         if ([s.name isEqualToString:self.service.name])
@@ -294,7 +299,7 @@
     } else {
         [_socketConnect removeObject:sock];
     }
-
+    
 }
 
 #pragma mark NSNetServiceBrowserDelegate

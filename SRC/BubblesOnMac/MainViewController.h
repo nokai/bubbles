@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "WDBubble.h"
 #import "PasswordMacViewController.h"
+#import "DragAndDropImageView.h"
 
 #define kMACUserDefaultsUsePassword @"kMACUserDefaultsUsePassword"
 
 @interface MainViewController : NSObject<WDBubbleDelegate,NSTableViewDelegate, NSTableViewDataSource,PasswordMacViewControllerDelegate>
 {
     IBOutlet NSTextField *_textMessage;
-    IBOutlet NSImageView *_imageMessage;
+    IBOutlet DragAndDropImageView *_imageMessage;
     IBOutlet NSTableView *_tableView;
     IBOutlet NSButton *_checkBox;
     
@@ -24,7 +25,7 @@
 }
 
 @property (nonatomic, retain) IBOutlet NSTextField *textMessage;
-@property (nonatomic, retain) IBOutlet NSImageView *imageMessage;
+@property (nonatomic, retain) IBOutlet DragAndDropImageView *imageMessage;
 @property (nonatomic, retain) IBOutlet NSTableView *tableView;
 @property (nonatomic, retain) IBOutlet NSButton *checkBox;
 
@@ -35,5 +36,6 @@
 -(IBAction)sendImage:(id)sender;
 -(IBAction)saveImage:(id)sender;
 -(IBAction)clickBox:(id)sender;
+-(IBAction)BrowseImage:(id)sender;
 
 @end

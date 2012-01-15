@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11A511</string>
+		<string key="IBDocument.SystemVersion">11C74</string>
 		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
-		<string key="IBDocument.AppKitVersion">1138</string>
-		<string key="IBDocument.HIToolboxVersion">566.00</string>
+		<string key="IBDocument.AppKitVersion">1138.23</string>
+		<string key="IBDocument.HIToolboxVersion">567.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">1938</string>
@@ -1372,16 +1372,16 @@
 						<object class="NSButton" id="975258621">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{531, 44}, {72, 32}}</string>
+							<string key="NSFrame">{{525, 104}, {85, 32}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="200714482"/>
+							<reference key="NSNextKeyView" ref="705062723"/>
 							<string key="NSReuseIdentifierKey">_NS:687</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="79492031">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Send</string>
+								<string key="NSContents">Browse</string>
 								<reference key="NSSupport" ref="207741170"/>
 								<string key="NSCellIdentifier">_NS:687</string>
 								<reference key="NSControlView" ref="975258621"/>
@@ -1399,6 +1399,7 @@
 							<string key="NSFrame">{{531, 12}, {72, 32}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:687</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="400470139">
@@ -1467,7 +1468,7 @@
 											<string key="NSFrameSize">{135, 302}</string>
 											<reference key="NSSuperview" ref="73865651"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="1030998847"/>
+											<reference key="NSNextKeyView" ref="233270343"/>
 											<string key="NSReuseIdentifierKey">_NS:1828</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTableHeaderView" key="NSHeaderView" id="683138993">
@@ -1623,7 +1624,7 @@
 							<string key="NSFrame">{{12, 20}, {137, 320}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="73865651"/>
+							<reference key="NSNextKeyView" ref="1030998847"/>
 							<string key="NSReuseIdentifierKey">_NS:1824</string>
 							<int key="NSsFlags">133810</int>
 							<reference key="NSVScroller" ref="233270343"/>
@@ -1658,6 +1659,30 @@
 								<object class="NSButtonImageSource" key="NSAlternateImage">
 									<string key="NSImageName">NSSwitch</string>
 								</object>
+								<string key="NSAlternateContents"/>
+								<string key="NSKeyEquivalent"/>
+								<int key="NSPeriodicDelay">200</int>
+								<int key="NSPeriodicInterval">25</int>
+							</object>
+						</object>
+						<object class="NSButton" id="705062723">
+							<reference key="NSNextResponder" ref="439893737"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{531, 56}, {71, 32}}</string>
+							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="200714482"/>
+							<string key="NSReuseIdentifierKey">_NS:687</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="414672660">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">134217728</int>
+								<string key="NSContents">Send</string>
+								<reference key="NSSupport" ref="207741170"/>
+								<string key="NSCellIdentifier">_NS:687</string>
+								<reference key="NSControlView" ref="705062723"/>
+								<int key="NSButtonFlags">-2038284033</int>
+								<int key="NSButtonFlags2">129</int>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">200</int>
@@ -2375,28 +2400,12 @@
 					<int key="connectionID">575</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">_imageMessage</string>
-						<reference key="source" ref="480918507"/>
-						<reference key="destination" ref="471626410"/>
-					</object>
-					<int key="connectionID">576</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">sendText:</string>
 						<reference key="source" ref="480918507"/>
 						<reference key="destination" ref="980014467"/>
 					</object>
 					<int key="connectionID">577</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">sendImage:</string>
-						<reference key="source" ref="480918507"/>
-						<reference key="destination" ref="975258621"/>
-					</object>
-					<int key="connectionID">578</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -2421,6 +2430,38 @@
 						<reference key="destination" ref="34371075"/>
 					</object>
 					<int key="connectionID">616</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_tableView</string>
+						<reference key="source" ref="480918507"/>
+						<reference key="destination" ref="483825031"/>
+					</object>
+					<int key="connectionID">625</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_imageMessage</string>
+						<reference key="source" ref="480918507"/>
+						<reference key="destination" ref="471626410"/>
+					</object>
+					<int key="connectionID">626</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">BrowseImage:</string>
+						<reference key="source" ref="480918507"/>
+						<reference key="destination" ref="975258621"/>
+					</object>
+					<int key="connectionID">632</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">sendImage:</string>
+						<reference key="source" ref="480918507"/>
+						<reference key="destination" ref="705062723"/>
+					</object>
+					<int key="connectionID">633</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2965,11 +3006,12 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="471626410"/>
 							<reference ref="200714482"/>
-							<reference ref="975258621"/>
 							<reference ref="980014467"/>
 							<reference ref="974797356"/>
 							<reference ref="34371075"/>
 							<reference ref="617920482"/>
+							<reference ref="705062723"/>
+							<reference ref="975258621"/>
 						</array>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -3576,6 +3618,19 @@
 						<reference key="object" ref="289770579"/>
 						<reference key="parent" ref="34371075"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">630</int>
+						<reference key="object" ref="705062723"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="414672660"/>
+						</array>
+						<reference key="parent" ref="439893737"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">631</int>
+						<reference key="object" ref="414672660"/>
+						<reference key="parent" ref="705062723"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -3719,6 +3774,7 @@
 				<string key="516.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="517.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="534.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="538.CustomClassName">DragAndDropImageView</string>
 				<string key="538.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="539.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="540.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3742,6 +3798,8 @@
 				<string key="606.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="613.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="614.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="630.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="631.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="73.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="74.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3758,7 +3816,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">624</int>
+			<int key="maxID">633</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3771,15 +3829,28 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">DragAndDropImageView</string>
+					<string key="superclassName">NSImageView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/DragAndDropImageView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">MainViewController</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="BrowseImage:">id</string>
 						<string key="clickBox:">id</string>
 						<string key="saveImage:">id</string>
 						<string key="sendImage:">id</string>
 						<string key="sendText:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="BrowseImage:">
+							<string key="name">BrowseImage:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="clickBox:">
 							<string key="name">clickBox:</string>
 							<string key="candidateClassName">id</string>
@@ -3799,11 +3870,11 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="_checkBox">NSButton</string>
-						<string key="_imageMessage">NSImageView</string>
+						<string key="_imageMessage">DragAndDropImageView</string>
 						<string key="_tableView">NSTableView</string>
 						<string key="_textMessage">NSTextField</string>
 						<string key="checkBox">NSButton</string>
-						<string key="imageMessage">NSImageView</string>
+						<string key="imageMessage">DragAndDropImageView</string>
 						<string key="tableView">NSTableView</string>
 						<string key="textMessage">NSTextField</string>
 					</dictionary>
@@ -3814,7 +3885,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="_imageMessage">
 							<string key="name">_imageMessage</string>
-							<string key="candidateClassName">NSImageView</string>
+							<string key="candidateClassName">DragAndDropImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_tableView">
 							<string key="name">_tableView</string>
@@ -3830,7 +3901,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="imageMessage">
 							<string key="name">imageMessage</string>
-							<string key="candidateClassName">NSImageView</string>
+							<string key="candidateClassName">DragAndDropImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="tableView">
 							<string key="name">tableView</string>

@@ -22,17 +22,21 @@
     self = [super init];
     if (self) {
         //init bubbles
+        
         _bubble = [[WDBubble alloc] init];
         _bubble.delegate = self;
         [_bubble initSocket];
         
         [self LoadUserPreference];
-               
+        
         //Add observer to update service 
         [[NSNotificationCenter defaultCenter] addObserver:self 
                                                  selector:@selector(servicesUpdated:) 
                                                      name:kWDBubbleNotification
                                                    object:nil];
+        
+        [_imageMessage registerForDraggedTypes:[NSImage imagePasteboardTypes]];
+        //register for all the image types we can display
     }
     return self;
 }
@@ -89,23 +93,7 @@
 
 - (IBAction)sendImage:(id)sender {
     
-    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-    
-    //jpg and png is just for test ....
-	[openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"png",@"jpg",nil]];
-	[openPanel setTitle:@"Choose a picture"];
-	[openPanel setPrompt:@"Browse"];
-	[openPanel setNameFieldLabel:@"Choose a picture:"];
-     
-    if ([openPanel runModal] == NSFileHandlingPanelOKButton)
-    {
-        NSURL *url = [openPanel URL];//the path of your selected photo
-        NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
-        [_imageMessage setImage:image];
-        [image release];
-        
         [_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
-    }
 }
 
 - (IBAction)clickBox:(id)sender {
@@ -136,6 +124,26 @@
     }
 }
 
+- (IBAction)BrowseImage:(id)sender
+{
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    
+    //jpg and png is just for test ....
+	[openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"png",@"jpg",nil]];
+	[openPanel setTitle:@"Choose a picture"];
+	[openPanel setPrompt:@"Browse"];
+	[openPanel setNameFieldLabel:@"Choose a picture:"];
+    
+    if ([openPanel runModal] == NSFileHandlingPanelOKButton)
+    {
+        NSURL *url = [openPanel URL];//the path of your selected photo
+        NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
+        [_imageMessage setImage:image];
+        [image release];
+    }
+
+}
+
 #pragma mark - WDBubbleDelegate
 
 - (void)didReceiveText:(NSString *)text {
@@ -161,7 +169,7 @@
 
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    return _bubble.servicesFound.count;
+    return self.bubble.servicesFound.count;
 }
 
 - (id)tableView:(NSTableView *)aTableView 
@@ -186,6 +194,15 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     [_bubble publishServiceWithPassword:pwd];
     [_bubble browseServices];
 }
+
+#pragma mark - DragAndDropImageViewDelegate
+
+- (void)dropComplete:(NSString *)filePath
+{
+    DLog(@"path is %@",filePath);
+    [_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
+}
+
 
 #pragma mark - 
 #pragma mark Private
