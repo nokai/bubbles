@@ -48,6 +48,13 @@
     [_bubble release];
 }
 
+-(void)awakeFromNib
+{
+    bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kMACUserDefaultsUsePassword];
+    DLog(@"status is %d",status);
+    [_checkBox setState:status];
+}
+
 #pragma mark - 
 #pragma mark IBAction
 
@@ -108,16 +115,24 @@
     if (button.state == NSOnState) {
         [_bubble  stopService];
         
-        _passwordController = [[PasswordMacViewController alloc]init];
-        _passwordController.delegate = self;
+        if (_passwordController == nil) {
+            _passwordController = [[PasswordMacViewController alloc]init];
+            _passwordController.delegate = self;
+        }
         
         [_passwordController showWindow:self];
     }
+    
     else
     {
-        [self.bubble stopService];
-        [self.bubble publishServiceWithPassword:@""];
-        [self.bubble browseServices];
+        [_bubble stopService];
+        
+        if (_passwordController != nil) {
+            [_passwordController close];
+        }
+        
+        [_bubble publishServiceWithPassword:@""];
+        [_bubble browseServices];
     }
 }
 
@@ -170,7 +185,6 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     [_passwordController close];
     [_bubble publishServiceWithPassword:pwd];
     [_bubble browseServices];
-    
 }
 
 #pragma mark - 
@@ -183,8 +197,6 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 - (void)LoadUserPreference
 {
     bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kMACUserDefaultsUsePassword];
-    DLog(@"status is %d",status);
-    [_checkBox setState:status];
     
     if (status) {
         _passwordController = [[PasswordMacViewController alloc]init];

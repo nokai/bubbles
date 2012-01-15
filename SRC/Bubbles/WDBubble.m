@@ -54,6 +54,7 @@
 @synthesize service, browser, netServiceType;
 @synthesize socketListen, socketConnect, servicesFound = _servicesFound;
 @synthesize delegate;
+@synthesize percentageIndicator = _percentageIndicator;
 
 #pragma mark - Private Methods
 
@@ -112,10 +113,10 @@
 
 - (void)timerCheckProgress:(NSTimer*)theTimer {
     //if (self.socketConnect.isConnected) {
-    NSLog(@"WDBubble timerCheckProgress");
-    //NSLog(@"WDBubble timerCheckProgress %f", [self.socketConnect progressOfWriteReturningTag:nil bytesDone:nil total:nil]);
+    DLog(@"WDBubble timerCheckProgress");
+    _pertangeIndicatior = [_socketConnect progressOfReadReturningTag:20 bytesDone:nil total:[_dataBuffer length]];
+    DLog(@"WDBubble timerCheckProgress %f", _pertangeIndicatior);
     //}
-    
 }
 
 #pragma mark - Publice Methods
@@ -173,12 +174,14 @@
     _currentMessage = [msg retain];
     
     // DW: timer
-    //_timer = [[NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(timerCheckProgress:) userInfo:nil repeats:YES] retain];
-    //[_timer fire];
+    _timer = [[NSTimer scheduledTimerWithTimeInterval:-1 target:self selector:@selector(timerCheckProgress:) userInfo:nil repeats:YES] retain];
+    [_timer fire];
     
     for (NSNetService *s in self.servicesFound) {
         if ([s.name isEqualToString:self.service.name])
+        {
             continue;
+        }
         
         if ([s.addresses count] <= 0) {
             [s resolveWithTimeout:0];
@@ -231,13 +234,15 @@
     [newSocket readDataWithTimeout:kWDBubbleTimeOut tag:0];
     
     _socketReceive = [newSocket retain];
-    //_timer = [[NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(timerCheckProgress) userInfo:nil repeats:YES] retain];
-    //[_timer fire];
+    //_timer = [[NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(timerCheckProgress:) userInfo:nil repeats:YES] retain];
+   // [_timer fire];
 }
 
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     //DLog(@"AsyncSocketDelegate didReadData %@: %@", sock, data);
     [_dataBuffer appendData:data];
+    
+    [sock readDataToLength:[data length] withTimeout:-1 buffer:nil bufferOffset:0 tag:20];
     [sock readDataWithTimeout:kWDBubbleTimeOut tag:0];
 }
 
@@ -267,7 +272,6 @@
 
 - (void)onSocketDidDisconnect:(AsyncSocket *)sock {
     DLog(@"AsyncSocketDelegate onSocketDidDisconnect %@", sock);
-    
     if (_dataBuffer != nil) {
         // DW: a receive socket
         
@@ -279,20 +283,19 @@
             UIImage *ti = [[UIImage alloc] initWithData:t.content];
 #elif TARGET_OS_MAC
             NSImage *ti = [[NSImage alloc] initWithData:t.content];
-#endif
+#endif       
             [self.delegate didReceiveImage:ti];
         }
-        
+       
         // DW: clean up
         [_dataBuffer release];
         _dataBuffer = nil;
     }
     
-    /*
     [_timer invalidate];
     [_timer release];
     _timer = nil;
-     */
+     
 }
 
 #pragma mark NSNetServiceBrowserDelegate

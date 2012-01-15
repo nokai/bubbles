@@ -47,6 +47,10 @@
     
     // 20120114 DW: timer to check progress
     NSTimer *_timer;
+    
+    // Wuziqi:Percentage of current exceution
+    
+    float _pertangeIndicatior;
 }
 
 @property (nonatomic, retain) NSNetService *service;
@@ -56,6 +60,7 @@
 @property (nonatomic, retain) AsyncSocket *socketConnect;
 @property (nonatomic, retain) NSArray *servicesFound;
 @property (nonatomic, retain) id<WDBubbleDelegate> delegate;
+@property (nonatomic, assign) float percentageIndicator;
 
 - (void)initSocket;
 - (void)publishServiceWithPassword:(NSString *)pwd;
