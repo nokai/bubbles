@@ -38,8 +38,9 @@
     
     // DW: sockets
 	AsyncSocket *_socketListen;
-    AsyncSocket *_socketConnect; // DW: the first connect socket, used to determine local or not
+    //AsyncSocket *_socketConnect; // DW: the first connect socket, used to determine local or not
     AsyncSocket *_socketReceive;
+    NSMutableArray *_socketConnect;
     
     // DW: Message
     WDMessage *_currentMessage;
@@ -57,7 +58,7 @@
 @property (nonatomic, retain) NSNetServiceBrowser *browser;
 @property (nonatomic, retain) NSString *netServiceType;
 @property (nonatomic, retain) AsyncSocket *socketListen;
-@property (nonatomic, retain) AsyncSocket *socketConnect;
+//@property (nonatomic, retain) AsyncSocket *socketConnect;
 @property (nonatomic, retain) NSArray *servicesFound;
 @property (nonatomic, retain) id<WDBubbleDelegate> delegate;
 @property (nonatomic, assign) float percentageIndicator;
