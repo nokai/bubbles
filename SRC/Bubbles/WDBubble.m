@@ -261,21 +261,36 @@
     if (_dataBuffer != nil) {
         // DW: a receive socket
         
-        WDMessage *t = [NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer];
-        if (t.type == WDMessageTypeText) {
-            [self.delegate didReceiveText:[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding]];
-        } else if (t.type == WDMessageTypeImage) {
-#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-            UIImage *ti = [[UIImage alloc] initWithData:t.content];
-#elif TARGET_OS_MAC
-            NSImage *ti = [[NSImage alloc] initWithData:t.content];
-#endif       
-            [self.delegate didReceiveImage:ti];
+        WDMessage *t = nil;
+        @try {
+            t = [NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer];
         }
-        
-        // DW: clean up
-        [_dataBuffer release];
-        _dataBuffer = nil;
+        @catch (NSException *exception) {
+            DLog(@"AsyncSocketDelegate onSocketDidDisconnect @catch");
+            // DW: clean up
+            [_dataBuffer release];
+            _dataBuffer = nil;
+        }
+        @finally {
+            DLog(@"AsyncSocketDelegate onSocketDidDisconnect @finally");
+            if (!t)
+                return;
+            
+            if (t.type == WDMessageTypeText) {
+                [self.delegate didReceiveText:[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding]];
+            } else if (t.type == WDMessageTypeImage) {
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+                UIImage *ti = [[UIImage alloc] initWithData:t.content];
+#elif TARGET_OS_MAC
+                NSImage *ti = [[NSImage alloc] initWithData:t.content];
+#endif       
+                [self.delegate didReceiveImage:ti];
+            }
+            
+            // DW: clean up
+            [_dataBuffer release];
+            _dataBuffer = nil;
+        }
     } else {
         [_socketConnect removeObject:sock];
     }
@@ -285,6 +300,10 @@
 #pragma mark NSNetServiceBrowserDelegate
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didFindService:(NSNetService *)netService moreComing:(BOOL)moreServicesComing {
+    if (![netService.domain isEqualToString:@"local."]) {
+        return;
+    }
+    
     if ([_servicesFound indexOfObject:netService] != NSNotFound) {
         return;
     }
