@@ -8,11 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface DragAndDropImageView : NSImageView<NSDraggingSource, NSDraggingDestination, NSPasteboardItemDataProvider>
-{
+@interface DragAndDropImageView : NSImageView <NSDraggingSource, NSDraggingDestination, NSPasteboardItemDataProvider> {
     
 }
-
 
 - (id)initWithCoder:(NSCoder *)coder;
 

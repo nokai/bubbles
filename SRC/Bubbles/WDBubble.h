@@ -55,15 +55,14 @@
 }
 
 @property (nonatomic, retain) NSNetService *service;
-@property (nonatomic, retain) NSNetServiceBrowser *browser;
-@property (nonatomic, retain) NSString *netServiceType;
-@property (nonatomic, retain) AsyncSocket *socketListen;
+//@property (nonatomic, retain) NSNetServiceBrowser *browser;
+//@property (nonatomic, retain) NSString *netServiceType;
+//@property (nonatomic, retain) AsyncSocket *socketListen;
 //@property (nonatomic, retain) AsyncSocket *socketConnect;
 @property (nonatomic, retain) NSArray *servicesFound;
 @property (nonatomic, retain) id<WDBubbleDelegate> delegate;
-@property (nonatomic, assign) float percentageIndicator;
+//@property (nonatomic, assign) float percentageIndicator;
 
-- (void)initSocket;
 - (void)publishServiceWithPassword:(NSString *)pwd;
 - (void)browseServices;
 - (void)broadcastMessage:(WDMessage *)msg;

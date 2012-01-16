@@ -12,14 +12,17 @@
 
 #define kUserDefaultsUsePassword    @"kUserDefaultsUsePassword"
 
-@interface ViewController : UIViewController <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, PasswordViewControllerDelegate, WDBubbleDelegate>
-
-@property (nonatomic, retain) WDBubble *bubble;
-
-@property (nonatomic, retain) IBOutlet UITextField *textMessage;
-@property (nonatomic, retain) IBOutlet UIImageView *imageMessage;
-@property (nonatomic, retain) IBOutlet UIButton *logoutButton;
-@property (nonatomic, retain) IBOutlet UISwitch *switchUsePassword;
-@property (nonatomic, retain) PasswordViewController *passwordViewController;
+@interface ViewController : UIViewController <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, PasswordViewControllerDelegate, WDBubbleDelegate> {
+    WDBubble *_bubble;
+    
+    // DW: UI
+    IBOutlet UITextField *_textMessage;
+    IBOutlet UIImageView *_imageMessage;
+    IBOutlet UIButton *_logoutButton;
+    IBOutlet UISwitch *_switchUsePassword;
+    
+    // DW: password
+    PasswordViewController *_passwordViewController;
+}
 
 @end

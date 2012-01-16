@@ -10,24 +10,35 @@
 
 @implementation MainViewController
 
-@synthesize checkBox = _checkBox;
-@synthesize textMessage = _textMessage;
-@synthesize imageMessage = _imageMessage;
-@synthesize bubble = _bubble;
-@synthesize tableView = _tableView;
-@synthesize passwordController = _passwordController;
+#pragma mark - Private Methods
 
--(id)init
+- (void)servicesUpdated:(NSNotification *)notification {
+    [_tableView reloadData];
+}
+
+- (void)loadUserPreference
 {
-    self = [super init];
-    if (self) {
+    bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kMACUserDefaultsUsePassword];
+    
+    if (status) {
+        _passwordController = [[PasswordMacViewController alloc]init];
+        _passwordController.delegate = self;
+        [_passwordController showWindow:self];
+    } else {
+        [_bubble publishServiceWithPassword:@""];
+        [_bubble browseServices];
+    }
+}
+
+- (id)init
+{
+    if (self = [super init]) {
         //init bubbles
         
         _bubble = [[WDBubble alloc] init];
         _bubble.delegate = self;
-        [_bubble initSocket];
         
-        [self LoadUserPreference];
+        [self loadUserPreference];
         
         //Add observer to update service 
         [[NSNotificationCenter defaultCenter] addObserver:self 
@@ -41,44 +52,38 @@
     return self;
 }
 
--(void)dealloc
+- (void)dealloc
 {
     [self removeObserver:self forKeyPath:kWDBubbleNotification];
     [_passwordController release];
-    [_checkBox release];
-    [_tableView release];
-    [_textMessage release];
-    [_imageMessage release];
     [_bubble release];
 }
 
--(void)awakeFromNib
+- (void)awakeFromNib
 {
     bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kMACUserDefaultsUsePassword];
     DLog(@"status is %d",status);
     [_checkBox setState:status];
 }
 
-#pragma mark - 
-#pragma mark IBAction
+#pragma mark - IBActions
 
 - (IBAction)sendText:(id)sender {
     [_bubble broadcastMessage:[WDMessage messageWithText:_textMessage.stringValue]];
-    [_textMessage resignFirstResponder];
 }
 
 - (IBAction)saveImage:(id)sender {
     
     if (_imageMessage.image) {
-
+        
         NSSavePanel *savePanel = [NSSavePanel savePanel];
-    
+        
         //for test ,only two types
         [savePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"png",@"jpg",nil]];
         [savePanel setTitle:@"Save"];
         [savePanel setPrompt:@"Save"];
         [savePanel setNameFieldLabel:@"Save picture to:"];
-    
+        
         if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
             NSURL *url = [savePanel URL];
             
@@ -92,8 +97,7 @@
 }
 
 - (IBAction)sendImage:(id)sender {
-    
-        [_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
+    [_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
 }
 
 - (IBAction)clickBox:(id)sender {
@@ -109,10 +113,7 @@
         }
         
         [_passwordController showWindow:self];
-    }
-    
-    else
-    {
+    } else {
         [_bubble stopService];
         
         if (_passwordController != nil) {
@@ -124,7 +125,7 @@
     }
 }
 
-- (IBAction)BrowseImage:(id)sender
+- (IBAction)browseImage:(id)sender
 {
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
     
@@ -141,7 +142,7 @@
         [_imageMessage setImage:image];
         [image release];
     }
-
+    
 }
 
 #pragma mark - WDBubbleDelegate
@@ -160,21 +161,19 @@
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
-   //comment by wuziqi 
-   //This is used for select other devices to connect
-   //To be finished
+    //comment by wuziqi 
+    //This is used for select other devices to connect
+    //To be finished
 }
 
 #pragma mark - NSTableViewDataSource
 
--(NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    return self.bubble.servicesFound.count;
+    return _bubble.servicesFound.count;
 }
 
-- (id)tableView:(NSTableView *)aTableView 
-objectValueForTableColumn:(NSTableColumn *)aTableColumn 
-            row:(NSInteger)rowIndex
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
     NSNetService *t = [_bubble.servicesFound objectAtIndex:rowIndex];
     
@@ -201,31 +200,6 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 {
     DLog(@"path is %@",filePath);
     [_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
-}
-
-
-#pragma mark - 
-#pragma mark Private
-
-- (void)servicesUpdated:(NSNotification *)notification {
-    [_tableView reloadData];
-}
-
-- (void)LoadUserPreference
-{
-    bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kMACUserDefaultsUsePassword];
-    
-    if (status) {
-        _passwordController = [[PasswordMacViewController alloc]init];
-        _passwordController.delegate = self;
-        [_passwordController showWindow:self];
-    }
-    
-    else
-    {
-        [_bubble publishServiceWithPassword:@""];
-        [_bubble browseServices];
-    }
 }
 
 @end

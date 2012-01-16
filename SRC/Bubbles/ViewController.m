@@ -10,13 +10,18 @@
 #import "PeersViewController.h"
 
 @implementation ViewController
-@synthesize bubble;
-@synthesize textMessage, imageMessage, logoutButton, switchUsePassword, passwordViewController;
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Release any cached data, images, etc that aren't in use.
+}
+
+- (void)dealloc {
+    [_bubble release];
+    [_passwordViewController release];
+    
+    [super release];
 }
 
 #pragma mark - View lifecycle
@@ -30,24 +35,23 @@
     NSDictionary *t = [NSDictionary dictionaryWithObject:@"NO" forKey:kUserDefaultsUsePassword];
     [[NSUserDefaults standardUserDefaults] registerDefaults:t];
     
-    self.bubble = [[WDBubble alloc] init];
-    self.bubble.delegate = self;
-    [self.bubble initSocket];
+    _bubble = [[WDBubble alloc] init];
+    _bubble.delegate = self;
     
     // DW: password view
-    self.passwordViewController = [[PasswordViewController alloc] initWithNibName:@"PasswordViewController" bundle:nil];
-    self.passwordViewController.delegate = self;
+    _passwordViewController = [[PasswordViewController alloc] initWithNibName:@"PasswordViewController" bundle:nil];
+    _passwordViewController.delegate = self;
     
     // DW: use password or not
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
     if (usePassword) {
-        [self.view addSubview:self.passwordViewController.view];
+        [self.view addSubview:_passwordViewController.view];
     } else {
-        [self.bubble publishServiceWithPassword:@""];
-        [self.bubble browseServices];
+        [_bubble publishServiceWithPassword:@""];
+        [_bubble browseServices];
     }
-    self.logoutButton.hidden = !usePassword;
-    [self.switchUsePassword setOn:usePassword];
+    _logoutButton.hidden = !usePassword;
+    [_switchUsePassword setOn:usePassword];
 }
 
 - (void)viewDidUnload
@@ -94,8 +98,8 @@
 #pragma mark - IBOultets
 
 - (IBAction)sendText:(id)sender {
-    [self.bubble broadcastMessage:[WDMessage messageWithText:textMessage.text]];
-    [self.textMessage resignFirstResponder];
+    [_bubble broadcastMessage:[WDMessage messageWithText:_textMessage.text]];
+    [_textMessage resignFirstResponder];
 }
 
 - (IBAction)selectImage:(id)sender {
@@ -108,8 +112,8 @@
 }
 
 - (IBAction)saveImage:(id)sender {
-    if (imageMessage.image) {
-        UIImageWriteToSavedPhotosAlbum(imageMessage.image, 
+    if (_imageMessage.image) {
+        UIImageWriteToSavedPhotosAlbum(_imageMessage.image, 
                                        self, 
                                        @selector(image:didFinishSavingWithError:contextInfo:), 
                                        nil);
@@ -117,52 +121,52 @@
 }
 
 - (IBAction)sendImage:(id)sender {
-    [self.bubble broadcastMessage:[WDMessage messageWithImage:self.imageMessage.image]];
-    [self.textMessage resignFirstResponder];
+    [_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
+    [_textMessage resignFirstResponder];
 }
 
 - (IBAction)showPeers:(id)sender {
     PeersViewController *vc = [[PeersViewController alloc] initWithNibName:@"PeersViewController" bundle:nil];
-    vc.bubble = self.bubble;
+    vc.bubble = _bubble;
     
     UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentModalViewController:nv animated:YES];
 }
 
 - (IBAction)logout:(id)sender {
-    [self.view addSubview:self.passwordViewController.view];
-    [self.bubble stopService];
+    [self.view addSubview:_passwordViewController.view];
+    [_bubble stopService];
 }
 
 - (IBAction)triggerUsePassword:(id)sender {
     UISwitch *s = (UISwitch *)sender;
     [[NSUserDefaults standardUserDefaults] setBool:s.on forKey:kUserDefaultsUsePassword];
-    self.logoutButton.hidden = !s.on;
+    _logoutButton.hidden = !s.on;
     
     if (s.on) {
         [self logout:nil];
     } else {
-        [self.bubble stopService];
-        [self.bubble publishServiceWithPassword:@""];
-        [self.bubble browseServices];
+        [_bubble stopService];
+        [_bubble publishServiceWithPassword:@""];
+        [_bubble browseServices];
     }
 }
 
 #pragma mark - Events
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self.textMessage resignFirstResponder];
+    [_textMessage resignFirstResponder];
 }
 
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-    [self.textMessage resignFirstResponder];
+    [_textMessage resignFirstResponder];
     return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [self.textMessage resignFirstResponder];
+    [_textMessage resignFirstResponder];
     return YES;
 }
 
@@ -170,19 +174,19 @@
 
 - (void)didReceiveText:(NSString *)text {
     DLog(@"VC didReceiveText %@", text);
-    self.textMessage.text = text;
+    _textMessage.text = text;
 }
 
 - (void)didReceiveImage:(UIImage *)image {
     DLog(@"VC didReceiveImage %@", image);
-    self.imageMessage.image = image;
+    _imageMessage.image = image;
 }
 
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    self.imageMessage.image = image;
+    _imageMessage.image = image;
     
     [self dismissModalViewControllerAnimated:YES];
 }
@@ -194,8 +198,8 @@
 #pragma mark - PasswordViewControllerDelegate
 
 - (void)didInputPassword:(NSString *)pwd {
-    [self.bubble publishServiceWithPassword:pwd];
-    [self.bubble browseServices];
+    [_bubble publishServiceWithPassword:pwd];
+    [_bubble browseServices];
 }
 
 @end

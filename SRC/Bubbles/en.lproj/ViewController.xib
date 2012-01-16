@@ -199,7 +199,6 @@
 						<string key="NSFrame">{{282, 412}, {18, 19}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:225</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -310,35 +309,35 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">imageMessage</string>
+						<string key="label">_imageMessage</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="881980780"/>
 					</object>
-					<int key="connectionID">24</int>
+					<int key="connectionID">42</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">textMessage</string>
+						<string key="label">_textMessage</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="219383623"/>
 					</object>
-					<int key="connectionID">25</int>
+					<int key="connectionID">43</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">logoutButton</string>
+						<string key="label">_logoutButton</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="420438960"/>
 					</object>
-					<int key="connectionID">39</int>
+					<int key="connectionID">44</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">switchUsePassword</string>
+						<string key="label">_switchUsePassword</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="973933746"/>
 					</object>
-					<int key="connectionID">41</int>
+					<int key="connectionID">45</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -521,7 +520,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">41</int>
+			<int key="maxID">45</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -529,31 +528,26 @@
 					<string key="className">ViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="imageMessage">UIImageView</string>
-						<string key="logoutButton">UIButton</string>
-						<string key="switch">UISwitch</string>
-						<string key="switchUsePassword">UISwitch</string>
-						<string key="textMessage">UITextField</string>
+						<string key="_imageMessage">UIImageView</string>
+						<string key="_logoutButton">UIButton</string>
+						<string key="_switchUsePassword">UISwitch</string>
+						<string key="_textMessage">UITextField</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="imageMessage">
-							<string key="name">imageMessage</string>
+						<object class="IBToOneOutletInfo" key="_imageMessage">
+							<string key="name">_imageMessage</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="logoutButton">
-							<string key="name">logoutButton</string>
+						<object class="IBToOneOutletInfo" key="_logoutButton">
+							<string key="name">_logoutButton</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="switch">
-							<string key="name">switch</string>
+						<object class="IBToOneOutletInfo" key="_switchUsePassword">
+							<string key="name">_switchUsePassword</string>
 							<string key="candidateClassName">UISwitch</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="switchUsePassword">
-							<string key="name">switchUsePassword</string>
-							<string key="candidateClassName">UISwitch</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="textMessage">
-							<string key="name">textMessage</string>
+						<object class="IBToOneOutletInfo" key="_textMessage">
+							<string key="name">_textMessage</string>
 							<string key="candidateClassName">UITextField</string>
 						</object>
 					</dictionary>

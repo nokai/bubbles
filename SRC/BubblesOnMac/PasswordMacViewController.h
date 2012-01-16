@@ -21,9 +21,6 @@
     IBOutlet NSButton *_resetButton;
 }
 
-@property (nonatomic, retain) IBOutlet NSTextField *textField;
-@property (nonatomic, retain) IBOutlet NSButton *okButton;
-@property (nonatomic, retain) IBOutlet NSButton *resetButton;
 @property (nonatomic, retain) id<PasswordMacViewControllerDelegate> delegate;
 
 - (IBAction)confirmPassword:(id)sender;

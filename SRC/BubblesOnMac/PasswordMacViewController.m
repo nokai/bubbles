@@ -10,9 +10,6 @@
 
 @implementation PasswordMacViewController
 
-@synthesize textField = _textField;
-@synthesize okButton = _okButton;
-@synthesize resetButton = _resetButton;
 @synthesize delegate;
 
 - (id)init
@@ -30,8 +27,7 @@
     [super dealloc];
 }
 
-#pragma mark - 
-#pragma mark IBAction
+#pragma mark - IBAction
 
 - (IBAction)confirmPassword:(id)sender
 {
