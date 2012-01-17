@@ -21,6 +21,11 @@
     IBOutlet NSTableView *_tableView;
     IBOutlet NSButton *_checkBox;
     
+    IBOutlet NSView *_accessoryView;
+    
+    IBOutlet NSButton *_checkBoxOfPictureType;
+    IBOutlet NSPopUpButton *_popUpOfPictureType;
+    
     PasswordMacViewController *_passwordController;
 }
 

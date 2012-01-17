@@ -57,6 +57,10 @@
     [self removeObserver:self forKeyPath:kWDBubbleNotification];
     [_passwordController release];
     [_bubble release];
+    [_accessoryView release];
+    [_checkBoxOfPictureType release];
+    [_popUpOfPictureType release];
+    [super dealloc];
 }
 
 - (void)awakeFromNib
@@ -82,7 +86,11 @@
         [savePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"png",@"jpg",nil]];
         [savePanel setTitle:@"Save"];
         [savePanel setPrompt:@"Save"];
-        [savePanel setNameFieldLabel:@"Save picture to:"];
+        [savePanel setNameFieldLabel:@"Save as"];
+        [savePanel setAllowsOtherFileTypes:YES];
+        [savePanel setCanSelectHiddenExtension:YES];
+        [savePanel setExtensionHidden:NO];
+        [savePanel setAccessoryView:_accessoryView];
         
         if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
             NSURL *url = [savePanel URL];
@@ -90,7 +98,7 @@
             NSData *imageData = [_imageMessage.image TIFFRepresentation];
             NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
             NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
-            imageData = [imageRep representationUsingType:NSJPEGFileType properties:imageProps];
+            imageData = [imageRep representationUsingType:NSTIFFFileType properties:imageProps];
             [imageData writeToURL:url atomically:NO];  
         }
     }
