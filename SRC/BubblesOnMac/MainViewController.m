@@ -35,6 +35,8 @@
     if (self = [super init]) {
         //init bubbles
         
+        [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObject:@"file://localhost/Users/wuwuziqi/Downloads/" forKey:KUserDefaultSavingPath]];
+        
         _bubble = [[WDBubble alloc] init];
         _bubble.delegate = self;
         
@@ -58,8 +60,8 @@
     [_passwordController release];
     [_bubble release];
     [_accessoryView release];
-    [_checkBoxOfPictureType release];
-    [_popUpOfPictureType release];
+    [_directlySave release];
+    [_preferenceController release];
     [super dealloc];
 }
 
@@ -87,9 +89,6 @@
         [savePanel setTitle:@"Save"];
         [savePanel setPrompt:@"Save"];
         [savePanel setNameFieldLabel:@"Save as"];
-        [savePanel setAllowsOtherFileTypes:YES];
-        [savePanel setCanSelectHiddenExtension:YES];
-        [savePanel setExtensionHidden:NO];
         [savePanel setAccessoryView:_accessoryView];
         
         if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
@@ -153,6 +152,27 @@
     
 }
 
+- (IBAction)showPreferencePanel:(id)sender
+{
+    if (_preferenceController == nil) {
+        _preferenceController = [[PreferenceViewContoller alloc]init];
+    }
+    
+    [_preferenceController showWindow:self];
+}
+
+- (IBAction)directlySave:(id)sender
+{
+    NSURL *url = [[NSUserDefaults standardUserDefaults] URLForKey:KUserDefaultSavingPath];
+    if (_imageMessage.image != nil) {
+        NSFileManager *manager = [NSFileManager defaultManager];
+        NSData *data = [_imageMessage.image TIFFRepresentation];
+        NSString *fullPath = [[url path] stringByAppendingPathComponent:@"haha.png"];
+        DLog(@"full path is %@",fullPath);
+        [manager createFileAtPath:fullPath contents:data attributes:nil];
+    }
+}
+
 #pragma mark - WDBubbleDelegate
 
 - (void)didReceiveText:(NSString *)text {
@@ -202,12 +222,12 @@
     [_bubble browseServices];
 }
 
-#pragma mark - DragAndDropImageViewDelegate
+/*#pragma mark - DragAndDropImageViewDelegate
 
 - (void)dropComplete:(NSString *)filePath
 {
     DLog(@"path is %@",filePath);
     [_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
-}
+}*/
 
 @end

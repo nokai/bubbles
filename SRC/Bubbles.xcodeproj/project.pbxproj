@@ -10,6 +10,8 @@
 		0354C96014BDC3F700417697 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C95F14BDC3F700417697 /* MainViewController.m */; };
 		0354C9AB14BDE4FA00417697 /* PasswordMacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */; };
 		0354C9AD14BDE51800417697 /* PasswordWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0354C9AC14BDE51800417697 /* PasswordWindowView.xib */; };
+		037D71E114C954530082FB64 /* PreferenceViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 037D71E014C954530082FB64 /* PreferenceViewContoller.m */; };
+		037D71E414C954D60082FB64 /* PreferenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 037D71E314C954D60082FB64 /* PreferenceViewController.xib */; };
 		03BF64B314C32D8200CD52AB /* DragAndDropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */; };
 		03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C121946414B591D700159A9F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121946314B591D700159A9F /* UIKit.framework */; };
@@ -48,6 +50,9 @@
 		0354C9A914BDE4FA00417697 /* PasswordMacViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordMacViewController.h; sourceTree = "<group>"; };
 		0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordMacViewController.m; sourceTree = "<group>"; };
 		0354C9AC14BDE51800417697 /* PasswordWindowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordWindowView.xib; sourceTree = "<group>"; };
+		037D71DF14C954530082FB64 /* PreferenceViewContoller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceViewContoller.h; sourceTree = "<group>"; };
+		037D71E014C954530082FB64 /* PreferenceViewContoller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceViewContoller.m; sourceTree = "<group>"; };
+		037D71E314C954D60082FB64 /* PreferenceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferenceViewController.xib; sourceTree = "<group>"; };
 		03BF64B114C32D8200CD52AB /* DragAndDropImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragAndDropImageView.h; sourceTree = "<group>"; };
 		03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragAndDropImageView.m; sourceTree = "<group>"; };
 		03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
@@ -202,6 +207,9 @@
 				03BF64B114C32D8200CD52AB /* DragAndDropImageView.h */,
 				03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */,
 				C1C9371914BB1766005E0EAA /* Supporting Files */,
+				037D71DF14C954530082FB64 /* PreferenceViewContoller.h */,
+				037D71E014C954530082FB64 /* PreferenceViewContoller.m */,
+				037D71E314C954D60082FB64 /* PreferenceViewController.xib */,
 			);
 			path = BubblesOnMac;
 			sourceTree = "<group>";
@@ -344,6 +352,7 @@
 				C1C9372914BB1766005E0EAA /* MainMenu.xib in Resources */,
 				C1C9372E14BB17C3005E0EAA /* Icon-Mac.icns in Resources */,
 				0354C9AD14BDE51800417697 /* PasswordWindowView.xib in Resources */,
+				037D71E414C954D60082FB64 /* PreferenceViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +386,7 @@
 				0354C96014BDC3F700417697 /* MainViewController.m in Sources */,
 				0354C9AB14BDE4FA00417697 /* PasswordMacViewController.m in Sources */,
 				03BF64B314C32D8200CD52AB /* DragAndDropImageView.m in Sources */,
+				037D71E114C954530082FB64 /* PreferenceViewContoller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
