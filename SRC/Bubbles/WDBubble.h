@@ -27,6 +27,7 @@
 - (void)didReceiveImage:(NSImage *)image;
 #endif
 
+- (void)didReceiveFile:(NSURL *)url;
 @end
 
 @interface WDBubble : NSObject <AsyncSocketDelegate, NSNetServiceDelegate, NSNetServiceBrowserDelegate> {

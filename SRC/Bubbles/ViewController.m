@@ -105,6 +105,9 @@
 - (IBAction)selectImage:(id)sender {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         UIImagePickerController *t = [[UIImagePickerController alloc] init];
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            t.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+        }
         t.delegate = self;
         [self presentModalViewController:t animated:YES];
         [t release];
@@ -182,11 +185,19 @@
     _imageMessage.image = image;
 }
 
+- (void)didReceiveFile:(NSURL *)url {
+    
+}
+
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    DLog(@"VC didFinishPickingMediaWithInfo %@", info);
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
     _imageMessage.image = image;
+    
+    _filePath = [[info valueForKey:UIImagePickerControllerReferenceURL] absoluteString];
+    DLog(@"VC didFinishPickingMediaWithInfo select %@", _filePath);
     
     [self dismissModalViewControllerAnimated:YES];
 }

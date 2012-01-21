@@ -12,7 +12,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-@implementation NSData (Additions)
+@implementation NSData (Bubbles)
 
 - (int)port {
     int port;
@@ -50,8 +50,19 @@
 
 @end
 
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+@implementation UIDocument (Bubbles)
+
++ (NSURL *)applicationDocumentsDirectory {
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+@end
+#elif TARGET_OS_MAC
+#endif
+
 @implementation WDBubble
-@synthesize service;
+@synthesize service = _service;
 @synthesize servicesFound = _servicesFound;
 @synthesize delegate;
 //@synthesize percentageIndicator = _percentageIndicator;
@@ -118,7 +129,7 @@
 }
 
 - (void)publishServiceWithPassword:(NSString *)pwd {
-    DLog(@"WDBubble publishService <%@>%@ port %i", self.service.name, _socketListen, _socketListen.localPort);
+    DLog(@"WDBubble publishService <%@>%@ port %i", _service.name, _socketListen, _socketListen.localPort);
     if ([pwd isEqualToString:@""]) {
         _netServiceType = kWDBubbleWebServiceType;
     } else {
@@ -126,19 +137,19 @@
     }
     
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-    self.service = [[NSNetService alloc] initWithDomain:@""
-                                                   type:_netServiceType
-                                                   name:[[UIDevice currentDevice] name]
-                                                   port:_socketListen.localPort];
+    _service = [[NSNetService alloc] initWithDomain:@""
+                                               type:_netServiceType
+                                               name:[[UIDevice currentDevice] name]
+                                               port:_socketListen.localPort];
 #elif TARGET_OS_MAC
-    self.service = [[NSNetService alloc] initWithDomain:@""
-                                                   type:_netServiceType
-                                                   name:[[NSHost currentHost] localizedName]
-                                                   port:_socketListen.localPort];
+    _service = [[NSNetService alloc] initWithDomain:@""
+                                               type:_netServiceType
+                                               name:[[NSHost currentHost] localizedName]
+                                               port:_socketListen.localPort];
 #endif
     
-    self.service.delegate = self;
-    [self.service publish];
+    _service.delegate = self;
+    [_service publish];
 }
 
 - (void)browseServices {
@@ -160,7 +171,7 @@
     //[_timer fire];
     
     for (NSNetService *s in self.servicesFound) {
-        if ([s.name isEqualToString:self.service.name]) {
+        if ([s.name isEqualToString:_service.name]) {
             continue;
         }
         
@@ -173,9 +184,9 @@
 }
 
 - (void)stopService {
-    [self.service stop];
-    [self.service release];
-    self.service = nil;
+    [_service stop];
+    [_service release];
+    _service = nil;
     
     _netServiceType = nil;
 }
@@ -263,7 +274,7 @@
         
         WDMessage *t = nil;
         @try {
-            t = [NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer];
+            t = [[NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer] retain];
         }
         @catch (NSException *exception) {
             DLog(@"AsyncSocketDelegate onSocketDidDisconnect @catch");
@@ -283,8 +294,14 @@
                 UIImage *ti = [[UIImage alloc] initWithData:t.content];
 #elif TARGET_OS_MAC
                 NSImage *ti = [[NSImage alloc] initWithData:t.content];
-#endif       
+#endif
                 [self.delegate didReceiveImage:ti];
+            } else if (t.type == WDMessageTypeFile) {
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+                NSURL *storeURL = [NSURL URLWithString:[t.fileURL lastPathComponent] relativeToURL:[UIDocument applicationDocumentsDirectory]];
+                [_dataBuffer writeToURL:storeURL atomically:YES];
+#elif TARGET_OS_MAC
+#endif
             }
             
             // DW: clean up
