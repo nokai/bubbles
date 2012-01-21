@@ -10,6 +10,7 @@
 #import "WDBubble.h"
 #import "PasswordMacViewController.h"
 #import "DragAndDropImageView.h"
+#import "PreferenceViewContoller.h"
 
 #define kMACUserDefaultsUsePassword @"kMACUserDefaultsUsePassword"
 
@@ -21,8 +22,12 @@
     IBOutlet DragAndDropImageView *_imageMessage;
     IBOutlet NSTableView *_tableView;
     IBOutlet NSButton *_checkBox;
+    IBOutlet NSButton *_directlySave;
     
+    IBOutlet NSView *_accessoryView;
+   
     PasswordMacViewController *_passwordController;
+    PreferenceViewContoller *_preferenceController;
 }
 
 @end
