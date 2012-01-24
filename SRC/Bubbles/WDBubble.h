@@ -18,6 +18,10 @@
 // DW: notifications
 #define kWDBubbleNotification   @"kWDBubbleNotification"
 
+@interface UIDocument (Bubbles)
++ (NSURL *)applicationDocumentsDirectory;
+@end
+
 @protocol WDBubbleDelegate
 - (void)didReceiveText:(NSString *)text;
 

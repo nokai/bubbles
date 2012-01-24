@@ -206,7 +206,6 @@
 				0354C9AC14BDE51800417697 /* PasswordWindowView.xib */,
 				03BF64B114C32D8200CD52AB /* DragAndDropImageView.h */,
 				03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */,
-				C1C9371914BB1766005E0EAA /* Supporting Files */,
 				037D71DF14C954530082FB64 /* PreferenceViewContoller.h */,
 				037D71E014C954530082FB64 /* PreferenceViewContoller.m */,
 				037D71E314C954D60082FB64 /* PreferenceViewController.xib */,

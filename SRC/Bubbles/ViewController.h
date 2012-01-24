@@ -14,7 +14,7 @@
 
 @interface ViewController : UIViewController <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, PasswordViewControllerDelegate, WDBubbleDelegate> {
     WDBubble *_bubble;
-    NSString *_filePath;
+    NSURL *_fileURL;
     
     // DW: UI
     IBOutlet UITextField *_textMessage;
