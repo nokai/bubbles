@@ -10,19 +10,22 @@
 
 enum {
     WDMessageTypeText, 
-    WDMessageTypeImage
+    WDMessageTypeImage, 
+    WDMessageTypeFile
 };
 typedef NSUInteger WDMessageType;
 
 @interface WDMessage : NSObject <NSCoding> {
     NSString *_sender;
     NSDate *_time;
+    NSURL *_fileURL;    // DW: available only in file type
     NSData *_content;
     NSUInteger _type;
 }
 
 @property (nonatomic, retain) NSString *sender;
 @property (nonatomic, retain) NSDate *time;
+@property (nonatomic, retain) NSURL *fileURL;
 @property (nonatomic, retain) NSData *content;
 @property (nonatomic, assign) NSUInteger type;
 
@@ -33,5 +36,7 @@ typedef NSUInteger WDMessageType;
 #elif TARGET_OS_MAC
 + (id)messageWithImage:(NSImage *)image;
 #endif
+
++ (id)messageWithFile:(NSURL *)url;
 
 @end

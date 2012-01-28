@@ -12,7 +12,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-@implementation NSData (Additions)
+@implementation NSData (Bubbles)
 
 - (int)port {
     int port;
@@ -50,8 +50,19 @@
 
 @end
 
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+@implementation UIDocument (Bubbles)
+
++ (NSURL *)applicationDocumentsDirectory {
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+@end
+#elif TARGET_OS_MAC
+#endif
+
 @implementation WDBubble
-@synthesize service;
+@synthesize service = _service;
 @synthesize servicesFound = _servicesFound;
 @synthesize delegate;
 //@synthesize percentageIndicator = _percentageIndicator;
@@ -118,7 +129,7 @@
 }
 
 - (void)publishServiceWithPassword:(NSString *)pwd {
-    DLog(@"WDBubble publishService <%@>%@ port %i", self.service.name, _socketListen, _socketListen.localPort);
+    DLog(@"WDBubble publishService <%@>%@ port %i", _service.name, _socketListen, _socketListen.localPort);
     if ([pwd isEqualToString:@""]) {
         _netServiceType = kWDBubbleWebServiceType;
     } else {
@@ -126,19 +137,19 @@
     }
     
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-    self.service = [[NSNetService alloc] initWithDomain:@""
-                                                   type:_netServiceType
-                                                   name:[[UIDevice currentDevice] name]
-                                                   port:_socketListen.localPort];
+    _service = [[NSNetService alloc] initWithDomain:@""
+                                               type:_netServiceType
+                                               name:[[UIDevice currentDevice] name]
+                                               port:_socketListen.localPort];
 #elif TARGET_OS_MAC
-    self.service = [[NSNetService alloc] initWithDomain:@""
-                                                   type:_netServiceType
-                                                   name:[[NSHost currentHost] localizedName]
-                                                   port:_socketListen.localPort];
+    _service = [[NSNetService alloc] initWithDomain:@""
+                                               type:_netServiceType
+                                               name:[[NSHost currentHost] localizedName]
+                                               port:_socketListen.localPort];
 #endif
     
-    self.service.delegate = self;
-    [self.service publish];
+    _service.delegate = self;
+    [_service publish];
 }
 
 - (void)browseServices {
@@ -160,7 +171,7 @@
     //[_timer fire];
     
     for (NSNetService *s in self.servicesFound) {
-        if ([s.name isEqualToString:self.service.name]) {
+        if ([s.name isEqualToString:_service.name]) {
             continue;
         }
         
@@ -173,9 +184,9 @@
 }
 
 - (void)stopService {
-    [self.service stop];
-    [self.service release];
-    self.service = nil;
+    [_service stop];
+    [_service release];
+    _service = nil;
     
     _netServiceType = nil;
 }
@@ -261,21 +272,42 @@
     if (_dataBuffer != nil) {
         // DW: a receive socket
         
-        WDMessage *t = [NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer];
-        if (t.type == WDMessageTypeText) {
-            [self.delegate didReceiveText:[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding]];
-        } else if (t.type == WDMessageTypeImage) {
-#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-            UIImage *ti = [[UIImage alloc] initWithData:t.content];
-#elif TARGET_OS_MAC
-            NSImage *ti = [[NSImage alloc] initWithData:t.content];
-#endif       
-            [self.delegate didReceiveImage:ti];
+        WDMessage *t = nil;
+        @try {
+            t = [[NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer] retain];
         }
-        
-        // DW: clean up
-        [_dataBuffer release];
-        _dataBuffer = nil;
+        @catch (NSException *exception) {
+            DLog(@"AsyncSocketDelegate onSocketDidDisconnect @catch");
+            // DW: clean up
+            [_dataBuffer release];
+            _dataBuffer = nil;
+        }
+        @finally {
+            DLog(@"AsyncSocketDelegate onSocketDidDisconnect @finally");
+            if (!t)
+                return;
+            
+            if (t.type == WDMessageTypeText) {
+                [self.delegate didReceiveText:[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding]];
+            } else if (t.type == WDMessageTypeImage) {
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+                UIImage *ti = [[UIImage alloc] initWithData:t.content];
+#elif TARGET_OS_MAC
+                NSImage *ti = [[NSImage alloc] initWithData:t.content];
+#endif
+                [self.delegate didReceiveImage:ti];
+            } else if (t.type == WDMessageTypeFile) {
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+                NSURL *storeURL = [NSURL URLWithString:[t.fileURL lastPathComponent] relativeToURL:[UIDocument applicationDocumentsDirectory]];
+                [_dataBuffer writeToURL:storeURL atomically:YES];
+#elif TARGET_OS_MAC
+#endif
+            }
+            
+            // DW: clean up
+            [_dataBuffer release];
+            _dataBuffer = nil;
+        }
     } else {
         [_socketConnect removeObject:sock];
     }
@@ -285,6 +317,10 @@
 #pragma mark NSNetServiceBrowserDelegate
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didFindService:(NSNetService *)netService moreComing:(BOOL)moreServicesComing {
+    if (![netService.domain isEqualToString:@"local."]) {
+        return;
+    }
+    
     if ([_servicesFound indexOfObject:netService] != NSNotFound) {
         return;
     }

@@ -16,6 +16,7 @@
 
 @interface MainViewController : NSObject<WDBubbleDelegate,NSTableViewDelegate, NSTableViewDataSource,PasswordMacViewControllerDelegate> {
     WDBubble *_bubble;
+    NSURL *_fileURL;
     
     IBOutlet NSTextField *_textMessage;
     IBOutlet DragAndDropImageView *_imageMessage;

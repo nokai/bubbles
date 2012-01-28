@@ -18,6 +18,10 @@
 // DW: notifications
 #define kWDBubbleNotification   @"kWDBubbleNotification"
 
+@interface UIDocument (Bubbles)
++ (NSURL *)applicationDocumentsDirectory;
+@end
+
 @protocol WDBubbleDelegate
 - (void)didReceiveText:(NSString *)text;
 
@@ -27,6 +31,7 @@
 - (void)didReceiveImage:(NSImage *)image;
 #endif
 
+- (void)didReceiveFile:(NSURL *)url;
 @end
 
 @interface WDBubble : NSObject <AsyncSocketDelegate, NSNetServiceDelegate, NSNetServiceBrowserDelegate> {

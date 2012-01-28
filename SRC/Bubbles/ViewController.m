@@ -105,6 +105,9 @@
 - (IBAction)selectImage:(id)sender {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         UIImagePickerController *t = [[UIImagePickerController alloc] init];
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            t.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+        }
         t.delegate = self;
         [self presentModalViewController:t animated:YES];
         [t release];
@@ -182,12 +185,42 @@
     _imageMessage.image = image;
 }
 
+- (void)didReceiveFile:(NSURL *)url {
+    
+}
+
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    _imageMessage.image = image;
+    DLog(@"VC didFinishPickingMediaWithInfo %@", info);
+    if (_fileURL) {
+        [_fileURL release];
+    }
     
+    NSString *mediaType = [info valueForKey:UIImagePickerControllerMediaType];
+    if ([mediaType isEqualToString:@"public.image"]) {
+        UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+        NSString *fileName = [[info valueForKey:UIImagePickerControllerReferenceURL] lastPathComponent];
+        NSString *fileExtention = [[info valueForKey:UIImagePickerControllerReferenceURL] pathExtension];
+        NSData *fileData = nil;
+        NSURL *storeURL = [NSURL URLWithString:fileName relativeToURL:[UIDocument applicationDocumentsDirectory]];
+        if ([fileExtention isEqualToString:@"PNG"]) {
+            fileData = UIImagePNGRepresentation(image);
+            [fileData writeToURL:storeURL atomically:YES];
+        } else if ([fileExtention isEqualToString:@"JPG"]) {
+            fileData = UIImageJPEGRepresentation(image, 1.0);
+            [fileData writeToURL:storeURL atomically:YES];
+        } else {
+            DLog(@"VC didFinishPickingMediaWithInfo %@ not PNG or JPG", fileExtention);
+        }
+        _imageMessage.image = image;
+    } else if ([mediaType isEqualToString:@"public.movie"]) {
+        _imageMessage.image = [UIImage imageNamed:@"Icon.png"];
+        _fileURL = [[info valueForKey:UIImagePickerControllerMediaURL] retain];
+        DLog(@"VC didFinishPickingMediaWithInfo select %@", _fileURL);
+    } else {
+        _fileURL = nil;
+    }
     [self dismissModalViewControllerAnimated:YES];
 }
 

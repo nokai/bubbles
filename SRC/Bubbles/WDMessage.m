@@ -10,23 +10,25 @@
 
 #define kWDMessageSender    @"kWDMessageSender"
 #define kWDMessageTime      @"kWDMessageTime"
+#define kWDMessageFileURL   @"kWDMessageFileURL"
 #define kWDMessageContent   @"kWDMessageContent"
 #define kWDMessageType      @"kWDMessageType"
 
 @implementation WDMessage
-@synthesize sender, time, content, type;
+@synthesize sender = _sender, time = _time, fileURL = _fileURL, content = _content, type = _type;
 
 + (id)messageWithText:(NSString *)text {
-    WDMessage *m = [[WDMessage alloc] init];
+    WDMessage *m = [[[WDMessage alloc] init] autorelease];
     m.content = [text dataUsingEncoding:NSUTF8StringEncoding];
     m.time = [NSDate date];
     m.type = WDMessageTypeText;
+    DLog(@"WDMessage messageWithText %@", m);
     return m;
 }
 
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 + (id)messageWithImage:(UIImage *)image {
-    WDMessage *m = [[WDMessage alloc] init];
+    WDMessage *m = [[[WDMessage alloc] init] autorelease];
     m.content = UIImagePNGRepresentation(image);
     m.time = [NSDate date];
     m.type = WDMessageTypeImage;
@@ -34,7 +36,7 @@
 }
 #elif TARGET_OS_MAC
 + (id)messageWithImage:(NSImage *)image {
-    WDMessage *m = [[WDMessage alloc] init];
+    WDMessage *m = [[[WDMessage alloc] init] autorelease];
     m.content = [image TIFFRepresentation];
     m.time = [NSDate date];
     m.type = WDMessageTypeImage;
@@ -42,21 +44,43 @@
 }
 #endif
 
++ (id)messageWithFile:(NSURL *)url {
+    WDMessage *m = [[[WDMessage alloc] init] autorelease];
+    m.fileURL = url;
+    m.content = [NSData dataWithContentsOfURL:url];
+    m.time = [NSDate date];
+    m.type = WDMessageTypeFile;
+    DLog(@"WDMessage messageWithFile %@", m);
+    return m;
+}
+
+#pragma mark - Private Methods
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"WDMessage %@, %@, %@, %i", 
+            self.fileURL, 
+            self.content, 
+            self.time, 
+            self.type];
+}
+
 #pragma mark - NSCoding
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
-    [encoder encodeObject:self.sender forKey:kWDMessageSender];
-    [encoder encodeObject:self.time forKey:kWDMessageTime];
-    [encoder encodeObject:self.content forKey:kWDMessageContent];
-    [encoder encodeInteger:type forKey:kWDMessageType];
+    [encoder encodeObject:_sender forKey:kWDMessageSender];
+    [encoder encodeObject:_time forKey:kWDMessageTime];
+    [encoder encodeObject:_fileURL forKey:kWDMessageFileURL];
+    [encoder encodeObject:_content forKey:kWDMessageContent];
+    [encoder encodeInteger:_type forKey:kWDMessageType];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
     self = [super init];
-    self.sender = [decoder decodeObjectForKey:kWDMessageSender];
-    self.time = [decoder decodeObjectForKey:kWDMessageTime];
-    self.content = [decoder decodeObjectForKey:kWDMessageContent];
-    self.type = [decoder decodeIntegerForKey:kWDMessageType];
+    _sender = [[decoder decodeObjectForKey:kWDMessageSender] retain];
+    _time = [[decoder decodeObjectForKey:kWDMessageTime] retain];
+    _fileURL = [[decoder decodeObjectForKey:kWDMessageFileURL] retain];
+    _content = [[decoder decodeObjectForKey:kWDMessageContent] retain];
+    _type = [decoder decodeIntegerForKey:kWDMessageType];
     return self;
 }
 

@@ -104,7 +104,9 @@
 }
 
 - (IBAction)sendImage:(id)sender {
-    [_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
+    //[_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
+    // 20120120 DW: files not images
+    [_bubble broadcastMessage:[WDMessage messageWithFile:_fileURL]];
 }
 
 - (IBAction)clickBox:(id)sender {
@@ -144,17 +146,18 @@
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
     
     //jpg and png is just for test ....
-	[openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"png",@"jpg",nil]];
-	[openPanel setTitle:@"Choose a picture"];
+	//[openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"png",@"jpg",nil]];
+	[openPanel setTitle:@"Choose File"];
 	[openPanel setPrompt:@"Browse"];
-	[openPanel setNameFieldLabel:@"Choose a picture:"];
+	[openPanel setNameFieldLabel:@"Choose a file:"];
     
     if ([openPanel runModal] == NSFileHandlingPanelOKButton)
     {
-        NSURL *url = [openPanel URL];//the path of your selected photo
-        NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
-        [_imageMessage setImage:image];
-        [image release];
+        _fileURL = [[openPanel URL] retain];//the path of your selected photo
+        //NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
+        //[_imageMessage setImage:image];
+        //[image release];
+        DLog(@"Selected %@", _fileURL);
     }
     
 }
@@ -190,6 +193,10 @@
 - (void)didReceiveImage:(NSImage *)image {
     DLog(@"VC didReceiveImage %@", image);
     _imageMessage.image = image;
+}
+
+- (void)didReceiveFile:(NSURL *)url {
+    
 }
 
 #pragma mark - NSTableViewDelegate
