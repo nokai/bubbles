@@ -119,6 +119,13 @@
             _passwordController.delegate = self;
         }
         
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"Message text"];
+        [alert setInformativeText:@"Informative text"];
+        [alert setAccessoryView:_accessoryView];
+        [alert runModal];
+        [alert release];
+        
         [_passwordController showWindow:self];
     } else {
         [_bubble stopService];
