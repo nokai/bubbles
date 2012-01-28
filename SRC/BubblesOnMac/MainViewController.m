@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 
 @implementation MainViewController
+@synthesize fileURL = _fileURL;
 
 #pragma mark - Private Methods
 
@@ -103,7 +104,7 @@
     }
 }
 
-- (IBAction)sendImage:(id)sender {
+- (IBAction)sendFile:(id)sender {
     //[_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
     // 20120120 DW: files not images
     [_bubble broadcastMessage:[WDMessage messageWithFile:_fileURL]];
@@ -134,7 +135,7 @@
     }
 }
 
-- (IBAction)browseImage:(id)sender
+- (IBAction)selectFile:(id)sender
 {
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
     
@@ -144,8 +145,7 @@
 	[openPanel setPrompt:@"Browse"];
 	[openPanel setNameFieldLabel:@"Choose a file:"];
     
-    if ([openPanel runModal] == NSFileHandlingPanelOKButton)
-    {
+    if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
         _fileURL = [[openPanel URL] retain];//the path of your selected photo
         //NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
         //[_imageMessage setImage:image];

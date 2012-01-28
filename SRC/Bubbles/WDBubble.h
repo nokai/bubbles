@@ -18,9 +18,11 @@
 // DW: notifications
 #define kWDBubbleNotification   @"kWDBubbleNotification"
 
-@interface UIDocument (Bubbles)
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+@interface NSURL (Bubbles)
 + (NSURL *)applicationDocumentsDirectory;
 @end
+#endif
 
 @protocol WDBubbleDelegate
 - (void)didReceiveText:(NSString *)text;

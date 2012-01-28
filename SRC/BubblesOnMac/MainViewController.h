@@ -23,11 +23,14 @@
     IBOutlet NSTableView *_tableView;
     IBOutlet NSButton *_checkBox;
     IBOutlet NSButton *_directlySave;
+    IBOutlet NSTextField *_filePath;
     
     IBOutlet NSView *_accessoryView;
    
     PasswordMacViewController *_passwordController;
     PreferenceViewContoller *_preferenceController;
 }
+
+@property (nonatomic, retain) NSURL *fileURL;
 
 @end
