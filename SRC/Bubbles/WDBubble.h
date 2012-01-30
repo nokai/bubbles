@@ -27,14 +27,15 @@
 
 @protocol WDBubbleDelegate
 - (void)didReceiveText:(NSString *)text;
+- (void)didReceiveFile:(NSURL *)url;
 
+@optional
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 - (void)didReceiveImage:(UIImage *)image;
 #elif TARGET_OS_MAC
 - (void)didReceiveImage:(NSImage *)image;
 #endif
 
-- (void)didReceiveFile:(NSURL *)url;
 @end
 
 @interface WDBubble : NSObject <AsyncSocketDelegate, NSNetServiceDelegate, NSNetServiceBrowserDelegate> {

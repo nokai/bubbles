@@ -23,9 +23,6 @@
     IBOutlet NSImageView *_imageMessage;
     IBOutlet NSTableView *_tableView;
     IBOutlet NSButton *_checkBox;
-    IBOutlet NSButton *_directlySave;
-    IBOutlet NSTextField *_filePath;
-    
     IBOutlet NSView *_accessoryView;
    
     PasswordMacViewController *_passwordController;
@@ -33,6 +30,6 @@
 
 }
 
-@property (nonatomic, retain) NSURL *fileURL;
+//@property (nonatomic, retain) NSURL *fileURL;
 
 @end

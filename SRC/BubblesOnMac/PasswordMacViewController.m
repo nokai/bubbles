@@ -31,22 +31,20 @@
 
 #pragma mark - IBAction
 
-- (IBAction)confirmPassword:(id)sender
-{
+- (IBAction)confirmPassword:(id)sender {
     if ([_textField.stringValue length] != 0) {
         [NSApp endSheet:[self window]];
         [[self window] orderOut:sender];
         [self.delegate didInputPassword:_textField.stringValue];
-    }
-    else
-    {
+    } else {
         DLog(@"The length of password can not be 0");
     }
 }
 
-- (IBAction)resetPassword:(id)sender
-{
-    _textField.stringValue = @"";
+- (IBAction)resetPassword:(id)sender {
+    [NSApp endSheet:[self window]];
+    [[self window] orderOut:sender];
+    [self.delegate didCancel];
 }
 
 @end

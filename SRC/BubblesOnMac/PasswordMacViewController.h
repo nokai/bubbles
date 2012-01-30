@@ -10,12 +10,12 @@
 
 @protocol PasswordMacViewControllerDelegate
 
+- (void)didCancel;
 - (void)didInputPassword:(NSString *)pwd;
 
 @end
 
-@interface PasswordMacViewController : NSWindowController
-{
+@interface PasswordMacViewController : NSWindowController {
     IBOutlet NSTextField *_textField;
     IBOutlet NSButton *_okButton;
     IBOutlet NSButton *_resetButton;

@@ -58,7 +58,7 @@
 @end
 
 @implementation MainViewController
-@synthesize fileURL = _fileURL;
+//@synthesize fileURL = _fileURL;
 
 #pragma mark - Private Methods
 
@@ -73,13 +73,13 @@
     }
     
     bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kMACUserDefaultsUsePassword];
-        
+    
     if (status) {
         _passwordController = [[PasswordMacViewController alloc]init];
         _passwordController.delegate = self;
         
         [NSApp beginSheet:[_passwordController window] modalForWindow:[NSApplication sharedApplication].mainWindow modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
-            
+        
     } else {
         [_bubble publishServiceWithPassword:@""];
         [_bubble browseServices];
@@ -122,7 +122,6 @@
     [_preferenceController release];
     [_bubble release];
     [_accessoryView release];
-    [_directlySave release];
     [_fileURL release];
     [super dealloc];
 }
@@ -145,50 +144,20 @@
     [_bubble broadcastMessage:[WDMessage messageWithText:_textMessage.stringValue]];
 }
 
-- (IBAction)saveImage:(id)sender {
-    
-    if (_imageMessage.image) {
-        
-        NSSavePanel *savePanel = [NSSavePanel savePanel];
-        
-        [savePanel setTitle:@"Save"];
-        [savePanel setPrompt:@"Save"];
-        [savePanel setNameFieldLabel:@"Save as"];
-        [savePanel setAccessoryView:_accessoryView];
-        
-        if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-            NSURL *url = [savePanel URL];
-            
-            NSData *imageData = [_imageMessage.image TIFFRepresentation];
-            NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
-            NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
-            imageData = [imageRep representationUsingType:NSTIFFFileType properties:imageProps];
-            [imageData writeToURL:url atomically:NO];  
-        }
-    }
-}
-
-- (IBAction)sendFile:(id)sender {
-    //[_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
-    // 20120120 DW: files not images
-    [_bubble broadcastMessage:[WDMessage messageWithFile:_fileURL]];
-}
-
-- (IBAction)clickBox:(id)sender {
+- (IBAction)togglePassword:(id)sender {
     NSButton *button = (NSButton *)sender;
     [[NSUserDefaults standardUserDefaults] setBool:button.state forKey:kMACUserDefaultsUsePassword];
     
     if (button.state == NSOnState) {
-        [_bubble  stopService];
-        
+        // DW: user turned password on.
         if (_passwordController == nil) {
             _passwordController = [[PasswordMacViewController alloc]init];
             _passwordController.delegate = self;
         }
         
-        //show as a sheet window to force users to set usable password
+        // Wu: show as a sheet window to force users to set usable password
         [NSApp beginSheet:[_passwordController window] modalForWindow:[NSApplication sharedApplication].keyWindow  modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
-      
+        
     } else {
         [_bubble stopService];
         [_bubble publishServiceWithPassword:@""];
@@ -200,7 +169,7 @@
 {
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
     
-    //jpg and png is just for test ....
+    // jpg and png is just for test ....
 	//[openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"png",@"jpg",nil]];
 	[openPanel setTitle:@"Choose File"];
 	[openPanel setPrompt:@"Browse"];
@@ -213,6 +182,12 @@
         //[image release];
         DLog(@"Selected %@", _fileURL);
     }
+}
+
+- (IBAction)sendFile:(id)sender {
+    //[_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
+    // 20120120 DW: files not images
+    [_bubble broadcastMessage:[WDMessage messageWithFile:_fileURL]];
 }
 
 - (IBAction)showPreferencePanel:(id)sender
@@ -242,14 +217,17 @@
     _textMessage.stringValue = text;
 }
 
-- (void)didReceiveImage:(NSImage *)image {
-    DLog(@"VC didReceiveImage %@", image);
-    _imageMessage.image = image;
-}
-
 - (void)didReceiveFile:(NSURL *)url {
     NSLog(@"MVC didReceiveFile %@", url);
     [_imageMessage.image initWithContentsOfURL:url];
+    
+    /*
+     NSData *imageData = [_imageMessage.image TIFFRepresentation];
+     NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
+     NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
+     imageData = [imageRep representationUsingType:NSTIFFFileType properties:imageProps];
+     [imageData writeToURL:url atomically:NO];  
+     */
 }
 
 #pragma mark - NSTableViewDelegate
@@ -281,8 +259,13 @@
 
 #pragma mark - PasswordMacViewControllerDelegate
 
-- (void)didInputPassword:(NSString *)pwd
-{
+- (void)didCancel {
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kMACUserDefaultsUsePassword];
+    _checkBox.state = NSOffState;
+}
+
+- (void)didInputPassword:(NSString *)pwd {
+    [_bubble stopService];
     [_bubble publishServiceWithPassword:pwd];
     [_bubble browseServices];
 }

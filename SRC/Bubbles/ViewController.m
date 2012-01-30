@@ -185,11 +185,6 @@
     _textMessage.text = text;
 }
 
-- (void)didReceiveImage:(UIImage *)image {
-    DLog(@"VC didReceiveImage %@", image);
-    _imageMessage.image = image;
-}
-
 - (void)didReceiveFile:(NSURL *)url {
     NSString *fileExtention = [[url pathExtension] uppercaseString];
     if (([fileExtention isEqualToString:@"PNG"])||([fileExtention isEqualToString:@"JPG"])) {
