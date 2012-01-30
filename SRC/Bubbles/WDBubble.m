@@ -277,7 +277,7 @@
             t = [[NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer] retain];
         }
         @catch (NSException *exception) {
-            DLog(@"AsyncSocketDelegate onSocketDidDisconnect @catch");
+            DLog(@"AsyncSocketDelegate onSocketDidDisconnect @catch %@", exception);
             // DW: clean up
             [_dataBuffer release];
             _dataBuffer = nil;
@@ -299,7 +299,7 @@
             } else if (t.type == WDMessageTypeFile) {
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
                 NSURL *storeURL = [NSURL URLWithString:[t.fileURL lastPathComponent] relativeToURL:[NSURL applicationDocumentsDirectory]];
-                [_dataBuffer writeToURL:storeURL atomically:YES];
+                [t.content writeToURL:storeURL atomically:YES];
                 [self.delegate didReceiveFile:storeURL];
 #elif TARGET_OS_MAC
                 NSURL *storeURL = [NSURL URLWithString:@"file://tmp/"];

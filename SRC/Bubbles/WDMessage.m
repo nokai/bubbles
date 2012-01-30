@@ -50,7 +50,7 @@
     m.content = [NSData dataWithContentsOfURL:url];
     m.time = [NSDate date];
     m.type = WDMessageTypeFile;
-    DLog(@"WDMessage messageWithFile %@", m);
+    //DLog(@"WDMessage messageWithFile %@", m);
     return m;
 }
 
@@ -76,10 +76,10 @@
 
 - (id)initWithCoder:(NSCoder *)decoder {
     self = [super init];
-    _sender = [[decoder decodeObjectForKey:kWDMessageSender] retain];
-    _time = [[decoder decodeObjectForKey:kWDMessageTime] retain];
+    //_sender = [[decoder decodeObjectForKey:kWDMessageSender] retain];
     _fileURL = [[decoder decodeObjectForKey:kWDMessageFileURL] retain];
     _content = [[decoder decodeObjectForKey:kWDMessageContent] retain];
+    _time = [[decoder decodeObjectForKey:kWDMessageTime] retain];
     _type = [decoder decodeIntegerForKey:kWDMessageType];
     return self;
 }

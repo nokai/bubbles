@@ -127,9 +127,10 @@
 - (IBAction)sendImage:(id)sender {
     if (_fileURL) {
         // DW: a movie
-        
+        [_bubble broadcastMessage:[WDMessage messageWithFile:_fileURL]];
+    } else {
+        [_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
     }
-    [_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
 }
 
 - (IBAction)showPeers:(id)sender {
@@ -190,19 +191,14 @@
 }
 
 - (void)didReceiveFile:(NSURL *)url {
-    UIImage *image = [UIImage imageWithContentsOfFile:[url path]];
-    _imageMessage.image = image;
-    
-    /*
     NSString *fileExtention = [[url pathExtension] uppercaseString];
-    if ([fileExtention isEqualToString:@"PNG"]) {
-        
-    } else if ([fileExtention isEqualToString:@"JPG"]) {
-        
+    if (([fileExtention isEqualToString:@"PNG"])||([fileExtention isEqualToString:@"JPG"])) {
+        UIImage *image = [UIImage imageWithContentsOfFile:[url path]];
+        _imageMessage.image = image;
     } else {
         DLog(@"VC didFinishPickingMediaWithInfo %@ not PNG or JPG", fileExtention);
+        _imageMessage.image = [UIImage imageNamed:@"Icon.png"];
     }
-     */
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -225,9 +221,11 @@
         if ([fileExtention isEqualToString:@"PNG"]) {
             fileData = UIImagePNGRepresentation(image);
             [fileData writeToURL:storeURL atomically:YES];
+            _fileURL = [storeURL retain];
         } else if ([fileExtention isEqualToString:@"JPG"]) {
             fileData = UIImageJPEGRepresentation(image, 1.0);
             [fileData writeToURL:storeURL atomically:YES];
+            _fileURL = [storeURL retain];
         } else {
             DLog(@"VC didFinishPickingMediaWithInfo %@ not PNG or JPG", fileExtention);
         }
