@@ -169,10 +169,8 @@
 }
 
 - (IBAction)sendFile:(id)sender {
-=======
     //[_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
     // 20120120 DW: files not images
->>>>>>> ba086d95262f21667d69470da78897d822c77ec3
     [_bubble broadcastMessage:[WDMessage messageWithFile:_fileURL]];
 }
 
@@ -202,25 +200,6 @@
 {
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
     
-<<<<<<< HEAD
-    if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
-        if (_fileURL) {
-            [_fileURL release];
-        }
-        _fileURL = [[openPanel URL] retain];
-       NSString *path = [[_fileURL absoluteURL] path];
-        NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
-        if (image != nil) {
-            [_imageMessage setImage:image];
-            [image release];
-        }else
-        {
-            NSSize size ;
-            size.width = 90;
-            size.height = 90;
-            _imageMessage.image = [NSImage imageWithPreviewOfFileAtPath:path ofSize:size asIcon:YES];
-        }
-=======
     //jpg and png is just for test ....
 	//[openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"png",@"jpg",nil]];
 	[openPanel setTitle:@"Choose File"];
@@ -233,7 +212,6 @@
         //[_imageMessage setImage:image];
         //[image release];
         DLog(@"Selected %@", _fileURL);
->>>>>>> ba086d95262f21667d69470da78897d822c77ec3
     }
 }
 
