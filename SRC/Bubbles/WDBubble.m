@@ -51,7 +51,7 @@
 @end
 
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-@implementation UIDocument (Bubbles)
+@implementation NSURL (Bubbles)
 
 + (NSURL *)applicationDocumentsDirectory {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
@@ -302,6 +302,9 @@
                 [_dataBuffer writeToURL:storeURL atomically:YES];
                 [self.delegate didReceiveFile:storeURL];
 #elif TARGET_OS_MAC
+                NSURL *storeURL = [NSURL URLWithString:@"file://tmp/"];
+                [_dataBuffer writeToURL:storeURL atomically:YES];
+                [self.delegate didReceiveFile:storeURL];
 #endif
             }
             

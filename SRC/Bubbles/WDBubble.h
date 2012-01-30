@@ -22,6 +22,7 @@
 @interface NSURL (Bubbles)
 + (NSURL *)applicationDocumentsDirectory;
 @end
+#elif TARGET_OS_MAC
 #endif
 
 @protocol WDBubbleDelegate

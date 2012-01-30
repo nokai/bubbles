@@ -123,9 +123,13 @@
     }
 }
 
+// DW: can only send images and movies for now.
 - (IBAction)sendImage:(id)sender {
+    if (_fileURL) {
+        // DW: a movie
+        
+    }
     [_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
-    [_textMessage resignFirstResponder];
 }
 
 - (IBAction)showPeers:(id)sender {
@@ -207,6 +211,7 @@
     DLog(@"VC didFinishPickingMediaWithInfo %@", info);
     if (_fileURL) {
         [_fileURL release];
+        _fileURL = nil;
     }
     
     NSString *mediaType = [info valueForKey:UIImagePickerControllerMediaType];
@@ -216,7 +221,7 @@
         fileName = [NSString stringWithFormat:@".%@", fileName];
         NSString *fileExtention = [[info valueForKey:UIImagePickerControllerReferenceURL] pathExtension];
         NSData *fileData = nil;
-        NSURL *storeURL = [NSURL URLWithString:fileName relativeToURL:[UIDocument applicationDocumentsDirectory]];
+        NSURL *storeURL = [NSURL URLWithString:fileName relativeToURL:[NSURL applicationDocumentsDirectory]];
         if ([fileExtention isEqualToString:@"PNG"]) {
             fileData = UIImagePNGRepresentation(image);
             [fileData writeToURL:storeURL atomically:YES];

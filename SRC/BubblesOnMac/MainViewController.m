@@ -189,7 +189,7 @@
 }
 
 - (void)didReceiveFile:(NSURL *)url {
-    
+    NSLog(@"");
 }
 
 #pragma mark - NSTableViewDelegate
