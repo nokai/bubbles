@@ -13,7 +13,7 @@
 // DW: network
 #define kWDBubbleWebServiceType @"_bubbles._tcp."
 #define kWDBubbleInitialDomain  @""
-#define kWDBubbleTimeOut        5
+#define kWDBubbleTimeOut        -1
 
 // DW: notifications
 #define kWDBubbleNotification   @"kWDBubbleNotification"

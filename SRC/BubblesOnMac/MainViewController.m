@@ -9,10 +9,6 @@
 #import "MainViewController.h"
 #import <QuickLook/QuickLook.h>
 
-@interface NSImage (QuickLook)
-+ (NSImage *)imageWithPreviewOfFileAtPath:(NSString *)path ofSize:(NSSize)size asIcon:(BOOL)icon;
-@end
-
 @implementation NSImage (QuickLook)
 
 + (NSImage *)imageWithPreviewOfFileAtPath:(NSString *)path ofSize:(NSSize)size asIcon:(BOOL)icon
@@ -26,7 +22,7 @@
                                                      forKey:(NSString *)kQLThumbnailOptionIconModeKey];
     CGImageRef ref = QLThumbnailImageCreate(kCFAllocatorDefault, 
                                             (CFURLRef)fileURL, 
-                                            CGSizeMake(size.width, size.height),
+                                            size,
                                             (CFDictionaryRef)dict);
     
     if (ref != NULL) {
@@ -55,6 +51,7 @@
     }
     return nil;
 }
+
 @end
 
 @implementation MainViewController
@@ -181,7 +178,9 @@
         //[_imageMessage setImage:image];
         //[image release];
         DLog(@"Selected %@", _fileURL);
-        _imageMessage.image = [NSImage imageNamed:@"Icon.png"];
+        _imageMessage.image = [NSImage imageWithPreviewOfFileAtPath:[_fileURL absoluteString] 
+                                                             ofSize:CGSizeMake(50, 50) 
+                                                             asIcon:YES];
     }
 }
 

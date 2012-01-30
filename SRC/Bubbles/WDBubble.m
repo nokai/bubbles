@@ -274,6 +274,7 @@
         
         WDMessage *t = nil;
         @try {
+            [_dataBuffer writeToFile:@"dataBuffer" atomically:YES];
             t = [[NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer] retain];
         }
         @catch (NSException *exception) {
