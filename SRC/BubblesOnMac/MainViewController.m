@@ -169,7 +169,6 @@
 }
 
 - (IBAction)sendFile:(id)sender {
-<<<<<<< HEAD
 =======
     //[_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
     // 20120120 DW: files not images
