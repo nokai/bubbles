@@ -58,7 +58,7 @@
 @end
 
 @implementation MainViewController
-//@synthesize fileURL = _fileURL;
+@synthesize fileURL = _fileURL;
 
 #pragma mark - Private Methods
 
@@ -94,21 +94,21 @@
 - (id)init
 {
     if (self = [super init]) {
-        //init bubbles
+        // Wu: init bubbles
         
         [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObject:@"file://localhost/Users/wuwuziqi/Downloads/" forKey:KUserDefaultSavingPath]];
         
         _bubble = [[WDBubble alloc] init];
         _bubble.delegate = self;
         
-        //Add observer to update service 
+        // Wu: Add observer to update service 
         [[NSNotificationCenter defaultCenter] addObserver:self 
                                                  selector:@selector(servicesUpdated:) 
                                                      name:kWDBubbleNotification
                                                    object:nil];
         
         [_imageMessage registerForDraggedTypes:[NSImage imagePasteboardTypes]];
-        //register for all the image types we can display
+        // Wu: register for all the image types we can display
         
     }
     return self;
@@ -181,6 +181,7 @@
         //[_imageMessage setImage:image];
         //[image release];
         DLog(@"Selected %@", _fileURL);
+        _imageMessage.image = [NSImage imageNamed:@"Icon.png"];
     }
 }
 
@@ -217,9 +218,14 @@
     _textMessage.stringValue = text;
 }
 
+- (void)didReceiveImage:(NSImage *)image {
+    DLog(@"MVC didReceiveImage %@", image);
+    _imageMessage.image = image;
+}
+
 - (void)didReceiveFile:(NSURL *)url {
     NSLog(@"MVC didReceiveFile %@", url);
-    [_imageMessage.image initWithContentsOfURL:url];
+    _imageMessage.image = [[[NSImage alloc] initWithContentsOfURL:url] autorelease];
     
     /*
      NSData *imageData = [_imageMessage.image TIFFRepresentation];

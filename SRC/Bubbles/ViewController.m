@@ -185,13 +185,19 @@
     _textMessage.text = text;
 }
 
+- (void)didReceiveImage:(UIImage *)image {
+    DLog(@"VC didReceiveImage %@", image);
+    _imageMessage.image = image;
+}
+
 - (void)didReceiveFile:(NSURL *)url {
     NSString *fileExtention = [[url pathExtension] uppercaseString];
     if (([fileExtention isEqualToString:@"PNG"])||([fileExtention isEqualToString:@"JPG"])) {
+        DLog(@"VC didReceiveFile %@", url);
         UIImage *image = [UIImage imageWithContentsOfFile:[url path]];
         _imageMessage.image = image;
     } else {
-        DLog(@"VC didFinishPickingMediaWithInfo %@ not PNG or JPG", fileExtention);
+        DLog(@"VC didReceiveFile %@ not PNG or JPG", fileExtention);
         _imageMessage.image = [UIImage imageNamed:@"Icon.png"];
     }
 }
@@ -209,10 +215,12 @@
     if ([mediaType isEqualToString:@"public.image"]) {
         UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
         NSString *fileName = [[info valueForKey:UIImagePickerControllerReferenceURL] lastPathComponent];
-        fileName = [NSString stringWithFormat:@".%@", fileName];
+        //fileName = [NSString stringWithFormat:@".%@", fileName];
         NSString *fileExtention = [[info valueForKey:UIImagePickerControllerReferenceURL] pathExtension];
         NSData *fileData = nil;
-        NSURL *storeURL = [NSURL URLWithString:fileName relativeToURL:[NSURL applicationDocumentsDirectory]];
+        NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", 
+                                                [NSURL applicationDocumentsDirectory], 
+                                                fileName]];
         if ([fileExtention isEqualToString:@"PNG"]) {
             fileData = UIImagePNGRepresentation(image);
             [fileData writeToURL:storeURL atomically:YES];
@@ -225,6 +233,7 @@
             DLog(@"VC didFinishPickingMediaWithInfo %@ not PNG or JPG", fileExtention);
         }
         _imageMessage.image = image;
+        DLog(@"VC didFinishPickingMediaWithInfo URL is %@", _fileURL);
     } else if ([mediaType isEqualToString:@"public.movie"]) {
         _imageMessage.image = [UIImage imageNamed:@"Icon.png"];
         _fileURL = [[info valueForKey:UIImagePickerControllerMediaURL] retain];

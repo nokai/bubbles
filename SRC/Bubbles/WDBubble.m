@@ -299,11 +299,14 @@
             } else if (t.type == WDMessageTypeFile) {
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
                 NSURL *storeURL = [NSURL URLWithString:[t.fileURL lastPathComponent] relativeToURL:[NSURL applicationDocumentsDirectory]];
+                DLog(@"AsyncSocketDelegate onSocketDidDisconnect iOS storeURL %@", storeURL);
                 [t.content writeToURL:storeURL atomically:YES];
                 [self.delegate didReceiveFile:storeURL];
 #elif TARGET_OS_MAC
-                NSURL *storeURL = [NSURL URLWithString:@"file://tmp/"];
-                [_dataBuffer writeToURL:storeURL atomically:YES];
+                NSURL *storeURL = [NSURL URLWithString:
+                                   [NSString stringWithFormat:@"file://localhost/tmp/file.%@", [[t.fileURL pathExtension] lowercaseString]]];
+                DLog(@"AsyncSocketDelegate onSocketDidDisconnect Mac storeURL %@", storeURL);
+                [t.content writeToURL:storeURL atomically:YES];
                 [self.delegate didReceiveFile:storeURL];
 #endif
             }

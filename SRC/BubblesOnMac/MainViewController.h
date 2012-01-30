@@ -15,7 +15,7 @@
 #define kMACUserDefaultsUsePassword @"kMACUserDefaultsUsePassword"
 #define KMainMenuDidLoad @"KMainMenuDidLoad"
 
-@interface MainViewController : NSObject<WDBubbleDelegate,NSTableViewDelegate, NSTableViewDataSource,PasswordMacViewControllerDelegate> {
+@interface MainViewController : NSObject <WDBubbleDelegate,NSTableViewDelegate, NSTableViewDataSource,PasswordMacViewControllerDelegate> {
     WDBubble *_bubble;
     NSURL *_fileURL;
     
@@ -30,6 +30,7 @@
 
 }
 
-//@property (nonatomic, retain) NSURL *fileURL;
+// DW: for binding
+@property (nonatomic, retain) NSURL *fileURL;
 
 @end
