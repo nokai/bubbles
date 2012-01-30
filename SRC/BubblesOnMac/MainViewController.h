@@ -13,13 +13,14 @@
 #import "PreferenceViewContoller.h"
 
 #define kMACUserDefaultsUsePassword @"kMACUserDefaultsUsePassword"
+#define KMainMenuDidLoad @"KMainMenuDidLoad"
 
 @interface MainViewController : NSObject<WDBubbleDelegate,NSTableViewDelegate, NSTableViewDataSource,PasswordMacViewControllerDelegate> {
     WDBubble *_bubble;
     NSURL *_fileURL;
     
     IBOutlet NSTextField *_textMessage;
-    IBOutlet DragAndDropImageView *_imageMessage;
+    IBOutlet NSImageView *_imageMessage;
     IBOutlet NSTableView *_tableView;
     IBOutlet NSButton *_checkBox;
     IBOutlet NSButton *_directlySave;
@@ -29,6 +30,7 @@
    
     PasswordMacViewController *_passwordController;
     PreferenceViewContoller *_preferenceController;
+
 }
 
 @property (nonatomic, retain) NSURL *fileURL;

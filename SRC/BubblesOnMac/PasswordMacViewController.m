@@ -16,6 +16,8 @@
 {
     if (![super initWithWindowNibName:@"PasswordWindowView"])
             return nil;
+    [NSApp endSheet:[self window]];
+    [[self window] orderOut:nil];
     return self;
 }
 
@@ -32,6 +34,8 @@
 - (IBAction)confirmPassword:(id)sender
 {
     if ([_textField.stringValue length] != 0) {
+        [NSApp endSheet:[self window]];
+        [[self window] orderOut:sender];
         [self.delegate didInputPassword:_textField.stringValue];
     }
     else
