@@ -298,8 +298,9 @@
                 [self.delegate didReceiveImage:ti];
             } else if (t.type == WDMessageTypeFile) {
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-                NSURL *storeURL = [NSURL URLWithString:[t.fileURL lastPathComponent] relativeToURL:[UIDocument applicationDocumentsDirectory]];
+                NSURL *storeURL = [NSURL URLWithString:[t.fileURL lastPathComponent] relativeToURL:[NSURL applicationDocumentsDirectory]];
                 [_dataBuffer writeToURL:storeURL atomically:YES];
+                [self.delegate didReceiveFile:storeURL];
 #elif TARGET_OS_MAC
 #endif
             }

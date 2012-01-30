@@ -8,8 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "WDBubble.h"
-
 @interface AppDelegate : NSObject <NSApplicationDelegate>
-
 @property (assign) IBOutlet NSWindow *window;
 @end

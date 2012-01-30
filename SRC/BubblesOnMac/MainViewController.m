@@ -7,8 +7,58 @@
 //
 
 #import "MainViewController.h"
+#import <QuickLook/QuickLook.h>
+
+@interface NSImage (QuickLook)
++ (NSImage *)imageWithPreviewOfFileAtPath:(NSString *)path ofSize:(NSSize)size asIcon:(BOOL)icon;
+@end
+
+@implementation NSImage (QuickLook)
+
++ (NSImage *)imageWithPreviewOfFileAtPath:(NSString *)path ofSize:(NSSize)size asIcon:(BOOL)icon
+{
+    NSURL *fileURL = [NSURL fileURLWithPath:path];
+    if (!path || !fileURL) {
+        return nil;
+    }
+    
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:icon] 
+                                                     forKey:(NSString *)kQLThumbnailOptionIconModeKey];
+    CGImageRef ref = QLThumbnailImageCreate(kCFAllocatorDefault, 
+                                            (CFURLRef)fileURL, 
+                                            CGSizeMake(size.width, size.height),
+                                            (CFDictionaryRef)dict);
+    
+    if (ref != NULL) {
+        // Take advantage of NSBitmapImageRep's -initWithCGImage: initializer, new in Leopard,
+        // which is a lot more efficient than copying pixel data into a brand new NSImage.
+        // Thanks to Troy Stephens @ Apple for pointing this new method out to me.
+        NSBitmapImageRep *bitmapImageRep = [[NSBitmapImageRep alloc] initWithCGImage:ref];
+        NSImage *newImage = nil;
+        if (bitmapImageRep) {
+            newImage = [[NSImage alloc] initWithSize:[bitmapImageRep size]];
+            [newImage addRepresentation:bitmapImageRep];
+            [bitmapImageRep release];
+            
+            if (newImage) {
+                return [newImage autorelease];
+            }
+        }
+        CFRelease(ref);
+    } else {
+        // If we couldn't get a Quick Look preview, fall back on the file's Finder icon.
+        NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:path];
+        if (icon) {
+            [icon setSize:size];
+        }
+        return icon;
+    }
+    return nil;
+}
+@end
 
 @implementation MainViewController
+@synthesize fileURL = _fileURL;
 
 #pragma mark - Private Methods
 
@@ -18,16 +68,27 @@
 
 - (void)loadUserPreference
 {
-    bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kMACUserDefaultsUsePassword];
+    if (_passwordController != nil) {
+        return ;
+    }
     
+    bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kMACUserDefaultsUsePassword];
+        
     if (status) {
         _passwordController = [[PasswordMacViewController alloc]init];
         _passwordController.delegate = self;
-        [_passwordController showWindow:self];
+        
+        [NSApp beginSheet:[_passwordController window] modalForWindow:[NSApplication sharedApplication].mainWindow modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+            
     } else {
         [_bubble publishServiceWithPassword:@""];
         [_bubble browseServices];
     }
+}
+
+- (void)delayNotification
+{
+    [self performSelector:@selector(loadUserPreference) withObject:nil afterDelay:1.0f];
 }
 
 - (id)init
@@ -40,8 +101,6 @@
         _bubble = [[WDBubble alloc] init];
         _bubble.delegate = self;
         
-        [self loadUserPreference];
-        
         //Add observer to update service 
         [[NSNotificationCenter defaultCenter] addObserver:self 
                                                  selector:@selector(servicesUpdated:) 
@@ -50,18 +109,21 @@
         
         [_imageMessage registerForDraggedTypes:[NSImage imagePasteboardTypes]];
         //register for all the image types we can display
+        
     }
     return self;
 }
 
 - (void)dealloc
 {
+    [self removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
     [self removeObserver:self forKeyPath:kWDBubbleNotification];
     [_passwordController release];
+    [_preferenceController release];
     [_bubble release];
     [_accessoryView release];
     [_directlySave release];
-    [_preferenceController release];
+    [_fileURL release];
     [super dealloc];
 }
 
@@ -70,6 +132,11 @@
     bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kMACUserDefaultsUsePassword];
     DLog(@"status is %d",status);
     [_checkBox setState:status];
+    
+    //add observer to get the notification when the main menu become key window then the sheet window will appear
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(delayNotification)
+                                                 name:@"NSWindowDidBecomeKeyNotification" object:nil];
 }
 
 #pragma mark - IBActions
@@ -84,8 +151,6 @@
         
         NSSavePanel *savePanel = [NSSavePanel savePanel];
         
-        //for test ,only two types
-        [savePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"png",@"jpg",nil]];
         [savePanel setTitle:@"Save"];
         [savePanel setPrompt:@"Save"];
         [savePanel setNameFieldLabel:@"Save as"];
@@ -103,9 +168,7 @@
     }
 }
 
-- (IBAction)sendImage:(id)sender {
-    //[_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
-    // 20120120 DW: files not images
+- (IBAction)sendFile:(id)sender {
     [_bubble broadcastMessage:[WDMessage messageWithFile:_fileURL]];
 }
 
@@ -121,45 +184,38 @@
             _passwordController.delegate = self;
         }
         
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert setMessageText:@"Message text"];
-        [alert setInformativeText:@"Informative text"];
-        [alert setAccessoryView:_accessoryView];
-        [alert runModal];
-        [alert release];
-        
-        [_passwordController showWindow:self];
+        //show as a sheet window to force users to set usable password
+        [NSApp beginSheet:[_passwordController window] modalForWindow:[NSApplication sharedApplication].keyWindow  modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+      
     } else {
         [_bubble stopService];
-        
-        if (_passwordController != nil) {
-            [_passwordController close];
-        }
-        
         [_bubble publishServiceWithPassword:@""];
         [_bubble browseServices];
     }
 }
 
-- (IBAction)browseImage:(id)sender
+- (IBAction)selectFile:(id)sender
 {
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
     
-    //jpg and png is just for test ....
-	//[openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"png",@"jpg",nil]];
-	[openPanel setTitle:@"Choose File"];
-	[openPanel setPrompt:@"Browse"];
-	[openPanel setNameFieldLabel:@"Choose a file:"];
-    
-    if ([openPanel runModal] == NSFileHandlingPanelOKButton)
-    {
-        _fileURL = [[openPanel URL] retain];//the path of your selected photo
-        //NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
-        //[_imageMessage setImage:image];
-        //[image release];
-        DLog(@"Selected %@", _fileURL);
+    if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
+        if (_fileURL) {
+            [_fileURL release];
+        }
+        _fileURL = [[openPanel URL] retain];
+       NSString *path = [[_fileURL absoluteURL] path];
+        NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
+        if (image != nil) {
+            [_imageMessage setImage:image];
+            [image release];
+        }else
+        {
+            NSSize size ;
+            size.width = 90;
+            size.height = 90;
+            _imageMessage.image = [NSImage imageWithPreviewOfFileAtPath:path ofSize:size asIcon:YES];
+        }
     }
-    
 }
 
 - (IBAction)showPreferencePanel:(id)sender
@@ -178,7 +234,6 @@
         NSFileManager *manager = [NSFileManager defaultManager];
         NSData *data = [_imageMessage.image TIFFRepresentation];
         NSString *fullPath = [[url path] stringByAppendingPathComponent:@"haha.png"];
-        DLog(@"full path is %@",fullPath);
         [manager createFileAtPath:fullPath contents:data attributes:nil];
     }
 }
@@ -196,7 +251,7 @@
 }
 
 - (void)didReceiveFile:(NSURL *)url {
-    
+    [_imageMessage.image initWithContentsOfURL:url];
 }
 
 #pragma mark - NSTableViewDelegate
@@ -226,22 +281,12 @@
     }
 }
 
-#pragma mark - 
-#pragma mark PasswordMacViewControllerDelegate
+#pragma mark - PasswordMacViewControllerDelegate
 
 - (void)didInputPassword:(NSString *)pwd
 {
-    [_passwordController close];
     [_bubble publishServiceWithPassword:pwd];
     [_bubble browseServices];
 }
-
-/*#pragma mark - DragAndDropImageViewDelegate
-
-- (void)dropComplete:(NSString *)filePath
-{
-    DLog(@"path is %@",filePath);
-    [_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
-}*/
 
 @end

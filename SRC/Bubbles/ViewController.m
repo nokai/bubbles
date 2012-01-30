@@ -186,7 +186,19 @@
 }
 
 - (void)didReceiveFile:(NSURL *)url {
+    UIImage *image = [UIImage imageWithContentsOfFile:[url path]];
+    _imageMessage.image = image;
     
+    /*
+    NSString *fileExtention = [[url pathExtension] uppercaseString];
+    if ([fileExtention isEqualToString:@"PNG"]) {
+        
+    } else if ([fileExtention isEqualToString:@"JPG"]) {
+        
+    } else {
+        DLog(@"VC didFinishPickingMediaWithInfo %@ not PNG or JPG", fileExtention);
+    }
+     */
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -201,6 +213,7 @@
     if ([mediaType isEqualToString:@"public.image"]) {
         UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
         NSString *fileName = [[info valueForKey:UIImagePickerControllerReferenceURL] lastPathComponent];
+        fileName = [NSString stringWithFormat:@".%@", fileName];
         NSString *fileExtention = [[info valueForKey:UIImagePickerControllerReferenceURL] pathExtension];
         NSData *fileData = nil;
         NSURL *storeURL = [NSURL URLWithString:fileName relativeToURL:[UIDocument applicationDocumentsDirectory]];
