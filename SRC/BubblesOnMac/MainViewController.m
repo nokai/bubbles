@@ -169,6 +169,7 @@
 }
 
 - (IBAction)sendFile:(id)sender {
+<<<<<<< HEAD
     [_bubble broadcastMessage:[WDMessage messageWithFile:_fileURL]];
 }
 
