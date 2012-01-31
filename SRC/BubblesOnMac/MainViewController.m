@@ -41,6 +41,25 @@
     [self performSelector:@selector(loadUserPreference) withObject:nil afterDelay:1.0f];
 }
 
+- (void)directlySave
+{
+    NSURL *url = [[NSUserDefaults standardUserDefaults] URLForKey:KUserDefaultSavingPath];
+    if (_fileURL && _imageMessage.image != nil) {
+        NSFileManager *manager = [NSFileManager defaultManager];
+        
+        NSString *fileExtension = [[_fileURL absoluteString] pathExtension];
+        NSString *filename = [NSString stringWithFormat:@"%@.%@",[NSDate date],fileExtension];
+        DLog(@"filename is %@!!!!!!!",filename);
+        
+        NSData *data = [NSData dataWithContentsOfURL:_fileURL];
+        
+        NSString *fullPath = [[url path] stringByAppendingPathComponent:filename];
+        [manager createFileAtPath:fullPath contents:data attributes:nil];
+    }
+}
+
+#pragma mark - init & dealloc
+
 - (id)init
 {
     if (self = [super init]) {
@@ -152,22 +171,6 @@
     [_preferenceController showWindow:self];
 }
 
-- (IBAction)directlySave:(id)sender
-{
-    NSURL *url = [[NSUserDefaults standardUserDefaults] URLForKey:KUserDefaultSavingPath];
-    if (_fileURL && _imageMessage.image != nil) {
-        NSFileManager *manager = [NSFileManager defaultManager];
-        
-        NSString *fileExtension = [[_fileURL absoluteString] pathExtension];
-        NSString *filename = [NSString stringWithFormat:@"%@.%@",[NSDate date],fileExtension];
-        DLog(@"filename is %@!!!!!!!",filename);
-        
-        NSData *data = [NSData dataWithContentsOfURL:_fileURL];
-        
-        NSString *fullPath = [[url path] stringByAppendingPathComponent:filename];
-        [manager createFileAtPath:fullPath contents:data attributes:nil];
-    }
-}
 
 #pragma mark - WDBubbleDelegate
 
@@ -191,6 +194,7 @@
         NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[url path] ofSize:CGSizeMake(50, 50) asIcon:YES];
         [_imageMessage setImage:quicklook];
     }
+    [self directlySave];
 }
 
 #pragma mark - NSTableViewDelegate
