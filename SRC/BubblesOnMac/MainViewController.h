@@ -11,16 +11,17 @@
 #import "PasswordMacViewController.h"
 #import "DragAndDropImageView.h"
 #import "PreferenceViewContoller.h"
+#import "NSImage+QuickLook.h"
 
 #define kMACUserDefaultsUsePassword @"kMACUserDefaultsUsePassword"
 #define KMainMenuDidLoad @"KMainMenuDidLoad"
 
-@interface MainViewController : NSObject <WDBubbleDelegate,NSTableViewDelegate, NSTableViewDataSource,PasswordMacViewControllerDelegate> {
+@interface MainViewController : NSObject <WDBubbleDelegate,NSTableViewDelegate, NSTableViewDataSource,PasswordMacViewControllerDelegate,DragAndDropImageViewDelegate> {
     WDBubble *_bubble;
     NSURL *_fileURL;
     
     IBOutlet NSTextField *_textMessage;
-    IBOutlet NSImageView *_imageMessage;
+    IBOutlet DragAndDropImageView *_imageMessage;
     IBOutlet NSTableView *_tableView;
     IBOutlet NSButton *_checkBox;
     IBOutlet NSView *_accessoryView;

@@ -7,11 +7,20 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "NSImage+QuickLook.h"
 
-@interface DragAndDropImageView : NSImageView <NSDraggingSource, NSDraggingDestination, NSPasteboardItemDataProvider> {
+@protocol DragAndDropImageViewDelegate <NSObject>
+
+- (void)dragDidFinished:(NSURL *)url;
+- (NSURL *)dataDraggedToSave;
+
+@end
+
+@interface DragAndDropImageView : NSImageView <NSDraggingSource,NSDraggingDestination, NSPasteboardItemDataProvider> {
     
 }
 
+@property(nonatomic ,assign) id<DragAndDropImageViewDelegate>delegate;
 - (id)initWithCoder:(NSCoder *)coder;
 
 @end

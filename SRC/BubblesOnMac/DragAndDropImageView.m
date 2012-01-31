@@ -10,37 +10,36 @@
 
 @implementation DragAndDropImageView
 
+@synthesize delegate;
+
 NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 
 - (id)initWithCoder:(NSCoder *)coder
 {
-    /*------------------------------------------------------
-     Init method called for Interface Builder objects
-     --------------------------------------------------------*/
     self=[super initWithCoder:coder];
     if ( self ) {
+        
         //register for all the image types we can display
-        [self registerForDraggedTypes:[NSImage imagePasteboardTypes]];
+        [self registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType,NSTIFFPboardType,nil]];
     }
     return self;
 }
 
-#pragma mark - Destination Operations
+- (void)dealloc
+{
+    [self unregisterDraggedTypes];
+    [super dealloc];
+}
+
+#pragma mark - Destination Operations : Allow for drag in
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
-    /*------------------------------------------------------
-     method called whenever a drag enters our drop zone
-     --------------------------------------------------------*/
     
-    // Check if the pasteboard contains image data and source/user wants it copied
-    if ( [NSImage canInitWithPasteboard:[sender draggingPasteboard]] &&
-        [sender draggingSourceOperationMask] &
-        NSDragOperationCopy ) {
+    DLog(@"entered");
+    if (([sender draggingSourceOperationMask] & NSDragOperationCopy) == NSDragOperationCopy) {
         
-        [self setNeedsDisplay: YES];
-        
-        //accept data as a copy operation
+        //Wu:Means we offer the type the destination accepts
         return NSDragOperationCopy;
     }
     
@@ -49,41 +48,64 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
-    [self setNeedsDisplay: YES];
-}
-
--(void)drawRect:(NSRect)rect
-{
-    [super drawRect:rect];
+    DLog(@"haha exited!!!!!!!!!!!");
 }
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
-{    
-    [self setNeedsDisplay: YES];
-    
-    return [NSImage canInitWithPasteboard: [sender draggingPasteboard]];
-} 
-
-- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-    if ([sender draggingSource] != self ) {
-        NSURL* fileURL;
-        
-        //set the image using the best representation we can get from the pasteboard
-        if([NSImage canInitWithPasteboard: [sender draggingPasteboard]]) {
-            NSImage *newImage = [[NSImage alloc] initWithPasteboard: [sender draggingPasteboard]];
-            [self setImage:newImage];
-        }
-        
-        //if the drag comes from a file, set the window title to the filename
-        fileURL=[NSURL URLFromPasteboard: [sender draggingPasteboard]];
-            [[self window] setTitle: fileURL!=NULL ? [fileURL absoluteString] : @"(no name)"];
-    }
-    
     return YES;
 }
 
-- (NSRect)windowWillUseStandardFrame:(NSWindow *)window defaultFrame:(NSRect)newFrame
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
+{
+    
+    NSPasteboard *pboard = [sender draggingPasteboard];
+	
+    if ( [[pboard types] containsObject:NSFilenamesPboardType] ) {
+		//  NSArray *files = [pboard propertyListForType:NSFilenamesPboardType];
+        //NSLog(@"%@", files);
+        // Perform operation using the list of files
+    }
+    
+    //Wu:Set the files that can be accepted by NSImageView
+    NSPasteboard *pasterboard = [sender draggingPasteboard];
+    NSArray *allowedTypes = [NSArray arrayWithObjects:NSFilenamesPboardType,NSTIFFPboardType,nil];
+    NSString *fileType = [pasterboard availableTypeFromArray:allowedTypes];
+    NSData *data = [pasterboard dataForType:fileType];
+    
+    NSURL *fileUrl = [NSURL URLFromPasteboard: [sender draggingPasteboard]];
+    
+    if (data == nil) {
+        NSRunAlertPanel(@"Paste Error", @"The operation failed", @"Ok", nil, nil);
+        return NO;
+    } else {
+        if ([fileType isEqualToString:NSPasteboardTypeTIFF]) {
+            //Wu:It means it's image ,just paste it and show the preview
+            NSImage *image = [[NSImage alloc]initWithData:data];
+            [self setImage:image];
+            [image release];
+            
+        }else if ([fileType isEqualToString:NSFilenamesPboardType]){
+            //Wu:Other file ,we just show the quicklook of the file
+            NSArray *fileAttirbutes = [pasterboard propertyListForType:@"NSFilenamesPboardType"];
+            
+            //The first is the path of the file
+            NSString *filePath = [fileAttirbutes objectAtIndex:0];
+            
+            NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:filePath ofSize:CGSizeMake(50, 50) asIcon:YES];
+            [self setImage:quicklook];
+            //[quicklook release];
+        }else{
+            DLog(@"Something error");
+        }
+    }
+    
+    [self.delegate dragDidFinished:fileUrl];
+    [self setNeedsDisplay:YES];//Wu:Redraw at once
+    return YES;
+}
+
+/*- (NSRect)windowWillUseStandardFrame:(NSWindow *)window defaultFrame:(NSRect)newFrame
 {
     NSRect ContentRect=self.window.frame;
     
@@ -91,7 +113,7 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     ContentRect.size=[[self image] size];
     
     return [NSWindow frameRectForContentRect:ContentRect styleMask: [window styleMask]];
-}
+}*/
 
 #pragma mark - Source Operations
 
@@ -106,7 +128,8 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     dragPosition.y -= 16;
     imageLocation.origin = dragPosition;
     imageLocation.size = NSMakeSize(32,32);
-    [self dragPromisedFilesOfTypes:[NSArray arrayWithObject:NSPasteboardTypeTIFF] fromRect:imageLocation source:self slideBack:YES event:event];
+    [self dragPromisedFilesOfTypes:[NSArray arrayWithObjects:NSFilenamesPboardType,NSTIFFPboardType,nil] 
+                          fromRect:imageLocation source:self slideBack:YES event:event];
 }
 
 - (void)dragImage:(NSImage *)anImage at:(NSPoint)viewLocation offset:(NSSize)initialOffset event:(NSEvent *)event pasteboard:(NSPasteboard *)pboard source:(id)sourceObj slideBack:(BOOL)slideFlag
@@ -128,16 +151,24 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 //drag to save
 - (NSArray *)namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
 {
-    NSArray *representations;
-    NSData *bitmapData;
+    DLog(@"enter this method!!!");
     
-    representations = [[self image] representations];
+    NSURL *draggedDataURL = [self.delegate dataDraggedToSave];
     
-    bitmapData = [NSBitmapImageRep representationOfImageRepsInArray:representations 
-                                                          usingType:NSPNGFileType properties:nil];
+    if (draggedDataURL == nil) {
+        return nil;
+    }
+
+    NSFileManager *manager  = [NSFileManager defaultManager];
     
-    [bitmapData writeToFile:[[dropDestination path] stringByAppendingPathComponent:@"test.png"]  atomically:YES];
-    return [NSArray arrayWithObjects:@"test.png", nil];
+    NSString *fileExtension = [[draggedDataURL absoluteString] pathExtension];
+    NSString *filename = [NSString stringWithFormat:@"%@.%@",[NSDate date],fileExtension];
+    NSData *data = [NSData dataWithContentsOfURL:draggedDataURL];
+    NSString *fullPath = [[dropDestination path] stringByAppendingPathComponent:filename];
+    
+    [manager createFileAtPath:fullPath contents:data attributes:nil];
+    
+    return [NSArray arrayWithObjects:filename, nil];
 }
 
 - (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context
@@ -160,18 +191,17 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     return YES;
 }
 
-- (void)pasteboard:(NSPasteboard *)sender item:(NSPasteboardItem *)item provideDataForType:(NSString *)type
+/*- (void)pasteboard:(NSPasteboard *)sender item:(NSPasteboardItem *)item provideDataForType:(NSString *)type
 {
     if ( [type compare: NSPasteboardTypeTIFF] == NSOrderedSame ) {
         
         //set data for TIFF type on the pasteboard as requested
         [sender setData:[[self image] TIFFRepresentation] forType:NSPasteboardTypeTIFF];
         
-    } else if ( [type compare: NSPasteboardTypePDF] == NSOrderedSame ) {
+    } else if ( [type compare: NSFilenamesPboardType] == NSOrderedSame ) {
         
-        //set data for PDF type on the pasteboard as requested
+        //set data for Other type on the pasteboard as requested
         [sender setData:[self dataWithPDFInsideRect:[self bounds]] forType:NSPasteboardTypePDF];
     }
-    
-}
+}*/
 @end

@@ -7,53 +7,6 @@
 //
 
 #import "MainViewController.h"
-#import <QuickLook/QuickLook.h>
-
-@implementation NSImage (QuickLook)
-
-+ (NSImage *)imageWithPreviewOfFileAtPath:(NSString *)path ofSize:(NSSize)size asIcon:(BOOL)icon
-{
-    NSURL *fileURL = [NSURL fileURLWithPath:path];
-    if (!path || !fileURL) {
-        return nil;
-    }
-    
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:icon] 
-                                                     forKey:(NSString *)kQLThumbnailOptionIconModeKey];
-    CGImageRef ref = QLThumbnailImageCreate(kCFAllocatorDefault, 
-                                            (CFURLRef)fileURL, 
-                                            size,
-                                            (CFDictionaryRef)dict);
-    
-    if (ref != NULL) {
-        // Take advantage of NSBitmapImageRep's -initWithCGImage: initializer, new in Leopard,
-        // which is a lot more efficient than copying pixel data into a brand new NSImage.
-        // Thanks to Troy Stephens @ Apple for pointing this new method out to me.
-        NSBitmapImageRep *bitmapImageRep = [[NSBitmapImageRep alloc] initWithCGImage:ref];
-        NSImage *newImage = nil;
-        if (bitmapImageRep) {
-            newImage = [[NSImage alloc] initWithSize:[bitmapImageRep size]];
-            [newImage addRepresentation:bitmapImageRep];
-            [bitmapImageRep release];
-            
-            if (newImage) {
-                return [newImage autorelease];
-            }
-        }
-        CFRelease(ref);
-    } else {
-        // If we couldn't get a Quick Look preview, fall back on the file's Finder icon.
-        NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:path];
-        if (icon) {
-            [icon setSize:size];
-        }
-        return icon;
-    }
-    return nil;
-}
-
-@end
-
 @implementation MainViewController
 @synthesize fileURL = _fileURL;
 
@@ -129,6 +82,8 @@
     DLog(@"status is %d",status);
     [_checkBox setState:status];
     
+    _imageMessage.delegate = self;
+    
     //add observer to get the notification when the main menu become key window then the sheet window will appear
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(delayNotification)
@@ -172,9 +127,15 @@
     
     if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
         _fileURL = [[openPanel URL] retain];//the path of your selected photo
-        _imageMessage.image = [NSImage imageWithPreviewOfFileAtPath:[_fileURL absoluteString] 
-                                                             ofSize:CGSizeMake(50, 50) 
-                                                             asIcon:YES];
+        NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
+        
+        if (image != nil) {
+            [_imageMessage setImage:image];
+            [image release];   
+        }else {
+            NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] ofSize:CGSizeMake(50, 50) asIcon:YES];
+            [_imageMessage setImage:quicklook];
+        }
     }
 }
 
@@ -194,10 +155,16 @@
 - (IBAction)directlySave:(id)sender
 {
     NSURL *url = [[NSUserDefaults standardUserDefaults] URLForKey:KUserDefaultSavingPath];
-    if (_imageMessage.image != nil) {
+    if (_fileURL && _imageMessage.image != nil) {
         NSFileManager *manager = [NSFileManager defaultManager];
-        NSData *data = [_imageMessage.image TIFFRepresentation];
-        NSString *fullPath = [[url path] stringByAppendingPathComponent:@"haha.png"];
+        
+        NSString *fileExtension = [[_fileURL absoluteString] pathExtension];
+        NSString *filename = [NSString stringWithFormat:@"%@.%@",[NSDate date],fileExtension];
+        DLog(@"filename is %@!!!!!!!",filename);
+        
+        NSData *data = [NSData dataWithContentsOfURL:_fileURL];
+        
+        NSString *fullPath = [[url path] stringByAppendingPathComponent:filename];
         [manager createFileAtPath:fullPath contents:data attributes:nil];
     }
 }
@@ -216,15 +183,14 @@
 
 - (void)didReceiveFile:(NSURL *)url {
     NSLog(@"MVC didReceiveFile %@", url);
-    _imageMessage.image = [[[NSImage alloc] initWithContentsOfURL:url] autorelease];
-    
-    /*
-     NSData *imageData = [_imageMessage.image TIFFRepresentation];
-     NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
-     NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
-     imageData = [imageRep representationUsingType:NSTIFFFileType properties:imageProps];
-     [imageData writeToURL:url atomically:NO];  
-     */
+    NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
+    if (image != nil) {
+        [_imageMessage setImage:image];
+        [image release];   
+    }else {
+        NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[url path] ofSize:CGSizeMake(50, 50) asIcon:YES];
+        [_imageMessage setImage:quicklook];
+    }
 }
 
 #pragma mark - NSTableViewDelegate
@@ -267,4 +233,22 @@
     [_bubble browseServices];
 }
 
+#pragma mark - DragAndDropImageViewDelegate
+
+- (void)dragDidFinished:(NSURL *)url
+{
+    DLog(@"haha url got it");
+    if (_fileURL) {
+        [_fileURL release];
+    }
+    _fileURL = [url retain];
+}
+
+- (NSURL *)dataDraggedToSave
+{
+    if (_fileURL && _imageMessage.image != nil) {
+        return _fileURL;
+    }
+    return nil;
+}
 @end
