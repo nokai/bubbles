@@ -304,8 +304,11 @@
                 [t.content writeToURL:storeURL atomically:YES];
                 [self.delegate didReceiveFile:storeURL];
 #elif TARGET_OS_MAC
+                NSURL *defaultURL = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];
                 NSURL *storeURL = [NSURL URLWithString:
-                                   [NSString stringWithFormat:@"file://localhost/tmp/file.%@", [[t.fileURL pathExtension] lowercaseString]]];
+                                   [NSString stringWithFormat:@"%@file.%@", 
+                                    [defaultURL absoluteString], 
+                                    [[t.fileURL pathExtension] lowercaseString]]];
                 DLog(@"AsyncSocketDelegate onSocketDidDisconnect Mac storeURL %@", storeURL);
                 [t.content writeToURL:storeURL atomically:YES];
                 [self.delegate didReceiveFile:storeURL];

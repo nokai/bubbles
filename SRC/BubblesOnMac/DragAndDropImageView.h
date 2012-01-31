@@ -16,7 +16,7 @@
 
 @end
 
-@interface DragAndDropImageView : NSImageView <NSDraggingSource,NSDraggingDestination, NSPasteboardItemDataProvider> {
+@interface DragAndDropImageView : NSImageView <NSDraggingSource, NSDraggingDestination> {
     
 }
 

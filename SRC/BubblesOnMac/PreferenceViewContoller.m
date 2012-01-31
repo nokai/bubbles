@@ -31,7 +31,7 @@
 - (void)awakeFromNib
 {
     NSImage *folderIcon = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
-    NSString *string = [[[NSUserDefaults standardUserDefaults] URLForKey:KUserDefaultSavingPath]lastPathComponent];
+    NSString *string = [[[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath]lastPathComponent];
     [_savePathButton addItemWithTitle:string];
     [[_savePathButton itemAtIndex:0] setImage:folderIcon];
     [[_savePathButton menu] addItem:[NSMenuItem separatorItem]];
@@ -63,7 +63,7 @@
             
             NSURL *url = [openPanel URL];
             NSImage *folderIcon = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
-            [[NSUserDefaults standardUserDefaults] setURL:url forKey:KUserDefaultSavingPath];
+            [[NSUserDefaults standardUserDefaults] setURL:url forKey:kUserDefaultMacSavingPath];
             [[NSUserDefaults standardUserDefaults] synchronize];
             [_savePathButton insertItemWithTitle:[url lastPathComponent] atIndex:0];
             [[_savePathButton itemAtIndex:0] setImage:folderIcon];

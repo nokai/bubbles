@@ -22,7 +22,7 @@
         return ;
     }
     
-    bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kMACUserDefaultsUsePassword];
+    bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
     
     if (status) {
         _passwordController = [[PasswordMacViewController alloc]init];
@@ -36,14 +36,13 @@
     }
 }
 
-- (void)delayNotification
-{
+- (void)delayNotification {
     [self performSelector:@selector(loadUserPreference) withObject:nil afterDelay:1.0f];
 }
 
-- (void)directlySave
-{
-    NSURL *url = [[NSUserDefaults standardUserDefaults] URLForKey:KUserDefaultSavingPath];
+// DW: we do not need this method now
+- (void)directlySave {
+    NSURL *url = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];
     if (_fileURL && _imageMessage.image != nil) {
         NSFileManager *manager = [NSFileManager defaultManager];
         
@@ -65,7 +64,7 @@
     if (self = [super init]) {
         // Wu: init bubbles
         
-        [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObject:@"file://localhost/Users/wuwuziqi/Downloads/" forKey:KUserDefaultSavingPath]];
+        [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObject:@"file://localhost/~/Downloads/" forKey:kUserDefaultMacSavingPath]];
         
         _bubble = [[WDBubble alloc] init];
         _bubble.delegate = self;
@@ -97,7 +96,7 @@
 
 - (void)awakeFromNib
 {
-    bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kMACUserDefaultsUsePassword];
+    bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
     DLog(@"status is %d",status);
     [_checkBox setState:status];
     
@@ -117,7 +116,7 @@
 
 - (IBAction)togglePassword:(id)sender {
     NSButton *button = (NSButton *)sender;
-    [[NSUserDefaults standardUserDefaults] setBool:button.state forKey:kMACUserDefaultsUsePassword];
+    [[NSUserDefaults standardUserDefaults] setBool:button.state forKey:kUserDefaultsUsePassword];
     
     if (button.state == NSOnState) {
         // DW: user turned password on.
@@ -152,7 +151,7 @@
             [_imageMessage setImage:image];
             [image release];   
         }else {
-            NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] ofSize:CGSizeMake(50, 50) asIcon:YES];
+            NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
             [_imageMessage setImage:quicklook];
         }
     }
@@ -186,15 +185,21 @@
 
 - (void)didReceiveFile:(NSURL *)url {
     NSLog(@"MVC didReceiveFile %@", url);
+    
+    // DW: store this url for drag and drop
+    if (_fileURL) {
+        [_fileURL release];
+    }
+    _fileURL = [url retain];
+    
     NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
     if (image != nil) {
         [_imageMessage setImage:image];
-        [image release];   
-    }else {
-        NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[url path] ofSize:CGSizeMake(50, 50) asIcon:YES];
+        [image release];
+    } else {
+        NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[url path] asIcon:YES];
         [_imageMessage setImage:quicklook];
     }
-    [self directlySave];
 }
 
 #pragma mark - NSTableViewDelegate
@@ -227,7 +232,7 @@
 #pragma mark - PasswordMacViewControllerDelegate
 
 - (void)didCancel {
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kMACUserDefaultsUsePassword];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsUsePassword];
     _checkBox.state = NSOffState;
 }
 

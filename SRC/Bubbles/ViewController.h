@@ -10,8 +10,6 @@
 #import "WDBubble.h"
 #import "PasswordViewController.h"
 
-#define kUserDefaultsUsePassword    @"kUserDefaultsUsePassword"
-
 @interface ViewController : UIViewController <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, PasswordViewControllerDelegate, WDBubbleDelegate> {
     WDBubble *_bubble;
     NSURL *_fileURL;

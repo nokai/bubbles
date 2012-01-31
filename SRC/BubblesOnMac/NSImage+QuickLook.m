@@ -11,18 +11,19 @@
 @implementation NSImage (QuickLook)
 
 
-+ (NSImage *)imageWithPreviewOfFileAtPath:(NSString *)path ofSize:(NSSize)size asIcon:(BOOL)icon
++ (NSImage *)imageWithPreviewOfFileAtPath:(NSString *)path asIcon:(BOOL)icon
 {
     NSURL *fileURL = [NSURL fileURLWithPath:path];
     if (!path || !fileURL) {
         return nil;
     }
     
+    CGSize defaultSize = CGSizeMake(512, 512);
     NSDictionary *dict = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:icon] 
                                                      forKey:(NSString *)kQLThumbnailOptionIconModeKey];
     CGImageRef ref = QLThumbnailImageCreate(kCFAllocatorDefault, 
                                             (CFURLRef)fileURL, 
-                                            CGSizeMake(size.width, size.height),
+                                            defaultSize,
                                             (CFDictionaryRef)dict);
     
     if (ref != NULL) {
@@ -45,7 +46,7 @@
         // If we couldn't get a Quick Look preview, fall back on the file's Finder icon.
         NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:path];
         if (icon) {
-            [icon setSize:size];
+            [icon setSize:defaultSize];
         }
         return icon;
     }

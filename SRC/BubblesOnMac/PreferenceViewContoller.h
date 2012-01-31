@@ -7,8 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
-#define KUserDefaultSavingPath @"KUserDefaultSavingPath"
+#import "WDHeader.h"
 
 @interface PreferenceViewContoller : NSWindowController
 {

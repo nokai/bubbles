@@ -9,14 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AsyncSocket.h"
 #import "WDMessage.h"
-
-// DW: network
-#define kWDBubbleWebServiceType @"_bubbles._tcp."
-#define kWDBubbleInitialDomain  @""
-#define kWDBubbleTimeOut        -1
-
-// DW: notifications
-#define kWDBubbleNotification   @"kWDBubbleNotification"
+#import "WDHeader.h"
 
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 @interface NSURL (Bubbles)

@@ -92,7 +92,7 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
             //The first is the path of the file
             NSString *filePath = [fileAttirbutes objectAtIndex:0];
             
-            NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:filePath ofSize:CGSizeMake(50, 50) asIcon:YES];
+            NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:filePath asIcon:YES];
             [self setImage:quicklook];
             //[quicklook release];
         }else{
@@ -134,21 +134,22 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 
 - (void)dragImage:(NSImage *)anImage at:(NSPoint)viewLocation offset:(NSSize)initialOffset event:(NSEvent *)event pasteboard:(NSPasteboard *)pboard source:(id)sourceObj slideBack:(BOOL)slideFlag
 {
-    //create a new image for our semi-transparent drag image
+    // Wu: create a new image for our semi-transparent drag image
     NSImage* dragImage=[[NSImage alloc] initWithSize:[[self image] size]]; 
     
-    [dragImage lockFocus];//draw inside of our dragImage
-    //draw our original image as 50% transparent
+    // DW: this makes dragging visible
+    [dragImage lockFocus];// draw inside of our dragImage
+    // Wu: draw our original image as 50% transparent
     [[self image] dissolveToPoint: NSZeroPoint fraction: .5];
-    [dragImage unlockFocus];//finished drawing
-    [dragImage setScalesWhenResized:NO];//we want the image to resize
-    [dragImage setSize:[self bounds].size];//change to the size we are displaying
+    [dragImage unlockFocus];// finished drawing
+    [dragImage setScalesWhenResized:NO];// we want the image to resize
+    //[dragImage setSize:[self bounds].size];// change to the size we are displaying
     
     [super dragImage:dragImage at:self.bounds.origin offset:NSZeroSize event:event pasteboard:pboard source:sourceObj slideBack:slideFlag];
     [dragImage release];
 }
 
-//drag to save
+// Wu: drag to save
 - (NSArray *)namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
 {
     DLog(@"enter this method!!!");
@@ -160,9 +161,8 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     }
 
     NSFileManager *manager  = [NSFileManager defaultManager];
-    
-    NSString *fileExtension = [[draggedDataURL absoluteString] pathExtension];
-    NSString *filename = [NSString stringWithFormat:@"%@.%@",[NSDate date],fileExtension];
+
+    NSString *filename = [draggedDataURL lastPathComponent];
     NSData *data = [NSData dataWithContentsOfURL:draggedDataURL];
     NSString *fullPath = [[dropDestination path] stringByAppendingPathComponent:filename];
     
