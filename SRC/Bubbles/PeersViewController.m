@@ -34,13 +34,22 @@
 {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    // DW: custom bar bg
+    // this will appear as the title in the navigation bar
+    UILabel *label = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:20.0];
+    label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+    label.textAlignment = UITextAlignmentCenter;
+    label.textColor = [UIColor colorWithWhite:0.5 alpha:1];
+    self.navigationItem.titleView = label;
+    label.text = NSLocalizedString(@"Peers", @"");
+    [label sizeToFit];
+    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"tile_bg"]
+                                                      forBarMetrics:UIBarMetricsDefault];
+    }
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    self.title = @"Peers";
     self.navigationItem.rightBarButtonItem = self.dismissButton;
     
     [[NSNotificationCenter defaultCenter] addObserver:self 

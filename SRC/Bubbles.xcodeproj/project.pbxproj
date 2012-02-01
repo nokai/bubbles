@@ -22,6 +22,18 @@
 		C121949A14B5A9FC00159A9F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121949914B5A9FB00159A9F /* CFNetwork.framework */; };
 		C1393F0A14D90C83005AFEB6 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1393F0814D90C83005AFEB6 /* TextViewController.m */; };
 		C1393F0B14D90C83005AFEB6 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1393F0914D90C83005AFEB6 /* TextViewController.xib */; };
+		C1393F1C14D9165D005AFEB6 /* addfile.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F1214D9165D005AFEB6 /* addfile.png */; };
+		C1393F1D14D9165D005AFEB6 /* addtxt.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F1314D9165D005AFEB6 /* addtxt.png */; };
+		C1393F1E14D9165D005AFEB6 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F1414D9165D005AFEB6 /* bg.png */; };
+		C1393F1F14D9165D005AFEB6 /* del.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F1514D9165D005AFEB6 /* del.png */; };
+		C1393F2014D9165D005AFEB6 /* device.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F1614D9165D005AFEB6 /* device.png */; };
+		C1393F2114D9165D005AFEB6 /* item.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F1714D9165D005AFEB6 /* item.png */; };
+		C1393F2214D9165D005AFEB6 /* lock_off.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F1814D9165D005AFEB6 /* lock_off.png */; };
+		C1393F2314D9165D005AFEB6 /* lock_on.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F1914D9165D005AFEB6 /* lock_on.png */; };
+		C1393F2414D9165D005AFEB6 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F1A14D9165D005AFEB6 /* save.png */; };
+		C1393F2514D9165D005AFEB6 /* tile_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F1B14D9165D005AFEB6 /* tile_bg@2x.png */; };
+		C1393F2814D91BBF005AFEB6 /* UINavigationBar+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */; };
+		C1393F2A14D91D35005AFEB6 /* tile_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F2914D91D35005AFEB6 /* tile_bg.png */; };
 		C1C9371D14BB1766005E0EAA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1C9371B14BB1766005E0EAA /* InfoPlist.strings */; };
 		C1C9371F14BB1766005E0EAA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C9371E14BB1766005E0EAA /* main.m */; };
 		C1C9372314BB1766005E0EAA /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C1C9372114BB1766005E0EAA /* Credits.rtf */; };
@@ -71,6 +83,19 @@
 		C1393F0714D90C83005AFEB6 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextViewController.h; path = Bubbles/TextViewController.h; sourceTree = SOURCE_ROOT; };
 		C1393F0814D90C83005AFEB6 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextViewController.m; path = Bubbles/TextViewController.m; sourceTree = SOURCE_ROOT; };
 		C1393F0914D90C83005AFEB6 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TextViewController.xib; path = Bubbles/TextViewController.xib; sourceTree = SOURCE_ROOT; };
+		C1393F1214D9165D005AFEB6 /* addfile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addfile.png; path = Resources/iPhone/addfile.png; sourceTree = SOURCE_ROOT; };
+		C1393F1314D9165D005AFEB6 /* addtxt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addtxt.png; path = Resources/iPhone/addtxt.png; sourceTree = SOURCE_ROOT; };
+		C1393F1414D9165D005AFEB6 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg.png; path = Resources/iPhone/bg.png; sourceTree = SOURCE_ROOT; };
+		C1393F1514D9165D005AFEB6 /* del.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = del.png; path = Resources/iPhone/del.png; sourceTree = SOURCE_ROOT; };
+		C1393F1614D9165D005AFEB6 /* device.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = device.png; path = Resources/iPhone/device.png; sourceTree = SOURCE_ROOT; };
+		C1393F1714D9165D005AFEB6 /* item.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = item.png; path = Resources/iPhone/item.png; sourceTree = SOURCE_ROOT; };
+		C1393F1814D9165D005AFEB6 /* lock_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lock_off.png; path = Resources/iPhone/lock_off.png; sourceTree = SOURCE_ROOT; };
+		C1393F1914D9165D005AFEB6 /* lock_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lock_on.png; path = Resources/iPhone/lock_on.png; sourceTree = SOURCE_ROOT; };
+		C1393F1A14D9165D005AFEB6 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = save.png; path = Resources/iPhone/save.png; sourceTree = SOURCE_ROOT; };
+		C1393F1B14D9165D005AFEB6 /* tile_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tile_bg@2x.png"; path = "Resources/iPhone/tile_bg@2x.png"; sourceTree = SOURCE_ROOT; };
+		C1393F2614D91BBF005AFEB6 /* UINavigationBar+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+Custom.h"; path = "Bubbles/UINavigationBar+Custom.h"; sourceTree = SOURCE_ROOT; };
+		C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+Custom.m"; path = "Bubbles/UINavigationBar+Custom.m"; sourceTree = SOURCE_ROOT; };
+		C1393F2914D91D35005AFEB6 /* tile_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tile_bg.png; path = Resources/iPhone/tile_bg.png; sourceTree = SOURCE_ROOT; };
 		C1AC4D2F14D81DCC008FACE0 /* WDHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WDHeader.h; path = Bubbles/WDHeader.h; sourceTree = "<group>"; };
 		C1C9371014BB1766005E0EAA /* BubblesOnMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BubblesOnMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C9371514BB1766005E0EAA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -194,6 +219,24 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		C1393F1114D91621005AFEB6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C1393F1214D9165D005AFEB6 /* addfile.png */,
+				C1393F1314D9165D005AFEB6 /* addtxt.png */,
+				C1393F1414D9165D005AFEB6 /* bg.png */,
+				C1393F1514D9165D005AFEB6 /* del.png */,
+				C1393F1614D9165D005AFEB6 /* device.png */,
+				C1393F1714D9165D005AFEB6 /* item.png */,
+				C1393F1814D9165D005AFEB6 /* lock_off.png */,
+				C1393F1914D9165D005AFEB6 /* lock_on.png */,
+				C1393F1A14D9165D005AFEB6 /* save.png */,
+				C1393F2914D91D35005AFEB6 /* tile_bg.png */,
+				C1393F1B14D9165D005AFEB6 /* tile_bg@2x.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		C1C9371414BB1766005E0EAA /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,6 +300,7 @@
 		C1E624D014BD94020010F395 /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				C1393F1114D91621005AFEB6 /* Resources */,
 				C1CFCD0C14B98552008A1B1F /* AppDelegate.h */,
 				C1CFCD0D14B98552008A1B1F /* AppDelegate.m */,
 				C1CFCD2014B985D2008A1B1F /* ViewController.h */,
@@ -271,6 +315,8 @@
 				C1393F0714D90C83005AFEB6 /* TextViewController.h */,
 				C1393F0814D90C83005AFEB6 /* TextViewController.m */,
 				C1393F0914D90C83005AFEB6 /* TextViewController.xib */,
+				C1393F2614D91BBF005AFEB6 /* UINavigationBar+Custom.h */,
+				C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */,
 			);
 			name = iPhone;
 			sourceTree = "<group>";
@@ -359,6 +405,17 @@
 				C1F80FC714BA7A1B006F0779 /* PeersViewController.xib in Resources */,
 				C1F80FDE14BA84A6006F0779 /* PasswordViewController.xib in Resources */,
 				C1393F0B14D90C83005AFEB6 /* TextViewController.xib in Resources */,
+				C1393F1C14D9165D005AFEB6 /* addfile.png in Resources */,
+				C1393F1D14D9165D005AFEB6 /* addtxt.png in Resources */,
+				C1393F1E14D9165D005AFEB6 /* bg.png in Resources */,
+				C1393F1F14D9165D005AFEB6 /* del.png in Resources */,
+				C1393F2014D9165D005AFEB6 /* device.png in Resources */,
+				C1393F2114D9165D005AFEB6 /* item.png in Resources */,
+				C1393F2214D9165D005AFEB6 /* lock_off.png in Resources */,
+				C1393F2314D9165D005AFEB6 /* lock_on.png in Resources */,
+				C1393F2414D9165D005AFEB6 /* save.png in Resources */,
+				C1393F2514D9165D005AFEB6 /* tile_bg@2x.png in Resources */,
+				C1393F2A14D91D35005AFEB6 /* tile_bg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,6 +448,7 @@
 				C1F80FC614BA7A1B006F0779 /* PeersViewController.m in Sources */,
 				C1F80FDD14BA84A6006F0779 /* PasswordViewController.m in Sources */,
 				C1393F0A14D90C83005AFEB6 /* TextViewController.m in Sources */,
+				C1393F2814D91BBF005AFEB6 /* UINavigationBar+Custom.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
