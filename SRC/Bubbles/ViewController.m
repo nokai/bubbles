@@ -50,8 +50,9 @@
         [_bubble publishServiceWithPassword:@""];
         [_bubble browseServices];
     }
-    _logoutButton.hidden = !usePassword;
-    [_switchUsePassword setOn:usePassword];
+    //_logoutButton.hidden = !usePassword;
+    //[_switchUsePassword setOn:usePassword];
+    [_lockButton setTitle:usePassword?@"L":@"U" forState:UIControlStateNormal];
 }
 
 - (void)viewDidUnload
@@ -98,8 +99,14 @@
 #pragma mark - IBOultets
 
 - (IBAction)sendText:(id)sender {
-    [_bubble broadcastMessage:[WDMessage messageWithText:_textMessage.text]];
-    [_textMessage resignFirstResponder];
+    TextViewController *vc = [[TextViewController alloc] initWithNibName:@"TextViewController" bundle:nil];
+    vc.delegate = self;
+    
+    UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentModalViewController:nv animated:YES];
+
+    [vc release];
+    [nv release];
 }
 
 - (IBAction)selectImage:(id)sender {
@@ -139,6 +146,9 @@
     
     UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentModalViewController:nv animated:YES];
+    
+    [vc release];
+    [nv release];
 }
 
 - (IBAction)logout:(id)sender {
@@ -147,11 +157,12 @@
 }
 
 - (IBAction)triggerUsePassword:(id)sender {
-    UISwitch *s = (UISwitch *)sender;
-    [[NSUserDefaults standardUserDefaults] setBool:s.on forKey:kUserDefaultsUsePassword];
-    _logoutButton.hidden = !s.on;
+    BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
+    usePassword = !usePassword;
+    [[NSUserDefaults standardUserDefaults] setBool:usePassword forKey:kUserDefaultsUsePassword];
+    [_lockButton setTitle:usePassword?@"L":@"U" forState:UIControlStateNormal];
     
-    if (s.on) {
+    if (usePassword) {
         [self logout:nil];
     } else {
         [_bubble stopService];
@@ -160,29 +171,11 @@
     }
 }
 
-#pragma mark - Events
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [_textMessage resignFirstResponder];
-}
-
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-    [_textMessage resignFirstResponder];
-    return YES;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [_textMessage resignFirstResponder];
-    return YES;
-}
-
 #pragma mark - WDBubbleDelegate
 
 - (void)didReceiveText:(NSString *)text {
     DLog(@"VC didReceiveText %@", text);
-    _textMessage.text = text;
+    //_textMessage.text = text;
 }
 
 - (void)didReceiveImage:(UIImage *)image {
@@ -253,6 +246,12 @@
 - (void)didInputPassword:(NSString *)pwd {
     [_bubble publishServiceWithPassword:pwd];
     [_bubble browseServices];
+}
+
+#pragma mark - PasswordViewControllerDelegate
+
+- (void)didFinishWithText:(NSString *)text {
+    [_bubble broadcastMessage:[WDMessage messageWithText:text]];
 }
 
 @end
