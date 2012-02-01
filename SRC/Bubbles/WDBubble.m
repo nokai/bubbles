@@ -91,7 +91,7 @@
     AsyncSocket *sc = [[AsyncSocket alloc] init];
     sc.delegate = self;
     [sc connectToHost:[t host] onPort:[t port] error:nil];
-    [_socketConnect addObject:sc];
+    [_socketsConnect addObject:sc];
     [sc release];
 }
 
@@ -123,7 +123,7 @@
         // Following sockets like it will become temp vars
         //self.socketConnect = [[AsyncSocket alloc] init];
         //self.socketConnect.delegate = self;
-        _socketConnect = [[NSMutableArray alloc] init];
+        _socketsConnect = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -248,10 +248,10 @@
     //DLog(@"AsyncSocketDelegate didConnectToHost %@ (l%@)", sock, _socketListen);
     
     // DW: after connected, "socketSender" will send data.
-    //AsyncSocket *sc = [_socketConnect objectAtIndex:0];
+    //AsyncSocket *sc = [_socketsConnect objectAtIndex:0];
     //DLog(@"AsyncSocketDelegate didConnectToHost IP %@ : %@", sock.localHost, sc.localHost);
     //if ([sock.localHost isEqualToString:sc.localHost]) {
-    if (_socketConnect.count > 0) {
+    if (_socketsConnect.count > 0) {
         // DW: a sender
         
         NSData *t = [NSKeyedArchiver archivedDataWithRootObject:_currentMessage];
@@ -320,7 +320,7 @@
             _dataBuffer = nil;
         }
     } else {
-        [_socketConnect removeObject:sock];
+        [_socketsConnect removeObject:sock];
     }
     
 }

@@ -42,7 +42,7 @@
 	AsyncSocket *_socketListen;
     //AsyncSocket *_socketConnect; // DW: the first connect socket, used to determine local or not
     AsyncSocket *_socketReceive;
-    NSMutableArray *_socketConnect;
+    NSMutableArray *_socketsConnect;
     
     // DW: Message
     WDMessage *_currentMessage;
