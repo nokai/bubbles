@@ -31,11 +31,12 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     [super dealloc];
 }
 
+
+
 #pragma mark - Destination Operations : Allow for drag in
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
-    
     DLog(@"entered");
     if (([sender draggingSourceOperationMask] & NSDragOperationCopy) == NSDragOperationCopy) {
         
