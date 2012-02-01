@@ -11,6 +11,26 @@
 
 @implementation ViewController
 
+- (void)refreshLockStatus {
+    BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
+    if (usePassword) {
+        [_lockButton setImage:[UIImage imageNamed:@"lock_on"] forState:UIControlStateNormal];
+    } else {
+        [_lockButton setImage:[UIImage imageNamed:@"lock_off"] forState:UIControlStateNormal];
+    }
+}
+
+- (void)lock {
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Lock Bubbles" 
+                                                 message:@"Please input password:"
+                                                delegate:self 
+                                       cancelButtonTitle:@"Cancel" 
+                                       otherButtonTitles:@"OK", nil];
+    av.alertViewStyle = UIAlertViewStyleSecureTextInput;
+    [av show];
+    [av release];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -45,14 +65,12 @@
     // DW: use password or not
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
     if (usePassword) {
-        [self.view addSubview:_passwordViewController.view];
+        [self lock];
     } else {
         [_bubble publishServiceWithPassword:@""];
         [_bubble browseServices];
     }
-    //_logoutButton.hidden = !usePassword;
-    //[_switchUsePassword setOn:usePassword];
-    [_lockButton setTitle:usePassword?@"L":@"U" forState:UIControlStateNormal];
+    [self refreshLockStatus];
 }
 
 - (void)viewDidUnload
@@ -104,7 +122,7 @@
     
     UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentModalViewController:nv animated:YES];
-
+    
     [vc release];
     [nv release];
 }
@@ -151,19 +169,14 @@
     [nv release];
 }
 
-- (IBAction)logout:(id)sender {
-    [self.view addSubview:_passwordViewController.view];
-    [_bubble stopService];
-}
-
-- (IBAction)triggerUsePassword:(id)sender {
+- (IBAction)toggleUsePassword:(id)sender {
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
     usePassword = !usePassword;
     [[NSUserDefaults standardUserDefaults] setBool:usePassword forKey:kUserDefaultsUsePassword];
-    [_lockButton setTitle:usePassword?@"L":@"U" forState:UIControlStateNormal];
+    [self refreshLockStatus];
     
     if (usePassword) {
-        [self logout:nil];
+        [self lock];
     } else {
         [_bubble stopService];
         [_bubble publishServiceWithPassword:@""];
@@ -248,10 +261,25 @@
     [_bubble browseServices];
 }
 
-#pragma mark - PasswordViewControllerDelegate
+#pragma mark - TextViewControllerDelegate
 
 - (void)didFinishWithText:(NSString *)text {
     [_bubble broadcastMessage:[WDMessage messageWithText:text]];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"VC clickedButtonAtIndex %i", buttonIndex);
+    if (buttonIndex == 0) {
+        // DW: user canceled
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsUsePassword];
+        [self refreshLockStatus];
+    } else if (buttonIndex == 1) {
+        [_bubble stopService];
+        [_bubble publishServiceWithPassword:[alertView textFieldAtIndex:0].text];
+        [_bubble browseServices];
+    }
 }
 
 @end

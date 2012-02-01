@@ -12,6 +12,7 @@
 #import "TextViewController.h"
 
 @interface ViewController : UIViewController <
+UIAlertViewDelegate, 
 UITextFieldDelegate, 
 UINavigationControllerDelegate, 
 UIImagePickerControllerDelegate, 

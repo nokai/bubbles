@@ -46,6 +46,22 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    // DW: custom bar bg
+    // this will appear as the title in the navigation bar
+    UILabel *label = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:20.0];
+    label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+    label.textAlignment = UITextAlignmentCenter;
+    label.textColor = [UIColor colorWithWhite:0.5 alpha:1];
+    self.navigationItem.titleView = label;
+    label.text = NSLocalizedString(@"Peers", @"");
+    [label sizeToFit];
+    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"tile_bg"]
+                                                      forBarMetrics:UIBarMetricsDefault];
+    }
+    
     self.navigationItem.rightBarButtonItem = _done;
         self.navigationItem.leftBarButtonItem = _cancel;
     [self registerForKeyboardNotifications];    
