@@ -139,22 +139,24 @@
     }
 }
 
-- (IBAction)saveImage:(id)sender {
-    if (_imageMessage.image) {
-        UIImageWriteToSavedPhotosAlbum(_imageMessage.image, 
-                                       self, 
-                                       @selector(image:didFinishSavingWithError:contextInfo:), 
-                                       nil);
-    }
-}
+/*
+ - (IBAction)saveImage:(id)sender {
+ if (_imageMessage.image) {
+ UIImageWriteToSavedPhotosAlbum(_imageMessage.image, 
+ self, 
+ @selector(image:didFinishSavingWithError:contextInfo:), 
+ nil);
+ }
+ }
+ */
 
 // DW: can only send images and movies for now.
 - (IBAction)sendImage:(id)sender {
     if (_fileURL) {
-        // DW: a movie
+        // DW: a movie or JPG or PNG
         [_bubble broadcastMessage:[WDMessage messageWithFile:_fileURL]];
     } else {
-        [_bubble broadcastMessage:[WDMessage messageWithImage:_imageMessage.image]];
+        [_bubble broadcastMessage:[WDMessage messageWithImage:[_fileButton imageForState:UIControlStateNormal]]];
     }
 }
 
@@ -193,7 +195,7 @@
 
 - (void)didReceiveImage:(UIImage *)image {
     DLog(@"VC didReceiveImage %@", image);
-    _imageMessage.image = image;
+    [_fileButton setImage:image forState:UIControlStateNormal];
 }
 
 - (void)didReceiveFile:(NSURL *)url {
@@ -201,10 +203,10 @@
     if (([fileExtention isEqualToString:@"PNG"])||([fileExtention isEqualToString:@"JPG"])) {
         DLog(@"VC didReceiveFile %@", url);
         UIImage *image = [UIImage imageWithContentsOfFile:[url path]];
-        _imageMessage.image = image;
+        [_fileButton setImage:image forState:UIControlStateNormal];
     } else {
         DLog(@"VC didReceiveFile %@ not PNG or JPG", fileExtention);
-        _imageMessage.image = [UIImage imageNamed:@"Icon.png"];
+        [_fileButton setImage:[UIImage imageNamed:@"Icon.png"] forState:UIControlStateNormal];
     }
 }
 
@@ -238,12 +240,14 @@
         } else {
             DLog(@"VC didFinishPickingMediaWithInfo %@ not PNG or JPG", fileExtention);
         }
-        _imageMessage.image = image;
+        [_fileButton setImage:image forState:UIControlStateNormal];
         DLog(@"VC didFinishPickingMediaWithInfo URL is %@", _fileURL);
+        [self sendImage:nil];
     } else if ([mediaType isEqualToString:@"public.movie"]) {
-        _imageMessage.image = [UIImage imageNamed:@"Icon.png"];
+        [_fileButton setImage:[UIImage imageNamed:@"Icon.png"] forState:UIControlStateNormal];
         _fileURL = [[info valueForKey:UIImagePickerControllerMediaURL] retain];
         DLog(@"VC didFinishPickingMediaWithInfo select %@", _fileURL);
+        [self sendImage:nil];
     } else {
         _fileURL = nil;
     }

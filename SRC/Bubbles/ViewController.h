@@ -24,9 +24,10 @@ TextViewControllerDelegate> {
     
     // DW: UI
     //IBOutlet UITextField *_textMessage;
-    IBOutlet UIImageView *_imageMessage;
+    //IBOutlet UIImageView *_imageMessage;
     //IBOutlet UIButton *_logoutButton;
     //IBOutlet UISwitch *_switchUsePassword;
+    IBOutlet UIButton *_fileButton;
     IBOutlet UIButton *_lockButton;
     
     // DW: password
