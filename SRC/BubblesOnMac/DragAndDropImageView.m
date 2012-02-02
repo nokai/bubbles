@@ -64,7 +64,7 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 	
     if ( [[pboard types] containsObject:NSFilenamesPboardType] ) {
 		//  NSArray *files = [pboard propertyListForType:NSFilenamesPboardType];
-        //NSLog(@"%@", files);
+        //DLog(@"%@", files);
         // Perform operation using the list of files
     }
     

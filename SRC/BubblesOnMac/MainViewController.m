@@ -170,18 +170,18 @@
 
 #pragma mark - WDBubbleDelegate
 
-- (void)didReceiveText:(NSString *)text {
+- (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text {
     DLog(@"VC didReceiveText %@", text);
     _textMessage.stringValue = text;
 }
 
-- (void)didReceiveImage:(NSImage *)image {
+- (void)didReceiveMessage:(WDMessage *)message ofImage:(NSImage *)image {
     DLog(@"MVC didReceiveImage %@", image);
     _imageMessage.image = image;
 }
 
-- (void)didReceiveFile:(NSURL *)url {
-    NSLog(@"MVC didReceiveFile %@", url);
+- (void)didReceiveMessage:(WDMessage *)message ofFile:(NSURL *)url {
+    DLog(@"MVC didReceiveFile %@", url);
     
     // DW: store this url for drag and drop
     if (_fileURL) {

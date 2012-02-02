@@ -20,7 +20,6 @@
 + (id)messageWithText:(NSString *)text {
     WDMessage *m = [[[WDMessage alloc] init] autorelease];
     m.content = [text dataUsingEncoding:NSUTF8StringEncoding];
-    m.time = [NSDate date];
     m.type = WDMessageTypeText;
     DLog(@"WDMessage messageWithText %@", m);
     return m;
@@ -30,7 +29,6 @@
 + (id)messageWithImage:(UIImage *)image {
     WDMessage *m = [[[WDMessage alloc] init] autorelease];
     m.content = UIImagePNGRepresentation(image);
-    m.time = [NSDate date];
     m.type = WDMessageTypeImage;
     return m;
 }
@@ -38,7 +36,6 @@
 + (id)messageWithImage:(NSImage *)image {
     WDMessage *m = [[[WDMessage alloc] init] autorelease];
     m.content = [image TIFFRepresentation];
-    m.time = [NSDate date];
     m.type = WDMessageTypeImage;
     return m;
 }
@@ -48,7 +45,6 @@
     WDMessage *m = [[[WDMessage alloc] init] autorelease];
     m.fileURL = url;
     m.content = [NSData dataWithContentsOfURL:url];
-    m.time = [NSDate date];
     m.type = WDMessageTypeFile;
     //DLog(@"WDMessage messageWithFile %@", m);
     return m;
@@ -64,6 +60,27 @@
             self.type];
 }
 
+- (id)init {
+    if (self = [super init]) {
+        _time = [[NSDate date] retain];
+
+        // DW: in WDBubble we publish services with this name
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+        _sender = [[[UIDevice currentDevice] name] retain];
+#elif TARGET_OS_MAC
+        _sender = [[[NSHost currentHost] localizedName] retain];
+#endif
+    }
+    return self;
+}
+
+- (void)dealloc {
+    [_time release];
+    [_sender release];
+    
+    [super release];
+}
+
 #pragma mark - NSCoding
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
@@ -76,7 +93,7 @@
 
 - (id)initWithCoder:(NSCoder *)decoder {
     self = [super init];
-    //_sender = [[decoder decodeObjectForKey:kWDMessageSender] retain];
+    _sender = [[decoder decodeObjectForKey:kWDMessageSender] retain];
     _fileURL = [[decoder decodeObjectForKey:kWDMessageFileURL] retain];
     _content = [[decoder decodeObjectForKey:kWDMessageContent] retain];
     _time = [[decoder decodeObjectForKey:kWDMessageTime] retain];

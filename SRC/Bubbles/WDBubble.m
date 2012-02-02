@@ -275,7 +275,7 @@
         WDMessage *t = nil;
         @try {
             [_dataBuffer writeToFile:@"dataBuffer" atomically:YES];
-            t = [[NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer] retain];
+            t = [NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer];
         }
         @catch (NSException *exception) {
             DLog(@"AsyncSocketDelegate onSocketDidDisconnect @catch %@", exception);
@@ -289,20 +289,20 @@
                 return;
             
             if (t.type == WDMessageTypeText) {
-                [self.delegate didReceiveText:[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding]];
+                [self.delegate didReceiveMessage:t ofText:[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding]];
             } else if (t.type == WDMessageTypeImage) {
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
                 UIImage *ti = [[UIImage alloc] initWithData:t.content];
 #elif TARGET_OS_MAC
                 NSImage *ti = [[NSImage alloc] initWithData:t.content];
 #endif
-                [self.delegate didReceiveImage:ti];
+                [self.delegate didReceiveMessage:t ofImage:ti];
             } else if (t.type == WDMessageTypeFile) {
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
                 NSURL *storeURL = [NSURL URLWithString:[t.fileURL lastPathComponent] relativeToURL:[NSURL applicationDocumentsDirectory]];
                 DLog(@"AsyncSocketDelegate onSocketDidDisconnect iOS storeURL %@", storeURL);
                 [t.content writeToURL:storeURL atomically:YES];
-                [self.delegate didReceiveFile:storeURL];
+                [self.delegate didReceiveMessage:t ofFile:storeURL];
 #elif TARGET_OS_MAC
                 NSURL *defaultURL = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];
                 NSURL *storeURL = [NSURL URLWithString:
@@ -311,11 +311,12 @@
                                     [[t.fileURL pathExtension] lowercaseString]]];
                 DLog(@"AsyncSocketDelegate onSocketDidDisconnect Mac storeURL %@", storeURL);
                 [t.content writeToURL:storeURL atomically:YES];
-                [self.delegate didReceiveFile:storeURL];
+                [self.delegate didReceiveMessage:t ofFile:storeURL];
 #endif
             }
             
             // DW: clean up
+            //[t release];
             [_dataBuffer release];
             _dataBuffer = nil;
         }

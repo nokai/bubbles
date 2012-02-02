@@ -18,15 +18,19 @@ UINavigationControllerDelegate,
 UIImagePickerControllerDelegate, 
 PasswordViewControllerDelegate, 
 WDBubbleDelegate, 
-TextViewControllerDelegate> {
+TextViewControllerDelegate, 
+UITableViewDelegate, 
+UITableViewDataSource> {
     WDBubble *_bubble;
     NSURL *_fileURL;
+    NSMutableArray *_messages;
     
     // DW: UI
     //IBOutlet UITextField *_textMessage;
     //IBOutlet UIImageView *_imageMessage;
     //IBOutlet UIButton *_logoutButton;
     //IBOutlet UISwitch *_switchUsePassword;
+    IBOutlet UITableView *_messagesView;
     IBOutlet UIButton *_fileButton;
     IBOutlet UIButton *_lockButton;
     

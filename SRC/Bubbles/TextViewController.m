@@ -173,7 +173,7 @@
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    NSLog(@"kbh %f, %f", kbSize.width, kbSize.height);
+    DLog(@"kbh %f, %f", kbSize.width, kbSize.height);
     UIEdgeInsets contentInsets;
     if (self.interfaceOrientation == UIInterfaceOrientationPortrait) {
         contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);

@@ -19,14 +19,14 @@
 #endif
 
 @protocol WDBubbleDelegate
-- (void)didReceiveText:(NSString *)text;
-- (void)didReceiveFile:(NSURL *)url;
+- (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text;
+- (void)didReceiveMessage:(WDMessage *)message ofFile:(NSURL *)url;
 
 @optional
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-- (void)didReceiveImage:(UIImage *)image;
+- (void)didReceiveMessage:(WDMessage *)message ofImage:(UIImage *)image;
 #elif TARGET_OS_MAC
-- (void)didReceiveImage:(NSImage *)image;
+- (void)didReceiveMessage:(WDMessage *)message ofImage:(NSImage *)image;
 #endif
 
 @end

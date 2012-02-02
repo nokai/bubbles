@@ -31,6 +31,19 @@
     [av release];
 }
 
+- (void)storeMessage:(WDMessage *)message {
+    [_messages addObject:message];
+    [_messages sortUsingComparator:^(WDMessage *obj1, WDMessage * obj2) {
+        if ([obj1.time compare:obj2.time] == NSOrderedAscending)
+            return NSOrderedDescending;
+        else if ([obj1.time compare:obj2.time] == NSOrderedDescending)
+            return NSOrderedAscending;
+        else
+            return NSOrderedSame;
+    }];
+    [_messagesView reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -55,8 +68,12 @@
     NSDictionary *t = [NSDictionary dictionaryWithObject:@"NO" forKey:kUserDefaultsUsePassword];
     [[NSUserDefaults standardUserDefaults] registerDefaults:t];
     
+    // DW: bubble
     _bubble = [[WDBubble alloc] init];
     _bubble.delegate = self;
+    
+    // DW: messages
+    _messages = [[NSMutableArray alloc] init];
     
     // DW: password view
     _passwordViewController = [[PasswordViewController alloc] initWithNibName:@"PasswordViewController" bundle:nil];
@@ -153,10 +170,16 @@
 // DW: can only send images and movies for now.
 - (IBAction)sendImage:(id)sender {
     if (_fileURL) {
-        // DW: a movie or JPG or PNG
-        [_bubble broadcastMessage:[WDMessage messageWithFile:_fileURL]];
+        // DW: a movie or JPG or PNG        
+        WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
+        [self storeMessage:t];
+        [_bubble broadcastMessage:t];
+        [t release];
     } else {
-        [_bubble broadcastMessage:[WDMessage messageWithImage:[_fileButton imageForState:UIControlStateNormal]]];
+        WDMessage *t = [[WDMessage messageWithImage:[_fileButton imageForState:UIControlStateNormal]] retain];
+        [self storeMessage:t];
+        [_bubble broadcastMessage:t];
+        [t release];
     }
 }
 
@@ -188,26 +211,21 @@
 
 #pragma mark - WDBubbleDelegate
 
-- (void)didReceiveText:(NSString *)text {
+- (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text {
     DLog(@"VC didReceiveText %@", text);
     //_textMessage.text = text;
+    [self storeMessage:message];
 }
 
-- (void)didReceiveImage:(UIImage *)image {
+- (void)didReceiveMessage:(WDMessage *)message ofImage:(UIImage *)image {
     DLog(@"VC didReceiveImage %@", image);
-    [_fileButton setImage:image forState:UIControlStateNormal];
+    [self storeMessage:message];
 }
 
-- (void)didReceiveFile:(NSURL *)url {
-    NSString *fileExtention = [[url pathExtension] uppercaseString];
-    if (([fileExtention isEqualToString:@"PNG"])||([fileExtention isEqualToString:@"JPG"])) {
-        DLog(@"VC didReceiveFile %@", url);
-        UIImage *image = [UIImage imageWithContentsOfFile:[url path]];
-        [_fileButton setImage:image forState:UIControlStateNormal];
-    } else {
-        DLog(@"VC didReceiveFile %@ not PNG or JPG", fileExtention);
-        [_fileButton setImage:[UIImage imageNamed:@"Icon.png"] forState:UIControlStateNormal];
-    }
+- (void)didReceiveMessage:(WDMessage *)message ofFile:(NSURL *)url {
+    // DW: change original file URL to local one
+    message.fileURL = url;
+    [self storeMessage:message];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -268,13 +286,16 @@
 #pragma mark - TextViewControllerDelegate
 
 - (void)didFinishWithText:(NSString *)text {
-    [_bubble broadcastMessage:[WDMessage messageWithText:text]];
+    WDMessage *t = [[WDMessage messageWithText:text] retain];
+    [self storeMessage:t];
+    [_bubble broadcastMessage:t];
+    [t release];
 }
 
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSLog(@"VC clickedButtonAtIndex %i", buttonIndex);
+    DLog(@"VC clickedButtonAtIndex %i", buttonIndex);
     if (buttonIndex == 0) {
         // DW: user canceled
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsUsePassword];
@@ -284,6 +305,61 @@
         [_bubble publishServiceWithPassword:[alertView textFieldAtIndex:0].text];
         [_bubble browseServices];
     }
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Navigation logic may go here. Create and push another view controller.
+    /*
+     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     // ...
+     // Pass the selected object to the new view controller.
+     [self.navigationController pushViewController:detailViewController animated:YES];
+     [detailViewController release];
+     */
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    return _messages.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier] autorelease];
+    }
+    
+    // Configure the cell...
+    WDMessage *t = [[_messages objectAtIndex:indexPath.row] retain];
+    if (t.type == WDMessageTypeText) {
+        DLog(@"VC cellForRowAtIndexPath t is %@", t);
+        cell.textLabel.text = t.sender;
+        cell.detailTextLabel.text = [[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease];
+    } else if (t.type == WDMessageTypeImage) {
+        
+    } else if (t.type == WDMessageTypeFile) {
+        UIImage *image = [UIImage imageWithContentsOfFile:[t.fileURL path]];
+        if (image) {
+            cell.imageView.image = image;
+        } else {
+            cell.imageView.image = [UIImage imageNamed:@"Icon"];
+        }
+    }
+    [t release];
+    
+    return cell;
 }
 
 @end
