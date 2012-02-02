@@ -247,6 +247,7 @@
         NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", 
                                                 [NSURL applicationDocumentsDirectory], 
                                                 fileName]];
+        storeURL = [NSURL URLWithSmartConvertionFromURL:storeURL];
         if ([fileExtention isEqualToString:@"PNG"]) {
             fileData = UIImagePNGRepresentation(image);
             [fileData writeToURL:storeURL atomically:YES];
@@ -338,24 +339,30 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
     // Configure the cell...
     WDMessage *t = [[_messages objectAtIndex:indexPath.row] retain];
+    cell.detailTextLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
+    cell.detailTextLabel.text = t.sender;
     if (t.type == WDMessageTypeText) {
         DLog(@"VC cellForRowAtIndexPath t is %@", t);
-        cell.textLabel.text = t.sender;
-        cell.detailTextLabel.text = [[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease];
+        cell.textLabel.text = [[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease];
+        cell.imageView.image = nil;
     } else if (t.type == WDMessageTypeImage) {
         
     } else if (t.type == WDMessageTypeFile) {
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        df.dateFormat = @"hh:mm:ss";
+        cell.textLabel.text = [df stringFromDate:t.time];
         UIImage *image = [UIImage imageWithContentsOfFile:[t.fileURL path]];
         if (image) {
             cell.imageView.image = image;
         } else {
             cell.imageView.image = [UIImage imageNamed:@"Icon"];
         }
+        [df release];
     }
     [t release];
     

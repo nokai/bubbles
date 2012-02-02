@@ -11,13 +11,14 @@
 #import "WDMessage.h"
 #import "WDHeader.h"
 
-#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 @interface NSURL (Bubbles)
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 + (NSURL *)applicationDocumentsDirectory;
-@end
 #elif TARGET_OS_MAC
 #endif
-
++ (NSURL *)URLWithSmartConvertionFromURL:(NSURL *)url;
+@end
+   
 @protocol WDBubbleDelegate
 - (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text;
 - (void)didReceiveMessage:(WDMessage *)message ofFile:(NSURL *)url;

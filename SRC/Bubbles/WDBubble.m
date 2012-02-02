@@ -50,16 +50,59 @@
 
 @end
 
-#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 @implementation NSURL (Bubbles)
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 
 + (NSURL *)applicationDocumentsDirectory {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-@end
 #elif TARGET_OS_MAC
 #endif
+
+// DW: a good convert from remot URL to local one
+// or good convert from local to new local
++ (NSURL *)URLWithSmartConvertionFromURL:(NSURL *)url {
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+    NSString *originalFileName = [[url.lastPathComponent componentsSeparatedByString:@"."] objectAtIndex:0];
+    NSString *currentFileName = originalFileName;
+    NSInteger currentFileNamePostfix = 2;
+    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@.%@", currentFileName, [url pathExtension]] 
+                             relativeToURL:[NSURL applicationDocumentsDirectory]];
+    while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
+        DLog(@"AsyncSocketDelegate onSocketDidDisconnect iOS storeURL %i %@", 
+             currentFileNamePostfix, 
+             storeURL);
+        currentFileName = [NSString stringWithFormat:@"%@%%20%i", originalFileName, currentFileNamePostfix++];
+        storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@.%@", currentFileName, [url pathExtension]] 
+                          relativeToURL:[NSURL applicationDocumentsDirectory]];
+    }
+#elif TARGET_OS_MAC
+    NSURL *defaultURL = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];
+    NSString *originalFileName = @"file";
+    NSString *currentFileName = originalFileName;
+    NSInteger currentFileNamePostfix = 2;
+    NSURL *storeURL = [NSURL URLWithString:
+                       [NSString stringWithFormat:@"%@%@.%@", 
+                        [defaultURL absoluteString], 
+                        currentFileName, 
+                        [[url pathExtension] lowercaseString]]];
+    while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
+        DLog(@"AsyncSocketDelegate onSocketDidDisconnect Mac storeURL %li %@", 
+             currentFileNamePostfix, 
+             storeURL);
+        currentFileName = [NSString stringWithFormat:@"%@%%20%i", originalFileName, currentFileNamePostfix++];
+        storeURL = [NSURL URLWithString:
+                    [NSString stringWithFormat:@"%@%@.%@", 
+                     [defaultURL absoluteString], 
+                     currentFileName, 
+                     [[url pathExtension] lowercaseString]]];
+    }
+#endif
+    return storeURL;
+}
+
+@end
 
 @implementation WDBubble
 @synthesize service = _service;
@@ -298,21 +341,9 @@
 #endif
                 [self.delegate didReceiveMessage:t ofImage:ti];
             } else if (t.type == WDMessageTypeFile) {
-#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-                NSURL *storeURL = [NSURL URLWithString:[t.fileURL lastPathComponent] relativeToURL:[NSURL applicationDocumentsDirectory]];
-                DLog(@"AsyncSocketDelegate onSocketDidDisconnect iOS storeURL %@", storeURL);
+                NSURL *storeURL = [NSURL URLWithSmartConvertionFromURL:t.fileURL];
                 [t.content writeToURL:storeURL atomically:YES];
                 [self.delegate didReceiveMessage:t ofFile:storeURL];
-#elif TARGET_OS_MAC
-                NSURL *defaultURL = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];
-                NSURL *storeURL = [NSURL URLWithString:
-                                   [NSString stringWithFormat:@"%@file.%@", 
-                                    [defaultURL absoluteString], 
-                                    [[t.fileURL pathExtension] lowercaseString]]];
-                DLog(@"AsyncSocketDelegate onSocketDidDisconnect Mac storeURL %@", storeURL);
-                [t.content writeToURL:storeURL atomically:YES];
-                [self.delegate didReceiveMessage:t ofFile:storeURL];
-#endif
             }
             
             // DW: clean up
