@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "NSImage+QuickLook.h"
+#import "AppDelegate.h"
 
 @protocol DragAndDropImageViewDelegate <NSObject>
 

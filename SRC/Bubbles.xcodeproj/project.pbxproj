@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		03008FFF14D81C2800C93A14 /* NSImage+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */; };
+		034C97BF14D90C9B00E57578 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034C97BE14D90C9B00E57578 /* Quartz.framework */; };
 		0354C96014BDC3F700417697 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C95F14BDC3F700417697 /* MainViewController.m */; };
 		0354C9AB14BDE4FA00417697 /* PasswordMacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */; };
 		0354C9AD14BDE51800417697 /* PasswordWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0354C9AC14BDE51800417697 /* PasswordWindowView.xib */; };
@@ -63,6 +64,7 @@
 /* Begin PBXFileReference section */
 		03008FFD14D81C2800C93A14 /* NSImage+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+QuickLook.h"; sourceTree = "<group>"; };
 		03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+QuickLook.m"; sourceTree = "<group>"; };
+		034C97BE14D90C9B00E57578 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Quartz.framework; sourceTree = DEVELOPER_DIR; };
 		0354C95E14BDC3F700417697 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		0354C95F14BDC3F700417697 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		0354C9A914BDE4FA00417697 /* PasswordMacViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordMacViewController.h; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				034C97BF14D90C9B00E57578 /* Quartz.framework in Frameworks */,
 				03C4EC5114D6A320006FB4BD /* QuickLook.framework in Frameworks */,
 				03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */,
 			);
@@ -183,6 +186,7 @@
 		C121946214B591D700159A9F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				034C97BE14D90C9B00E57578 /* Quartz.framework */,
 				03EEBE7614D597AF0026B318 /* QuickLook.framework */,
 				03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */,
 				C121946314B591D700159A9F /* UIKit.framework */,

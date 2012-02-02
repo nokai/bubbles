@@ -73,11 +73,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self 
                                                  selector:@selector(servicesUpdated:) 
                                                      name:kWDBubbleNotification
-                                                   object:nil];
-        
-        [_imageMessage registerForDraggedTypes:[NSImage imagePasteboardTypes]];
-        // Wu: register for all the image types we can display
-        
+                                                   object:nil];        
     }
     return self;
 }
@@ -155,6 +151,8 @@
             [_imageMessage setImage:quicklook];
         }
     }
+    AppDelegate *del = (AppDelegate *)[NSApp delegate];
+    del.array = [NSArray arrayWithObject:_fileURL];
 }
 
 - (IBAction)sendFile:(id)sender {
@@ -169,7 +167,6 @@
     
     [_preferenceController showWindow:self];
 }
-
 
 #pragma mark - WDBubbleDelegate
 
@@ -200,6 +197,11 @@
         NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[url path] asIcon:YES];
         [_imageMessage setImage:quicklook];
     }
+    AppDelegate *del = (AppDelegate *)[NSApp delegate];
+    if (del.array) {
+        [del.array release];
+    }
+    del.array = [NSArray arrayWithObject:_fileURL];
 }
 
 #pragma mark - NSTableViewDelegate
@@ -246,11 +248,13 @@
 
 - (void)dragDidFinished:(NSURL *)url
 {
-    DLog(@"haha url got it");
     if (_fileURL) {
         [_fileURL release];
     }
     _fileURL = [url retain];
+    AppDelegate *del = (AppDelegate *)[NSApp delegate];
+    del.array = [NSArray arrayWithObject:_fileURL];
+    
 }
 
 - (NSURL *)dataDraggedToSave
@@ -260,4 +264,6 @@
     }
     return nil;
 }
+
+
 @end

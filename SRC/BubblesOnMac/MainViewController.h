@@ -25,6 +25,8 @@
    
     PasswordMacViewController *_passwordController;
     PreferenceViewContoller *_preferenceController;
+    
+   
 
 }
 

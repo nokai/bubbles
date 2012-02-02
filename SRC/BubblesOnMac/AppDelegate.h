@@ -8,6 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 #import "WDBubble.h"
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+#import <Quartz/Quartz.h>
+
+@interface AppDelegate : NSObject <NSApplicationDelegate,QLPreviewPanelDataSource,QLPreviewPanelDelegate>
+{
+    QLPreviewPanel *_panel;
+    NSArray *_array;
+}
 @property (assign) IBOutlet NSWindow *window;
+@property (copy) NSArray *array;
+- (IBAction)showPreview:(id)sender;
 @end
