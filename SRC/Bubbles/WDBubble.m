@@ -333,13 +333,6 @@
             
             if (t.type == WDMessageTypeText) {
                 [self.delegate didReceiveMessage:t ofText:[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding]];
-            } else if (t.type == WDMessageTypeImage) {
-#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-                UIImage *ti = [[UIImage alloc] initWithData:t.content];
-#elif TARGET_OS_MAC
-                NSImage *ti = [[NSImage alloc] initWithData:t.content];
-#endif
-                [self.delegate didReceiveMessage:t ofImage:ti];
             } else if (t.type == WDMessageTypeFile) {
                 NSURL *storeURL = [NSURL URLWithSmartConvertionFromURL:t.fileURL];
                 [t.content writeToURL:storeURL atomically:YES];

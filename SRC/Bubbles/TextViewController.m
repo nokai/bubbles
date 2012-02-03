@@ -62,13 +62,11 @@
                                                       forBarMetrics:UIBarMetricsDefault];
     }
     
-    self.navigationItem.rightBarButtonItem = _cancel;
-    self.navigationItem.leftBarButtonItem = _done;
+    self.navigationItem.rightBarButtonItem = _done;
+    self.navigationItem.leftBarButtonItem = _cancel;
     _done.enabled = NO;
     [self registerForKeyboardNotifications];    
     [self setUpUndoManager];
-    
-    [_textView becomeFirstResponder];
 }
 
 - (void)viewDidUnload
@@ -77,6 +75,23 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     [self cleanUpUndoManager];
+}
+
+/*
+ The view controller must be first responder in order to be able to receive shake events for undo. It should resign first responder status when it disappears.
+ */
+- (BOOL)canBecomeFirstResponder {
+	return YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+    [_textView becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	[self resignFirstResponder];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -154,23 +169,6 @@
 
 - (void)undoManagerDidRedo:(NSNotification *)notification {
 	//[self updateRightBarButtonItemState];
-}
-
-/*
- The view controller must be first responder in order to be able to receive shake events for undo. It should resign first responder status when it disappears.
- */
-- (BOOL)canBecomeFirstResponder {
-	return YES;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
-	[self becomeFirstResponder];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
-	[self resignFirstResponder];
 }
 
 #pragma mark - Keyboard

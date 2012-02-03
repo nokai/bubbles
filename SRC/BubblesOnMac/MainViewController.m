@@ -175,11 +175,6 @@
     _textMessage.stringValue = text;
 }
 
-- (void)didReceiveMessage:(WDMessage *)message ofImage:(NSImage *)image {
-    DLog(@"MVC didReceiveImage %@", image);
-    _imageMessage.image = image;
-}
-
 - (void)didReceiveMessage:(WDMessage *)message ofFile:(NSURL *)url {
     DLog(@"MVC didReceiveFile %@", url);
     

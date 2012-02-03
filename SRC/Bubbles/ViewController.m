@@ -12,6 +12,7 @@
 #define kActionSheetButtonMessage   @"Message"
 #define kActionSheetButtonEmail     @"Email"
 #define kActionSheetButtonPrint     @"Print"
+#define kActionSheetButtonCopy      @"Copy"
 #define kActionSheetButtonSave      @"Save to Gallery"
 #define kActionSheetButtonOpenIn    @"Open In.."
 #define kActionSheetButtonCancel    @"Cancel"
@@ -70,13 +71,18 @@
     [label sizeToFit];
     if ([picker.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
         [picker.navigationBar setBackgroundImage:[UIImage imageNamed:@"tile_bg"]
-                                                      forBarMetrics:UIBarMetricsDefault];
+                                   forBarMetrics:UIBarMetricsDefault];
     }
     
 	// Set up recipients
-	NSString *emailBody = [[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding];
-	[picker setMessageBody:emailBody isHTML:YES];
-	
+    if (message.type == WDMessageTypeText) {
+        NSString *emailBody = [[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding];
+        [picker setMessageBody:emailBody isHTML:YES];
+    } else {
+        NSData *myData = [NSData dataWithContentsOfFile:message.fileURL.path];
+        [picker addAttachmentData:myData mimeType:@"image/jpeg" fileName:@"attachment"];
+	}
+    
 	[self presentModalViewController:picker animated:YES];
 	[picker release];
 }
@@ -86,7 +92,7 @@
     if ((!picker)||(![MFMessageComposeViewController canSendText])) {
         return;
     }
-        
+    
     picker.messageComposeDelegate = self;
     picker.body = [[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding];
 	[self presentModalViewController:picker animated:YES];
@@ -217,7 +223,7 @@
  */
 
 // DW: can only send images and movies for now.
-- (IBAction)sendImage:(id)sender {
+- (void)sendFile {
     if (_fileURL) {
         // DW: a movie or JPG or PNG        
         WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
@@ -225,10 +231,7 @@
         [_bubble broadcastMessage:t];
         [t release];
     } else {
-        WDMessage *t = [[WDMessage messageWithImage:[_fileButton imageForState:UIControlStateNormal]] retain];
-        [self storeMessage:t];
-        [_bubble broadcastMessage:t];
-        [t release];
+        DLog(@"VC sendFile no good file URL");
     }
 }
 
@@ -266,11 +269,6 @@
     [self storeMessage:message];
 }
 
-- (void)didReceiveMessage:(WDMessage *)message ofImage:(UIImage *)image {
-    DLog(@"VC didReceiveImage %@", image);
-    [self storeMessage:message];
-}
-
 - (void)didReceiveMessage:(WDMessage *)message ofFile:(NSURL *)url {
     // DW: change original file URL to local one
     message.fileURL = url;
@@ -297,25 +295,24 @@
                                                 [NSURL applicationDocumentsDirectory], 
                                                 fileName]];
         storeURL = [NSURL URLWithSmartConvertionFromURL:storeURL];
-        if ([fileExtention isEqualToString:@"PNG"]) {
-            fileData = UIImagePNGRepresentation(image);
-            [fileData writeToURL:storeURL atomically:YES];
-            _fileURL = [storeURL retain];
-        } else if ([fileExtention isEqualToString:@"JPG"]) {
+        if ([fileExtention isEqualToString:@"JPG"]) {
             fileData = UIImageJPEGRepresentation(image, 1.0);
             [fileData writeToURL:storeURL atomically:YES];
             _fileURL = [storeURL retain];
         } else {
             DLog(@"VC didFinishPickingMediaWithInfo %@ not PNG or JPG", fileExtention);
+            fileData = UIImagePNGRepresentation(image);
+            [fileData writeToURL:storeURL atomically:YES];
+            _fileURL = [storeURL retain];
         }
         [_fileButton setImage:image forState:UIControlStateNormal];
         DLog(@"VC didFinishPickingMediaWithInfo URL is %@", _fileURL);
-        [self sendImage:nil];
+        [self sendFile];
     } else if ([mediaType isEqualToString:@"public.movie"]) {
         [_fileButton setImage:[UIImage imageNamed:@"Icon.png"] forState:UIControlStateNormal];
         _fileURL = [[info valueForKey:UIImagePickerControllerMediaURL] retain];
         DLog(@"VC didFinishPickingMediaWithInfo select %@", _fileURL);
-        [self sendImage:nil];
+        [self sendFile];
     } else {
         _fileURL = nil;
     }
@@ -371,26 +368,20 @@
                                          delegate:self 
                                 cancelButtonTitle:kActionSheetButtonCancel
                            destructiveButtonTitle:nil
-                                otherButtonTitles:kActionSheetButtonMessage, kActionSheetButtonEmail, kActionSheetButtonPrint, nil];
-    } else if (t.type == WDMessageTypeImage) {
-        as = [[UIActionSheet alloc] initWithTitle:nil
-                                         delegate:self 
-                                cancelButtonTitle:kActionSheetButtonCancel
-                           destructiveButtonTitle:nil
-                                otherButtonTitles:kActionSheetButtonSave, kActionSheetButtonPrint, nil];
+                                otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonMessage, kActionSheetButtonEmail, kActionSheetButtonPrint, nil];
     } else if (t.type == WDMessageTypeFile) {
-        if ([UIImage imageWithContentsOfFile:t.fileURL.path]) {
+        if ([WDMessage isImageURL:t.fileURL]) {
             as = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self 
                                     cancelButtonTitle:kActionSheetButtonCancel
                                destructiveButtonTitle:nil
-                                    otherButtonTitles:kActionSheetButtonSave, kActionSheetButtonPrint, nil];
+                                    otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonSave, kActionSheetButtonPrint, kActionSheetButtonEmail, nil];
         } else {
             as = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self 
                                     cancelButtonTitle:kActionSheetButtonCancel
                                destructiveButtonTitle:nil
-                                    otherButtonTitles:kActionSheetButtonOpenIn, nil];
+                                    otherButtonTitles:kActionSheetButtonEmail, kActionSheetButtonOpenIn, nil];
         }
     }
     [t release];
@@ -427,8 +418,6 @@
         DLog(@"VC cellForRowAtIndexPath t is %@", t);
         cell.textLabel.text = [[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease];
         cell.imageView.image = nil;
-    } else if (t.type == WDMessageTypeImage) {
-        
     } else if (t.type == WDMessageTypeFile) {
         NSDateFormatter *df = [[NSDateFormatter alloc] init];
         df.dateFormat = @"hh:mm:ss";
@@ -459,6 +448,12 @@
         [self displayMailComposerSheetWithMessage:message];
     } else if ([buttonTitle isEqualToString:kActionSheetButtonMessage]) {
         [self displayMessageComposerSheetWithMessage:message];
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonCopy]) {
+        if (message.type == WDMessageTypeText) {
+            [UIPasteboard generalPasteboard].string = [[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding];
+        } else {
+            [UIPasteboard generalPasteboard].image = [UIImage imageWithContentsOfFile:message.fileURL.path];
+        }
     }
 }
 

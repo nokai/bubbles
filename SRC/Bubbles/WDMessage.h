@@ -10,7 +10,6 @@
 
 enum {
     WDMessageTypeText, 
-    WDMessageTypeImage, 
     WDMessageTypeFile
 };
 typedef NSUInteger WDMessageType;
@@ -29,14 +28,8 @@ typedef NSUInteger WDMessageType;
 @property (nonatomic, retain) NSData *content;
 @property (nonatomic, assign) NSUInteger type;
 
++ (BOOL)isImageURL:(NSURL *)url;
 + (id)messageWithText:(NSString *)text;
-
-#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-+ (id)messageWithImage:(UIImage *)image;
-#elif TARGET_OS_MAC
-+ (id)messageWithImage:(NSImage *)image;
-#endif
-
 + (id)messageWithFile:(NSURL *)url;
 
 @end

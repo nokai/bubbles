@@ -17,6 +17,14 @@
 @implementation WDMessage
 @synthesize sender = _sender, time = _time, fileURL = _fileURL, content = _content, type = _type;
 
++ (BOOL)isImageURL:(NSURL *)url {
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+    return [[UIImage alloc] initWithContentsOfFile:url.path] != nil;
+#elif TARGET_OS_MAC
+    return [[NSImage alloc] initWithContentsOfURL:url] != nil;
+#endif
+}
+
 + (id)messageWithText:(NSString *)text {
     WDMessage *m = [[[WDMessage alloc] init] autorelease];
     m.content = [text dataUsingEncoding:NSUTF8StringEncoding];
@@ -24,22 +32,6 @@
     DLog(@"WDMessage messageWithText %@", m);
     return m;
 }
-
-#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-+ (id)messageWithImage:(UIImage *)image {
-    WDMessage *m = [[[WDMessage alloc] init] autorelease];
-    m.content = UIImagePNGRepresentation(image);
-    m.type = WDMessageTypeImage;
-    return m;
-}
-#elif TARGET_OS_MAC
-+ (id)messageWithImage:(NSImage *)image {
-    WDMessage *m = [[[WDMessage alloc] init] autorelease];
-    m.content = [image TIFFRepresentation];
-    m.type = WDMessageTypeImage;
-    return m;
-}
-#endif
 
 + (id)messageWithFile:(NSURL *)url {
     WDMessage *m = [[[WDMessage alloc] init] autorelease];
