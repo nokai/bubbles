@@ -13,7 +13,8 @@
 
 @interface NSURL (Bubbles)
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-+ (NSURL *)applicationDocumentsDirectory;
++ (NSURL *)iOSDocumentsDirectoryURL;
++ (NSString *)iOSDocumentsDirectoryPath;
 #elif TARGET_OS_MAC
 #endif
 + (NSURL *)URLWithSmartConvertionFromURL:(NSURL *)url;

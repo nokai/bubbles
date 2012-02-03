@@ -292,7 +292,7 @@
         NSString *fileExtention = [[info valueForKey:UIImagePickerControllerReferenceURL] pathExtension];
         NSData *fileData = nil;
         NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", 
-                                                [NSURL applicationDocumentsDirectory], 
+                                                [NSURL iOSDocumentsDirectoryURL], 
                                                 fileName]];
         storeURL = [NSURL URLWithSmartConvertionFromURL:storeURL];
         if ([fileExtention isEqualToString:@"JPG"]) {

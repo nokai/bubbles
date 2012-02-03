@@ -53,8 +53,12 @@
 @implementation NSURL (Bubbles)
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 
-+ (NSURL *)applicationDocumentsDirectory {
++ (NSURL *)iOSDocumentsDirectoryURL {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
++ (NSString *)iOSDocumentsDirectoryPath {
+    return [[[NSURL iOSDocumentsDirectoryURL] path] stringByAppendingString:@"/"];
 }
 
 #elif TARGET_OS_MAC
@@ -68,14 +72,14 @@
     NSString *currentFileName = originalFileName;
     NSInteger currentFileNamePostfix = 2;
     NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@.%@", currentFileName, [url pathExtension]] 
-                             relativeToURL:[NSURL applicationDocumentsDirectory]];
+                             relativeToURL:[NSURL iOSDocumentsDirectoryURL]];
     while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
         DLog(@"AsyncSocketDelegate onSocketDidDisconnect iOS storeURL %i %@", 
              currentFileNamePostfix, 
              storeURL);
         currentFileName = [NSString stringWithFormat:@"%@%%20%i", originalFileName, currentFileNamePostfix++];
         storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@.%@", currentFileName, [url pathExtension]] 
-                          relativeToURL:[NSURL applicationDocumentsDirectory]];
+                          relativeToURL:[NSURL iOSDocumentsDirectoryURL]];
     }
 #elif TARGET_OS_MAC
     NSURL *defaultURL = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];

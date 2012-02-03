@@ -15,6 +15,18 @@
 @synthesize window = _window;
 @synthesize viewController = _viewController;
 
+- (void)scanDocuments {
+    // set up Add and Edit navigation items here....
+    NSArray* localDocuments = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSURL iOSDocumentsDirectoryPath]
+                                                                                  error:nil];
+    NSError *error = [[NSError alloc] init];
+    for (NSString *document in localDocuments) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:[[NSURL iOSDocumentsDirectoryPath] stringByAppendingString:document]  
+                                                        error:&error])
+            NSLog(@"Unable to delete file %@: %@", document, error);
+    }
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -62,6 +74,7 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+    [self scanDocuments];
 }
 
 @end
