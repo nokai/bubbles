@@ -62,10 +62,13 @@
                                                       forBarMetrics:UIBarMetricsDefault];
     }
     
-    self.navigationItem.rightBarButtonItem = _done;
-        self.navigationItem.leftBarButtonItem = _cancel;
+    self.navigationItem.rightBarButtonItem = _cancel;
+    self.navigationItem.leftBarButtonItem = _done;
+    _done.enabled = NO;
     [self registerForKeyboardNotifications];    
     [self setUpUndoManager];
+    
+    [_textView becomeFirstResponder];
 }
 
 - (void)viewDidUnload
@@ -102,6 +105,10 @@
     //self.navigationItem.rightBarButtonItem = _done;
     //[self.navigationItem setHidesBackButton:YES animated:YES];
     return YES;
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+    _done.enabled = textView.text.length > 0;
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {

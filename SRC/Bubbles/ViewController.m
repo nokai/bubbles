@@ -9,6 +9,13 @@
 #import "ViewController.h"
 #import "PeersViewController.h"
 
+#define kActionSheetButtonMessage   @"Message"
+#define kActionSheetButtonEmail     @"Email"
+#define kActionSheetButtonPrint     @"Print"
+#define kActionSheetButtonSave      @"Save to Gallery"
+#define kActionSheetButtonOpenIn    @"Open In.."
+#define kActionSheetButtonCancel    @"Cancel"
+
 @implementation ViewController
 
 - (void)refreshLockStatus {
@@ -42,6 +49,48 @@
             return NSOrderedSame;
     }];
     [_messagesView reloadData];
+}
+
+- (void)displayMailComposerSheetWithMessage:(WDMessage *)message {
+	MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+    if (!picker) {
+        return;
+    }
+    
+	picker.mailComposeDelegate = self;
+    
+    UILabel *label = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:20.0];
+    label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+    label.textAlignment = UITextAlignmentCenter;
+    label.textColor = [UIColor colorWithWhite:0.5 alpha:1];
+    picker.navigationItem.titleView = label;
+    label.text = NSLocalizedString(@"Peers", @"");
+    [label sizeToFit];
+    if ([picker.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
+        [picker.navigationBar setBackgroundImage:[UIImage imageNamed:@"tile_bg"]
+                                                      forBarMetrics:UIBarMetricsDefault];
+    }
+    
+	// Set up recipients
+	NSString *emailBody = [[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding];
+	[picker setMessageBody:emailBody isHTML:YES];
+	
+	[self presentModalViewController:picker animated:YES];
+	[picker release];
+}
+
+- (void)displayMessageComposerSheetWithMessage:(WDMessage *)message {
+    MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
+    if ((!picker)||(![MFMessageComposeViewController canSendText])) {
+        return;
+    }
+        
+    picker.messageComposeDelegate = self;
+    picker.body = [[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding];
+	[self presentModalViewController:picker animated:YES];
+	[picker release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -313,13 +362,41 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    UIActionSheet *as = nil;
+    
+    // DW: add action sheet buttons
+    WDMessage *t = [[_messages objectAtIndex:indexPath.row] retain];
+    if (t.type == WDMessageTypeText) {
+        as = [[UIActionSheet alloc] initWithTitle:nil
+                                         delegate:self 
+                                cancelButtonTitle:kActionSheetButtonCancel
+                           destructiveButtonTitle:nil
+                                otherButtonTitles:kActionSheetButtonMessage, kActionSheetButtonEmail, kActionSheetButtonPrint, nil];
+    } else if (t.type == WDMessageTypeImage) {
+        as = [[UIActionSheet alloc] initWithTitle:nil
+                                         delegate:self 
+                                cancelButtonTitle:kActionSheetButtonCancel
+                           destructiveButtonTitle:nil
+                                otherButtonTitles:kActionSheetButtonSave, kActionSheetButtonPrint, nil];
+    } else if (t.type == WDMessageTypeFile) {
+        if ([UIImage imageWithContentsOfFile:t.fileURL.path]) {
+            as = [[UIActionSheet alloc] initWithTitle:nil
+                                             delegate:self 
+                                    cancelButtonTitle:kActionSheetButtonCancel
+                               destructiveButtonTitle:nil
+                                    otherButtonTitles:kActionSheetButtonSave, kActionSheetButtonPrint, nil];
+        } else {
+            as = [[UIActionSheet alloc] initWithTitle:nil
+                                             delegate:self 
+                                    cancelButtonTitle:kActionSheetButtonCancel
+                               destructiveButtonTitle:nil
+                                    otherButtonTitles:kActionSheetButtonOpenIn, nil];
+        }
+    }
+    [t release];
+    
+    
+    [as showInView:self.view];
 }
 
 #pragma mark - UITableViewDataSource
@@ -367,6 +444,40 @@
     [t release];
     
     return cell;
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    WDMessage *message = [_messages objectAtIndex:[_messagesView indexPathForSelectedRow].row];
+    [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
+    
+    NSString *buttonTitle = [[actionSheet buttonTitleAtIndex:buttonIndex] retain];
+    [actionSheet release];
+    
+    if ([buttonTitle isEqualToString:kActionSheetButtonEmail]) {
+        [self displayMailComposerSheetWithMessage:message];
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonMessage]) {
+        [self displayMessageComposerSheetWithMessage:message];
+    }
+}
+
+- (void)actionSheetCancel:(UIActionSheet *)actionSheet {
+    DLog(@"VC actionSheetCancel");
+    [actionSheet release];
+    [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+	[self dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark - MFMessageComposeViewControllerDelegate
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+	[self dismissModalViewControllerAnimated:YES];
 }
 
 @end

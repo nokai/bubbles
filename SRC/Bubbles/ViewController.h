@@ -10,6 +10,8 @@
 #import "WDBubble.h"
 #import "PasswordViewController.h"
 #import "TextViewController.h"
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
 @interface ViewController : UIViewController <
 UIAlertViewDelegate, 
@@ -20,7 +22,10 @@ PasswordViewControllerDelegate,
 WDBubbleDelegate, 
 TextViewControllerDelegate, 
 UITableViewDelegate, 
-UITableViewDataSource> {
+UITableViewDataSource, 
+UIActionSheetDelegate, 
+MFMailComposeViewControllerDelegate, 
+MFMessageComposeViewControllerDelegate> {
     WDBubble *_bubble;
     NSURL *_fileURL;
     NSMutableArray *_messages;
