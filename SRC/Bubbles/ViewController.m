@@ -305,11 +305,9 @@
             [fileData writeToURL:storeURL atomically:YES];
             _fileURL = [storeURL retain];
         }
-        [_fileButton setImage:image forState:UIControlStateNormal];
         DLog(@"VC didFinishPickingMediaWithInfo URL is %@", _fileURL);
         [self sendFile];
     } else if ([mediaType isEqualToString:@"public.movie"]) {
-        [_fileButton setImage:[UIImage imageNamed:@"Icon.png"] forState:UIControlStateNormal];
         _fileURL = [[info valueForKey:UIImagePickerControllerMediaURL] retain];
         DLog(@"VC didFinishPickingMediaWithInfo select %@", _fileURL);
         [self sendFile];

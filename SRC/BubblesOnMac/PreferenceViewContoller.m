@@ -10,11 +10,10 @@
 
 @implementation PreferenceViewContoller
 
-- (id)init
-{
-    if (![super initWithWindowNibName:@"PreferenceViewController"])
-        return nil;
-    
+- (id)init {
+    if (self = [super init]) {
+        
+    }
     return self;
 }
 

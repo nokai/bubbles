@@ -38,6 +38,7 @@
             [bitmapImageRep release];
             
             if (newImage) {
+                CFRelease(ref);
                 return [newImage autorelease];
             }
         }

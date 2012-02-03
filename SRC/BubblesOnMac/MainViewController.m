@@ -193,9 +193,6 @@
         [_imageMessage setImage:quicklook];
     }
     AppDelegate *del = (AppDelegate *)[NSApp delegate];
-    if (del.array) {
-        [del.array release];
-    }
     del.array = [NSArray arrayWithObject:_fileURL];
 }
 

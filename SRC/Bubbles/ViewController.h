@@ -36,7 +36,7 @@ MFMessageComposeViewControllerDelegate> {
     //IBOutlet UIButton *_logoutButton;
     //IBOutlet UISwitch *_switchUsePassword;
     IBOutlet UITableView *_messagesView;
-    IBOutlet UIButton *_fileButton;
+    //IBOutlet UIButton *_fileButton;
     IBOutlet UIButton *_lockButton;
     
     // DW: password

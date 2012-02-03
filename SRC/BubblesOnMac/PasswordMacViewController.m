@@ -12,12 +12,11 @@
 
 @synthesize delegate;
 
-- (id)init
-{
-    if (![super initWithWindowNibName:@"PasswordWindowView"])
-            return nil;
-    [NSApp endSheet:[self window]];
-    [[self window] orderOut:nil];
+- (id)init {
+    if (self = [super init]) {
+        [NSApp endSheet:[self window]];
+        [[self window] orderOut:nil];
+    }
     return self;
 }
 

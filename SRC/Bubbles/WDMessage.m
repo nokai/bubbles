@@ -19,9 +19,9 @@
 
 + (BOOL)isImageURL:(NSURL *)url {
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-    return [[UIImage alloc] initWithContentsOfFile:url.path] != nil;
+    return [[[UIImage alloc] initWithContentsOfFile:url.path] autorelease] != nil;
 #elif TARGET_OS_MAC
-    return [[NSImage alloc] initWithContentsOfURL:url] != nil;
+    return [[[NSImage alloc] initWithContentsOfURL:url] autorelease] != nil;
 #endif
 }
 
