@@ -76,7 +76,7 @@
     
 	// Set up recipients
     if (message.type == WDMessageTypeText) {
-        NSString *emailBody = [[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding];
+        NSString *emailBody = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
         [picker setMessageBody:emailBody isHTML:YES];
     } else {
         NSData *myData = [NSData dataWithContentsOfFile:message.fileURL.path];
@@ -88,13 +88,17 @@
 }
 
 - (void)displayMessageComposerSheetWithMessage:(WDMessage *)message {
+    if (![MFMessageComposeViewController canSendText]) {
+        return;
+    }
+    
     MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
-    if ((!picker)||(![MFMessageComposeViewController canSendText])) {
+    if (!picker) {
         return;
     }
     
     picker.messageComposeDelegate = self;
-    picker.body = [[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding];
+    picker.body = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
 	[self presentModalViewController:picker animated:YES];
 	[picker release];
 }
@@ -360,32 +364,21 @@
     UIActionSheet *as = nil;
     
     // DW: add action sheet buttons
-    WDMessage *t = [[_messages objectAtIndex:indexPath.row] retain];
+    WDMessage *t = [_messages objectAtIndex:indexPath.row];
     if (t.type == WDMessageTypeText) {
         as = [[UIActionSheet alloc] initWithTitle:nil
                                          delegate:self 
                                 cancelButtonTitle:kActionSheetButtonCancel
                            destructiveButtonTitle:nil
                                 otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonMessage, kActionSheetButtonEmail, kActionSheetButtonPrint, nil];
+        [as showInView:self.view];
+        [as release];
     } else if (t.type == WDMessageTypeFile) {
-        if ([WDMessage isImageURL:t.fileURL]) {
-            as = [[UIActionSheet alloc] initWithTitle:nil
-                                             delegate:self 
-                                    cancelButtonTitle:kActionSheetButtonCancel
-                               destructiveButtonTitle:nil
-                                    otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonSave, kActionSheetButtonPrint, kActionSheetButtonEmail, nil];
-        } else {
-            as = [[UIActionSheet alloc] initWithTitle:nil
-                                             delegate:self 
-                                    cancelButtonTitle:kActionSheetButtonCancel
-                               destructiveButtonTitle:nil
-                                    otherButtonTitles:kActionSheetButtonEmail, kActionSheetButtonOpenIn, nil];
-        }
+        UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:t.fileURL] retain];
+        //[interactionController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
+        interactionController.delegate = self;
+        DLog(@"VC didSelectRowAtIndexPath present %i", [interactionController presentPreviewAnimated:YES]);
     }
-    [t release];
-    
-    
-    [as showInView:self.view];
 }
 
 #pragma mark - UITableViewDataSource
@@ -409,26 +402,33 @@
     }
     
     // Configure the cell...
-    WDMessage *t = [[_messages objectAtIndex:indexPath.row] retain];
+    WDMessage *t = [_messages objectAtIndex:indexPath.row];
+    cell.textLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
     cell.detailTextLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
-    cell.detailTextLabel.text = t.sender;
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.dateFormat = @"hh:mm:ss";
+    cell.detailTextLabel.text = [t.sender stringByAppendingFormat:@" %@", [df stringFromDate:t.time]];
+    [df release];
     if (t.type == WDMessageTypeText) {
         DLog(@"VC cellForRowAtIndexPath t is %@", t);
         cell.textLabel.text = [[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease];
-        cell.imageView.image = nil;
+        cell.imageView.image = [UIImage imageNamed:@"Icon-Text"];
     } else if (t.type == WDMessageTypeFile) {
-        NSDateFormatter *df = [[NSDateFormatter alloc] init];
-        df.dateFormat = @"hh:mm:ss";
-        cell.textLabel.text = [df stringFromDate:t.time];
+        cell.textLabel.text = [t.fileURL lastPathComponent];
         UIImage *image = [UIImage imageWithContentsOfFile:[t.fileURL path]];
         if (image) {
             cell.imageView.image = image;
         } else {
-            cell.imageView.image = [UIImage imageNamed:@"Icon"];
+            //cell.imageView.image = [UIImage imageNamed:@"Icon"];
+            if (t.fileURL) {
+                UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:t.fileURL] retain];
+                cell.imageView.image = [interactionController.icons objectAtIndex:0];
+                [interactionController release];
+            } else {
+                cell.imageView.image = [UIImage imageNamed:@"Icon"];
+            }
         }
-        [df release];
     }
-    [t release];
     
     return cell;
 }
@@ -439,8 +439,8 @@
     WDMessage *message = [_messages objectAtIndex:[_messagesView indexPathForSelectedRow].row];
     [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
     
-    NSString *buttonTitle = [[actionSheet buttonTitleAtIndex:buttonIndex] retain];
-    [actionSheet release];
+    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    //[actionSheet release];
     
     if ([buttonTitle isEqualToString:kActionSheetButtonEmail]) {
         [self displayMailComposerSheetWithMessage:message];
@@ -448,7 +448,7 @@
         [self displayMessageComposerSheetWithMessage:message];
     } else if ([buttonTitle isEqualToString:kActionSheetButtonCopy]) {
         if (message.type == WDMessageTypeText) {
-            [UIPasteboard generalPasteboard].string = [[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding];
+            [UIPasteboard generalPasteboard].string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
         } else {
             [UIPasteboard generalPasteboard].image = [UIImage imageWithContentsOfFile:message.fileURL.path];
         }
@@ -457,7 +457,7 @@
 
 - (void)actionSheetCancel:(UIActionSheet *)actionSheet {
     DLog(@"VC actionSheetCancel");
-    [actionSheet release];
+    //[actionSheet release];
     [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
 }
 
@@ -471,6 +471,16 @@
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
 	[self dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark - UIDocumentInteractionControllerDelegate
+
+- (UIViewController *)documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller {
+    return self;
+}
+
+- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller {
+    [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
 }
 
 @end

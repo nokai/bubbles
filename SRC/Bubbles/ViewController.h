@@ -12,6 +12,7 @@
 #import "TextViewController.h"
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
+#import <QuickLook/QuickLook.h>
 
 @interface ViewController : UIViewController <
 UIAlertViewDelegate, 
@@ -25,7 +26,8 @@ UITableViewDelegate,
 UITableViewDataSource, 
 UIActionSheetDelegate, 
 MFMailComposeViewControllerDelegate, 
-MFMessageComposeViewControllerDelegate> {
+MFMessageComposeViewControllerDelegate, 
+UIDocumentInteractionControllerDelegate> {
     WDBubble *_bubble;
     NSURL *_fileURL;
     NSMutableArray *_messages;
