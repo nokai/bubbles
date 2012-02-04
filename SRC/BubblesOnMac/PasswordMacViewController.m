@@ -13,7 +13,7 @@
 @synthesize delegate;
 
 - (id)init {
-    if (self = [super init]) {
+    if (self = [super initWithWindowNibName:@"PasswordWindowView"]) {
         [NSApp endSheet:[self window]];
         [[self window] orderOut:nil];
     }
