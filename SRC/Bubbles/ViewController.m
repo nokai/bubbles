@@ -11,10 +11,9 @@
 
 #define kActionSheetButtonMessage   @"Message"
 #define kActionSheetButtonEmail     @"Email"
-#define kActionSheetButtonPrint     @"Print"
 #define kActionSheetButtonCopy      @"Copy"
 #define kActionSheetButtonSave      @"Save to Gallery"
-#define kActionSheetButtonOpenIn    @"Open In.."
+#define kActionSheetButtonPreview   @"Preview"
 #define kActionSheetButtonCancel    @"Cancel"
 
 @implementation ViewController
@@ -370,14 +369,25 @@
                                          delegate:self 
                                 cancelButtonTitle:kActionSheetButtonCancel
                            destructiveButtonTitle:nil
-                                otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonMessage, kActionSheetButtonEmail, kActionSheetButtonPrint, nil];
+                                otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonMessage, kActionSheetButtonEmail, nil];
         [as showInView:self.view];
         [as release];
     } else if (t.type == WDMessageTypeFile) {
-        UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:t.fileURL] retain];
-        //[interactionController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
-        interactionController.delegate = self;
-        DLog(@"VC didSelectRowAtIndexPath present %i", [interactionController presentPreviewAnimated:YES]);
+        if ([WDMessage isImageURL:t.fileURL]) {
+            as = [[UIActionSheet alloc] initWithTitle:nil
+                                             delegate:self 
+                                    cancelButtonTitle:kActionSheetButtonCancel
+                               destructiveButtonTitle:nil
+                                    otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonPreview, kActionSheetButtonSave, nil];
+            [as showInView:self.view];
+            [as release];
+        } else {
+            UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:t.fileURL] retain];
+            //[interactionController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
+            interactionController.delegate = self;
+            DLog(@"VC didSelectRowAtIndexPath present %i", [interactionController presentPreviewAnimated:YES]);
+            [interactionController release];
+        }
     }
 }
 
@@ -452,6 +462,12 @@
         } else {
             [UIPasteboard generalPasteboard].image = [UIImage imageWithContentsOfFile:message.fileURL.path];
         }
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonPreview]) {
+        UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:message.fileURL] retain];
+        //[interactionController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
+        interactionController.delegate = self;
+        DLog(@"VC didSelectRowAtIndexPath present %i", [interactionController presentPreviewAnimated:YES]);
+        [interactionController release];
     }
 }
 
