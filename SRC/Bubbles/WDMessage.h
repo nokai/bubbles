@@ -14,7 +14,7 @@ enum {
 };
 typedef NSUInteger WDMessageType;
 
-@interface WDMessage : NSObject <NSCoding> {
+@interface WDMessage : NSObject <NSCoding,NSCopying> {
     NSString *_sender;
     NSDate *_time;
     NSURL *_fileURL;    // DW: available only in file type

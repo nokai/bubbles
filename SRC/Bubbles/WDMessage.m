@@ -93,4 +93,16 @@
     return self;
 }
 
+#pragma mark - NSCopy
+
+- (id)copyWithMessage:(WDMessage *)aMessage
+{
+    
+}
+
+- (id)copyWithZone:(NSZone *)zone{
+    WDMessage *copy = [[[self class] allocWithZone: zone] init];
+    return copy;
+}
+
 @end

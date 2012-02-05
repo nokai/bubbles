@@ -19,6 +19,7 @@
 - (void)loadUserPreference
 {
     if (_passwordController != nil) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
         return ;
     }
     
@@ -41,7 +42,7 @@
 }
 
 // DW: we do not need this method now
-- (void)directlySave {
+/*- (void)directlySave {
     NSURL *url = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];
     if (_fileURL && _imageMessage.image != nil) {
         NSFileManager *manager = [NSFileManager defaultManager];
@@ -55,6 +56,21 @@
         NSString *fullPath = [[url path] stringByAppendingPathComponent:filename];
         [manager createFileAtPath:fullPath contents:data attributes:nil];
     }
+}*/
+
+- (void)storeMessage:(WDMessage *)message
+{
+    DLog(@"storeMessage");
+    [_fileHistoryArray addObject:message];
+   /* [_fileHistoryArray sortUsingComparator:^(WDMessage *obj1, WDMessage * obj2) {
+        if ([obj1.time compare:obj2.time] == NSOrderedAscending)
+            return NSOrderedDescending;
+        else if ([obj1.time compare:obj2.time] == NSOrderedDescending)
+            return NSOrderedAscending;
+        else
+            return NSOrderedSame;
+    }];*/
+    [_historyTableView reloadData];
 }
 
 #pragma mark - init & dealloc
@@ -73,35 +89,49 @@
         [[NSNotificationCenter defaultCenter] addObserver:self 
                                                  selector:@selector(servicesUpdated:) 
                                                      name:kWDBubbleNotification
-                                                   object:nil];        
+                                                   object:nil];   
+        
+        _fileHistoryArray = [[NSMutableArray alloc]init];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
-    [self removeObserver:self forKeyPath:kWDBubbleNotification];
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kWDBubbleNotification];
+    [_imageMessage release];
     [_passwordController release];
     [_preferenceController release];
+    [_imageAndTextCell release];
+    [_fileHistoryArray release];
     [_bubble release];
     [_accessoryView release];
+    [_tableView release];
+    [_historyTableView release];
     [_fileURL release];
+    [_imageMessage release];
+    [_textMessage release];
+    [_checkBox release];
     [super dealloc];
 }
 
 - (void)awakeFromNib
 {
     bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
-    DLog(@"status is %d",status);
     [_checkBox setState:status];
-    
     _imageMessage.delegate = self;
     
     //add observer to get the notification when the main menu become key window then the sheet window will appear
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(delayNotification)
                                                  name:@"NSWindowDidBecomeKeyNotification" object:nil];
+    
+    // Wu:Set the customize the cell for the  only one column
+    _imageAndTextCell = [[ImageAndTextCell alloc] init];
+    _imageAndTextCell.delegate = self;
+    NSTableColumn *column = [[_historyTableView tableColumns] objectAtIndex:0];
+    [column setDataCell:_imageAndTextCell];
 }
 
 #pragma mark - IBActions
@@ -156,7 +186,10 @@
 }
 
 - (IBAction)sendFile:(id)sender {
-    [_bubble broadcastMessage:[WDMessage messageWithFile:_fileURL]];
+     WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
+    [self storeMessage:t];
+    [_bubble broadcastMessage:t];
+    [t release];
 }
 
 - (IBAction)showPreferencePanel:(id)sender
@@ -173,17 +206,18 @@
 - (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text {
     DLog(@"VC didReceiveText %@", text);
     _textMessage.stringValue = text;
+    [self storeMessage:message];
 }
 
 - (void)didReceiveMessage:(WDMessage *)message ofFile:(NSURL *)url {
     DLog(@"MVC didReceiveFile %@", url);
-    
+    [self storeMessage:message];
     // DW: store this url for drag and drop
     if (_fileURL) {
         [_fileURL release];
     }
     _fileURL = [url retain];
-    
+   
     NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
     if (image != nil) {
         [_imageMessage setImage:image];
@@ -209,18 +243,29 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    return _bubble.servicesFound.count;
+    if (aTableView == _tableView ) {
+        return _bubble.servicesFound.count;
+    } else if (aTableView == _historyTableView) {
+        DLog(@"numberOfRowsInTableView");
+        return [_fileHistoryArray count];
+    }
+    return 0;
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    NSNetService *t = [_bubble.servicesFound objectAtIndex:rowIndex];
-    
-    if ([t.name isEqualToString:_bubble.service.name]) {
-        return [t.name stringByAppendingString:@" (local)"];
-    } else {
-        return t.name;
+    if (aTableView == _tableView) {
+        NSNetService *t = [_bubble.servicesFound objectAtIndex:rowIndex];
+        if ([t.name isEqualToString:_bubble.service.name]) {
+            return [t.name stringByAppendingString:@" (local)"];
+        } else {
+            return t.name;
+        }
+    } else if (aTableView == _historyTableView) {
+        DLog(@"objectValueForTableColumn");
+        return [_fileHistoryArray objectAtIndex:rowIndex];
     }
+    return nil;
 }
 
 #pragma mark - PasswordMacViewControllerDelegate
@@ -246,7 +291,6 @@
     _fileURL = [url retain];
     AppDelegate *del = (AppDelegate *)[NSApp delegate];
     del.array = [NSArray arrayWithObject:_fileURL];
-    
 }
 
 - (NSURL *)dataDraggedToSave
@@ -257,5 +301,39 @@
     return nil;
 }
 
+#pragma mark - ImageAndTextCellDelegate
+
+- (NSImage *)previewIconForCell:(NSObject *)data
+{
+    DLog(@"previewIconForCell");
+    WDMessage *message = (WDMessage *)data;
+    if (message.type == WDMessageTypeText){
+        return nil;
+    } else if (message.type == WDMessageTypeFile){
+        NSImage *icon = [[[NSImage alloc]initWithContentsOfURL:message.fileURL]autorelease];
+        return icon;
+    }
+    return nil;
+}
+
+- (NSString *)primaryTextForCell:(NSObject *)data
+{
+    DLog(@"primaryTextForCell");
+    WDMessage *message = (WDMessage *)data;
+    if (message.type == WDMessageTypeText){
+        return [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
+    } else if (message.type == WDMessageTypeFile){
+        return [message.fileURL lastPathComponent];
+    }
+    return nil;
+}
+
+- (NSString *)auxiliaryTextForCell:(NSObject *)data
+{
+    WDMessage *message = (WDMessage *)data;
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.dateFormat = @"hh:mm:ss";
+    return  [message.sender stringByAppendingFormat:@" %@", [df stringFromDate:message.time]];
+}
 
 @end

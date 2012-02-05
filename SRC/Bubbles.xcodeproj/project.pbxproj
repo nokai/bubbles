@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		03008FFF14D81C2800C93A14 /* NSImage+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */; };
+		0311924414DE4CE700E0DFEB /* ImageAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0311924314DE4CE700E0DFEB /* ImageAndTextCell.m */; };
 		034C97BF14D90C9B00E57578 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034C97BE14D90C9B00E57578 /* Quartz.framework */; };
 		0354C96014BDC3F700417697 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C95F14BDC3F700417697 /* MainViewController.m */; };
 		0354C9AB14BDE4FA00417697 /* PasswordMacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */; };
@@ -68,6 +69,8 @@
 /* Begin PBXFileReference section */
 		03008FFD14D81C2800C93A14 /* NSImage+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+QuickLook.h"; sourceTree = "<group>"; };
 		03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+QuickLook.m"; sourceTree = "<group>"; };
+		0311924214DE4CE700E0DFEB /* ImageAndTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageAndTextCell.h; sourceTree = "<group>"; };
+		0311924314DE4CE700E0DFEB /* ImageAndTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageAndTextCell.m; sourceTree = "<group>"; };
 		034C97BE14D90C9B00E57578 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Quartz.framework; sourceTree = DEVELOPER_DIR; };
 		0354C95E14BDC3F700417697 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		0354C95F14BDC3F700417697 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -286,6 +289,8 @@
 				037D71DF14C954530082FB64 /* PreferenceViewContoller.h */,
 				037D71E014C954530082FB64 /* PreferenceViewContoller.m */,
 				037D71E314C954D60082FB64 /* PreferenceViewController.xib */,
+				0311924214DE4CE700E0DFEB /* ImageAndTextCell.h */,
+				0311924314DE4CE700E0DFEB /* ImageAndTextCell.m */,
 			);
 			path = BubblesOnMac;
 			sourceTree = "<group>";
@@ -488,6 +493,7 @@
 				03BF64B314C32D8200CD52AB /* DragAndDropImageView.m in Sources */,
 				037D71E114C954530082FB64 /* PreferenceViewContoller.m in Sources */,
 				03008FFF14D81C2800C93A14 /* NSImage+QuickLook.m in Sources */,
+				0311924414DE4CE700E0DFEB /* ImageAndTextCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

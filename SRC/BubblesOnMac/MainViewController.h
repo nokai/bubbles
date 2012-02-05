@@ -12,8 +12,9 @@
 #import "DragAndDropImageView.h"
 #import "PreferenceViewContoller.h"
 #import "NSImage+QuickLook.h"
+#import "ImageAndTextCell.h"
 
-@interface MainViewController : NSObject <WDBubbleDelegate,NSTableViewDelegate, NSTableViewDataSource,PasswordMacViewControllerDelegate,DragAndDropImageViewDelegate> {
+@interface MainViewController : NSObject <WDBubbleDelegate,NSTableViewDelegate, NSTableViewDataSource,PasswordMacViewControllerDelegate,DragAndDropImageViewDelegate,ImageAndTextCellDelegate> {
     WDBubble *_bubble;
     NSURL *_fileURL;
     
@@ -22,14 +23,14 @@
     IBOutlet NSTableView *_tableView;
     IBOutlet NSButton *_checkBox;
     IBOutlet NSView *_accessoryView;
+    IBOutlet NSTableView *_historyTableView;
+    
+    NSMutableArray *_fileHistoryArray;
    
     PasswordMacViewController *_passwordController;
     PreferenceViewContoller *_preferenceController;
-    
-   
-
+    ImageAndTextCell *_imageAndTextCell;
 }
-
 // DW: for binding
 @property (nonatomic, retain) NSURL *fileURL;
 
