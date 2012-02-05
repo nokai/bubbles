@@ -157,9 +157,13 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
         return nil;
     }
 
-    NSURL *newURL = [draggedDataURL URLWithoutNameConflict];
+    NSURL *newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
+                                                  dropDestination.path, 
+                                                  [draggedDataURL.lastPathComponent stringByReplacingOccurrencesOfString:@" " 
+                                                                                                              withString:@"%20"]]];
+    newURL = [newURL URLWithoutNameConflict];
     NSData *data = [NSData dataWithContentsOfURL:draggedDataURL];
-    [[NSFileManager defaultManager] createFileAtPath:newURL.absoluteString contents:data attributes:nil];
+    [[NSFileManager defaultManager] createFileAtPath:newURL.path contents:data attributes:nil];
     
     return [NSArray arrayWithObjects:newURL.lastPathComponent, nil];
 }

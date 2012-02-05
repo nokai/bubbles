@@ -65,7 +65,7 @@
 #endif
 
 - (NSURL *)URLWithRemoteChangedToLocal {
-    NSString *currentFileName = [self URLByDeletingPathExtension].lastPathComponent;
+    NSString *currentFileName = [[self URLByDeletingPathExtension].lastPathComponent stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
     NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", 
                                             [NSURL iOSDocumentsDirectoryURL], 
@@ -91,7 +91,7 @@
 // DW: a good convert from remot URL to local one
 // or good convert from local to new local
 - (NSURL *)URLWithoutNameConflict {
-    NSString *originalFileName = [self URLByDeletingPathExtension].lastPathComponent;
+    NSString *originalFileName = [[self URLByDeletingPathExtension].lastPathComponent stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     NSString *currentFileName = originalFileName;
     NSInteger currentFileNamePostfix = 2;
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
