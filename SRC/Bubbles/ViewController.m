@@ -295,10 +295,9 @@
         //fileName = [NSString stringWithFormat:@".%@", fileName];
         NSString *fileExtention = [[info valueForKey:UIImagePickerControllerReferenceURL] pathExtension];
         NSData *fileData = nil;
-        NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", 
+        NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@.%@", 
                                                 [NSURL iOSDocumentsDirectoryURL], 
                                                 fileName]];
-        storeURL = [NSURL URLWithSmartConvertionFromURL:storeURL];
         if ([fileExtention isEqualToString:@"JPG"]) {
             fileData = UIImageJPEGRepresentation(image, 1.0);
             [fileData writeToURL:storeURL atomically:YES];
@@ -422,12 +421,13 @@
     }
     
     // Configure the cell...
+    cell.textLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
+    cell.detailTextLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
+    
     if (_segmentSwith.selectedSegmentIndex == 0) {
         // DW: messages, AKA "History"
         
         WDMessage *t = [_itemsToShow objectAtIndex:indexPath.row];
-        cell.textLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
-        cell.detailTextLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
         NSDateFormatter *df = [[NSDateFormatter alloc] init];
         df.dateFormat = @"hh:mm:ss";
         cell.detailTextLabel.text = [t.sender stringByAppendingFormat:@" %@", [df stringFromDate:t.time]];
@@ -441,6 +441,11 @@
             UIImage *image = [UIImage imageWithContentsOfFile:[t.fileURL path]];
             if (image) {
                 cell.imageView.image = image;
+                
+                // DW: if it's images named like ".asset.xxx", we do not show it's name
+                if ([t.fileURL.lastPathComponent hasPrefix:@"."]) {
+                    cell.textLabel.text = @"From Photos";
+                }
             } else {
                 //cell.imageView.image = [UIImage imageNamed:@"Icon"];
                 if (t.fileURL) {

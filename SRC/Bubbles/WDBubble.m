@@ -64,36 +64,56 @@
 #elif TARGET_OS_MAC
 #endif
 
+- (NSURL *)URLWithRemoteChangedToLocal {
+    NSString *currentFileName = [self URLByDeletingPathExtension].lastPathComponent;
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", 
+                                            [NSURL iOSDocumentsDirectoryURL], 
+                                            currentFileName, 
+                                            [[self pathExtension] lowercaseString]]];
+#elif TARGET_OS_MAC
+    NSURL *defaultURL = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];
+    
+    // DW: Mac do not use ".xxx" files, remove the first "."
+    if ([currentFileName hasPrefix:@"."]) {
+        currentFileName = [currentFileName stringByReplacingCharactersInRange:NSRangeFromString(@"0 1") withString:@""];
+    }
+    
+    NSURL *storeURL = [NSURL URLWithString:
+                       [NSString stringWithFormat:@"%@%@.%@", 
+                        [defaultURL absoluteString], 
+                        currentFileName, 
+                        [[self pathExtension] lowercaseString]]];
+#endif
+    return storeURL;
+}
+
 // DW: a good convert from remot URL to local one
 // or good convert from local to new local
-+ (NSURL *)URLWithSmartConvertionFromURL:(NSURL *)url {
-    NSString *originalFileName = [[url.lastPathComponent componentsSeparatedByString:@"."] objectAtIndex:0];
-    NSString *currentFileName = (NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                                    (CFStringRef)originalFileName,
-                                                                                    NULL,
-                                                                                    CFSTR(" "),
-                                                                                    kCFStringEncodingUTF8);
+- (NSURL *)URLWithoutNameConflict {
+    NSString *originalFileName = [self URLByDeletingPathExtension].lastPathComponent;
+    NSString *currentFileName = originalFileName;
     NSInteger currentFileNamePostfix = 2;
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
     NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@.%@", 
                                             [NSURL iOSDocumentsDirectoryURL], 
                                             currentFileName, 
-                                            [url pathExtension]]];
+                                            [self pathExtension]]];
     while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
         DLog(@"AsyncSocketDelegate onSocketDidDisconnect iOS storeURL %i %@", 
              currentFileNamePostfix, 
              storeURL);
         currentFileName = [NSString stringWithFormat:@"%@%%20%i", originalFileName, currentFileNamePostfix++];
-        storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@.%@", currentFileName, [url pathExtension]] 
-                          relativeToURL:[NSURL iOSDocumentsDirectoryURL]];
+        storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@.%@", currentFileName, [self pathExtension]] 
+                          relativeToURL:[self URLByDeletingLastPathComponent]];
     }
 #elif TARGET_OS_MAC
-    NSURL *defaultURL = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];
+    NSURL *defaultURL = [self URLByDeletingLastPathComponent];
     NSURL *storeURL = [NSURL URLWithString:
                        [NSString stringWithFormat:@"%@%@.%@", 
                         [defaultURL absoluteString], 
                         currentFileName, 
-                        [[url pathExtension] lowercaseString]]];
+                        [[self pathExtension] lowercaseString]]];
     while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
         DLog(@"NSURL URLWithSmartConvertionFromURL Mac storeURL %li %@", 
              currentFileNamePostfix, 
@@ -103,7 +123,7 @@
                     [NSString stringWithFormat:@"%@%@.%@", 
                      [defaultURL absoluteString], 
                      currentFileName, 
-                     [[url pathExtension] lowercaseString]]];
+                     [[self pathExtension] lowercaseString]]];
     }
 #endif
     return storeURL;
@@ -361,7 +381,8 @@
             if (t.type == WDMessageTypeText) {
                 [self.delegate didReceiveMessage:t ofText:[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding]];
             } else if (t.type == WDMessageTypeFile) {
-                NSURL *storeURL = [NSURL URLWithSmartConvertionFromURL:t.fileURL];
+                NSURL *storeURL = [[t.fileURL URLWithRemoteChangedToLocal] URLWithoutNameConflict];
+                DLog(@"WDBubble onSocketDidDisconnect %@", storeURL.pathExtension);
                 [t.content writeToURL:storeURL atomically:YES];
                 [self.delegate didReceiveMessage:t ofFile:storeURL];
             }
