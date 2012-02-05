@@ -580,24 +580,12 @@
 
 - (void)directoryDidChange:(DirectoryWatcher *)directoryWatcher {
 	[_documents removeAllObjects];    // clear out the old docs and start over
-	
-	NSString *documentsDirectoryPath = [NSURL iOSDocumentsDirectoryPath];
-	NSArray *documentsDirectoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectoryPath error:NULL];
-    
-	for (NSString* curFileName in [documentsDirectoryContents objectEnumerator]) {
-		NSString *filePath = [documentsDirectoryPath stringByAppendingPathComponent:curFileName];
-		NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-		
-		BOOL isDirectory;
-        [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDirectory];
-		
-        // proceed to add the document URL to our list (ignore the "Inbox" folder)
-        if (!(isDirectory && [curFileName isEqualToString: @"Inbox"])) {
-            [_documents addObject:fileURL];
-        }
-	}
-	
-	[_messagesView reloadData];
+
+    [_documents addObjectsFromArray:[[NSFileManager defaultManager] contentsOfDirectoryAtURL:[NSURL iOSDocumentsDirectoryURL] 
+                                                                 includingPropertiesForKeys:nil 
+                                                                                    options:NSDirectoryEnumerationSkipsHiddenFiles 
+                                                                                      error:nil]];
+    [_messagesView reloadData];
 }
 
 @end
