@@ -67,14 +67,14 @@
 // DW: a good convert from remot URL to local one
 // or good convert from local to new local
 + (NSURL *)URLWithSmartConvertionFromURL:(NSURL *)url {
-#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
     NSString *originalFileName = [[url.lastPathComponent componentsSeparatedByString:@"."] objectAtIndex:0];
-    NSString *currentFileName = [(NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+    NSString *currentFileName = (NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
                                                                                     (CFStringRef)originalFileName,
                                                                                     NULL,
                                                                                     CFSTR(" "),
-                                                                                    kCFStringEncodingUTF8) autorelease];
+                                                                                    kCFStringEncodingUTF8);
     NSInteger currentFileNamePostfix = 2;
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
     NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@.%@", 
                                             [NSURL iOSDocumentsDirectoryURL], 
                                             currentFileName, 
@@ -89,20 +89,13 @@
     }
 #elif TARGET_OS_MAC
     NSURL *defaultURL = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];
-    NSString *originalFileName = @"file";
-    NSString *currentFileName = (NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                                    (CFStringRef)originalFileName,
-                                                                                    NULL,
-                                                                                    CFSTR(" "),
-                                                                                    kCFStringEncodingUTF8);
-    NSInteger currentFileNamePostfix = 2;
     NSURL *storeURL = [NSURL URLWithString:
                        [NSString stringWithFormat:@"%@%@.%@", 
                         [defaultURL absoluteString], 
                         currentFileName, 
                         [[url pathExtension] lowercaseString]]];
     while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
-        DLog(@"AsyncSocketDelegate onSocketDidDisconnect Mac storeURL %li %@", 
+        DLog(@"NSURL URLWithSmartConvertionFromURL Mac storeURL %li %@", 
              currentFileNamePostfix, 
              storeURL);
         currentFileName = [NSString stringWithFormat:@"%@%%20%i", originalFileName, currentFileNamePostfix++];
@@ -114,6 +107,26 @@
     }
 #endif
     return storeURL;
+}
+
++ (NSString *)formattedFileSize:(unsigned long long)size {
+	NSString *formattedStr = nil;
+    if (size == 0) 
+		formattedStr = @"Empty";
+	else 
+		if (size > 0 && size < 1024) 
+			formattedStr = [NSString stringWithFormat:@"%qu bytes", size];
+        else 
+            if (size >= 1024 && size < pow(1024, 2)) 
+                formattedStr = [NSString stringWithFormat:@"%.1f KB", (size / 1024.)];
+            else 
+                if (size >= pow(1024, 2) && size < pow(1024, 3))
+                    formattedStr = [NSString stringWithFormat:@"%.2f MB", (size / pow(1024, 2))];
+                else 
+                    if (size >= pow(1024, 3)) 
+                        formattedStr = [NSString stringWithFormat:@"%.3f GB", (size / pow(1024, 3))];
+	
+	return formattedStr;
 }
 
 @end

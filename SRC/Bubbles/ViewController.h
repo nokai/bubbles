@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WDBubble.h"
+#import "DirectoryWatcher.h"
 #import "PasswordViewController.h"
 #import "TextViewController.h"
 #import <MessageUI/MessageUI.h>
@@ -27,18 +28,21 @@ UITableViewDataSource,
 UIActionSheetDelegate, 
 MFMailComposeViewControllerDelegate, 
 MFMessageComposeViewControllerDelegate, 
-UIDocumentInteractionControllerDelegate> {
+UIDocumentInteractionControllerDelegate, 
+DirectoryWatcherDelegate> {
+    // DW: bubbles core
     WDBubble *_bubble;
     NSURL *_fileURL;
     NSMutableArray *_messages;
     
+    // DW: files
+    NSMutableArray *_documents;
+    DirectoryWatcher *_directoryWatcher;
+    
     // DW: UI
-    //IBOutlet UITextField *_textMessage;
-    //IBOutlet UIImageView *_imageMessage;
-    //IBOutlet UIButton *_logoutButton;
-    //IBOutlet UISwitch *_switchUsePassword;
+    NSMutableArray *_itemsToShow;
+    IBOutlet UISegmentedControl *_segmentSwith;
     IBOutlet UITableView *_messagesView;
-    //IBOutlet UIButton *_fileButton;
     IBOutlet UIButton *_lockButton;
     
     // DW: password

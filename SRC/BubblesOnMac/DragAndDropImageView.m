@@ -151,19 +151,16 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 }
 
 // Wu: drag to save
-- (NSArray *)namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
-{
-    DLog(@"enter this method!!!");
-    
+- (NSArray *)namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination {
     NSURL *draggedDataURL = [self.delegate dataDraggedToSave];
-    
     if (draggedDataURL == nil) {
         return nil;
     }
 
     NSFileManager *manager  = [NSFileManager defaultManager];
 
-    NSString *filename = [draggedDataURL lastPathComponent];
+    NSURL *newURL = [NSURL URLWithSmartConvertionFromURL:draggedDataURL];
+    NSString *filename = [newURL lastPathComponent];
     NSData *data = [NSData dataWithContentsOfURL:draggedDataURL];
     NSString *fullPath = [[dropDestination path] stringByAppendingPathComponent:filename];
     

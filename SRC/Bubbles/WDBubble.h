@@ -18,6 +18,7 @@
 #elif TARGET_OS_MAC
 #endif
 + (NSURL *)URLWithSmartConvertionFromURL:(NSURL *)url;
++ (NSString *)formattedFileSize:(unsigned long long)size;
 @end
    
 @protocol WDBubbleDelegate

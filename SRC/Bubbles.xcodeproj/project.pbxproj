@@ -17,6 +17,7 @@
 		03BF64B314C32D8200CD52AB /* DragAndDropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */; };
 		03C4EC5114D6A320006FB4BD /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EEBE7614D597AF0026B318 /* QuickLook.framework */; };
 		03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C111265514DE2C7800884F7D /* DirectoryWatcher.m */; };
 		C11FC3A814DB8D75002A92A2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11FC3A714DB8D75002A92A2 /* MessageUI.framework */; };
 		C121946414B591D700159A9F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121946314B591D700159A9F /* UIKit.framework */; };
 		C121946614B591D700159A9F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121946514B591D700159A9F /* Foundation.framework */; };
@@ -80,6 +81,8 @@
 		03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragAndDropImageView.m; sourceTree = "<group>"; };
 		03EEBE7614D597AF0026B318 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuickLook.framework; sourceTree = DEVELOPER_DIR; };
 		03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		C111265414DE2C7800884F7D /* DirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryWatcher.h; path = Bubbles/DirectoryWatcher.h; sourceTree = SOURCE_ROOT; };
+		C111265514DE2C7800884F7D /* DirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectoryWatcher.m; path = Bubbles/DirectoryWatcher.m; sourceTree = SOURCE_ROOT; };
 		C11FC3A714DB8D75002A92A2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		C121945F14B591D700159A9F /* Bubbles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bubbles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C121946314B591D700159A9F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -209,6 +212,8 @@
 		C121946914B591D700159A9F /* Bubbles */ = {
 			isa = PBXGroup;
 			children = (
+				C111265414DE2C7800884F7D /* DirectoryWatcher.h */,
+				C111265514DE2C7800884F7D /* DirectoryWatcher.m */,
 				C1E624D114BD940B0010F395 /* iPad */,
 				C1E624D014BD94020010F395 /* iPhone */,
 				C121946A14B591D700159A9F /* Supporting Files */,
@@ -465,6 +470,7 @@
 				C1F80FDD14BA84A6006F0779 /* PasswordViewController.m in Sources */,
 				C1393F0A14D90C83005AFEB6 /* TextViewController.m in Sources */,
 				C1393F2814D91BBF005AFEB6 /* UINavigationBar+Custom.m in Sources */,
+				C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

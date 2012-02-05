@@ -15,6 +15,7 @@
 @synthesize window = _window;
 @synthesize viewController = _viewController;
 
+// DW: scan and delete all files
 - (void)scanDocuments {
     // set up Add and Edit navigation items here....
     NSArray* localDocuments = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSURL iOSDocumentsDirectoryPath]
@@ -75,7 +76,8 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
-    [self scanDocuments];
+    // DW: we do not delete all files now, :-)
+    //[self scanDocuments];
 }
 
 @end
