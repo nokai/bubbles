@@ -10,4 +10,12 @@
 
 @implementation UINavigationBar (Custom)
 
+- (void)drawRect:(CGRect)rect {
+	UIImage* navigationBarBackgroundImage = [UIImage imageNamed:@"tile_bg"];
+	if (navigationBarBackgroundImage)
+		[navigationBarBackgroundImage drawInRect:rect];
+	else
+		[super drawRect:rect];	
+}
+
 @end

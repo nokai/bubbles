@@ -59,26 +59,16 @@
     
 	picker.mailComposeDelegate = self;
     
-    UILabel *label = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-    label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont boldSystemFontOfSize:20.0];
-    label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-    label.textAlignment = UITextAlignmentCenter;
-    label.textColor = [UIColor colorWithWhite:0.5 alpha:1];
-    picker.navigationItem.titleView = label;
-    label.text = NSLocalizedString(@"Mail", @"");
-    [label sizeToFit];
-    if ([picker.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
-        [picker.navigationBar setBackgroundImage:[UIImage imageNamed:@"tile_bg"]
-                                   forBarMetrics:UIBarMetricsDefault];
-    }
-    
 	// Set up recipients
     if (message.type == WDMessageTypeText) {
         NSString *emailBody = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
         [picker setMessageBody:emailBody isHTML:YES];
     } else {
         NSData *myData = [NSData dataWithContentsOfFile:message.fileURL.path];
+        NSURLRequest *req = [NSURLRequest requestWithURL:message.fileURL];
+        NSURLResponse *res = nil;
+        [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
+        DLog(@"VC displayMailComposerSheetWithMessage UTI %@", [res MIMEType]);
         [picker addAttachmentData:myData mimeType:@"image/jpeg" fileName:@"attachment"];
 	}
     
@@ -108,6 +98,7 @@
     } else {
         DLog(@"VC Image %@ saved.", image);
     }
+    [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -368,59 +359,43 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    WDMessage *t = nil;
+    UIActionSheet *as = nil;
     
+    // DW: construct a WDMessage
     if (_segmentSwith.selectedSegmentIndex == 0) {
-        // Navigation logic may go here. Create and push another view controller.
-        UIActionSheet *as = nil;
-        
-        // DW: add action sheet buttons
-        WDMessage *t = [_messages objectAtIndex:indexPath.row];
-        if (t.type == WDMessageTypeText) {
+        t = [_messages objectAtIndex:indexPath.row];
+    } else if (_segmentSwith.selectedSegmentIndex == 1) {
+        NSURL *fileURL = [_documents objectAtIndex:indexPath.row];
+        t = [[[WDMessage alloc] init] autorelease];
+        t.type = WDMessageTypeFile;
+        t.fileURL = fileURL;
+    }
+    
+    // DW: chose an action
+    if (t.type == WDMessageTypeText) {
+        as = [[UIActionSheet alloc] initWithTitle:nil
+                                         delegate:self 
+                                cancelButtonTitle:kActionSheetButtonCancel
+                           destructiveButtonTitle:nil
+                                otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonMessage, kActionSheetButtonEmail, nil];
+    } else if (t.type == WDMessageTypeFile) {
+        if ([WDMessage isImageURL:t.fileURL]) {
             as = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self 
                                     cancelButtonTitle:kActionSheetButtonCancel
                                destructiveButtonTitle:nil
-                                    otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonMessage, kActionSheetButtonEmail, nil];
-            [as showInView:self.view];
-            [as release];
-        } else if (t.type == WDMessageTypeFile) {
-            if ([WDMessage isImageURL:t.fileURL]) {
-                as = [[UIActionSheet alloc] initWithTitle:nil
-                                                 delegate:self 
-                                        cancelButtonTitle:kActionSheetButtonCancel
-                                   destructiveButtonTitle:nil
-                                        otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonPreview, kActionSheetButtonSave, nil];
-                [as showInView:self.view];
-                [as release];
-            } else {
-                UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:t.fileURL] retain];
-                //[interactionController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
-                interactionController.delegate = self;
-                [interactionController presentPreviewAnimated:YES];
-                [interactionController release];
-                [_messagesView deselectRowAtIndexPath:_messagesView.indexPathForSelectedRow animated:YES];
-            }
-        }
-    } else if (_segmentSwith.selectedSegmentIndex == 1) {
-        // DW: files, quite the same with WDMessageTypeFile
-        NSURL *fileURL = [_documents objectAtIndex:indexPath.row];
-        if ([WDMessage isImageURL:fileURL]) {
-            UIActionSheet *as = [[UIActionSheet alloc] initWithTitle:nil
-                                                            delegate:self 
-                                                   cancelButtonTitle:kActionSheetButtonCancel
-                                              destructiveButtonTitle:nil
-                                                   otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonPreview, kActionSheetButtonSave, nil];
-            [as showInView:self.view];
-            [as release];
+                                    otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonPreview, kActionSheetButtonSave, nil];
         } else {
-            UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
-            //[interactionController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
-            interactionController.delegate = self;
-            [interactionController presentPreviewAnimated:YES];
-            [interactionController release];
-            [_messagesView deselectRowAtIndexPath:_messagesView.indexPathForSelectedRow animated:YES];
+            as = [[UIActionSheet alloc] initWithTitle:nil
+                                             delegate:self 
+                                    cancelButtonTitle:kActionSheetButtonCancel
+                               destructiveButtonTitle:nil
+                                    otherButtonTitles:kActionSheetButtonEmail, kActionSheetButtonPreview, nil];
         }
     }
+    [as showInView:self.view];
+    [as release];
 }
 
 #pragma mark - UITableViewDataSource
@@ -481,7 +456,6 @@
         NSURL *fileURL = [_documents objectAtIndex:indexPath.row];
         
         UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
-        interactionController.delegate = self;
         
         // layout the cell
         cell.textLabel.text = [[fileURL path] lastPathComponent];
@@ -524,55 +498,46 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
     
+    // DW: construct a WDMessage
+    WDMessage *message = nil;
     if (_segmentSwith.selectedSegmentIndex == 0) {
         // DW: messages
-        WDMessage *message = [_messages objectAtIndex:[_messagesView indexPathForSelectedRow].row];
-        [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
-        
-        if ([buttonTitle isEqualToString:kActionSheetButtonEmail]) {
-            [self displayMailComposerSheetWithMessage:message];
-        } else if ([buttonTitle isEqualToString:kActionSheetButtonMessage]) {
-            [self displayMessageComposerSheetWithMessage:message];
-        } else if ([buttonTitle isEqualToString:kActionSheetButtonCopy]) {
-            if (message.type == WDMessageTypeText) {
-                [UIPasteboard generalPasteboard].string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
-            } else {
-                [UIPasteboard generalPasteboard].image = [UIImage imageWithContentsOfFile:message.fileURL.path];
-            }
-        } else if ([buttonTitle isEqualToString:kActionSheetButtonPreview]) {
-            UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:message.fileURL] retain];
-            //[interactionController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
-            interactionController.delegate = self;
-            DLog(@"VC didSelectRowAtIndexPath present %i", [interactionController presentPreviewAnimated:YES]);
-            [interactionController release];
-        } else if ([buttonTitle isEqualToString:kActionSheetButtonSave]) {
-            UIImage *image = [UIImage imageWithContentsOfFile:message.fileURL.path];
-            if (image) {
-                UIImageWriteToSavedPhotosAlbum(image, 
-                                               self, 
-                                               @selector(image:didFinishSavingWithError:contextInfo:), 
-                                               nil);
-            }
-        }
-    } else if (_segmentSwith.selectedSegmentIndex == 0) {
-        // DW: files
+        message = [[_messages objectAtIndex:[_messagesView indexPathForSelectedRow].row] retain];
+    } else if (_segmentSwith.selectedSegmentIndex == 1) {
         NSURL *fileURL = [_documents objectAtIndex:_messagesView.indexPathForSelectedRow.row];
-        if ([buttonTitle isEqualToString:kActionSheetButtonPreview]) {
-            UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
-            //[interactionController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
-            interactionController.delegate = self;
-            DLog(@"VC didSelectRowAtIndexPath present %i", [interactionController presentPreviewAnimated:YES]);
-            [interactionController release];
-        } else if ([buttonTitle isEqualToString:kActionSheetButtonSave]) {
-            UIImage *image = [UIImage imageWithContentsOfFile:fileURL.path];
-            if (image) {
-                UIImageWriteToSavedPhotosAlbum(image, 
-                                               self, 
-                                               @selector(image:didFinishSavingWithError:contextInfo:), 
-                                               nil);
-            }
-        }
+        message = [[WDMessage alloc] init];
+        message.type = WDMessageTypeFile;
+        message.fileURL = fileURL;
     }
+    
+    // DW: chose an action
+    if ([buttonTitle isEqualToString:kActionSheetButtonEmail]) {
+        [self displayMailComposerSheetWithMessage:message];
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonMessage]) {
+        [self displayMessageComposerSheetWithMessage:message];
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonCopy]) {
+        if (message.type == WDMessageTypeText) {
+            [UIPasteboard generalPasteboard].string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
+        } else {
+            [UIPasteboard generalPasteboard].image = [UIImage imageWithContentsOfFile:message.fileURL.path];
+        }
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonPreview]) {
+        UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:message.fileURL] retain];
+        interactionController.delegate = self;
+        DLog(@"VC clickedButtonAtIndex present %i", [interactionController presentPreviewAnimated:YES]);
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonSave]) {
+        UIImage *image = [UIImage imageWithContentsOfFile:message.fileURL.path];
+        if (image) {
+            UIImageWriteToSavedPhotosAlbum(image, 
+                                           self, 
+                                           @selector(image:didFinishSavingWithError:contextInfo:), 
+                                           nil);
+        }
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonCancel]) {
+        [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
+    }
+    
+    [message release];
 }
 
 - (void)actionSheetCancel:(UIActionSheet *)actionSheet {
@@ -585,12 +550,14 @@
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
 	[self dismissModalViewControllerAnimated:YES];
+    [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
 }
 
 #pragma mark - MFMessageComposeViewControllerDelegate
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
 	[self dismissModalViewControllerAnimated:YES];
+    [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
 }
 
 #pragma mark - UIDocumentInteractionControllerDelegate
@@ -600,6 +567,7 @@
 }
 
 - (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller {
+    [controller release];
     [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
 }
 
