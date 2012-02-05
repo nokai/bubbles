@@ -95,13 +95,20 @@
 
 #pragma mark - NSCopy
 
-- (id)copyWithMessage:(WDMessage *)aMessage
+- (id)initWithCopyMessage:(NSString *)aSender withUrl:(NSURL *)aURL withDate:(NSDate *)aDate withContent:(NSData *)aContent withType:(NSUInteger) aType
 {
-    
+    if (self = [super init]) {
+        _sender = [aSender retain];
+        _fileURL = [aURL retain];
+        _time = [aDate retain];
+        _content = [aContent retain];
+        _type = aType;
+    }
+    return self;
 }
 
 - (id)copyWithZone:(NSZone *)zone{
-    WDMessage *copy = [[[self class] allocWithZone: zone] init];
+    WDMessage *copy = [[[self class] allocWithZone: zone] initWithCopyMessage:_sender withUrl:_fileURL withDate:_time withContent:_content withType:_type];
     return copy;
 }
 
