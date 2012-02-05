@@ -67,7 +67,7 @@
 - (NSURL *)URLWithRemoteChangedToLocal {
     NSString *currentFileName = [[self URLByDeletingPathExtension].lastPathComponent stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", 
+    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@.%@", 
                                             [NSURL iOSDocumentsDirectoryURL], 
                                             currentFileName, 
                                             [[self pathExtension] lowercaseString]]];

@@ -9,11 +9,12 @@
 #import "ViewController.h"
 #import "PeersViewController.h"
 
-#define kActionSheetButtonMessage   @"Message"
-#define kActionSheetButtonEmail     @"Email"
 #define kActionSheetButtonCopy      @"Copy"
-#define kActionSheetButtonSave      @"Save to Gallery"
+#define kActionSheetButtonSend      @"Send"
+#define kActionSheetButtonEmail     @"Email"
+#define kActionSheetButtonMessage   @"Message"
 #define kActionSheetButtonPreview   @"Preview"
+#define kActionSheetButtonSave      @"Save to Gallery"
 #define kActionSheetButtonCancel    @"Cancel"
 
 @implementation ViewController
@@ -98,7 +99,7 @@
     } else {
         DLog(@"VC Image %@ saved.", image);
     }
-    [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
+    //[_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -377,20 +378,20 @@
                                          delegate:self 
                                 cancelButtonTitle:kActionSheetButtonCancel
                            destructiveButtonTitle:nil
-                                otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonMessage, kActionSheetButtonEmail, nil];
+                                otherButtonTitles:kActionSheetButtonSend, kActionSheetButtonCopy, kActionSheetButtonMessage, kActionSheetButtonEmail, nil];
     } else if (t.type == WDMessageTypeFile) {
         if ([WDMessage isImageURL:t.fileURL]) {
             as = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self 
                                     cancelButtonTitle:kActionSheetButtonCancel
                                destructiveButtonTitle:nil
-                                    otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonPreview, kActionSheetButtonSave, nil];
+                                    otherButtonTitles:kActionSheetButtonSend, kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonPreview, kActionSheetButtonSave, nil];
         } else {
             as = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self 
                                     cancelButtonTitle:kActionSheetButtonCancel
                                destructiveButtonTitle:nil
-                                    otherButtonTitles:kActionSheetButtonEmail, kActionSheetButtonPreview, nil];
+                                    otherButtonTitles:kActionSheetButtonSend, kActionSheetButtonEmail, kActionSheetButtonPreview, nil];
         }
     }
     [as showInView:self.view];
@@ -523,7 +524,7 @@
     } else if ([buttonTitle isEqualToString:kActionSheetButtonCopy]) {
         if (message.type == WDMessageTypeText) {
             [UIPasteboard generalPasteboard].string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
-        } else {
+        } else if (message.type == WDMessageTypeFile) {
             [UIPasteboard generalPasteboard].image = [UIImage imageWithContentsOfFile:message.fileURL.path];
         }
     } else if ([buttonTitle isEqualToString:kActionSheetButtonPreview]) {
@@ -540,29 +541,42 @@
         }
     } else if ([buttonTitle isEqualToString:kActionSheetButtonCancel]) {
         [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonSend]) {
+        if (message.type == WDMessageTypeText) {
+            WDMessage *t = [[WDMessage messageWithText:[[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease]] retain];
+            [self storeMessage:t];
+            [_bubble broadcastMessage:t];
+            [t release];
+        } else if (message.type == WDMessageTypeFile) {
+            WDMessage *t = [[WDMessage messageWithFile:message.fileURL] retain];
+            [self storeMessage:t];
+            [_bubble broadcastMessage:t];
+            [t release];
+        }
     }
     
     [message release];
+    [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
 }
 
 - (void)actionSheetCancel:(UIActionSheet *)actionSheet {
     DLog(@"VC actionSheetCancel");
     //[actionSheet release];
-    [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
+    //[_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
 	[self dismissModalViewControllerAnimated:YES];
-    [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
+    //[_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
 }
 
 #pragma mark - MFMessageComposeViewControllerDelegate
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
 	[self dismissModalViewControllerAnimated:YES];
-    [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
+    //[_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
 }
 
 #pragma mark - UIDocumentInteractionControllerDelegate
@@ -573,18 +587,18 @@
 
 - (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller {
     [controller release];
-    [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
+    //[_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
 }
 
 #pragma mark - DirectoryWatcherDelegate
 
 - (void)directoryDidChange:(DirectoryWatcher *)directoryWatcher {
 	[_documents removeAllObjects];    // clear out the old docs and start over
-
+    
     [_documents addObjectsFromArray:[[NSFileManager defaultManager] contentsOfDirectoryAtURL:[NSURL iOSDocumentsDirectoryURL] 
-                                                                 includingPropertiesForKeys:nil 
-                                                                                    options:NSDirectoryEnumerationSkipsHiddenFiles 
-                                                                                      error:nil]];
+                                                                  includingPropertiesForKeys:nil 
+                                                                                     options:NSDirectoryEnumerationSkipsHiddenFiles 
+                                                                                       error:nil]];
     [_messagesView reloadData];
 }
 
