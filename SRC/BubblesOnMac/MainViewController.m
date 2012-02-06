@@ -201,6 +201,28 @@
     [_preferenceController showWindow:self];
 }
 
+- (IBAction)deleteSelectedRows:(id)sender
+{
+    if ([_historyTableView selectedRow] < 0 || [_historyTableView selectedRow] >= [_fileHistoryArray count]) {
+        return ;
+    } else {
+        [_fileHistoryArray removeObjectAtIndex:[_historyTableView selectedRow]];
+        [_historyTableView noteNumberOfRowsChanged];
+        [_historyTableView reloadData];
+    }
+}
+
+- (IBAction)removeAllHistory:(id)sender
+{
+    if ([_fileHistoryArray count] == 0) {
+        return ;
+    } else {
+        [_fileHistoryArray removeAllObjects];
+        [_historyTableView noteNumberOfRowsChanged];
+        [_historyTableView reloadData];
+    }
+}
+
 #pragma mark - WDBubbleDelegate
 
 - (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text {
@@ -267,6 +289,8 @@
     }
     return nil;
 }
+
+
 
 #pragma mark - PasswordMacViewControllerDelegate
 
