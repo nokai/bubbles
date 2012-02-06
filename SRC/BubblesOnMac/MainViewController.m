@@ -331,7 +331,7 @@
 - (NSString *)auxiliaryTextForCell:(NSObject *)data
 {
     WDMessage *message = (WDMessage *)data;
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    NSDateFormatter *df = [[[NSDateFormatter alloc] init] autorelease];
     df.dateFormat = @"hh:mm:ss";
     return  [message.sender stringByAppendingFormat:@" %@", [df stringFromDate:message.time]];
 }

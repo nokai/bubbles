@@ -23,7 +23,7 @@
     [super dealloc];
 }
 
-/*- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
     DLog(@"copyWithZone");
     ImageAndTextCell *cell = (ImageAndTextCell *)[super copyWithZone:zone];
@@ -32,7 +32,7 @@
     cell.delegate = nil;
     cell.previewImage = nil;
     return cell;
-}*/
+}
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
@@ -41,9 +41,9 @@
     
     // Wu:fetch the three attributes 02/05
     NSObject *data = [self objectValue];
-    _primaryText = [self.delegate primaryTextForCell:data];
-    _auxiliaryText = [self.delegate auxiliaryTextForCell:data];
-    _previewImage = [self.delegate previewIconForCell:data];
+    _primaryText = [[self.delegate primaryTextForCell:data] retain];
+    _auxiliaryText = [[self.delegate auxiliaryTextForCell:data] retain];
+    _previewImage = [[self.delegate previewIconForCell:data] retain];
     
     // Wu:For the primaryText 02/05
     NSColor *primartTextColor = [self isHighlighted] ? [NSColor alternateSelectedControlTextColor] : 
@@ -72,7 +72,7 @@
 	[[NSGraphicsContext currentContext] setImageInterpolation: NSImageInterpolationHigh];	
 	
 	[_previewImage drawInRect:NSMakeRect(cellFrame.origin.x + 5, yOffset + 3, cellFrame.size.height - 6, cellFrame.size.height - 6) 
-                     fromRect:NSMakeRect(0,0,cellFrame.size.width,cellFrame.size.height) 
+                     fromRect:NSMakeRect(0,0,[_previewImage size].width,[_previewImage size].height) 
                     operation:NSCompositeSourceOver
                      fraction:1.0];
 	
