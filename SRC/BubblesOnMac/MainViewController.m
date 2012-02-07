@@ -122,7 +122,7 @@
     [_checkBox setState:status];
     _imageMessage.delegate = self;
     
-    //add observer to get the notification when the main menu become key window then the sheet window will appear
+    // Wu:Add observer to get the notification when the main menu become key window then the sheet window will appear
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(delayNotification)
                                                  name:@"NSWindowDidBecomeKeyNotification" object:nil];
@@ -132,6 +132,11 @@
     _imageAndTextCell.delegate = self;
     NSTableColumn *column = [[_historyTableView tableColumns] objectAtIndex:0];
     [column setDataCell:_imageAndTextCell];
+    
+    // Wu:Set the tableview can accept being dragged from
+    [_historyTableView registerForDraggedTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType,NSFilenamesPboardType,NSTIFFPboardType,nil]];
+	// Wu:Tell NSTableView we want to drag and drop accross applications the default is YES
+	[_historyTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }
 
 #pragma mark - IBActions
@@ -181,6 +186,7 @@
             [_imageMessage setImage:quicklook];
         }
     }
+    DLog(@"selected file url is %@",_fileURL);
     AppDelegate *del = (AppDelegate *)[NSApp delegate];
     del.array = [NSArray arrayWithObject:_fileURL];
 }
@@ -284,13 +290,47 @@
             return t.name;
         }
     } else if (aTableView == _historyTableView) {
-        DLog(@"objectValueForTableColumn");
         return [_fileHistoryArray objectAtIndex:rowIndex];
     }
     return nil;
 }
 
+- (BOOL)   tableView:(NSTableView *)pTableView 
+writeRowsWithIndexes:(NSIndexSet *)pIndexSetOfRows 
+		toPasteboard:(NSPasteboard*)pboard
+{
+	// Wu:This is to allow us to drag files to save
+	// We don't do this if more than one row is selected
+    DLog(@"writeRowsWithIndexes");
+	if ([pIndexSetOfRows count] > 1) {
+		return YES;
+	} 
+	NSInteger zIndex	= [pIndexSetOfRows firstIndex];
+	WDMessage *message	= [_fileHistoryArray objectAtIndex:zIndex];
+    
+    [pboard declareTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType, nil] owner:self];
+    NSArray *propertyArray = [NSArray arrayWithObject:message.fileURL.pathExtension];
+    [pboard setPropertyList:propertyArray
+                    forType:NSFilesPromisePboardType];
+    return YES;
+}
 
+- (NSArray *)tableView:(NSTableView *)aTableView
+namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
+forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
+    DLog(@"namesOfPromisedFilesDroppedAtDestination");
+    NSInteger zIndex = [indexSet firstIndex];
+    WDMessage *message = [_fileHistoryArray objectAtIndex:zIndex];
+    
+    NSURL *newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
+                                          dropDestination.path, 
+                                          [message.fileURL.lastPathComponent stringByReplacingOccurrencesOfString:@" " 
+                                                                                                      withString:@"%20"]]];
+    newURL = [newURL URLWithoutNameConflict];
+    NSData *data = [NSData dataWithContentsOfURL:message.fileURL];
+    [[NSFileManager defaultManager] createFileAtPath:newURL.path contents:data attributes:nil];
+    return [NSArray arrayWithObjects:newURL.lastPathComponent, nil];
+}
 
 #pragma mark - PasswordMacViewControllerDelegate
 
