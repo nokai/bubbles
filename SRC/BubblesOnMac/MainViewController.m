@@ -186,9 +186,6 @@
             [_imageMessage setImage:quicklook];
         }
     }
-    DLog(@"selected file url is %@",_fileURL);
-    AppDelegate *del = (AppDelegate *)[NSApp delegate];
-    del.array = [NSArray arrayWithObject:_fileURL];
 }
 
 - (IBAction)sendFile:(id)sender {
@@ -254,8 +251,6 @@
         NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[url path] asIcon:YES];
         [_imageMessage setImage:quicklook];
     }
-    AppDelegate *del = (AppDelegate *)[NSApp delegate];
-    del.array = [NSArray arrayWithObject:_fileURL];
 }
 
 #pragma mark - NSTableViewDelegate
@@ -353,8 +348,6 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
         [_fileURL release];
     }
     _fileURL = [url retain];
-    AppDelegate *del = (AppDelegate *)[NSApp delegate];
-    del.array = [NSArray arrayWithObject:_fileURL];
 }
 
 - (NSURL *)dataDraggedToSave
@@ -398,6 +391,12 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     NSDateFormatter *df = [[[NSDateFormatter alloc] init] autorelease];
     df.dateFormat = @"hh:mm:ss";
     return  [message.sender stringByAppendingFormat:@" %@", [df stringFromDate:message.time]];
+}
+
+- (NSURL *)URLForCell:(NSObject *)data
+{
+    WDMessage *message = (WDMessage *)data;
+    return  message.fileURL;
 }
 
 @end

@@ -8,11 +8,13 @@
 
 #import <AppKit/AppKit.h>
 #import <Cocoa/Cocoa.h>
+#import "AppDelegate.h"
 
 @protocol ImageAndTextCellDelegate <NSObject>
 - (NSImage *)previewIconForCell:(NSObject *)data;
 - (NSString *)primaryTextForCell:(NSObject *)data;
 - (NSString *)auxiliaryTextForCell:(NSObject *)data;
+- (NSURL *)URLForCell:(NSObject *)data;
 @end
 
 @interface ImageAndTextCell : NSTextFieldCell
@@ -20,10 +22,13 @@
     NSImage *_previewImage;
     NSString *_auxiliaryText;
     NSString *_primaryText;
+    NSButton *_previewButton;
+    NSURL *_fileURL;
 }
 @property (nonatomic , retain) NSImage *previewImage;
 @property (nonatomic , copy) NSString *auxiliaryText;
 @property (nonatomic , copy) NSString *primaryText;
+@property (nonatomic , retain) NSURL *fileURL;
 @property (nonatomic , assign) id<ImageAndTextCellDelegate> delegate;
 
 @end
