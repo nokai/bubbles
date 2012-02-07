@@ -122,7 +122,7 @@
     [_checkBox setState:status];
     _imageMessage.delegate = self;
     
-    //add observer to get the notification when the main menu become key window then the sheet window will appear
+    // Wu:Add observer to get the notification when the main menu become key window then the sheet window will appear
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(delayNotification)
                                                  name:@"NSWindowDidBecomeKeyNotification" object:nil];
@@ -132,6 +132,11 @@
     _imageAndTextCell.delegate = self;
     NSTableColumn *column = [[_historyTableView tableColumns] objectAtIndex:0];
     [column setDataCell:_imageAndTextCell];
+    
+    // Wu:Set the tableview can accept being dragged from
+    [_historyTableView registerForDraggedTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType,NSFilenamesPboardType,NSTIFFPboardType,nil]];
+	// Wu:Tell NSTableView we want to drag and drop accross applications the default is YES
+	[_historyTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }
 
 #pragma mark - IBActions
@@ -181,8 +186,6 @@
             [_imageMessage setImage:quicklook];
         }
     }
-    AppDelegate *del = (AppDelegate *)[NSApp delegate];
-    del.array = [NSArray arrayWithObject:_fileURL];
 }
 
 - (IBAction)sendFile:(id)sender {
@@ -199,6 +202,28 @@
     }
     
     [_preferenceController showWindow:self];
+}
+
+- (IBAction)deleteSelectedRows:(id)sender
+{
+    if ([_historyTableView selectedRow] < 0 || [_historyTableView selectedRow] >= [_fileHistoryArray count]) {
+        return ;
+    } else {
+        [_fileHistoryArray removeObjectAtIndex:[_historyTableView selectedRow]];
+        [_historyTableView noteNumberOfRowsChanged];
+        [_historyTableView reloadData];
+    }
+}
+
+- (IBAction)removeAllHistory:(id)sender
+{
+    if ([_fileHistoryArray count] == 0) {
+        return ;
+    } else {
+        [_fileHistoryArray removeAllObjects];
+        [_historyTableView noteNumberOfRowsChanged];
+        [_historyTableView reloadData];
+    }
 }
 
 #pragma mark - WDBubbleDelegate
@@ -226,8 +251,6 @@
         NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[url path] asIcon:YES];
         [_imageMessage setImage:quicklook];
     }
-    AppDelegate *del = (AppDelegate *)[NSApp delegate];
-    del.array = [NSArray arrayWithObject:_fileURL];
 }
 
 #pragma mark - NSTableViewDelegate
@@ -262,10 +285,46 @@
             return t.name;
         }
     } else if (aTableView == _historyTableView) {
-        DLog(@"objectValueForTableColumn");
         return [_fileHistoryArray objectAtIndex:rowIndex];
     }
     return nil;
+}
+
+- (BOOL)   tableView:(NSTableView *)pTableView 
+writeRowsWithIndexes:(NSIndexSet *)pIndexSetOfRows 
+		toPasteboard:(NSPasteboard*)pboard
+{
+	// Wu:This is to allow us to drag files to save
+	// We don't do this if more than one row is selected
+    DLog(@"writeRowsWithIndexes");
+	if ([pIndexSetOfRows count] > 1) {
+		return YES;
+	} 
+	NSInteger zIndex	= [pIndexSetOfRows firstIndex];
+	WDMessage *message	= [_fileHistoryArray objectAtIndex:zIndex];
+    
+    [pboard declareTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType, nil] owner:self];
+    NSArray *propertyArray = [NSArray arrayWithObject:message.fileURL.pathExtension];
+    [pboard setPropertyList:propertyArray
+                    forType:NSFilesPromisePboardType];
+    return YES;
+}
+
+- (NSArray *)tableView:(NSTableView *)aTableView
+namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
+forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
+    DLog(@"namesOfPromisedFilesDroppedAtDestination");
+    NSInteger zIndex = [indexSet firstIndex];
+    WDMessage *message = [_fileHistoryArray objectAtIndex:zIndex];
+    
+    NSURL *newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
+                                          dropDestination.path, 
+                                          [message.fileURL.lastPathComponent stringByReplacingOccurrencesOfString:@" " 
+                                                                                                      withString:@"%20"]]];
+    newURL = [newURL URLWithoutNameConflict];
+    NSData *data = [NSData dataWithContentsOfURL:message.fileURL];
+    [[NSFileManager defaultManager] createFileAtPath:newURL.path contents:data attributes:nil];
+    return [NSArray arrayWithObjects:newURL.lastPathComponent, nil];
 }
 
 #pragma mark - PasswordMacViewControllerDelegate
@@ -289,8 +348,6 @@
         [_fileURL release];
     }
     _fileURL = [url retain];
-    AppDelegate *del = (AppDelegate *)[NSApp delegate];
-    del.array = [NSArray arrayWithObject:_fileURL];
 }
 
 - (NSURL *)dataDraggedToSave
@@ -334,6 +391,12 @@
     NSDateFormatter *df = [[[NSDateFormatter alloc] init] autorelease];
     df.dateFormat = @"hh:mm:ss";
     return  [message.sender stringByAppendingFormat:@" %@", [df stringFromDate:message.time]];
+}
+
+- (NSURL *)URLForCell:(NSObject *)data
+{
+    WDMessage *message = (WDMessage *)data;
+    return  message.fileURL;
 }
 
 @end

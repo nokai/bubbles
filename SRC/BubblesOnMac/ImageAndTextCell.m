@@ -13,6 +13,7 @@
 @synthesize previewImage = _previewImage;
 @synthesize auxiliaryText = _auxiliaryText;
 @synthesize primaryText = _primaryText;
+@synthesize fileURL = _fileURL;
 @synthesize delegate;
 
 - (void)dealloc
@@ -20,6 +21,8 @@
     [_previewImage release];
     [_auxiliaryText release];
     [_primaryText release];
+    [_previewImage release];
+    [_fileURL release];
     [super dealloc];
 }
 
@@ -31,6 +34,7 @@
     cell.auxiliaryText = nil;
     cell.delegate = nil;
     cell.previewImage = nil;
+    cell.fileURL = nil;
     return cell;
 }
 
@@ -44,6 +48,7 @@
     _primaryText = [[self.delegate primaryTextForCell:data] retain];
     _auxiliaryText = [[self.delegate auxiliaryTextForCell:data] retain];
     _previewImage = [[self.delegate previewIconForCell:data] retain];
+    _fileURL = [[self.delegate URLForCell:data] retain];
     
     // Wu:For the primaryText 02/05
     NSColor *primartTextColor = [self isHighlighted] ? [NSColor alternateSelectedControlTextColor] : 
@@ -78,7 +83,24 @@
 	
 	[[NSGraphicsContext currentContext] setImageInterpolation: interpolation];
 	
-	[[NSGraphicsContext currentContext] restoreGraphicsState];	                                                             
+	[[NSGraphicsContext currentContext] restoreGraphicsState];	   
+    
+    _previewButton = [[NSButton alloc]initWithFrame:CGRectMake(cellFrame.origin.x + cellFrame.size.height + 200 ,cellFrame.origin.y + cellFrame.size.height / 2, 70, cellFrame.size.height / 2 )];
+    [_previewButton setTitle:@"Preview"];
+    [_previewButton setTarget:self];
+    [_previewButton setAction:@selector(showItPreview)];
+    [_previewButton setButtonType:NSRoundedDisclosureBezelStyle];
+    [controlView addSubview:_previewButton];
+}
+
+- (void)showItPreview
+{
+    AppDelegate *del = (AppDelegate *)[NSApp delegate];
+    DLog(@"file is %@",_fileURL);
+    if (![del.array containsObject:_fileURL]) {
+        del.array = [NSArray arrayWithObject:_fileURL];
+    }
+    [del showPreviewInHistory];
 }
 
 @end

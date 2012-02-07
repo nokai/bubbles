@@ -18,4 +18,5 @@
 @property (assign) IBOutlet NSWindow *window;
 @property (copy) NSArray *array;
 - (IBAction)showPreview:(id)sender;
+- (void)showPreviewInHistory;
 @end

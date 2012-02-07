@@ -36,6 +36,15 @@
     }
 }
 
+- (void)showPreviewInHistory
+{
+    if ([QLPreviewPanel sharedPreviewPanelExists] && [[QLPreviewPanel sharedPreviewPanel]isVisible]) {
+        [[QLPreviewPanel sharedPreviewPanel] orderOut:nil];
+    } else {
+        [[QLPreviewPanel sharedPreviewPanel]makeKeyAndOrderFront:nil];
+    }
+}
+
 #pragma mark - QLPreviewPanel Support
 
 - (BOOL)acceptsPreviewPanelControl:(QLPreviewPanel *)panel;
