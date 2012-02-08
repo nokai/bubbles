@@ -143,16 +143,17 @@
     _textViewController = [[TextViewController alloc]initWithNibName:@"TextViewController" bundle:nil];
     _dragFileController = [[DragFileViewController alloc]initWithNibName:@"DragFileViewController" bundle:nil];
     
-
     [[_textViewController view] setFrame:[_superView bounds]];
     [[_dragFileController view] setFrame:[_superView bounds]];
     
     [_superView addSubview:[_textViewController view]];
-    //[_superView addSubview:[_dragFileController view]];
+    [_superView addSubview:[_dragFileController view]];
     
     _dragFileController.imageView.delegate = self;
-
+   
+    
     // Wu:Hide some buttons with related to Drag File
+    [_dragFileController.view setHidden:YES];
     [_selectFile setHidden:YES];
     [_sendFile setHidden:YES];
 }
@@ -257,19 +258,25 @@
 {
     if (_isView == kTextViewController) {
         _isView = kDragFileController;
-        [[_textViewController view]removeFromSuperview];
+       // [_superView replaceSubview:[_textViewController view] with:[_dragFileController view]];
+       // [[[_textViewController view]animator]setAlphaValue:0.0f];
+       // [[[_dragFileController view]animator]setAlphaValue:1.0f];
+        [_textViewController.view setHidden:YES withFade:YES];
+        [_dragFileController.view setHidden:NO withFade:YES];
         [_sendText setHidden:YES];
-        [_superView addSubview:[_dragFileController view]];
         [_sendFile setHidden:NO];
         [_selectFile setHidden:NO];
         _swapButton.title = @"Swap to Messages";
         
     } else {
         _isView = kTextViewController;
-        [[_dragFileController view] removeFromSuperview];
+        [_textViewController.view setHidden:NO withFade:YES];
+        [_dragFileController.view setHidden:YES withFade:YES];
+//        [_superView replaceSubview:[_dragFileController view] with:[_textViewController view]];
+//        [[[_dragFileController view]animator]setAlphaValue:0.0f];
+//       [[[_textViewController view]animator]setAlphaValue:1.0f];
         [_sendFile setHidden:YES];
         [_selectFile setHidden:YES];
-        [_superView addSubview:[_textViewController view]];
         [_sendText setHidden:NO];
         _swapButton.title = @"Swap to Files";
     }

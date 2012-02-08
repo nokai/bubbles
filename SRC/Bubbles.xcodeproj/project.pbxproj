@@ -22,6 +22,7 @@
 		03A887AE14E2BFAD008CA643 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A887AD14E2BFAD008CA643 /* QuartzCore.framework */; };
 		03BF64B314C32D8200CD52AB /* DragAndDropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */; };
 		03C4EC5114D6A320006FB4BD /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EEBE7614D597AF0026B318 /* QuickLook.framework */; };
+		03EFE64B14E2EF04007FA2B6 /* NSView+NSView_Fade_.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */; };
 		03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C111265514DE2C7800884F7D /* DirectoryWatcher.m */; };
 		C11FC3A814DB8D75002A92A2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11FC3A714DB8D75002A92A2 /* MessageUI.framework */; };
@@ -95,6 +96,8 @@
 		03BF64B114C32D8200CD52AB /* DragAndDropImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragAndDropImageView.h; sourceTree = "<group>"; };
 		03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragAndDropImageView.m; sourceTree = "<group>"; };
 		03EEBE7614D597AF0026B318 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuickLook.framework; sourceTree = DEVELOPER_DIR; };
+		03EFE64914E2EF04007FA2B6 /* NSView+NSView_Fade_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+NSView_Fade_.h"; sourceTree = "<group>"; };
+		03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+NSView_Fade_.m"; sourceTree = "<group>"; };
 		03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		C111265414DE2C7800884F7D /* DirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryWatcher.h; path = Bubbles/DirectoryWatcher.h; sourceTree = SOURCE_ROOT; };
 		C111265514DE2C7800884F7D /* DirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectoryWatcher.m; path = Bubbles/DirectoryWatcher.m; sourceTree = SOURCE_ROOT; };
@@ -198,6 +201,8 @@
 				0311924314DE4CE700E0DFEB /* ImageAndTextCell.m */,
 				03008FFD14D81C2800C93A14 /* NSImage+QuickLook.h */,
 				03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */,
+				03EFE64914E2EF04007FA2B6 /* NSView+NSView_Fade_.h */,
+				03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */,
 			);
 			name = SubClass;
 			sourceTree = "<group>";
@@ -542,6 +547,7 @@
 				0311924414DE4CE700E0DFEB /* ImageAndTextCell.m in Sources */,
 				03A8878C14E2A272008CA643 /* DragFileViewController.m in Sources */,
 				03A8879914E2B108008CA643 /* TextViewController.m in Sources */,
+				03EFE64B14E2EF04007FA2B6 /* NSView+NSView_Fade_.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

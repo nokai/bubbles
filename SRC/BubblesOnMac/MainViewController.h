@@ -14,6 +14,7 @@
 #import "NSImage+QuickLook.h"
 #import "ImageAndTextCell.h"
 #import "TextViewController.h"
+#import "NSView+NSView_Fade_.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define kTextViewController 0
