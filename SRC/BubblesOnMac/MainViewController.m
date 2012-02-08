@@ -73,6 +73,7 @@
     [_historyTableView reloadData];
 }
 
+
 #pragma mark - init & dealloc
 
 - (id)init
@@ -92,6 +93,9 @@
                                                    object:nil];   
         
         _fileHistoryArray = [[NSMutableArray alloc]init];
+        
+        //Wu:the initilization is open the send text view;
+        _isView = kTextViewController;
     }
     return self;
 }
@@ -100,19 +104,18 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kWDBubbleNotification];
-    [_imageMessage release];
     [_passwordController release];
     [_preferenceController release];
+    [_dragFileController release];
+    [_textViewController release];
     [_imageAndTextCell release];
     [_fileHistoryArray release];
     [_bubble release];
-    [_accessoryView release];
     [_tableView release];
     [_historyTableView release];
     [_fileURL release];
-    [_imageMessage release];
-    [_textMessage release];
     [_checkBox release];
+    [_swapButton release];
     [super dealloc];
 }
 
@@ -120,8 +123,6 @@
 {
     bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
     [_checkBox setState:status];
-    _imageMessage.delegate = self;
-    
     // Wu:Add observer to get the notification when the main menu become key window then the sheet window will appear
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(delayNotification)
@@ -135,14 +136,34 @@
     
     // Wu:Set the tableview can accept being dragged from
     [_historyTableView registerForDraggedTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType,NSFilenamesPboardType,NSTIFFPboardType,nil]];
-	// Wu:Tell NSTableView we want to drag and drop accross applications the default is YES
+	// Wu:Tell NSTableView we want to drag and drop accross applications the default is YES means can be only interact with current application
 	[_historyTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+    
+    // Alloc the two view controller and first add textviewcontroller into superview
+    _textViewController = [[TextViewController alloc]initWithNibName:@"TextViewController" bundle:nil];
+    _dragFileController = [[DragFileViewController alloc]initWithNibName:@"DragFileViewController" bundle:nil];
+    
+
+    [[_textViewController view] setFrame:[_superView bounds]];
+    [[_dragFileController view] setFrame:[_superView bounds]];
+    
+    [_superView addSubview:[_textViewController view]];
+    //[_superView addSubview:[_dragFileController view]];
+    
+    _dragFileController.imageView.delegate = self;
+
+    // Wu:Hide some buttons with related to Drag File
+    [_selectFile setHidden:YES];
+    [_sendFile setHidden:YES];
 }
 
 #pragma mark - IBActions
 
 - (IBAction)sendText:(id)sender {
-    [_bubble broadcastMessage:[WDMessage messageWithText:_textMessage.stringValue]];
+    DLog(@"jkhsdkfjhsdf");
+    if (_isView == kTextViewController) {
+        [_bubble broadcastMessage:[WDMessage messageWithText:_textViewController.textField.stringValue]];
+    }
 }
 
 - (IBAction)togglePassword:(id)sender {
@@ -168,6 +189,10 @@
 
 - (IBAction)selectFile:(id)sender
 {
+    if (_isView == kTextViewController) {
+        return ;
+    }
+    
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 
 	[openPanel setTitle:@"Choose File"];
@@ -177,18 +202,20 @@
     if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
         _fileURL = [[openPanel URL] retain];//the path of your selected photo
         NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
-        
         if (image != nil) {
-            [_imageMessage setImage:image];
+            [_dragFileController.imageView setImage:image];
             [image release];   
         }else {
             NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
-            [_imageMessage setImage:quicklook];
+            [_dragFileController.imageView setImage:quicklook];
         }
     }
 }
 
 - (IBAction)sendFile:(id)sender {
+    if (_isView == kTextViewController) {
+        return ;
+    }
      WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
     [self storeMessage:t];
     [_bubble broadcastMessage:t];
@@ -226,17 +253,45 @@
     }
 }
 
+- (IBAction)swapView:(id)sender
+{
+    if (_isView == kTextViewController) {
+        _isView = kDragFileController;
+        [[_textViewController view]removeFromSuperview];
+        [_sendText setHidden:YES];
+        [_superView addSubview:[_dragFileController view]];
+        [_sendFile setHidden:NO];
+        [_selectFile setHidden:NO];
+        _swapButton.title = @"Swap to Messages";
+        
+    } else {
+        _isView = kTextViewController;
+        [[_dragFileController view] removeFromSuperview];
+        [_sendFile setHidden:YES];
+        [_selectFile setHidden:YES];
+        [_superView addSubview:[_textViewController view]];
+        [_sendText setHidden:NO];
+        _swapButton.title = @"Swap to Files";
+    }
+}
+
 #pragma mark - WDBubbleDelegate
 
 - (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text {
     DLog(@"VC didReceiveText %@", text);
-    _textMessage.stringValue = text;
-    [self storeMessage:message];
+    if (_isView == kTextViewController) {
+        _textViewController.textField.stringValue = text;
+        [self storeMessage:message];
+    } 
 }
 
 - (void)didReceiveMessage:(WDMessage *)message ofFile:(NSURL *)url {
     DLog(@"MVC didReceiveFile %@", url);
+    if (_isView != kDragFileController) {
+        return ;
+    }
     [self storeMessage:message];
+    
     // DW: store this url for drag and drop
     if (_fileURL) {
         [_fileURL release];
@@ -245,11 +300,11 @@
    
     NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
     if (image != nil) {
-        [_imageMessage setImage:image];
+        [_dragFileController.imageView setImage:image];
         [image release];
     } else {
         NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[url path] asIcon:YES];
-        [_imageMessage setImage:quicklook];
+        [_dragFileController.imageView setImage:quicklook];
     }
 }
 
@@ -269,7 +324,6 @@
     if (aTableView == _tableView ) {
         return _bubble.servicesFound.count;
     } else if (aTableView == _historyTableView) {
-        DLog(@"numberOfRowsInTableView");
         return [_fileHistoryArray count];
     }
     return 0;
@@ -296,7 +350,6 @@ writeRowsWithIndexes:(NSIndexSet *)pIndexSetOfRows
 {
 	// Wu:This is to allow us to drag files to save
 	// We don't do this if more than one row is selected
-    DLog(@"writeRowsWithIndexes");
 	if ([pIndexSetOfRows count] > 1) {
 		return YES;
 	} 
@@ -313,7 +366,6 @@ writeRowsWithIndexes:(NSIndexSet *)pIndexSetOfRows
 - (NSArray *)tableView:(NSTableView *)aTableView
 namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
 forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
-    DLog(@"namesOfPromisedFilesDroppedAtDestination");
     NSInteger zIndex = [indexSet firstIndex];
     WDMessage *message = [_fileHistoryArray objectAtIndex:zIndex];
     
@@ -344,6 +396,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
 
 - (void)dragDidFinished:(NSURL *)url
 {
+    DLog(@"dragDidFinished");
     if (_fileURL) {
         [_fileURL release];
     }
@@ -352,7 +405,9 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
 
 - (NSURL *)dataDraggedToSave
 {
-    if (_fileURL && _imageMessage.image != nil) {
+    if (_isView == kTextViewController) {
+        return nil;
+    } else if (_fileURL && _dragFileController.imageView.image != nil) {
         return _fileURL;
     }
     return nil;

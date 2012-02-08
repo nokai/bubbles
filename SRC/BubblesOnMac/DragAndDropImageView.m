@@ -100,7 +100,7 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
             DLog(@"Something error");
         }
     }
-    
+    DLog(@"self.delegate is %@",self.delegate);
     [self.delegate dragDidFinished:fileUrl];
     [self setNeedsDisplay:YES];//Wu:Redraw at once
     return YES;
@@ -111,7 +111,7 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     NSRect ContentRect=self.window.frame;
     
     //set it to the image frame size
-    ContentRect.size=[[self image] size];
+    ContentRect.size = [[self image] size];
     
     return [NSWindow frameRectForContentRect:ContentRect styleMask: [window styleMask]];
 }*/

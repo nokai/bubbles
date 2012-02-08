@@ -15,6 +15,11 @@
 		0354C9AD14BDE51800417697 /* PasswordWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0354C9AC14BDE51800417697 /* PasswordWindowView.xib */; };
 		037D71E114C954530082FB64 /* PreferenceViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 037D71E014C954530082FB64 /* PreferenceViewContoller.m */; };
 		037D71E414C954D60082FB64 /* PreferenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 037D71E314C954D60082FB64 /* PreferenceViewController.xib */; };
+		03A8878C14E2A272008CA643 /* DragFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A8878A14E2A272008CA643 /* DragFileViewController.m */; };
+		03A8878D14E2A272008CA643 /* DragFileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03A8878B14E2A272008CA643 /* DragFileViewController.xib */; };
+		03A8879914E2B108008CA643 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A8879714E2B108008CA643 /* TextViewController.m */; };
+		03A8879A14E2B108008CA643 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03A8879814E2B108008CA643 /* TextViewController.xib */; };
+		03A887AE14E2BFAD008CA643 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A887AD14E2BFAD008CA643 /* QuartzCore.framework */; };
 		03BF64B314C32D8200CD52AB /* DragAndDropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */; };
 		03C4EC5114D6A320006FB4BD /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EEBE7614D597AF0026B318 /* QuickLook.framework */; };
 		03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -80,6 +85,13 @@
 		037D71DF14C954530082FB64 /* PreferenceViewContoller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceViewContoller.h; sourceTree = "<group>"; };
 		037D71E014C954530082FB64 /* PreferenceViewContoller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceViewContoller.m; sourceTree = "<group>"; };
 		037D71E314C954D60082FB64 /* PreferenceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferenceViewController.xib; sourceTree = "<group>"; };
+		03A8878914E2A272008CA643 /* DragFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragFileViewController.h; sourceTree = "<group>"; };
+		03A8878A14E2A272008CA643 /* DragFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragFileViewController.m; sourceTree = "<group>"; };
+		03A8878B14E2A272008CA643 /* DragFileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DragFileViewController.xib; sourceTree = "<group>"; };
+		03A8879614E2B108008CA643 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
+		03A8879714E2B108008CA643 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
+		03A8879814E2B108008CA643 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextViewController.xib; sourceTree = "<group>"; };
+		03A887AD14E2BFAD008CA643 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		03BF64B114C32D8200CD52AB /* DragAndDropImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragAndDropImageView.h; sourceTree = "<group>"; };
 		03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragAndDropImageView.m; sourceTree = "<group>"; };
 		03EEBE7614D597AF0026B318 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuickLook.framework; sourceTree = DEVELOPER_DIR; };
@@ -167,6 +179,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03A887AE14E2BFAD008CA643 /* QuartzCore.framework in Frameworks */,
 				034C97BF14D90C9B00E57578 /* Quartz.framework in Frameworks */,
 				03C4EC5114D6A320006FB4BD /* QuickLook.framework in Frameworks */,
 				03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */,
@@ -176,6 +189,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03A8878514E2A1E3008CA643 /* SubClass */ = {
+			isa = PBXGroup;
+			children = (
+				03BF64B114C32D8200CD52AB /* DragAndDropImageView.h */,
+				03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */,
+				0311924214DE4CE700E0DFEB /* ImageAndTextCell.h */,
+				0311924314DE4CE700E0DFEB /* ImageAndTextCell.m */,
+				03008FFD14D81C2800C93A14 /* NSImage+QuickLook.h */,
+				03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */,
+			);
+			name = SubClass;
+			sourceTree = "<group>";
+		};
+		03A8878714E2A218008CA643 /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				0354C9A914BDE4FA00417697 /* PasswordMacViewController.h */,
+				0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */,
+				0354C9AC14BDE51800417697 /* PasswordWindowView.xib */,
+				037D71DF14C954530082FB64 /* PreferenceViewContoller.h */,
+				037D71E014C954530082FB64 /* PreferenceViewContoller.m */,
+				037D71E314C954D60082FB64 /* PreferenceViewController.xib */,
+			);
+			name = Window;
+			sourceTree = "<group>";
+		};
+		03A8878814E2A22B008CA643 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				03A8878914E2A272008CA643 /* DragFileViewController.h */,
+				03A8878A14E2A272008CA643 /* DragFileViewController.m */,
+				03A8878B14E2A272008CA643 /* DragFileViewController.xib */,
+				03A8879614E2B108008CA643 /* TextViewController.h */,
+				03A8879714E2B108008CA643 /* TextViewController.m */,
+				03A8879814E2B108008CA643 /* TextViewController.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		C121945414B591D700159A9F = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +251,7 @@
 		C121946214B591D700159A9F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03A887AD14E2BFAD008CA643 /* QuartzCore.framework */,
 				C11FC3A714DB8D75002A92A2 /* MessageUI.framework */,
 				034C97BE14D90C9B00E57578 /* Quartz.framework */,
 				03EEBE7614D597AF0026B318 /* QuickLook.framework */,
@@ -272,25 +325,16 @@
 		C1C9371814BB1766005E0EAA /* BubblesOnMac */ = {
 			isa = PBXGroup;
 			children = (
+				03A8878814E2A22B008CA643 /* View */,
+				03A8878714E2A218008CA643 /* Window */,
+				03A8878514E2A1E3008CA643 /* SubClass */,
 				C1C9371914BB1766005E0EAA /* Supporting Files */,
 				C1C9372D14BB17C3005E0EAA /* Icon-Mac.icns */,
-				03008FFD14D81C2800C93A14 /* NSImage+QuickLook.h */,
-				03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */,
 				C1C9372414BB1766005E0EAA /* AppDelegate.h */,
 				C1C9372514BB1766005E0EAA /* AppDelegate.m */,
 				C1C9372714BB1766005E0EAA /* MainMenu.xib */,
 				0354C95E14BDC3F700417697 /* MainViewController.h */,
 				0354C95F14BDC3F700417697 /* MainViewController.m */,
-				0354C9A914BDE4FA00417697 /* PasswordMacViewController.h */,
-				0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */,
-				0354C9AC14BDE51800417697 /* PasswordWindowView.xib */,
-				03BF64B114C32D8200CD52AB /* DragAndDropImageView.h */,
-				03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */,
-				037D71DF14C954530082FB64 /* PreferenceViewContoller.h */,
-				037D71E014C954530082FB64 /* PreferenceViewContoller.m */,
-				037D71E314C954D60082FB64 /* PreferenceViewController.xib */,
-				0311924214DE4CE700E0DFEB /* ImageAndTextCell.h */,
-				0311924314DE4CE700E0DFEB /* ImageAndTextCell.m */,
 			);
 			path = BubblesOnMac;
 			sourceTree = "<group>";
@@ -455,6 +499,8 @@
 				C1C9372E14BB17C3005E0EAA /* Icon-Mac.icns in Resources */,
 				0354C9AD14BDE51800417697 /* PasswordWindowView.xib in Resources */,
 				037D71E414C954D60082FB64 /* PreferenceViewController.xib in Resources */,
+				03A8878D14E2A272008CA643 /* DragFileViewController.xib in Resources */,
+				03A8879A14E2B108008CA643 /* TextViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,6 +540,8 @@
 				037D71E114C954530082FB64 /* PreferenceViewContoller.m in Sources */,
 				03008FFF14D81C2800C93A14 /* NSImage+QuickLook.m in Sources */,
 				0311924414DE4CE700E0DFEB /* ImageAndTextCell.m in Sources */,
+				03A8878C14E2A272008CA643 /* DragFileViewController.m in Sources */,
+				03A8879914E2B108008CA643 /* TextViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

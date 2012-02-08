@@ -28,7 +28,6 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    DLog(@"copyWithZone");
     ImageAndTextCell *cell = (ImageAndTextCell *)[super copyWithZone:zone];
     cell.primaryText = nil;
     cell.auxiliaryText = nil;
@@ -40,7 +39,6 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-    DLog(@"drawWithFrame");
     [self setTextColor:[NSColor blackColor]];
     
     // Wu:fetch the three attributes 02/05
@@ -85,6 +83,7 @@
 	
 	[[NSGraphicsContext currentContext] restoreGraphicsState];	   
     
+    // Wu:Set the preview button
     _previewButton = [[NSButton alloc]initWithFrame:CGRectMake(cellFrame.origin.x + cellFrame.size.height + 200 ,cellFrame.origin.y + cellFrame.size.height / 2, 70, cellFrame.size.height / 2 )];
     [_previewButton setTitle:@"Preview"];
     [_previewButton setTarget:self];
@@ -95,8 +94,8 @@
 
 - (void)showItPreview
 {
+    DLog(@"showfileURl is %@",_fileURL);
     AppDelegate *del = (AppDelegate *)[NSApp delegate];
-    DLog(@"file is %@",_fileURL);
     if (![del.array containsObject:_fileURL]) {
         del.array = [NSArray arrayWithObject:_fileURL];
     }
