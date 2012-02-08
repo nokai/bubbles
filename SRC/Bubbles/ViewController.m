@@ -358,6 +358,10 @@
 
 #pragma mark - UITableViewDelegate
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     WDMessage *t = nil;
     UIActionSheet *as = nil;
@@ -408,6 +412,20 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     return _itemsToShow.count;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (_segmentSwith.selectedSegmentIndex == 0) {
+        [_messages removeObjectAtIndex:indexPath.row];
+    } else if (_segmentSwith.selectedSegmentIndex == 1) {
+        NSURL *fileURL = [_documents objectAtIndex:indexPath.row];
+        [[NSFileManager defaultManager] removeItemAtPath:fileURL.path
+                                                   error:nil];
+        [_documents removeObjectAtIndex:indexPath.row];
+    }
+    
+    [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] 
+                     withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
