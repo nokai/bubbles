@@ -10,11 +10,12 @@
 #import "PeersViewController.h"
 
 #define kActionSheetButtonCopy      @"Copy"
-#define kActionSheetButtonSend      @"Send"
 #define kActionSheetButtonEmail     @"Email"
+#define kActionSheetButtonSend      @"Resend"
 #define kActionSheetButtonMessage   @"Message"
 #define kActionSheetButtonPreview   @"Preview"
 #define kActionSheetButtonSave      @"Save to Gallery"
+
 #define kActionSheetButtonCancel    @"Cancel"
 #define kActionSheetButtonDeleteAll @"Delete All"
 
@@ -269,8 +270,8 @@
             UIPopoverController *pc = [[UIPopoverController alloc] initWithContentViewController:t];
             UIButton *b = (UIButton *)sender;
             DLog(@"VC selectFile %@", b);
-            [pc presentPopoverFromRect:[(UIButton *)sender bounds]
-                                inView:self.view 
+            [pc presentPopoverFromRect:CGRectMake(0, 0, ((UIButton *)sender).frame.size.width, 0)
+                                inView:(UIButton *)sender 
               permittedArrowDirections:UIPopoverArrowDirectionAny 
                               animated:YES];
         } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
@@ -322,7 +323,7 @@
                                            cancelButtonTitle:kActionSheetButtonCancel
                                       destructiveButtonTitle:kActionSheetButtonDeleteAll
                                            otherButtonTitles:nil];
-    [as showInView:self.view];
+    [as showFromBarButtonItem:_clearButton animated:YES];
     [as release];
 }
 
@@ -354,12 +355,15 @@
         UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
         NSString *fileName = [[info valueForKey:UIImagePickerControllerReferenceURL] lastPathComponent];
         //fileName = [NSString stringWithFormat:@".%@", fileName];
-        NSString *fileExtention = [[info valueForKey:UIImagePickerControllerReferenceURL] pathExtension];
+        NSString *fileExtention = [[[info valueForKey:UIImagePickerControllerReferenceURL] pathExtension] lowercaseString];
         NSData *fileData = nil;
-        NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@.%@", 
+        
+        // 20120209 DW: we changed back to previous rule, store files selected from photo album to /Documents
+        NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", 
                                                 [NSURL iOSDocumentsDirectoryURL], 
                                                 fileName]];
-        if ([fileExtention isEqualToString:@"JPG"]) {
+        storeURL = [storeURL URLWithoutNameConflict];
+        if ([fileExtention isEqualToString:@"jpg"]) {
             fileData = UIImageJPEGRepresentation(image, 1.0);
             [fileData writeToURL:storeURL atomically:YES];
             _fileURL = [storeURL retain];
@@ -442,23 +446,27 @@
                                          delegate:self 
                                 cancelButtonTitle:kActionSheetButtonCancel
                            destructiveButtonTitle:nil
-                                otherButtonTitles:kActionSheetButtonSend, kActionSheetButtonCopy, kActionSheetButtonMessage, kActionSheetButtonEmail, nil];
+                                otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonMessage, nil];
     } else if (t.type == WDMessageTypeFile) {
         if ([WDMessage isImageURL:t.fileURL]) {
             as = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self 
                                     cancelButtonTitle:kActionSheetButtonCancel
                                destructiveButtonTitle:nil
-                                    otherButtonTitles:kActionSheetButtonSend, kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonPreview, kActionSheetButtonSave, nil];
+                                    otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonPreview, kActionSheetButtonSave, nil];
         } else {
             as = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self 
                                     cancelButtonTitle:kActionSheetButtonCancel
                                destructiveButtonTitle:nil
-                                    otherButtonTitles:kActionSheetButtonSend, kActionSheetButtonEmail, kActionSheetButtonPreview, nil];
+                                    otherButtonTitles:kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonPreview, nil];
         }
     }
-    [as showInView:self.view];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [as showFromRect:[tableView cellForRowAtIndexPath:indexPath].frame inView:_messagesView animated:YES];
+    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+        [as showInView:self.view];
+    }
     [as release];
 }
 
@@ -474,9 +482,17 @@
     
     // DW: we can use here to hide bar buttons
     if (_segmentSwith.selectedSegmentIndex == 0) {
-        [_bar.topItem setRightBarButtonItem:(_messages.count > 0)?self.editButtonItem:nil];
+        BOOL canShowEditButton = (_messages.count > 0);
+        [_bar.topItem setRightBarButtonItem:canShowEditButton?self.editButtonItem:nil];
+        if (!canShowEditButton) {
+            [self setEditing:NO];
+        }
     } else if (_segmentSwith.selectedSegmentIndex == 1) {
+        BOOL canShowEditButton = (_documents.count > 0);
         [_bar.topItem setRightBarButtonItem:(_documents.count > 0)?self.editButtonItem:nil];
+        if (!canShowEditButton) {
+            [self setEditing:NO];
+        }
     }
     
     return _itemsToShow.count;
@@ -523,12 +539,23 @@
             cell.textLabel.text = [[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease];
             cell.imageView.image = [UIImage imageNamed:@"Icon-Text"];
         } else if (t.type == WDMessageTypeFile) {
+            // DW: we use this since "image in cell" slows our app down
+            if (t.fileURL) {
+                UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:t.fileURL] retain];
+                cell.imageView.image = [interactionController.icons objectAtIndex:0];
+                [interactionController release];
+            } else {
+                cell.imageView.image = [UIImage imageNamed:@"Icon"];
+            }
+            
+            /*
             cell.textLabel.text = [t.fileURL lastPathComponent];
             UIImage *image = [UIImage imageWithContentsOfFile:[t.fileURL path]];
             if (image) {
                 cell.imageView.image = image;
                 
                 // DW: if it's images named like ".asset.xxx", we do not show it's name
+                // 20120209 DW: we do not use "From Photos" trick, ignore this, this will never run
                 if ([t.fileURL.lastPathComponent hasPrefix:@"."]) {
                     cell.textLabel.text = @"From Photos";
                 }
@@ -542,6 +569,7 @@
                     cell.imageView.image = [UIImage imageNamed:@"Icon"];
                 }
             }
+             */
         }
     } else {
         NSURL *fileURL = [_documents objectAtIndex:indexPath.row];
