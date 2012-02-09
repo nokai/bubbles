@@ -29,7 +29,8 @@ UIActionSheetDelegate,
 MFMailComposeViewControllerDelegate, 
 MFMessageComposeViewControllerDelegate, 
 UIDocumentInteractionControllerDelegate, 
-DirectoryWatcherDelegate> {
+DirectoryWatcherDelegate, 
+UISplitViewControllerDelegate> {
     // DW: bubbles core
     WDBubble *_bubble;
     NSURL *_fileURL;
@@ -50,5 +51,7 @@ DirectoryWatcherDelegate> {
     // DW: password
     PasswordViewController *_passwordViewController;
 }
+
+@property (nonatomic, readonly) WDBubble *bubble;
 
 @end

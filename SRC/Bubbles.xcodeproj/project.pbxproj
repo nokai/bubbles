@@ -30,6 +30,8 @@
 		C121946614B591D700159A9F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121946514B591D700159A9F /* Foundation.framework */; };
 		C121946814B591D700159A9F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121946714B591D700159A9F /* CoreGraphics.framework */; };
 		C121949A14B5A9FC00159A9F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121949914B5A9FB00159A9F /* CFNetwork.framework */; };
+		C123285C14E3CFBF006968FE /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C123285B14E3CFBF006968FE /* ViewController_iPad.xib */; };
+		C123285E14E3CFE6006968FE /* PeersViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C123285D14E3CFE6006968FE /* PeersViewController_iPad.xib */; };
 		C1393F0A14D90C83005AFEB6 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1393F0814D90C83005AFEB6 /* TextViewController.m */; };
 		C1393F0B14D90C83005AFEB6 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1393F0914D90C83005AFEB6 /* TextViewController.xib */; };
 		C1393F1C14D9165D005AFEB6 /* addfile.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F1214D9165D005AFEB6 /* addfile.png */; };
@@ -107,6 +109,8 @@
 		C121946514B591D700159A9F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C121946714B591D700159A9F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		C121949914B5A9FB00159A9F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		C123285B14E3CFBF006968FE /* ViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewController_iPad.xib; path = Bubbles/ViewController_iPad.xib; sourceTree = SOURCE_ROOT; };
+		C123285D14E3CFE6006968FE /* PeersViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeersViewController_iPad.xib; path = Bubbles/PeersViewController_iPad.xib; sourceTree = SOURCE_ROOT; };
 		C1393F0714D90C83005AFEB6 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextViewController.h; path = Bubbles/TextViewController.h; sourceTree = SOURCE_ROOT; };
 		C1393F0814D90C83005AFEB6 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextViewController.m; path = Bubbles/TextViewController.m; sourceTree = SOURCE_ROOT; };
 		C1393F0914D90C83005AFEB6 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TextViewController.xib; path = Bubbles/TextViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -397,6 +401,8 @@
 		C1E624D114BD940B0010F395 /* iPad */ = {
 			isa = PBXGroup;
 			children = (
+				C123285B14E3CFBF006968FE /* ViewController_iPad.xib */,
+				C123285D14E3CFE6006968FE /* PeersViewController_iPad.xib */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -491,6 +497,8 @@
 				C1393F2A14D91D35005AFEB6 /* tile_bg.png in Resources */,
 				C18B6F7D14DCC8E7009F502E /* Icon-Text.png in Resources */,
 				C18B6F7E14DCC8E7009F502E /* Icon-Text@2x.png in Resources */,
+				C123285C14E3CFBF006968FE /* ViewController_iPad.xib in Resources */,
+				C123285E14E3CFE6006968FE /* PeersViewController_iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

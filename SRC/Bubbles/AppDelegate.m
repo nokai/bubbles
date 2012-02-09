@@ -9,20 +9,37 @@
 #import "AppDelegate.h"
 
 #import "ViewController.h"
+#import "PeersViewController.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize viewController = _viewController;
+@synthesize viewController = _viewController, splitViewController = _splitViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
-    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    // Override point for customization after application launch.
-    self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
-    self.window.rootViewController = self.viewController;
-    [self.window makeKeyAndVisible];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        ViewController *detailViewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
+        UINavigationController *detailNavigationController = [[[UINavigationController alloc] initWithRootViewController:detailViewController] autorelease];
+    	
+        PeersViewController *masterViewController = [[[PeersViewController alloc] initWithNibName:@"PeersViewController_iPad" bundle:nil] autorelease];
+        UINavigationController *masterNavigationController = [[[UINavigationController alloc] initWithRootViewController:masterViewController] autorelease];
+        masterViewController.bubble = detailViewController.bubble;
+        
+        self.splitViewController = [[[UISplitViewController alloc] init] autorelease];
+        self.splitViewController.delegate = detailViewController;
+        self.splitViewController.viewControllers = [NSArray arrayWithObjects:masterNavigationController, detailNavigationController, nil];
+        
+        self.window.rootViewController = self.splitViewController;
+    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+        self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+        // Override point for customization after application launch.
+        self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
+        self.window.rootViewController = self.viewController;
+        [self.window makeKeyAndVisible];
+    }
+
     return YES;
 }
 

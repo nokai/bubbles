@@ -48,7 +48,7 @@
     // Do any additional setup after loading the view from its nib.
     // DW: custom bar bg
     // this will appear as the title in the navigation bar
-    
+    self.title = @"Text";
     self.navigationItem.rightBarButtonItem = _done;
     self.navigationItem.leftBarButtonItem = _cancel;
     _done.enabled = NO;

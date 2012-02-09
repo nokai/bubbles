@@ -19,6 +19,7 @@
 #define kActionSheetButtonDeleteAll @"Delete All"
 
 @implementation ViewController
+@synthesize bubble = _bubble;
 
 - (void)refreshLockStatus {
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
@@ -228,7 +229,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) || (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - IBOultets
@@ -251,8 +252,19 @@
             t.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
         }
         t.delegate = self;
-        [self presentModalViewController:t animated:YES];
-        [t release];
+        
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            UIPopoverController *pc = [[UIPopoverController alloc] initWithContentViewController:t];
+            UIButton *b = (UIButton *)sender;
+            DLog(@"VC selectFile %@", b);
+            [pc presentPopoverFromRect:[(UIButton *)sender bounds]
+                                inView:self.view 
+              permittedArrowDirections:UIPopoverArrowDirectionAny 
+                              animated:YES];
+        } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+            [self presentModalViewController:t animated:YES];
+            [t release];
+        }
     }
 }
 
@@ -687,6 +699,31 @@
                                                                                      options:NSDirectoryEnumerationSkipsHiddenFiles 
                                                                                        error:nil]];
     [_messagesView reloadData];
+}
+
+#pragma mark - UIPopoverControllerDelegate
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    [popoverController release];
+}
+
+#pragma mark - Split view
+
+- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
+    return NO;
+}
+
+- (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController {
+    barButtonItem.title = NSLocalizedString(@"Master", @"Master");
+    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
+    //self.masterPopoverController = popoverController;
+    
+}
+
+- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
+    // Called when the view is shown again in the split view, invalidating the button and popover controller.
+    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+    //self.masterPopoverController = nil;
 }
 
 @end

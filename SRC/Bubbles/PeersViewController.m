@@ -35,7 +35,8 @@
     [super viewDidLoad];
     
     // DW: custom bar bg
-    // this will appear as the title in the navigation bar    
+    // this will appear as the title in the navigation bar
+    self.title = @"Peers";
     self.navigationItem.rightBarButtonItem = self.dismissButton;
     
     [[NSNotificationCenter defaultCenter] addObserver:self 
@@ -74,7 +75,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) || (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Table view data source
