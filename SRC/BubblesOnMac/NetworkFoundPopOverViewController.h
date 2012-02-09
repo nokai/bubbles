@@ -19,5 +19,5 @@
 @property (nonatomic ,assign) WDBubble *bubble;
 
 - (void)showServicesFoundPopOver:(NSView *)attachedView;
-
+- (void)reloadNetwork;
 @end

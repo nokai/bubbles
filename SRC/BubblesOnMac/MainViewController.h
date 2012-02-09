@@ -21,20 +21,21 @@
 #define kTextViewController 0
 #define kDragFileController 1
 
-@interface MainViewController : NSObject <WDBubbleDelegate,PasswordMacViewControllerDelegate,DragAndDropImageViewDelegate> {
+@interface MainViewController : NSObject <WDBubbleDelegate,PasswordMacViewControllerDelegate,DragAndDropImageViewDelegate,NSToolbarDelegate> {
     WDBubble *_bubble;
     NSURL *_fileURL;
         
     // Wu:_checkBox is the control of enabling password
-    IBOutlet NSButton *_sendText;
-    IBOutlet NSButton *_sendFile;
-    IBOutlet NSButton *_selectFile;
     IBOutlet NSButton *_checkBox;
     IBOutlet NSButton *_swapButton;
     
     // Wu:NSView for adding two subView and constrain their bound
     IBOutlet NSView *_superView;
-   
+    
+    IBOutlet NSToolbarItem *_selectFileItem;
+    IBOutlet NSToolbarItem *_networkItem;
+    IBOutlet NSToolbarItem *_historyItem;
+    
     BOOL _isView;
        
     // Wu:The window controller : for password sheet window and preference window

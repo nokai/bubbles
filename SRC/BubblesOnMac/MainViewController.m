@@ -13,10 +13,16 @@
 
 #pragma mark - Private Methods
 
+- (void)servicesUpdated:(NSNotification *)notification {
+    if (_networkPopOverController != nil) {
+        [_networkPopOverController reloadNetwork];
+    }
+}
+
 - (void)loadUserPreference
 {
     if (_passwordController != nil) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
+        //[[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
         return ;
     }
     
@@ -70,7 +76,24 @@
     [_historyPopOverController.filehistoryTableView reloadData];
 }
 
+- (void)sendFile
+{
+    if (_isView == kTextViewController) {
+        return ;
+    }
+    WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
+    [self storeMessage:t];
+    [_bubble broadcastMessage:t];
+    [t release];  
+}
 
+- (void)sendText
+{
+    DLog(@"MVC sendText %@", _textViewController.textField.stringValue);
+    if (_isView == kTextViewController) {
+        [_bubble broadcastMessage:[WDMessage messageWithText:_textViewController.textField.stringValue]];
+    }   
+}
 #pragma mark - init & dealloc
 
 - (id)init
@@ -82,6 +105,14 @@
         
         _bubble = [[WDBubble alloc] init];
         _bubble.delegate = self;
+        
+        // Wu:Init two popover
+        _historyPopOverController = [[HistoryPopOverViewController alloc]
+                                     initWithNibName:@"HistoryPopOverViewController" bundle:nil];
+        
+        _networkPopOverController = [[NetworkFoundPopOverViewController alloc]
+                                     initWithNibName:@"NetworkFoundPopOverViewController" bundle:nil];
+        _networkPopOverController.bubble = _bubble;
     
         //Wu:the initilization is open the send text view;
         _isView = kTextViewController;
@@ -109,6 +140,9 @@
     [_fileURL release];
     [_checkBox release];
     [_swapButton release];
+    [_selectFileItem release];
+    [_networkItem release];
+    [_historyItem release];
     [super dealloc];
 }
 
@@ -120,6 +154,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(delayNotification)
                                                  name:@"NSWindowDidBecomeKeyNotification" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(servicesUpdated:) 
+                                                 name:kWDBubbleNotification
+                                               object:nil];  
 
     // Wu: Alloc the two view controller and first add textviewcontroller into superview
     _textViewController = [[TextViewController alloc]initWithNibName:@"TextViewController" bundle:nil];
@@ -132,30 +171,11 @@
     [_superView addSubview:[_dragFileController view]];
     
     _dragFileController.imageView.delegate = self;
-   
-    
-    // Wu:Hide some buttons with related to Drag File
     [_dragFileController.view setHidden:YES];
-    [_selectFile setHidden:YES];
-    [_sendFile setHidden:YES];
     
-    // Wu:Init two popover
-    _historyPopOverController = [[HistoryPopOverViewController alloc]
-                                 initWithNibName:@"HistoryPopOverViewController" bundle:nil];
-    
-    _networkPopOverController = [[NetworkFoundPopOverViewController alloc]
-                                 initWithNibName:@"NetworkFoundPopOverViewController" bundle:nil];
-    _networkPopOverController.bubble = self.bubble;
 }
 
 #pragma mark - IBActions
-
-- (IBAction)sendText:(id)sender {
-    DLog(@"MVC sendText %@", _textViewController.textField.stringValue);
-    if (_isView == kTextViewController) {
-        [_bubble broadcastMessage:[WDMessage messageWithText:_textViewController.textField.stringValue]];
-    }
-}
 
 - (IBAction)togglePassword:(id)sender {
     NSButton *button = (NSButton *)sender;
@@ -203,16 +223,6 @@
     }
 }
 
-- (IBAction)sendFile:(id)sender {
-    if (_isView == kTextViewController) {
-        return ;
-    }
-     WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
-    [self storeMessage:t];
-    [_bubble broadcastMessage:t];
-    [t release];
-}
-
 - (IBAction)showPreferencePanel:(id)sender
 {
     if (_preferenceController == nil) {
@@ -254,34 +264,35 @@
         _isView = kDragFileController;
         [_textViewController.view setHidden:YES withFade:YES];
         [_dragFileController.view setHidden:NO withFade:YES];
-        [_sendText setHidden:YES];
-        [_sendFile setHidden:NO];
-        [_selectFile setHidden:NO];
         _swapButton.title = @"Swap to Messages";
         
     } else {
         _isView = kTextViewController;
         [_textViewController.view setHidden:NO withFade:YES];
         [_dragFileController.view setHidden:YES withFade:YES];
-        [_sendFile setHidden:YES];
-        [_selectFile setHidden:YES];
-        [_sendText setHidden:NO];
         _swapButton.title = @"Swap to Files";
     }
 }
 
 - (IBAction)openHistoryPopOver:(id)sender
 {
-    NSButton *button = (NSButton *)sender;
-   
+    NSButton *button  = (NSButton *)[_historyItem view];
     [_historyPopOverController showHistoryPopOver:button];
-    
 }
 
 - (IBAction)openServiceFoundPopOver:(id)sender
 {
-    NSButton *button = (NSButton *)sender;
+    NSButton *button  = (NSButton *)[_networkItem view];
     [_networkPopOverController showServicesFoundPopOver:button];
+}
+
+- (IBAction)send:(id)sender
+{
+    if (_isView == kTextViewController) {
+        [self sendText];
+    } else {
+        [self sendFile];
+    }
 }
 
 #pragma mark - WDBubbleDelegate
@@ -349,6 +360,16 @@
         return _fileURL;
     }
     return nil;
+}
+
+#pragma mark - NSToolBarDelegate
+
+- (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
+{
+    if (theItem == _selectFileItem && _isView == kTextViewController) {
+        return FALSE;
+    } 
+    return YES;
 }
 
 

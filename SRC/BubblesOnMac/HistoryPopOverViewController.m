@@ -17,12 +17,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self 
-                                                 selector:@selector(servicesUpdated:) 
-                                                     name:kWDBubbleNotification
-                                                   object:nil];  
-        
         _fileHistoryArray = [[NSMutableArray alloc]init];
     }
     
@@ -65,7 +59,7 @@
     }
     
     // Wu:CGRectMaxXEdge means appear in the right of button
-    [_historyPopOver showRelativeToRect:[attachedView bounds] ofView:attachedView preferredEdge:CGRectMaxXEdge];
+    [_historyPopOver showRelativeToRect:[attachedView bounds] ofView:attachedView preferredEdge:CGRectMinYEdge];
 }
 
 #pragma mark - NSTableViewDataSource

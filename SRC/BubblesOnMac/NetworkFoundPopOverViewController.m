@@ -13,8 +13,9 @@
 
 #pragma mark - Private Methods
 
-- (void)servicesUpdated:(NSNotification *)notification {
-    [_serviceFoundTableView reloadData];
+- (void)reloadNetwork
+{
+    [_serviceFoundTableView reloadData];   
 }
 
 - (void)showServicesFoundPopOver:(NSView *)attachedView
@@ -27,7 +28,6 @@
         _serviceFoundPopOver.behavior = NSPopoverBehaviorTransient;
         _serviceFoundPopOver.delegate = self;
     }
-    
     // Wu:CGRectMaxXEdge means appear in the right of button
     [_serviceFoundPopOver showRelativeToRect:[attachedView bounds] ofView:attachedView preferredEdge:CGRectMaxXEdge];
 }
@@ -38,12 +38,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self 
-                                                 selector:@selector(servicesUpdated:) 
-                                                     name:kWDBubbleNotification
-                                                   object:nil];  
-    }
     
+    }
     return self;
 }
 
@@ -58,7 +54,7 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return [_bubble.servicesFound count];
+    return _bubble.servicesFound.count;
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
