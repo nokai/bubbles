@@ -16,7 +16,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         DLog(@"DragFileViewController init");
-        
     }
     return self;
 }

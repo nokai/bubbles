@@ -15,20 +15,16 @@
 #import "ImageAndTextCell.h"
 #import "TextViewController.h"
 #import "NSView+NSView_Fade_.h"
-#import <QuartzCore/QuartzCore.h>
+#import "HistoryPopOverViewController.h"
+#import "NetworkFoundPopOverViewController.h"
 
 #define kTextViewController 0
 #define kDragFileController 1
 
-@interface MainViewController : NSObject <WDBubbleDelegate,NSTableViewDelegate, NSTableViewDataSource,PasswordMacViewControllerDelegate,ImageAndTextCellDelegate,DragAndDropImageViewDelegate> {
+@interface MainViewController : NSObject <WDBubbleDelegate,PasswordMacViewControllerDelegate,DragAndDropImageViewDelegate> {
     WDBubble *_bubble;
     NSURL *_fileURL;
-    
-    
-    // Wu:_tableView is the table of found network and the other is for file history
-    IBOutlet NSTableView *_tableView;
-    IBOutlet NSTableView *_historyTableView;
-    
+        
     // Wu:_checkBox is the control of enabling password
     IBOutlet NSButton *_sendText;
     IBOutlet NSButton *_sendFile;
@@ -40,8 +36,7 @@
     IBOutlet NSView *_superView;
    
     BOOL _isView;
-    NSMutableArray *_fileHistoryArray;
-   
+       
     // Wu:The window controller : for password sheet window and preference window
     PasswordMacViewController *_passwordController;
     PreferenceViewContoller *_preferenceController;
@@ -50,10 +45,11 @@
     DragFileViewController *_dragFileController;
     TextViewController *_textViewController;
     
-    // Wu:Set the cumtomized cell for the tableview
-    ImageAndTextCell *_imageAndTextCell;
+    // Wu:Two Popover 
+    HistoryPopOverViewController *_historyPopOverController;
+    NetworkFoundPopOverViewController *_networkPopOverController;
 }
 // DW: for binding
 @property (nonatomic, retain) NSURL *fileURL;
-
+@property (nonatomic, assign) WDBubble *bubble;
 @end

@@ -9,12 +9,9 @@
 #import "MainViewController.h"
 @implementation MainViewController
 @synthesize fileURL = _fileURL;
+@synthesize bubble = _bubble;
 
 #pragma mark - Private Methods
-
-- (void)servicesUpdated:(NSNotification *)notification {
-    [_tableView reloadData];
-}
 
 - (void)loadUserPreference
 {
@@ -61,7 +58,7 @@
 - (void)storeMessage:(WDMessage *)message
 {
     DLog(@"storeMessage");
-    [_fileHistoryArray addObject:message];
+    [_historyPopOverController.fileHistoryArray addObject:message];
    /* [_fileHistoryArray sortUsingComparator:^(WDMessage *obj1, WDMessage * obj2) {
         if ([obj1.time compare:obj2.time] == NSOrderedAscending)
             return NSOrderedDescending;
@@ -70,7 +67,7 @@
         else
             return NSOrderedSame;
     }];*/
-    [_historyTableView reloadData];
+    [_historyPopOverController.filehistoryTableView reloadData];
 }
 
 
@@ -85,15 +82,7 @@
         
         _bubble = [[WDBubble alloc] init];
         _bubble.delegate = self;
-        
-        // Wu: Add observer to update service 
-        [[NSNotificationCenter defaultCenter] addObserver:self 
-                                                 selector:@selector(servicesUpdated:) 
-                                                     name:kWDBubbleNotification
-                                                   object:nil];   
-        
-        _fileHistoryArray = [[NSMutableArray alloc]init];
-        
+    
         //Wu:the initilization is open the send text view;
         _isView = kTextViewController;
     }
@@ -102,17 +91,21 @@
 
 - (void)dealloc
 {
+    // Wu:Remove observe the notification
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
-    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kWDBubbleNotification];
-    [_passwordController release];
-    [_preferenceController release];
+    
+    // Wu:Remove two subviews
+    [[_textViewController view] removeFromSuperview];
+    [[_dragFileController view] removeFromSuperview];
+    [_superView release];
     [_dragFileController release];
     [_textViewController release];
-    [_imageAndTextCell release];
-    [_fileHistoryArray release];
+    
+    // Wu:Release two window controller
+    [_passwordController release];
+    [_preferenceController release];
+       
     [_bubble release];
-    [_tableView release];
-    [_historyTableView release];
     [_fileURL release];
     [_checkBox release];
     [_swapButton release];
@@ -127,19 +120,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(delayNotification)
                                                  name:@"NSWindowDidBecomeKeyNotification" object:nil];
-    
-    // Wu:Set the customize the cell for the  only one column
-    _imageAndTextCell = [[ImageAndTextCell alloc] init];
-    _imageAndTextCell.delegate = self;
-    NSTableColumn *column = [[_historyTableView tableColumns] objectAtIndex:0];
-    [column setDataCell:_imageAndTextCell];
-    
-    // Wu:Set the tableview can accept being dragged from
-    [_historyTableView registerForDraggedTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType,NSFilenamesPboardType,NSTIFFPboardType,nil]];
-	// Wu:Tell NSTableView we want to drag and drop accross applications the default is YES means can be only interact with current application
-	[_historyTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
-    
-    // Alloc the two view controller and first add textviewcontroller into superview
+
+    // Wu: Alloc the two view controller and first add textviewcontroller into superview
     _textViewController = [[TextViewController alloc]initWithNibName:@"TextViewController" bundle:nil];
     _dragFileController = [[DragFileViewController alloc]initWithNibName:@"DragFileViewController" bundle:nil];
     
@@ -156,6 +138,14 @@
     [_dragFileController.view setHidden:YES];
     [_selectFile setHidden:YES];
     [_sendFile setHidden:YES];
+    
+    // Wu:Init two popover
+    _historyPopOverController = [[HistoryPopOverViewController alloc]
+                                 initWithNibName:@"HistoryPopOverViewController" bundle:nil];
+    
+    _networkPopOverController = [[NetworkFoundPopOverViewController alloc]
+                                 initWithNibName:@"NetworkFoundPopOverViewController" bundle:nil];
+    _networkPopOverController.bubble = self.bubble;
 }
 
 #pragma mark - IBActions
@@ -234,23 +224,27 @@
 
 - (IBAction)deleteSelectedRows:(id)sender
 {
-    if ([_historyTableView selectedRow] < 0 || [_historyTableView selectedRow] >= [_fileHistoryArray count]) {
+    if ([_historyPopOverController.filehistoryTableView selectedRow] < 0 || 
+        [_historyPopOverController.filehistoryTableView selectedRow] >= [_historyPopOverController.fileHistoryArray count])
+    {
         return ;
     } else {
-        [_fileHistoryArray removeObjectAtIndex:[_historyTableView selectedRow]];
-        [_historyTableView noteNumberOfRowsChanged];
-        [_historyTableView reloadData];
+        [_historyPopOverController.fileHistoryArray removeObjectAtIndex:
+                                                    [_historyPopOverController.filehistoryTableView selectedRow]];
+        
+        [_historyPopOverController.filehistoryTableView noteNumberOfRowsChanged];
+        [_historyPopOverController.filehistoryTableView reloadData];
     }
 }
 
 - (IBAction)removeAllHistory:(id)sender
 {
-    if ([_fileHistoryArray count] == 0) {
+    if ([_historyPopOverController.fileHistoryArray count] == 0) {
         return ;
     } else {
-        [_fileHistoryArray removeAllObjects];
-        [_historyTableView noteNumberOfRowsChanged];
-        [_historyTableView reloadData];
+        [_historyPopOverController.fileHistoryArray removeAllObjects];
+        [_historyPopOverController.filehistoryTableView noteNumberOfRowsChanged];
+        [_historyPopOverController.filehistoryTableView reloadData];
     }
 }
 
@@ -258,9 +252,6 @@
 {
     if (_isView == kTextViewController) {
         _isView = kDragFileController;
-       // [_superView replaceSubview:[_textViewController view] with:[_dragFileController view]];
-       // [[[_textViewController view]animator]setAlphaValue:0.0f];
-       // [[[_dragFileController view]animator]setAlphaValue:1.0f];
         [_textViewController.view setHidden:YES withFade:YES];
         [_dragFileController.view setHidden:NO withFade:YES];
         [_sendText setHidden:YES];
@@ -272,14 +263,25 @@
         _isView = kTextViewController;
         [_textViewController.view setHidden:NO withFade:YES];
         [_dragFileController.view setHidden:YES withFade:YES];
-//        [_superView replaceSubview:[_dragFileController view] with:[_textViewController view]];
-//        [[[_dragFileController view]animator]setAlphaValue:0.0f];
-//       [[[_textViewController view]animator]setAlphaValue:1.0f];
         [_sendFile setHidden:YES];
         [_selectFile setHidden:YES];
         [_sendText setHidden:NO];
         _swapButton.title = @"Swap to Files";
     }
+}
+
+- (IBAction)openHistoryPopOver:(id)sender
+{
+    NSButton *button = (NSButton *)sender;
+   
+    [_historyPopOverController showHistoryPopOver:button];
+    
+}
+
+- (IBAction)openServiceFoundPopOver:(id)sender
+{
+    NSButton *button = (NSButton *)sender;
+    [_networkPopOverController showServicesFoundPopOver:button];
 }
 
 #pragma mark - WDBubbleDelegate
@@ -313,77 +315,6 @@
         NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[url path] asIcon:YES];
         [_dragFileController.imageView setImage:quicklook];
     }
-}
-
-#pragma mark - NSTableViewDelegate
-
-- (void)tableViewSelectionDidChange:(NSNotification *)notification
-{
-    //comment by wuziqi 
-    //This is used for select other devices to connect
-    //To be finished
-}
-
-#pragma mark - NSTableViewDataSource
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
-{
-    if (aTableView == _tableView ) {
-        return _bubble.servicesFound.count;
-    } else if (aTableView == _historyTableView) {
-        return [_fileHistoryArray count];
-    }
-    return 0;
-}
-
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
-{
-    if (aTableView == _tableView) {
-        NSNetService *t = [_bubble.servicesFound objectAtIndex:rowIndex];
-        if ([t.name isEqualToString:_bubble.service.name]) {
-            return [t.name stringByAppendingString:@" (local)"];
-        } else {
-            return t.name;
-        }
-    } else if (aTableView == _historyTableView) {
-        return [_fileHistoryArray objectAtIndex:rowIndex];
-    }
-    return nil;
-}
-
-- (BOOL)   tableView:(NSTableView *)pTableView 
-writeRowsWithIndexes:(NSIndexSet *)pIndexSetOfRows 
-		toPasteboard:(NSPasteboard*)pboard
-{
-	// Wu:This is to allow us to drag files to save
-	// We don't do this if more than one row is selected
-	if ([pIndexSetOfRows count] > 1) {
-		return YES;
-	} 
-	NSInteger zIndex	= [pIndexSetOfRows firstIndex];
-	WDMessage *message	= [_fileHistoryArray objectAtIndex:zIndex];
-    
-    [pboard declareTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType, nil] owner:self];
-    NSArray *propertyArray = [NSArray arrayWithObject:message.fileURL.pathExtension];
-    [pboard setPropertyList:propertyArray
-                    forType:NSFilesPromisePboardType];
-    return YES;
-}
-
-- (NSArray *)tableView:(NSTableView *)aTableView
-namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
-forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
-    NSInteger zIndex = [indexSet firstIndex];
-    WDMessage *message = [_fileHistoryArray objectAtIndex:zIndex];
-    
-    NSURL *newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
-                                          dropDestination.path, 
-                                          [message.fileURL.lastPathComponent stringByReplacingOccurrencesOfString:@" " 
-                                                                                                      withString:@"%20"]]];
-    newURL = [newURL URLWithoutNameConflict];
-    NSData *data = [NSData dataWithContentsOfURL:message.fileURL];
-    [[NSFileManager defaultManager] createFileAtPath:newURL.path contents:data attributes:nil];
-    return [NSArray arrayWithObjects:newURL.lastPathComponent, nil];
 }
 
 #pragma mark - PasswordMacViewControllerDelegate
@@ -420,45 +351,5 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     return nil;
 }
 
-#pragma mark - ImageAndTextCellDelegate
-
-- (NSImage *)previewIconForCell:(NSObject *)data
-{
-    DLog(@"previewIconForCell");
-    WDMessage *message = (WDMessage *)data;
-    if (message.type == WDMessageTypeText){
-        return nil;
-    } else if (message.type == WDMessageTypeFile){
-        NSImage *icon = [[[NSImage alloc]initWithContentsOfURL:message.fileURL]autorelease];
-        return icon;
-    }
-    return nil;
-}
-
-- (NSString *)primaryTextForCell:(NSObject *)data
-{
-    DLog(@"primaryTextForCell");
-    WDMessage *message = (WDMessage *)data;
-    if (message.type == WDMessageTypeText){
-        return [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
-    } else if (message.type == WDMessageTypeFile){
-        return [message.fileURL lastPathComponent];
-    }
-    return nil;
-}
-
-- (NSString *)auxiliaryTextForCell:(NSObject *)data
-{
-    WDMessage *message = (WDMessage *)data;
-    NSDateFormatter *df = [[[NSDateFormatter alloc] init] autorelease];
-    df.dateFormat = @"hh:mm:ss";
-    return  [message.sender stringByAppendingFormat:@" %@", [df stringFromDate:message.time]];
-}
-
-- (NSURL *)URLForCell:(NSObject *)data
-{
-    WDMessage *message = (WDMessage *)data;
-    return  message.fileURL;
-}
 
 @end
