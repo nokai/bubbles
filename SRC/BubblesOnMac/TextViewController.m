@@ -20,11 +20,6 @@
     return self;
 }
 
-/*- (BOOL)acceptsFirstResponder
-{
-    return YES;
-}*/
-
 - (void)dealloc
 {
     [_textField release];
