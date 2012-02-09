@@ -161,7 +161,7 @@
 #pragma mark - IBActions
 
 - (IBAction)sendText:(id)sender {
-    DLog(@"jkhsdkfjhsdf");
+    DLog(@"MVC sendText %@", _textViewController.textField.stringValue);
     if (_isView == kTextViewController) {
         [_bubble broadcastMessage:[WDMessage messageWithText:_textViewController.textField.stringValue]];
     }

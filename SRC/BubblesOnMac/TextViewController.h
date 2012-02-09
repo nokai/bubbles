@@ -8,11 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface TextViewController : NSViewController
-{
-    IBOutlet NSTextField *_textField;
+@interface TextViewController : NSViewController {
+    NSTextField *_textField;
 }
 
-@property (nonatomic ,retain)IBOutlet NSTextField *textField;
+@property (nonatomic ,retain) IBOutlet NSTextField *textField;
 
 @end
