@@ -15,20 +15,6 @@
 @synthesize window = _window;
 @synthesize viewController = _viewController;
 
-// DW: scan and delete all files
-- (void)scanDocuments {
-    // set up Add and Edit navigation items here....
-    NSArray* localDocuments = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSURL iOSDocumentsDirectoryPath]
-                                                                                  error:nil];
-    NSError *error = [[NSError alloc] init];
-    for (NSString *document in localDocuments) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:[[NSURL iOSDocumentsDirectoryPath] stringByAppendingString:document]  
-                                                        error:&error])
-            NSLog(@"Unable to delete file %@: %@", document, error);
-    }
-    [error release];
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];

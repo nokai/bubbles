@@ -44,6 +44,8 @@ DirectoryWatcherDelegate> {
     IBOutlet UISegmentedControl *_segmentSwith;
     IBOutlet UITableView *_messagesView;
     IBOutlet UIButton *_lockButton;
+    IBOutlet UINavigationBar *_bar;
+    IBOutlet UIBarButtonItem *_clearButton;
     
     // DW: password
     PasswordViewController *_passwordViewController;

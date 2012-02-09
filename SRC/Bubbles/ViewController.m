@@ -16,6 +16,7 @@
 #define kActionSheetButtonPreview   @"Preview"
 #define kActionSheetButtonSave      @"Save to Gallery"
 #define kActionSheetButtonCancel    @"Cancel"
+#define kActionSheetButtonDeleteAll @"Delete All"
 
 @implementation ViewController
 
@@ -102,6 +103,27 @@
     //[_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
 }
 
+// DW: this deletes acutal documents and their referencing messages if they have
+- (void)deleteDocumentAndMessageInURL:(NSURL *)fileURL {      
+    // DW: delete records in messages
+    for (WDMessage *m in _messages) {
+        if ([m.fileURL.path isEqualToString:fileURL.path]) {
+            [_messages removeObject:m];
+        }
+    }
+    
+    [[NSFileManager defaultManager] removeItemAtPath:fileURL.path
+                                               error:nil];
+}
+
+// DW: scan and delete all files
+- (void)deleteAllDocuments {
+    // set up Add and Edit navigation items here....
+    for (NSURL *fileURL in _documents) {
+        [self deleteDocumentAndMessageInURL:fileURL];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -144,6 +166,10 @@
         _itemsToShow = _documents;
     }
     
+    // DW: other UI
+    _bar.topItem.rightBarButtonItem = self.editButtonItem;
+    //[self setEditing:NO animated:NO];
+    
     // DW: password view
     _passwordViewController = [[PasswordViewController alloc] initWithNibName:@"PasswordViewController" bundle:nil];
     _passwordViewController.delegate = self;
@@ -157,6 +183,8 @@
         [_bubble browseServices];
     }
     [self refreshLockStatus];
+    
+    [_messagesView reloadData];
 }
 
 - (void)viewDidUnload
@@ -184,6 +212,17 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {    
+    [super setEditing:editing animated:animated];
+    
+    [_messagesView setEditing:editing animated:YES];
+    if (editing) {
+        [_bar.topItem setLeftBarButtonItem:_clearButton animated:YES];
+    } else {
+        [_bar.topItem setLeftBarButtonItem:nil animated:YES];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -264,6 +303,16 @@
         _itemsToShow = _documents;
     }
     [_messagesView reloadData];
+}
+
+- (IBAction)clearButton:(id)sender {
+    UIActionSheet *as = [[UIActionSheet alloc] initWithTitle:nil
+                                                    delegate:self 
+                                           cancelButtonTitle:kActionSheetButtonCancel
+                                      destructiveButtonTitle:kActionSheetButtonDeleteAll
+                                           otherButtonTitles:nil];
+    [as showInView:self.view];
+    [as release];
 }
 
 #pragma mark - WDBubbleDelegate
@@ -411,6 +460,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
+    
+    // DW: we can use here to hide bar buttons
+    if (_segmentSwith.selectedSegmentIndex == 0) {
+        [_bar.topItem setRightBarButtonItem:(_messages.count > 0)?self.editButtonItem:nil];
+    } else if (_segmentSwith.selectedSegmentIndex == 1) {
+        [_bar.topItem setRightBarButtonItem:(_documents.count > 0)?self.editButtonItem:nil];
+    }
+    
     return _itemsToShow.count;
 }
 
@@ -419,8 +476,7 @@
         [_messages removeObjectAtIndex:indexPath.row];
     } else if (_segmentSwith.selectedSegmentIndex == 1) {
         NSURL *fileURL = [_documents objectAtIndex:indexPath.row];
-        [[NSFileManager defaultManager] removeItemAtPath:fileURL.path
-                                                   error:nil];
+        [self deleteDocumentAndMessageInURL:fileURL];
         [_documents removeObjectAtIndex:indexPath.row];
     }
     
@@ -521,6 +577,19 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    // DW: special actions that do not need WDMessage
+    if ([buttonTitle isEqualToString:kActionSheetButtonDeleteAll]) {
+        if (_segmentSwith.selectedSegmentIndex == 0) {
+            [_messages removeAllObjects];
+        } else if (_segmentSwith.selectedSegmentIndex == 1) {
+            [self deleteAllDocuments];
+            [_documents removeAllObjects];
+        }
+        [_messagesView reloadData];
+        [self setEditing:NO animated:YES];
+        return;
+    }
     
     // DW: construct a WDMessage
     WDMessage *message = nil;
