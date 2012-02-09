@@ -18,6 +18,8 @@
 
 - (void)dealloc
 {
+    [_previewButton release];
+    [_deleteButton release];
     [_previewImage release];
     [_auxiliaryText release];
     [_primaryText release];
@@ -84,12 +86,21 @@
 	[[NSGraphicsContext currentContext] restoreGraphicsState];	   
     
     // Wu:Set the preview button
-    _previewButton = [[NSButton alloc]initWithFrame:CGRectMake(cellFrame.origin.x + cellFrame.size.height + 200 ,cellFrame.origin.y + cellFrame.size.height / 2, 70, cellFrame.size.height / 2 )];
-    [_previewButton setTitle:@"Preview"];
+    _previewButton = [[NSButton alloc]initWithFrame:CGRectMake(cellFrame.origin.x + 200 ,cellFrame.origin.y , 30, cellFrame.size.height / 2 )];
     [_previewButton setTarget:self];
     [_previewButton setAction:@selector(showItPreview)];
-    [_previewButton setButtonType:NSRoundedDisclosureBezelStyle];
+    [_previewButton setBordered:NO];
+    [_previewButton setImage:[NSImage imageNamed:@"NSRevealFreestandingTemplate"]];
     [controlView addSubview:_previewButton];
+    
+    // Wu:Set the delete button
+    
+    _deleteButton = [[NSButton alloc]initWithFrame:CGRectMake(cellFrame.origin.x + 170 ,cellFrame.origin.y , 30, cellFrame.size.height / 2 )];
+    [_deleteButton setTarget:self];
+    [_deleteButton setBordered:NO];
+    [_deleteButton setImage:[NSImage imageNamed:@"NSStopProgressTemplate"]];
+    [controlView addSubview:_deleteButton];
+    
 }
 
 - (void)showItPreview

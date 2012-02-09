@@ -23,6 +23,7 @@
     NSString *_auxiliaryText;
     NSString *_primaryText;
     NSButton *_previewButton;
+    NSButton *_deleteButton;
     NSURL *_fileURL;
 }
 @property (nonatomic , retain) NSImage *previewImage;
