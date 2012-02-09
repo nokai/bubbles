@@ -17,11 +17,14 @@
 @synthesize viewController = _viewController, splitViewController = _splitViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{    
+{
+    WDBubble *bubble = [[[WDBubble alloc] init] autorelease];
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         ViewController *detailViewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
         UINavigationController *detailNavigationController = [[[UINavigationController alloc] initWithRootViewController:detailViewController] autorelease];
-    	
+    	detailViewController.bubble = bubble;
+        bubble.delegate = detailViewController;
+        
         PeersViewController *masterViewController = [[[PeersViewController alloc] initWithNibName:@"PeersViewController_iPad" bundle:nil] autorelease];
         UINavigationController *masterNavigationController = [[[UINavigationController alloc] initWithRootViewController:masterViewController] autorelease];
         masterViewController.bubble = detailViewController.bubble;
@@ -36,6 +39,9 @@
         self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
         // Override point for customization after application launch.
         self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
+        self.viewController.bubble = bubble;
+        bubble.delegate = self.viewController;
+        
         self.window.rootViewController = self.viewController;
         [self.window makeKeyAndVisible];
     }

@@ -52,6 +52,14 @@ UISplitViewControllerDelegate> {
     PasswordViewController *_passwordViewController;
 }
 
-@property (nonatomic, readonly) WDBubble *bubble;
+@property (nonatomic, retain) WDBubble *bubble;
+
+// DW: it's very weird that sometimes I can't drag actions to this vc unless I declare these methods as public
+- (IBAction)sendText:(id)sender;
+- (IBAction)selectFile:(id)sender;
+- (IBAction)showPeers:(id)sender;
+- (IBAction)toggleUsePassword:(id)sender;
+- (IBAction)toggleView:(id)sender;
+- (IBAction)clearButton:(id)sender;
 
 @end

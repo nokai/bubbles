@@ -54,6 +54,19 @@
     [_messagesView reloadData];
 }
 
+// DW: can only send images and movies for now.
+- (void)sendFile {
+    if (_fileURL) {
+        // DW: a movie or JPG or PNG        
+        WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
+        [self storeMessage:t];
+        [_bubble broadcastMessage:t];
+        [t release];
+    } else {
+        DLog(@"VC sendFile no good file URL");
+    }
+}
+
 - (void)displayMailComposerSheetWithMessage:(WDMessage *)message {
 	MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
     if (!picker) {
@@ -153,8 +166,6 @@
     [[NSUserDefaults standardUserDefaults] registerDefaults:t];
     
     // DW: bubble
-    _bubble = [[WDBubble alloc] init];
-    _bubble.delegate = self;
     
     // DW: messages or files
     _messages = [[NSMutableArray alloc] init];
@@ -168,6 +179,7 @@
     }
     
     // DW: other UI
+    self.navigationController.navigationBar.hidden = YES;
     _bar.topItem.rightBarButtonItem = self.editButtonItem;
     //[self setEditing:NO animated:NO];
     
@@ -265,19 +277,6 @@
             [self presentModalViewController:t animated:YES];
             [t release];
         }
-    }
-}
-
-// DW: can only send images and movies for now.
-- (void)sendFile {
-    if (_fileURL) {
-        // DW: a movie or JPG or PNG        
-        WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
-        [self storeMessage:t];
-        [_bubble broadcastMessage:t];
-        [t release];
-    } else {
-        DLog(@"VC sendFile no good file URL");
     }
 }
 
