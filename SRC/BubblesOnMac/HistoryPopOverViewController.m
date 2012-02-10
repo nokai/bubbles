@@ -62,6 +62,19 @@
     [_historyPopOver showRelativeToRect:[attachedView bounds] ofView:attachedView preferredEdge:CGRectMinYEdge];
 }
 
+#pragma mark - IBAction
+
+- (IBAction)removeAllHistory:(id)sender
+{
+    if ([_fileHistoryArray count] == 0) {
+        return ;
+    } else {
+        [_fileHistoryArray removeAllObjects];
+        [_fileHistoryTableView noteNumberOfRowsChanged];
+        [_fileHistoryTableView reloadData];
+    }
+}
+
 #pragma mark - NSTableViewDataSource
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
@@ -150,5 +163,16 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     return  message.fileURL;
 }
 
-
+- (void)deleteSeletcedRows
+{
+    if ([_fileHistoryTableView selectedRow] < 0 || [_fileHistoryTableView selectedRow] >= [_fileHistoryArray count])
+    {
+        return ;
+    } else {
+        [_fileHistoryArray removeObjectAtIndex:[_fileHistoryTableView selectedRow]];
+        
+        [_fileHistoryTableView noteNumberOfRowsChanged];
+        [_fileHistoryTableView reloadData];
+    }
+}
 @end

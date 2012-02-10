@@ -16,8 +16,24 @@
 @synthesize fileURL = _fileURL;
 @synthesize delegate;
 
+- (void)showItPreview
+{
+    DLog(@"showfileURl is %@",_fileURL);
+    AppDelegate *del = (AppDelegate *)[NSApp delegate];
+    if (![del.array containsObject:_fileURL]) {
+        del.array = [NSArray arrayWithObject:_fileURL];
+    }
+    [del showPreviewInHistory];
+}
+
+- (void)deleteRows
+{
+    [self.delegate deleteSeletcedRows];
+}
+
 - (void)dealloc
 {
+    DLog(@"dealloc");
     [_previewButton release];
     [_deleteButton release];
     [_previewImage release];
@@ -92,25 +108,17 @@
     [_previewButton setBordered:NO];
     [_previewButton setImage:[NSImage imageNamed:@"NSRevealFreestandingTemplate"]];
     [controlView addSubview:_previewButton];
+    [_previewButton release];
     
     // Wu:Set the delete button
     
     _deleteButton = [[NSButton alloc]initWithFrame:CGRectMake(cellFrame.origin.x + 170 ,cellFrame.origin.y , 30, cellFrame.size.height / 2 )];
     [_deleteButton setTarget:self];
     [_deleteButton setBordered:NO];
+    [_deleteButton setAction:@selector(deleteRows)];
     [_deleteButton setImage:[NSImage imageNamed:@"NSStopProgressTemplate"]];
     [controlView addSubview:_deleteButton];
-    
-}
-
-- (void)showItPreview
-{
-    DLog(@"showfileURl is %@",_fileURL);
-    AppDelegate *del = (AppDelegate *)[NSApp delegate];
-    if (![del.array containsObject:_fileURL]) {
-        del.array = [NSArray arrayWithObject:_fileURL];
-    }
-    [del showPreviewInHistory];
+    [_deleteButton release];
 }
 
 @end

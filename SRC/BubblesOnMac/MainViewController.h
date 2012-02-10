@@ -17,6 +17,7 @@
 #import "NSView+NSView_Fade_.h"
 #import "HistoryPopOverViewController.h"
 #import "NetworkFoundPopOverViewController.h"
+#import <SecurityInterface/SFAuthorizationView.h>
 
 #define kTextViewController 0
 #define kDragFileController 1
@@ -25,16 +26,14 @@
     WDBubble *_bubble;
     NSURL *_fileURL;
         
-    // Wu:_checkBox is the control of enabling password
-    IBOutlet NSButton *_checkBox;
-    IBOutlet NSButton *_swapButton;
-    
     // Wu:NSView for adding two subView and constrain their bound
     IBOutlet NSView *_superView;
     
     IBOutlet NSToolbarItem *_selectFileItem;
     IBOutlet NSToolbarItem *_networkItem;
     IBOutlet NSToolbarItem *_historyItem;
+    
+    IBOutlet NSButton *_swapButton;
     
     BOOL _isView;
        
