@@ -13,27 +13,6 @@
 
 #pragma mark - Private Methods
 
-/*- (void)delayNotification {
- [self performSelector:@selector(loadUserPreference) withObject:nil afterDelay:1.0f];
- }*/
-
-// DW: we do not need this method now
-/*- (void)directlySave {
- NSURL *url = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];
- if (_fileURL && _imageMessage.image != nil) {
- NSFileManager *manager = [NSFileManager defaultManager];
- 
- NSString *fileExtension = [[_fileURL absoluteString] pathExtension];
- NSString *filename = [NSString stringWithFormat:@"%@.%@",[NSDate date],fileExtension];
- DLog(@"filename is %@!!!!!!!",filename);
- 
- NSData *data = [NSData dataWithContentsOfURL:_fileURL];
- 
- NSString *fullPath = [[url path] stringByAppendingPathComponent:filename];
- [manager createFileAtPath:fullPath contents:data attributes:nil];
- }
- }*/
-
 - (void)servicesUpdated:(NSNotification *)notification {
     if (_networkPopOverController != nil) {
         [_networkPopOverController reloadNetwork];
@@ -42,7 +21,7 @@
 
 - (void)loadUserPreference
 {
-    /*if (_passwordController != nil) {
+    if (_passwordController != nil) {
         //[[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
         return ;
     }
@@ -58,12 +37,29 @@
     } else {
         [_bubble publishServiceWithPassword:@""];
         [_bubble browseServices];
-    }*/
-    [_bubble publishServiceWithPassword:@""];
-    [_bubble browseServices];
+    }
 }
 
+- (void)delayNotification {
+    [self performSelector:@selector(loadUserPreference) withObject:nil afterDelay:1.0f];
+}
 
+// DW: we do not need this method now
+/*- (void)directlySave {
+    NSURL *url = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];
+    if (_fileURL && _imageMessage.image != nil) {
+        NSFileManager *manager = [NSFileManager defaultManager];
+        
+        NSString *fileExtension = [[_fileURL absoluteString] pathExtension];
+        NSString *filename = [NSString stringWithFormat:@"%@.%@",[NSDate date],fileExtension];
+        DLog(@"filename is %@!!!!!!!",filename);
+        
+        NSData *data = [NSData dataWithContentsOfURL:_fileURL];
+        
+        NSString *fullPath = [[url path] stringByAppendingPathComponent:filename];
+        [manager createFileAtPath:fullPath contents:data attributes:nil];
+    }
+}*/
 
 - (void)storeMessage:(WDMessage *)message
 {
@@ -142,6 +138,7 @@
        
     [_bubble release];
     [_fileURL release];
+    [_checkBox release];
     [_swapButton release];
     [_selectFileItem release];
     [_networkItem release];
@@ -151,11 +148,12 @@
 
 - (void)awakeFromNib
 {
-    // bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
+    bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
+    [_checkBox setState:status];
     // Wu:Add observer to get the notification when the main menu become key window then the sheet window will appear
-    /* [[NSNotificationCenter defaultCenter] addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(delayNotification)
-                                                 name:@"NSWindowDidBecomeKeyNotification" object:nil];*/
+                                                 name:@"NSWindowDidBecomeKeyNotification" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(servicesUpdated:) 
@@ -181,7 +179,7 @@
 
 - (IBAction)togglePassword:(id)sender {
     NSButton *button = (NSButton *)sender;
-    //[[NSUserDefaults standardUserDefaults] setBool:button.state forKey:kUserDefaultsUsePassword];
+    [[NSUserDefaults standardUserDefaults] setBool:button.state forKey:kUserDefaultsUsePassword];
     
     if (button.state == NSOnState) {
         // DW: user turned password on.
@@ -232,6 +230,32 @@
     }
     
     [_preferenceController showWindow:self];
+}
+
+- (IBAction)deleteSelectedRows:(id)sender
+{
+    if ([_historyPopOverController.filehistoryTableView selectedRow] < 0 || 
+        [_historyPopOverController.filehistoryTableView selectedRow] >= [_historyPopOverController.fileHistoryArray count])
+    {
+        return ;
+    } else {
+        [_historyPopOverController.fileHistoryArray removeObjectAtIndex:
+                                                    [_historyPopOverController.filehistoryTableView selectedRow]];
+        
+        [_historyPopOverController.filehistoryTableView noteNumberOfRowsChanged];
+        [_historyPopOverController.filehistoryTableView reloadData];
+    }
+}
+
+- (IBAction)removeAllHistory:(id)sender
+{
+    if ([_historyPopOverController.fileHistoryArray count] == 0) {
+        return ;
+    } else {
+        [_historyPopOverController.fileHistoryArray removeAllObjects];
+        [_historyPopOverController.filehistoryTableView noteNumberOfRowsChanged];
+        [_historyPopOverController.filehistoryTableView reloadData];
+    }
 }
 
 - (IBAction)swapView:(id)sender
@@ -307,7 +331,8 @@
 #pragma mark - PasswordMacViewControllerDelegate
 
 - (void)didCancel {
-   
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsUsePassword];
+    _checkBox.state = NSOffState;
 }
 
 - (void)didInputPassword:(NSString *)pwd {

@@ -15,7 +15,6 @@
 - (NSString *)primaryTextForCell:(NSObject *)data;
 - (NSString *)auxiliaryTextForCell:(NSObject *)data;
 - (NSURL *)URLForCell:(NSObject *)data;
-- (void)deleteSeletcedRows;
 @end
 
 @interface ImageAndTextCell : NSTextFieldCell
