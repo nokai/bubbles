@@ -8,7 +8,6 @@
 
 #import <AppKit/AppKit.h>
 #import <Cocoa/Cocoa.h>
-#import "AppDelegate.h"
 
 @protocol ImageAndTextCellDelegate <NSObject>
 - (NSImage *)previewIconForCell:(NSObject *)data;
@@ -22,8 +21,6 @@
     NSImage *_previewImage;
     NSString *_auxiliaryText;
     NSString *_primaryText;
-    NSButton *_previewButton;
-    NSButton *_deleteButton;
     NSURL *_fileURL;
 }
 @property (nonatomic , retain) NSImage *previewImage;

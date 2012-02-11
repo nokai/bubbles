@@ -26,7 +26,6 @@
     NSURL *_fileURL;
         
     // Wu:_checkBox is the control of enabling password
-    IBOutlet NSButton *_checkBox;
     IBOutlet NSButton *_swapButton;
     
     // Wu:NSView for adding two subView and constrain their bound

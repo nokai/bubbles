@@ -8,10 +8,37 @@
 
 #import "HistoryPopOverViewController.h"
 
+
 @implementation HistoryPopOverViewController
 @synthesize historyPopOver = _historyPopOver;
 @synthesize fileHistoryArray = _fileHistoryArray;
 @synthesize filehistoryTableView = _fileHistoryTableView;
+
+#pragma mark - Private Methods
+- (void)showItPreview:(NSURL *)aFileURL
+{
+    AppDelegate *del = (AppDelegate *)[NSApp delegate];
+    if (![del.array containsObject:aFileURL]) {
+        del.array = [NSArray arrayWithObject:aFileURL];
+    }
+    [del showPreviewInHistory];
+}
+
+- (void)deleteSelectedRow
+{
+    if (0 <= [_fileHistoryTableView selectedRow] && [_fileHistoryTableView selectedRow] < [_fileHistoryArray count]) {
+        [_fileHistoryArray removeObjectAtIndex:[_fileHistoryTableView selectedRow]];
+    }
+    [_fileHistoryTableView reloadData];
+}
+
+- (void)previewSelectedRow
+{
+    if (0 <= [_fileHistoryTableView selectedRow] && [_fileHistoryTableView selectedRow] < [_fileHistoryArray count]) {
+        WDMessage *message = (WDMessage *)[_fileHistoryArray objectAtIndex:[_fileHistoryTableView selectedRow]];
+        [self showItPreview:message.fileURL];
+    }
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,6 +67,21 @@
     NSTableColumn *column = [[_fileHistoryTableView tableColumns] objectAtIndex:0];
     [column setDataCell:_imageAndTextCell];
     
+    NSButtonCell *deleteCell = [[[NSButtonCell alloc]init]autorelease];
+    [deleteCell setBordered:NO];
+    [deleteCell setImage:[NSImage imageNamed:@"NSStopProgressTemplate"]];
+    [deleteCell setAction:@selector(deleteSelectedRow)];
+     NSTableColumn *columnTwo = [[_fileHistoryTableView tableColumns] objectAtIndex:1];
+    [columnTwo setDataCell:deleteCell];
+    
+    NSButtonCell *previewCell = [[[NSButtonCell alloc]init]autorelease];
+    [previewCell setBordered:NO];
+    [previewCell setImage:[NSImage imageNamed:@"NSRevealFreestandingTemplate"]];
+    [previewCell setAction:@selector(previewSelectedRow)];
+    NSTableColumn *columnThree = [[_fileHistoryTableView tableColumns] objectAtIndex:2];
+    [columnThree setDataCell:previewCell];
+    
+    
     // Wu:Set the tableview can accept being dragged from
     [_fileHistoryTableView registerForDraggedTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType,NSFilenamesPboardType,NSTIFFPboardType,nil]];
 	// Wu:Tell NSTableView we want to drag and drop accross applications the default is YES means can be only interact with current application
@@ -60,6 +102,19 @@
     
     // Wu:CGRectMaxXEdge means appear in the right of button
     [_historyPopOver showRelativeToRect:[attachedView bounds] ofView:attachedView preferredEdge:CGRectMinYEdge];
+}
+
+#pragma mark - IBAction
+
+- (IBAction)removeAllHistory:(id)sender
+{
+    if ([_fileHistoryArray count] == 0) {
+        return ;
+    } else {
+        [_fileHistoryArray removeAllObjects];
+        [_fileHistoryTableView noteNumberOfRowsChanged];
+        [_fileHistoryTableView reloadData];
+    }
 }
 
 #pragma mark - NSTableViewDataSource
@@ -118,7 +173,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     if (message.type == WDMessageTypeText){
         return nil;
     } else if (message.type == WDMessageTypeFile){
-        NSImage *icon = [[[NSImage alloc]initWithContentsOfURL:message.fileURL]autorelease];
+        NSImage *icon = [NSImage imageWithPreviewOfFileAtPath:[message.fileURL path] asIcon:YES];
         return icon;
     }
     return nil;
@@ -150,5 +205,11 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     return  message.fileURL;
 }
 
+- (NSInteger)indexForCell:(NSObject *)data
+{
+    WDMessage *message = (WDMessage *)data;
+    DLog(@"index is %@",[_fileHistoryArray indexOfObject:message]);
+    return [_fileHistoryArray indexOfObject:message];
+}
 
 @end

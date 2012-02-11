@@ -16,10 +16,12 @@
 @synthesize fileURL = _fileURL;
 @synthesize delegate;
 
+#pragma mark - Override
+
 - (void)dealloc
 {
-    [_previewButton release];
-    [_deleteButton release];
+    //[_previewButton release];
+    //[_deleteButton release];
     [_previewImage release];
     [_auxiliaryText release];
     [_primaryText release];
@@ -59,8 +61,8 @@
     // Wu:For the auxiliaryText 02/05
     NSColor *auxiliaryTextColor = [self isHighlighted] ? [NSColor alternateSelectedControlTextColor] : 
     [NSColor disabledControlTextColor];
-    NSDictionary *auxiliaryTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:auxiliaryTextColor,NSForegroundColorAttributeName,[NSFont systemFontOfSize:10],NSFontAttributeName,nil];
-    [_auxiliaryText drawAtPoint:NSMakePoint(cellFrame.origin.x + cellFrame.size.height + 10, cellFrame.origin.y +cellFrame.size.height / 2) withAttributes:auxiliaryTextAttributes];
+    NSDictionary *auxiliaryTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:auxiliaryTextColor,NSForegroundColorAttributeName,[NSFont systemFontOfSize:8],NSFontAttributeName,nil];
+    [_auxiliaryText drawAtPoint:NSMakePoint(cellFrame.origin.x + cellFrame.size.height, cellFrame.origin.y +cellFrame.size.height / 2) withAttributes:auxiliaryTextAttributes];
     
     // Wu:For the previewImage
     [[NSGraphicsContext currentContext] saveGraphicsState];
@@ -84,33 +86,6 @@
 	[[NSGraphicsContext currentContext] setImageInterpolation: interpolation];
 	
 	[[NSGraphicsContext currentContext] restoreGraphicsState];	   
-    
-    // Wu:Set the preview button
-    _previewButton = [[NSButton alloc]initWithFrame:CGRectMake(cellFrame.origin.x + 200 ,cellFrame.origin.y , 30, cellFrame.size.height / 2 )];
-    [_previewButton setTarget:self];
-    [_previewButton setAction:@selector(showItPreview)];
-    [_previewButton setBordered:NO];
-    [_previewButton setImage:[NSImage imageNamed:@"NSRevealFreestandingTemplate"]];
-    [controlView addSubview:_previewButton];
-    
-    // Wu:Set the delete button
-    
-    _deleteButton = [[NSButton alloc]initWithFrame:CGRectMake(cellFrame.origin.x + 170 ,cellFrame.origin.y , 30, cellFrame.size.height / 2 )];
-    [_deleteButton setTarget:self];
-    [_deleteButton setBordered:NO];
-    [_deleteButton setImage:[NSImage imageNamed:@"NSStopProgressTemplate"]];
-    [controlView addSubview:_deleteButton];
-    
-}
-
-- (void)showItPreview
-{
-    DLog(@"showfileURl is %@",_fileURL);
-    AppDelegate *del = (AppDelegate *)[NSApp delegate];
-    if (![del.array containsObject:_fileURL]) {
-        del.array = [NSArray arrayWithObject:_fileURL];
-    }
-    [del showPreviewInHistory];
 }
 
 @end

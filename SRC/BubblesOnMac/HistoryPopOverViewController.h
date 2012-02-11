@@ -9,8 +9,10 @@
 #import <Cocoa/Cocoa.h>
 #import "WDMessage.h"
 #import "ImageAndTextCell.h"
+#import "NSImage+QuickLook.h"
+#import "AppDelegate.h"
 
-@interface HistoryPopOverViewController : NSViewController<NSPopoverDelegate,NSTableViewDelegate,NSTableViewDataSource,ImageAndTextCellDelegate>
+@interface HistoryPopOverViewController : NSViewController<NSPopoverDelegate,NSTableViewDataSource,NSTableViewDelegate,ImageAndTextCellDelegate>
 {
     IBOutlet NSTableView *_fileHistoryTableView;
     NSPopover *_historyPopOver;
