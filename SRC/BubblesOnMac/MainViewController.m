@@ -141,7 +141,7 @@
        
     [_bubble release];
     [_fileURL release];
-    [_swapButton release];
+    [_viewIndicator release];
     [_selectFileItem release];
     [_networkItem release];
     [_historyItem release];
@@ -173,13 +173,17 @@
     _dragFileController.imageView.delegate = self;
     [_dragFileController.view setHidden:YES];
     
+    _viewIndicator.stringValue = @"Bubbles Message";
+    
 }
 
 #pragma mark - IBActions
 
 - (IBAction)togglePassword:(id)sender {
     NSButton *button = (NSButton *)sender;
-    [[NSUserDefaults standardUserDefaults] setBool:button.state forKey:kUserDefaultsUsePassword];
+    
+    DLog(@"!!!!!!!!!!!!!");
+    //[[NSUserDefaults standardUserDefaults] setBool:button.state forKey:kUserDefaultsUsePassword];
     
     if (button.state == NSOnState) {
         // DW: user turned password on.
@@ -238,13 +242,13 @@
         _isView = kDragFileController;
         [_textViewController.view setHidden:YES withFade:YES];
         [_dragFileController.view setHidden:NO withFade:YES];
-        _swapButton.title = @"Swap to Messages";
+        _viewIndicator.stringValue = @"Bubbles File";
         
     } else {
         _isView = kTextViewController;
         [_textViewController.view setHidden:NO withFade:YES];
         [_dragFileController.view setHidden:YES withFade:YES];
-        _swapButton.title = @"Swap to Files";
+         _viewIndicator.stringValue = @"Bubbles Message";
     }
 }
 

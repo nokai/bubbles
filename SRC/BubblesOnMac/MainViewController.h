@@ -25,15 +25,14 @@
     WDBubble *_bubble;
     NSURL *_fileURL;
         
-    // Wu:_checkBox is the control of enabling password
-    IBOutlet NSButton *_swapButton;
-    
     // Wu:NSView for adding two subView and constrain their bound
     IBOutlet NSView *_superView;
     
     IBOutlet NSToolbarItem *_selectFileItem;
     IBOutlet NSToolbarItem *_networkItem;
     IBOutlet NSToolbarItem *_historyItem;
+    
+    IBOutlet NSTextField *_viewIndicator;
     
     BOOL _isView;
        
