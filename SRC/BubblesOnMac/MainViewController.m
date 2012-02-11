@@ -117,6 +117,8 @@
     
         //Wu:the initilization is open the send text view;
         _isView = kTextViewController;
+        
+        [self loadUserPreference];
     }
     return self;
 }
