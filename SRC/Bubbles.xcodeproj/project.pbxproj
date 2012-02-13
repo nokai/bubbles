@@ -53,6 +53,9 @@
 		C1393F2514D9165D005AFEB6 /* tile_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F1B14D9165D005AFEB6 /* tile_bg@2x.png */; };
 		C1393F2814D91BBF005AFEB6 /* UINavigationBar+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */; };
 		C1393F2A14D91D35005AFEB6 /* tile_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F2914D91D35005AFEB6 /* tile_bg.png */; };
+		C167CE0D14E8F3A700B419CD /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = C167CE0C14E8F3A700B419CD /* UIImage+Resize.m */; };
+		C167CE1314E8F5CF00B419CD /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = C167CE1014E8F5CF00B419CD /* UIImage+Alpha.m */; };
+		C167CE1414E8F5CF00B419CD /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = C167CE1214E8F5CF00B419CD /* UIImage+RoundedCorner.m */; };
 		C18B6F7D14DCC8E7009F502E /* Icon-Text.png in Resources */ = {isa = PBXBuildFile; fileRef = C18B6F7B14DCC8E7009F502E /* Icon-Text.png */; };
 		C18B6F7E14DCC8E7009F502E /* Icon-Text@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C18B6F7C14DCC8E7009F502E /* Icon-Text@2x.png */; };
 		C1C9371D14BB1766005E0EAA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1C9371B14BB1766005E0EAA /* InfoPlist.strings */; };
@@ -144,6 +147,12 @@
 		C1393F2614D91BBF005AFEB6 /* UINavigationBar+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+Custom.h"; path = "Bubbles/UINavigationBar+Custom.h"; sourceTree = SOURCE_ROOT; };
 		C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+Custom.m"; path = "Bubbles/UINavigationBar+Custom.m"; sourceTree = SOURCE_ROOT; };
 		C1393F2914D91D35005AFEB6 /* tile_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tile_bg.png; path = Resources/iPhone/tile_bg.png; sourceTree = SOURCE_ROOT; };
+		C167CE0B14E8F3A700B419CD /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "Bubbles/UIImage+Resize.h"; sourceTree = SOURCE_ROOT; };
+		C167CE0C14E8F3A700B419CD /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "Bubbles/UIImage+Resize.m"; sourceTree = SOURCE_ROOT; };
+		C167CE0F14E8F5CF00B419CD /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Alpha.h"; path = "Bubbles/UIImage+Alpha.h"; sourceTree = SOURCE_ROOT; };
+		C167CE1014E8F5CF00B419CD /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Alpha.m"; path = "Bubbles/UIImage+Alpha.m"; sourceTree = SOURCE_ROOT; };
+		C167CE1114E8F5CF00B419CD /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+RoundedCorner.h"; path = "Bubbles/UIImage+RoundedCorner.h"; sourceTree = SOURCE_ROOT; };
+		C167CE1214E8F5CF00B419CD /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+RoundedCorner.m"; path = "Bubbles/UIImage+RoundedCorner.m"; sourceTree = SOURCE_ROOT; };
 		C18B6F7B14DCC8E7009F502E /* Icon-Text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Text.png"; path = "Resources/iPhone/Icon-Text.png"; sourceTree = SOURCE_ROOT; };
 		C18B6F7C14DCC8E7009F502E /* Icon-Text@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Text@2x.png"; path = "Resources/iPhone/Icon-Text@2x.png"; sourceTree = SOURCE_ROOT; };
 		C1AC4D2F14D81DCC008FACE0 /* WDHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WDHeader.h; path = Bubbles/WDHeader.h; sourceTree = "<group>"; };
@@ -326,6 +335,16 @@
 		C121946A14B591D700159A9F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C1CFCD0C14B98552008A1B1F /* AppDelegate.h */,
+				C1CFCD0D14B98552008A1B1F /* AppDelegate.m */,
+				C167CE0F14E8F5CF00B419CD /* UIImage+Alpha.h */,
+				C167CE1014E8F5CF00B419CD /* UIImage+Alpha.m */,
+				C167CE1114E8F5CF00B419CD /* UIImage+RoundedCorner.h */,
+				C167CE1214E8F5CF00B419CD /* UIImage+RoundedCorner.m */,
+				C167CE0B14E8F3A700B419CD /* UIImage+Resize.h */,
+				C167CE0C14E8F3A700B419CD /* UIImage+Resize.m */,
+				C1393F2614D91BBF005AFEB6 /* UINavigationBar+Custom.h */,
+				C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */,
 				C1CFCD1814B985AE008A1B1F /* Bubbles-Info.plist */,
 				C1CFCD1914B985AE008A1B1F /* Bubbles-Prefix.pch */,
 				C1CFCD1A14B985AE008A1B1F /* main.m */,
@@ -401,8 +420,6 @@
 			isa = PBXGroup;
 			children = (
 				C1393F1114D91621005AFEB6 /* Resources */,
-				C1CFCD0C14B98552008A1B1F /* AppDelegate.h */,
-				C1CFCD0D14B98552008A1B1F /* AppDelegate.m */,
 				C1CFCD2014B985D2008A1B1F /* ViewController.h */,
 				C1CFCD2114B985D2008A1B1F /* ViewController.m */,
 				C1CFCD1D14B985CC008A1B1F /* ViewController.xib */,
@@ -415,8 +432,6 @@
 				C1393F0714D90C83005AFEB6 /* TextViewController.h */,
 				C1393F0814D90C83005AFEB6 /* TextViewController.m */,
 				C1393F0914D90C83005AFEB6 /* TextViewController.xib */,
-				C1393F2614D91BBF005AFEB6 /* UINavigationBar+Custom.h */,
-				C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */,
 			);
 			name = iPhone;
 			sourceTree = "<group>";
@@ -563,6 +578,9 @@
 				C1393F0A14D90C83005AFEB6 /* TextViewController.m in Sources */,
 				C1393F2814D91BBF005AFEB6 /* UINavigationBar+Custom.m in Sources */,
 				C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */,
+				C167CE0D14E8F3A700B419CD /* UIImage+Resize.m in Sources */,
+				C167CE1314E8F5CF00B419CD /* UIImage+Alpha.m in Sources */,
+				C167CE1414E8F5CF00B419CD /* UIImage+RoundedCorner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

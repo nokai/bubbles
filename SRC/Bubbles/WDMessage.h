@@ -31,5 +31,6 @@ typedef NSUInteger WDMessageType;
 + (BOOL)isImageURL:(NSURL *)url;
 + (id)messageWithText:(NSString *)text;
 + (id)messageWithFile:(NSURL *)url;
++ (id)messageInfoFromMessage:(WDMessage *)message;
 
 @end

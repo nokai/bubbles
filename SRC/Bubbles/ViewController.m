@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "UIImage+Resize.h"
 #import "PeersViewController.h"
 #import <MobileCoreServices/UTType.h>
 #import <MobileCoreServices/UTCoreTypes.h>
@@ -62,8 +63,10 @@
     if (_fileURL) {
         // DW: a movie or JPG or PNG        
         WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
-        [self storeMessage:t];
         [_bubble broadcastMessage:t];
+        
+        // DW: store message metadata without content data
+        [self storeMessage:[WDMessage messageInfoFromMessage:t]];
         [t release];
     } else {
         DLog(@"VC sendFile no good file URL");
@@ -154,7 +157,10 @@
     if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
         UIImage *image = [_thumbnails objectForKey:fileURL.path];
         if (!image) {
-            image = [UIImage imageWithContentsOfFile:[fileURL path]];
+            image = [[[UIImage imageWithContentsOfFile:[fileURL path]] resizedImageWithContentMode:UIViewContentModeScaleAspectFill
+                                                                                            bounds:CGSizeMake(43, 43)
+                                                                              interpolationQuality:kCGInterpolationHigh] 
+                     croppedImage:CGRectMake(0, 0, 43, 43)];
             [_thumbnails setObject:image forKey:fileURL.path];
         }
         cell.imageView.image = image;
@@ -371,7 +377,8 @@
 - (void)didReceiveMessage:(WDMessage *)message ofFile:(NSURL *)url {
     // DW: change original file URL to local one
     message.fileURL = url;
-    [self storeMessage:message];
+    // DW: store message metadata without content data
+    [self storeMessage:[WDMessage messageInfoFromMessage:message]];
 }
 
 #pragma mark - UIImagePickerControllerDelegate

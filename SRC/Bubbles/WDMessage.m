@@ -42,6 +42,15 @@
     return m;
 }
 
++ (id)messageInfoFromMessage:(WDMessage *)message {
+    WDMessage *m = [[[WDMessage alloc] init] autorelease];
+    m.sender = message.sender;
+    m.time = message.time;
+    m.fileURL = message.fileURL;
+    m.type = message.type;
+    return m;
+}
+
 #pragma mark - Private Methods
 
 - (NSString *)description {
