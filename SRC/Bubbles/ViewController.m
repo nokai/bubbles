@@ -22,6 +22,8 @@
 #define kActionSheetButtonCancel    @"Cancel"
 #define kActionSheetButtonDeleteAll @"Delete All"
 
+#define kTableViewCellHeight        50
+
 @implementation ViewController
 @synthesize bubble = _bubble;
 
@@ -158,9 +160,9 @@
         UIImage *image = [_thumbnails objectForKey:fileURL.path];
         if (!image) {
             image = [[[UIImage imageWithContentsOfFile:[fileURL path]] resizedImageWithContentMode:UIViewContentModeScaleAspectFill
-                                                                                            bounds:CGSizeMake(43, 43)
+                                                                                            bounds:CGSizeMake(kTableViewCellHeight, kTableViewCellHeight)
                                                                               interpolationQuality:kCGInterpolationHigh] 
-                     croppedImage:CGRectMake(0, 0, 43, 43)];
+                     croppedImage:CGRectMake(0, 0, kTableViewCellHeight, kTableViewCellHeight)];
             [_thumbnails setObject:image forKey:fileURL.path];
         }
         cell.imageView.image = image;
@@ -370,7 +372,8 @@
 
 - (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text {
     DLog(@"VC didReceiveText %@", text);
-    //_textMessage.text = text;
+    // DW: change time to received time since time may be different
+    message.time = [NSDate date];
     [self storeMessage:message];
 }
 
@@ -378,6 +381,8 @@
     // DW: change original file URL to local one
     message.fileURL = url;
     // DW: store message metadata without content data
+    // DW: change time to received time since time may be different
+    message.time = [NSDate date];
     [self storeMessage:[WDMessage messageInfoFromMessage:message]];
 }
 
@@ -619,6 +624,10 @@
 }
 
 #pragma mark - UIActionSheetDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return kTableViewCellHeight;
+}
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];

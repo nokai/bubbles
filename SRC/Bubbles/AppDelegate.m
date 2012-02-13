@@ -13,17 +13,17 @@
 
 @implementation AppDelegate
 
-@synthesize window = _window;
+@synthesize window = _window, bubble = _bubble;
 @synthesize viewController = _viewController, splitViewController = _splitViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    WDBubble *bubble = [[[WDBubble alloc] init] autorelease];
+    _bubble = [[WDBubble alloc] init];
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         ViewController *detailViewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
         UINavigationController *detailNavigationController = [[[UINavigationController alloc] initWithRootViewController:detailViewController] autorelease];
-    	detailViewController.bubble = bubble;
-        bubble.delegate = detailViewController;
+    	detailViewController.bubble = _bubble;
+        _bubble.delegate = detailViewController;
         
         PeersViewController *masterViewController = [[[PeersViewController alloc] initWithNibName:@"PeersViewController_iPad" bundle:nil] autorelease];
         UINavigationController *masterNavigationController = [[[UINavigationController alloc] initWithRootViewController:masterViewController] autorelease];
@@ -39,8 +39,8 @@
         self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
         // Override point for customization after application launch.
         self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
-        self.viewController.bubble = bubble;
-        bubble.delegate = self.viewController;
+        self.viewController.bubble = _bubble;
+        _bubble.delegate = self.viewController;
         
         self.window.rootViewController = self.viewController;
         [self.window makeKeyAndVisible];
@@ -63,6 +63,7 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+    [_bubble stopService];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -70,6 +71,14 @@
     /*
      Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
      */
+    BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
+    if (usePassword) {
+        [self.viewController lock];
+    } else {
+        [_bubble stopService];
+        [_bubble publishServiceWithPassword:@""];
+        [_bubble browseServices];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @class ViewController;
+@class WDBubble;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (nonatomic, retain) WDBubble *bubble;
 
 @property (strong, nonatomic) UIWindow *window;
 

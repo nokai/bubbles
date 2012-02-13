@@ -56,6 +56,8 @@ UISplitViewControllerDelegate> {
 
 @property (nonatomic, retain) WDBubble *bubble;
 
+- (void)lock;
+
 // DW: it's very weird that sometimes I can't drag actions to this vc unless I declare these methods as public
 - (IBAction)sendText:(id)sender;
 - (IBAction)selectFile:(id)sender;
