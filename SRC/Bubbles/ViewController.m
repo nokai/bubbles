@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 #import "PeersViewController.h"
+#import <MobileCoreServices/UTType.h>
+#import <MobileCoreServices/UTCoreTypes.h>
 
 #define kActionSheetButtonCopy      @"Copy"
 #define kActionSheetButtonEmail     @"Email"
@@ -146,6 +148,29 @@
     }
 }
 
+- (void)fillCell:(UITableViewCell *)cell withFileURL:(NSURL *)fileURL {
+    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (CFStringRef)fileURL.pathExtension, NULL);
+    
+    if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
+        UIImage *image = [_thumbnails objectForKey:fileURL.path];
+        if (!image) {
+            image = [UIImage imageWithContentsOfFile:[fileURL path]];
+            [_thumbnails setObject:image forKey:fileURL.path];
+        }
+        cell.imageView.image = image;
+    } else {
+        if (fileURL) {
+            UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
+            cell.imageView.image = [interactionController.icons objectAtIndex:0];
+            [interactionController release];
+        } else {
+            cell.imageView.image = [UIImage imageNamed:@"Icon"];
+        }
+    }
+    
+    CFRelease(fileUTI);
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -176,6 +201,7 @@
     // DW: bubble
     
     // DW: messages or files
+    _thumbnails = [[NSMutableDictionary alloc] init];
     _messages = [[NSMutableArray alloc] init];
     _directoryWatcher = [[DirectoryWatcher watchFolderWithPath:[NSURL iOSDocumentsDirectoryPath] delegate:self] retain];
     _documents = [[NSMutableArray alloc] init];
@@ -547,52 +573,16 @@
             cell.imageView.image = [UIImage imageNamed:@"Icon-Text"];
         } else if (t.type == WDMessageTypeFile) {
             cell.textLabel.text = [t.fileURL lastPathComponent];
-            
-            // DW: we use this since "image in cell" slows our app down
-            if (t.fileURL) {
-                UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:t.fileURL] retain];
-                cell.imageView.image = [interactionController.icons objectAtIndex:0];
-                [interactionController release];
-            } else {
-                cell.imageView.image = [UIImage imageNamed:@"Icon"];
-            }
-            
-            /*
-             cell.textLabel.text = [t.fileURL lastPathComponent];
-             UIImage *image = [UIImage imageWithContentsOfFile:[t.fileURL path]];
-             if (image) {
-             cell.imageView.image = image;
-             
-             // DW: if it's images named like ".asset.xxx", we do not show it's name
-             // 20120209 DW: we do not use "From Photos" trick, ignore this, this will never run
-             if ([t.fileURL.lastPathComponent hasPrefix:@"."]) {
-             cell.textLabel.text = @"From Photos";
-             }
-             } else {
-             //cell.imageView.image = [UIImage imageNamed:@"Icon"];
-             if (t.fileURL) {
-             UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:t.fileURL] retain];
-             cell.imageView.image = [interactionController.icons objectAtIndex:0];
-             [interactionController release];
-             } else {
-             cell.imageView.image = [UIImage imageNamed:@"Icon"];
-             }
-             }
-             */
+            [self fillCell:cell withFileURL:t.fileURL];
         }
     } else if (_segmentSwith.selectedSegmentIndex == 1) {
         NSURL *fileURL = [_documents objectAtIndex:indexPath.row];
         
         UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
         
-        // layout the cell
+        
         cell.textLabel.text = [[fileURL path] lastPathComponent];
-        UIImage *image = [UIImage imageWithContentsOfFile:fileURL.path];
-        if (image) {
-            cell.imageView.image = image;
-        } else {
-            cell.imageView.image = [interactionController.icons objectAtIndex:0];
-        }
+        [self fillCell:cell withFileURL:fileURL];
         
         // DW: size info in detail label
         NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:interactionController.URL.path error:nil];
@@ -734,7 +724,7 @@
                                                                   includingPropertiesForKeys:nil 
                                                                                      options:NSDirectoryEnumerationSkipsHiddenFiles 
                                                                                        error:nil]];
-    [_documents sortUsingComparator:^NSComparisonResult(NSURL *obj1, NSURL * obj2) {
+    [_documents sortUsingComparator:^(NSURL *obj1, NSURL * obj2) {
         return [obj1.path.lowercaseString compare:obj2.path.lowercaseString];
     }];
     

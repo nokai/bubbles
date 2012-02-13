@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuickLook/QuickLook.h>
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
+
 #import "WDBubble.h"
 #import "DirectoryWatcher.h"
 #import "PasswordViewController.h"
 #import "TextViewController.h"
-#import <MessageUI/MessageUI.h>
-#import <MessageUI/MFMailComposeViewController.h>
-#import <QuickLook/QuickLook.h>
+
 
 @interface ViewController : UIViewController <
 UIAlertViewDelegate, 
@@ -42,6 +44,7 @@ UISplitViewControllerDelegate> {
     
     // DW: UI
     NSMutableArray *_itemsToShow;
+    NSMutableDictionary *_thumbnails; // DW: key is file url path
     IBOutlet UISegmentedControl *_segmentSwith;
     IBOutlet UITableView *_messagesView;
     IBOutlet UIButton *_lockButton;
