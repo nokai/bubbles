@@ -66,14 +66,14 @@
 {
     DLog(@"storeMessage");
     [_historyPopOverController.fileHistoryArray addObject:message];
-   /* [_fileHistoryArray sortUsingComparator:^(WDMessage *obj1, WDMessage * obj2) {
+    [_historyPopOverController.fileHistoryArray sortUsingComparator:^NSComparisonResult(WDMessage *obj1, WDMessage * obj2) {
         if ([obj1.time compare:obj2.time] == NSOrderedAscending)
             return NSOrderedDescending;
         else if ([obj1.time compare:obj2.time] == NSOrderedDescending)
             return NSOrderedAscending;
         else
             return NSOrderedSame;
-    }];*/
+    }];
     [_historyPopOverController.filehistoryTableView reloadData];
 }
 
@@ -92,9 +92,37 @@
 {
     DLog(@"MVC sendText %@", _textViewController.textField.stringValue);
     if (_isView == kTextViewController) {
-        [_bubble broadcastMessage:[WDMessage messageWithText:_textViewController.textField.stringValue]];
+        WDMessage *t = [WDMessage messageWithText:_textViewController.textField.stringValue];
+        [self storeMessage:t];
+        [_bubble broadcastMessage:t];
     }   
 }
+
+- (void)selectFile
+{
+    if (_isView == kTextViewController) {
+        return ;
+    }
+    
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    
+	[openPanel setTitle:@"Choose File"];
+	[openPanel setPrompt:@"Browse"];
+	[openPanel setNameFieldLabel:@"Choose a file:"];
+    
+    if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
+        _fileURL = [[openPanel URL] retain];//the path of your selected photo
+        NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
+        if (image != nil) {
+            [_dragFileController.imageView setImage:image];
+            [image release];   
+        }else {
+            NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
+            [_dragFileController.imageView setImage:quicklook];
+        }
+    }
+}
+
 #pragma mark - init & dealloc
 
 - (id)init
@@ -138,6 +166,9 @@
     // Wu:Release two window controller
     [_passwordController release];
     [_preferenceController release];
+    
+    [_lockButton release];
+    [_selectFileItem release];
        
     [_bubble release];
     [_fileURL release];
@@ -202,31 +233,6 @@
     }
 }
 
-- (IBAction)selectFile:(id)sender
-{
-    if (_isView == kTextViewController) {
-        return ;
-    }
-    
-    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-
-	[openPanel setTitle:@"Choose File"];
-	[openPanel setPrompt:@"Browse"];
-	[openPanel setNameFieldLabel:@"Choose a file:"];
-    
-    if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
-        _fileURL = [[openPanel URL] retain];//the path of your selected photo
-        NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
-        if (image != nil) {
-            [_dragFileController.imageView setImage:image];
-            [image release];   
-        }else {
-            NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
-            [_dragFileController.imageView setImage:quicklook];
-        }
-    }
-}
-
 - (IBAction)showPreferencePanel:(id)sender
 {
     if (_preferenceController == nil) {
@@ -239,13 +245,17 @@
 - (IBAction)swapView:(id)sender
 {
     if (_isView == kTextViewController) {
+        [_toolBar insertItemWithItemIdentifier:@"SelectItemIdentifier" atIndex:1];
+        
         _isView = kDragFileController;
         [_textViewController.view setHidden:YES withFade:YES];
         [_dragFileController.view setHidden:NO withFade:YES];
         _viewIndicator.stringValue = @"Bubbles File";
         
     } else {
-        _isView = kTextViewController;
+        
+        [_toolBar removeItemAtIndex:1];
+         _isView = kTextViewController;
         [_textViewController.view setHidden:NO withFade:YES];
         [_dragFileController.view setHidden:YES withFade:YES];
          _viewIndicator.stringValue = @"Bubbles Message";
@@ -309,10 +319,42 @@
 #pragma mark - PasswordMacViewControllerDelegate
 
 - (void)didCancel {
-   // [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsUsePassword];
+    
+    NSArray* toolbarVisibleItems = [_toolBar visibleItems];
+    NSEnumerator* enumerator = [toolbarVisibleItems objectEnumerator];
+    NSToolbarItem* anItem = nil;
+    BOOL stillLooking = YES;
+    while ( stillLooking && ( anItem = [enumerator nextObject] ) )
+    {
+        if ( [[anItem itemIdentifier] isEqualToString:@"PasswordIdentifier"] )
+        {
+            [anItem setImage:[NSImage imageNamed:@"NSLockUnlockedTemplate"]];
+            
+            stillLooking = NO;
+        }
+    }
+    _lockButton.state = NSOffState;
+    [_bubble stopService];
+    [_bubble publishServiceWithPassword:@""];
+    [_bubble browseServices];
 }
 
 - (void)didInputPassword:(NSString *)pwd {
+    
+    NSArray* toolbarVisibleItems = [_toolBar visibleItems];
+    NSEnumerator* enumerator = [toolbarVisibleItems objectEnumerator];
+    NSToolbarItem* anItem = nil;
+    BOOL stillLooking = YES;
+    while ( stillLooking && ( anItem = [enumerator nextObject] ) )
+    {
+        if ( [[anItem itemIdentifier] isEqualToString:@"PasswordIdentifier"] )
+        {
+            [anItem setImage:[NSImage imageNamed:@"NSLockLockedTemplate"]];
+            
+            stillLooking = NO;
+        }
+    }
+    _lockButton.state = NSOnState;
     [_bubble stopService];
     [_bubble publishServiceWithPassword:pwd];
     [_bubble browseServices];
@@ -343,11 +385,58 @@
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
 {
-    if (theItem == _selectFileItem && _isView == kTextViewController) {
-        return FALSE;
-    } 
-    return YES;
+    DLog(@"validateToolbarItem");
+    if ([[theItem itemIdentifier] isEqual: @"SelectItemIdentifier"]) {
+        return YES;
+    } else if ([[theItem itemIdentifier] isEqual:@"PasswordIdentifier"]) {
+        return YES;
+    } else if ([[theItem itemIdentifier] isEqual:@"HistoryIdentifier"]) {
+        return YES;
+    } else if ([[theItem itemIdentifier] isEqual:@"NetworkIdentifier"]) {
+        return YES;
+    }
+    return NO;
 }
+
+- (void) toolbarWillAddItem:(NSNotification *)notification {
+    NSToolbarItem *addedItem = [[notification userInfo] objectForKey: @"item"];
+
+    if ([[addedItem itemIdentifier] isEqual: @"SelectItemIdentifier"]) {
+        DLog(@"kjhfkjsdhkjsdhfkjsdhf!!!!");
+    }
+}
+
+- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar {
+    return [NSArray arrayWithObjects:
+            @"PasswordIdentifier", NSToolbarFlexibleSpaceItemIdentifier,
+            @"HistoryIdentifier", @"NetworkIdentifier", nil];
+}
+
+- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar {
+    return [NSArray arrayWithObjects:
+            @"PasswordIdentifier",
+            NSToolbarFlexibleSpaceItemIdentifier,@"HistoryIdentifier", @"NetworkIdentifier", @"SelectItemIdentifier",nil];
+}
+
+- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdent willBeInsertedIntoToolbar:(BOOL)willBeInserted {
+    // Required delegate method:  Given an item identifier, this method returns an item 
+    // The toolbar will use this method to obtain toolbar items that can be displayed in the customization sheet, or in the toolbar itself 
+    
+    DLog(@"itemForItemIdentifier");
+    NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdent] autorelease];
+    if ([[toolbarItem itemIdentifier] isEqual:@"SelectItemIdentifier"]) {
+        [toolbarItem setImage:[NSImage imageNamed:@"NSFolderSmart"]];
+        [toolbarItem setLabel:@"Select"];
+        [toolbarItem setPaletteLabel:@"Select"];
+        [toolbarItem setTarget:self];
+        [toolbarItem setAction:@selector(selectFile)];
+    }
+    
+    return toolbarItem;
+}
+
+
+
 
 
 @end
