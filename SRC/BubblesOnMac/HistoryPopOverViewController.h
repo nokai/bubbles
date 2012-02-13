@@ -11,10 +11,11 @@
 #import "ImageAndTextCell.h"
 #import "NSImage+QuickLook.h"
 #import "AppDelegate.h"
+#import "TransparentTableView.h"
 
 @interface HistoryPopOverViewController : NSViewController<NSPopoverDelegate,NSTableViewDataSource,NSTableViewDelegate,ImageAndTextCellDelegate>
 {
-    IBOutlet NSTableView *_fileHistoryTableView;
+    IBOutlet TransparentTableView *_fileHistoryTableView;
     NSPopover *_historyPopOver;
     NSMutableArray *_fileHistoryArray;
     
@@ -23,7 +24,7 @@
 
 @property (nonatomic ,retain) NSPopover *historyPopOver;
 @property (nonatomic ,retain) NSMutableArray *fileHistoryArray;
-@property (nonatomic ,retain) NSTableView *filehistoryTableView;
+@property (nonatomic ,retain) TransparentTableView *filehistoryTableView;
 
 // Wu:attachedView is the the view which popover attach to like the effect in Safari
 - (void)showHistoryPopOver:(NSView *)attachedView;

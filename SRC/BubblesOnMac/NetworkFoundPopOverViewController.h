@@ -8,10 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "WDBubble.h"
+#import "TransparentTableView.h"
 
 @interface NetworkFoundPopOverViewController : NSViewController<NSTableViewDelegate,NSTableViewDataSource,NSPopoverDelegate>
 {
-    IBOutlet NSTableView *_serviceFoundTableView;
+    IBOutlet TransparentTableView *_serviceFoundTableView;
     NSPopover *_serviceFoundPopOver;
     WDBubble *_bubble;
 }
