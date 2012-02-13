@@ -45,10 +45,11 @@
 #pragma mark - Private Methods
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"WDMessage %@, %@, %@, %i", 
-            self.fileURL, 
-            self.content, 
+    return [NSString stringWithFormat:@"WDMessage %@, %@, %@, %@, %i", 
+            self.sender, 
             self.time, 
+            self.fileURL, 
+            //self.content, 
             self.type];
 }
 

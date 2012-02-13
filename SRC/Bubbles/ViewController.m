@@ -123,10 +123,17 @@
     // DW: delete records in messages
     for (WDMessage *m in _messages) {
         if ([m.fileURL.path isEqualToString:fileURL.path]) {
+            // DW: when we find it, we delete it and return
+            
             [_messages removeObject:m];
+            [[NSFileManager defaultManager] removeItemAtPath:fileURL.path
+                                                       error:nil];
+            
+            return;
         }
     }
     
+    // DW: files not in messages can also be deleted here
     [[NSFileManager defaultManager] removeItemAtPath:fileURL.path
                                                error:nil];
 }
@@ -539,6 +546,8 @@
             cell.textLabel.text = [[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease];
             cell.imageView.image = [UIImage imageNamed:@"Icon-Text"];
         } else if (t.type == WDMessageTypeFile) {
+            cell.textLabel.text = [t.fileURL lastPathComponent];
+            
             // DW: we use this since "image in cell" slows our app down
             if (t.fileURL) {
                 UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:t.fileURL] retain];
@@ -549,29 +558,29 @@
             }
             
             /*
-            cell.textLabel.text = [t.fileURL lastPathComponent];
-            UIImage *image = [UIImage imageWithContentsOfFile:[t.fileURL path]];
-            if (image) {
-                cell.imageView.image = image;
-                
-                // DW: if it's images named like ".asset.xxx", we do not show it's name
-                // 20120209 DW: we do not use "From Photos" trick, ignore this, this will never run
-                if ([t.fileURL.lastPathComponent hasPrefix:@"."]) {
-                    cell.textLabel.text = @"From Photos";
-                }
-            } else {
-                //cell.imageView.image = [UIImage imageNamed:@"Icon"];
-                if (t.fileURL) {
-                    UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:t.fileURL] retain];
-                    cell.imageView.image = [interactionController.icons objectAtIndex:0];
-                    [interactionController release];
-                } else {
-                    cell.imageView.image = [UIImage imageNamed:@"Icon"];
-                }
-            }
+             cell.textLabel.text = [t.fileURL lastPathComponent];
+             UIImage *image = [UIImage imageWithContentsOfFile:[t.fileURL path]];
+             if (image) {
+             cell.imageView.image = image;
+             
+             // DW: if it's images named like ".asset.xxx", we do not show it's name
+             // 20120209 DW: we do not use "From Photos" trick, ignore this, this will never run
+             if ([t.fileURL.lastPathComponent hasPrefix:@"."]) {
+             cell.textLabel.text = @"From Photos";
+             }
+             } else {
+             //cell.imageView.image = [UIImage imageNamed:@"Icon"];
+             if (t.fileURL) {
+             UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:t.fileURL] retain];
+             cell.imageView.image = [interactionController.icons objectAtIndex:0];
+             [interactionController release];
+             } else {
+             cell.imageView.image = [UIImage imageNamed:@"Icon"];
+             }
+             }
              */
         }
-    } else {
+    } else if (_segmentSwith.selectedSegmentIndex == 1) {
         NSURL *fileURL = [_documents objectAtIndex:indexPath.row];
         
         UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
@@ -725,6 +734,10 @@
                                                                   includingPropertiesForKeys:nil 
                                                                                      options:NSDirectoryEnumerationSkipsHiddenFiles 
                                                                                        error:nil]];
+    [_documents sortUsingComparator:^NSComparisonResult(NSURL *obj1, NSURL * obj2) {
+        return [obj1.path.lowercaseString compare:obj2.path.lowercaseString];
+    }];
+    
     [_messagesView reloadData];
 }
 

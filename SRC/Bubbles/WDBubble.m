@@ -375,7 +375,7 @@
         }
         @finally {
             DLog(@"AsyncSocketDelegate onSocketDidDisconnect @finally");
-            if (!t)
+            if ((!t)||(!_dataBuffer))
                 return;
             
             if (t.type == WDMessageTypeText) {
