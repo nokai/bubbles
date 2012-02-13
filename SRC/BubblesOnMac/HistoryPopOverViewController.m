@@ -78,6 +78,7 @@
     [previewCell setBordered:NO];
     [previewCell setImage:[NSImage imageNamed:@"NSRevealFreestandingTemplate"]];
     [previewCell setAction:@selector(previewSelectedRow)];
+    [previewCell setTitle:@""];
     NSTableColumn *columnThree = [[_fileHistoryTableView tableColumns] objectAtIndex:2];
     [columnThree setDataCell:previewCell];
     
@@ -162,6 +163,21 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     NSData *data = [NSData dataWithContentsOfURL:message.fileURL];
     [[NSFileManager defaultManager] createFileAtPath:newURL.path contents:data attributes:nil];
     return [NSArray arrayWithObjects:newURL.lastPathComponent, nil];
+}
+
+- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    WDMessage *message = [_fileHistoryArray objectAtIndex:row];
+    if (message .type == WDMessageTypeText && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:2])
+    {
+        NSButtonCell *buttonCell = (NSButtonCell *)cell;
+        [buttonCell setImagePosition:NSNoImage];
+    }
+    else if (message .type == WDMessageTypeFile && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:2])
+    {
+        NSButtonCell *buttonCell = (NSButtonCell *)cell;
+        [buttonCell setImagePosition:NSImageOverlaps];
+    }
 }
 
 #pragma mark - ImageAndTextCellDelegate

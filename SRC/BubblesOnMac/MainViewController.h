@@ -28,11 +28,15 @@
     // Wu:NSView for adding two subView and constrain their bound
     IBOutlet NSView *_superView;
     
-    IBOutlet NSToolbarItem *_selectFileItem;
+    NSToolbarItem *_selectFileItem;
     IBOutlet NSToolbarItem *_networkItem;
     IBOutlet NSToolbarItem *_historyItem;
     
     IBOutlet NSTextField *_viewIndicator;
+    
+    IBOutlet NSButton *_lockButton;
+    
+    IBOutlet NSToolbar *_toolBar;
     
     BOOL _isView;
        
