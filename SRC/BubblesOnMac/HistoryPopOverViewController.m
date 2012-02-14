@@ -236,4 +236,28 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     return [_fileHistoryArray indexOfObject:message];
 }
 
+#pragma mark - ContextMenuDelegate
+
+- (NSMenu*)tableView:(NSTableView*)aTableView menuForRows:(NSIndexSet*)rows
+{
+    NSMenu *menu = [[[NSMenu alloc] init] autorelease];
+    NSInteger selectedRow = [rows firstIndex];
+    WDMessage *message = [_fileHistoryArray objectAtIndex:selectedRow];
+    if (message.type == WDMessageTypeText) {
+        NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteSelectedRow) keyEquivalent:@""];
+        
+        [menu addItem:deleteItem];
+        [deleteItem release];
+    } else {
+        NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteSelectedRow) keyEquivalent:@""];
+        [menu addItem:deleteItem];
+        [deleteItem release];
+        
+        NSMenuItem *previewItem = [[NSMenuItem alloc]initWithTitle:@"Preview" action:@selector(previewSelectedRow) keyEquivalent:@""];
+        [menu addItem:previewItem];
+        [previewItem release];
+    }
+    return menu;
+}
+
 @end

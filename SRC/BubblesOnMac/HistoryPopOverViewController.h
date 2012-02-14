@@ -12,8 +12,9 @@
 #import "NSImage+QuickLook.h"
 #import "AppDelegate.h"
 #import "TransparentTableView.h"
+#import "NSTableView+ContextMenu.h"
 
-@interface HistoryPopOverViewController : NSViewController<NSPopoverDelegate,NSTableViewDataSource,NSTableViewDelegate,ImageAndTextCellDelegate>
+@interface HistoryPopOverViewController : NSViewController<NSPopoverDelegate,NSTableViewDataSource,NSTableViewDelegate,ImageAndTextCellDelegate,ContextMenuDelegate>
 {
     IBOutlet TransparentTableView *_fileHistoryTableView;
     NSPopover *_historyPopOver;

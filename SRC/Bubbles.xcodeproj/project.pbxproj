@@ -30,6 +30,7 @@
 		03A887AE14E2BFAD008CA643 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A887AD14E2BFAD008CA643 /* QuartzCore.framework */; };
 		03BF64B314C32D8200CD52AB /* DragAndDropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */; };
 		03C4EC5114D6A320006FB4BD /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EEBE7614D597AF0026B318 /* QuickLook.framework */; };
+		03E8C3EA14EA39C2001F5091 /* NSTableView+ContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */; };
 		03EFE64B14E2EF04007FA2B6 /* NSView+NSView_Fade_.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */; };
 		03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C111265514DE2C7800884F7D /* DirectoryWatcher.m */; };
@@ -120,6 +121,8 @@
 		03A887AD14E2BFAD008CA643 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		03BF64B114C32D8200CD52AB /* DragAndDropImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragAndDropImageView.h; sourceTree = "<group>"; };
 		03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragAndDropImageView.m; sourceTree = "<group>"; };
+		03E8C3E814EA39C2001F5091 /* NSTableView+ContextMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTableView+ContextMenu.h"; sourceTree = "<group>"; };
+		03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTableView+ContextMenu.m"; sourceTree = "<group>"; };
 		03EEBE7614D597AF0026B318 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuickLook.framework; sourceTree = DEVELOPER_DIR; };
 		03EFE64914E2EF04007FA2B6 /* NSView+NSView_Fade_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+NSView_Fade_.h"; sourceTree = "<group>"; };
 		03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+NSView_Fade_.m"; sourceTree = "<group>"; };
@@ -247,6 +250,8 @@
 				03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */,
 				03A80DDE14E97BB3006C77D8 /* TransparentTableView.h */,
 				03A80DDF14E97BB3006C77D8 /* TransparentTableView.m */,
+				03E8C3E814EA39C2001F5091 /* NSTableView+ContextMenu.h */,
+				03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */,
 			);
 			name = SubClass;
 			sourceTree = "<group>";
@@ -610,6 +615,7 @@
 				032A05C314E39F5B005C4F6E /* HistoryPopOverViewController.m in Sources */,
 				032A05C914E3A525005C4F6E /* NetworkFoundPopOverViewController.m in Sources */,
 				03A80DE014E97BB3006C77D8 /* TransparentTableView.m in Sources */,
+				03E8C3EA14EA39C2001F5091 /* NSTableView+ContextMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
