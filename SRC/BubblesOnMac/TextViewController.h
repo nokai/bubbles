@@ -9,9 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 @interface TextViewController : NSViewController {
-    NSTextField *_textField;
+    NSTextView *_textField;
 }
 
-@property (nonatomic ,retain) IBOutlet NSTextField *textField;
+@property (nonatomic ,retain) IBOutlet NSTextView *textField;
 
 @end

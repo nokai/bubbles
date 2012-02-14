@@ -90,9 +90,8 @@
 
 - (void)sendText
 {
-    DLog(@"MVC sendText %@", _textViewController.textField.stringValue);
-    if (_isView == kTextViewController || [_textViewController.textField.stringValue length] == 0) {
-        WDMessage *t = [WDMessage messageWithText:_textViewController.textField.stringValue];
+    if (_isView == kTextViewController || [_textViewController.textField.string length] == 0) {
+        WDMessage *t = [WDMessage messageWithText:_textViewController.textField.string];
         [self storeMessage:t];
         [_bubble broadcastMessage:t];
     }   
@@ -299,7 +298,7 @@
 
 - (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text {
     if (_isView == kTextViewController) {
-        _textViewController.textField.stringValue = text;
+        _textViewController.textField.string = text;
         [self storeMessage:message];
     } 
 }

@@ -69,14 +69,17 @@
     
     NSButtonCell *deleteCell = [[[NSButtonCell alloc]init]autorelease];
     [deleteCell setBordered:NO];
-    [deleteCell setImage:[NSImage imageNamed:@"NSStopProgressTemplate"]];
+    [deleteCell setImage:[NSImage imageNamed:@"NSStopProgressFreestandingTemplate"]];
+    [deleteCell setImageScaling:NSImageScaleProportionallyDown];
     [deleteCell setAction:@selector(deleteSelectedRow)];
      NSTableColumn *columnTwo = [[_fileHistoryTableView tableColumns] objectAtIndex:1];
     [columnTwo setDataCell:deleteCell];
     
+    
     NSButtonCell *previewCell = [[[NSButtonCell alloc]init]autorelease];
     [previewCell setBordered:NO];
     [previewCell setImage:[NSImage imageNamed:@"NSRevealFreestandingTemplate"]];
+    [previewCell setImageScaling:NSImageScaleProportionallyDown];
     [previewCell setAction:@selector(previewSelectedRow)];
     [previewCell setTitle:@""];
     NSTableColumn *columnThree = [[_fileHistoryTableView tableColumns] objectAtIndex:2];
@@ -187,7 +190,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     DLog(@"previewIconForCell");
     WDMessage *message = (WDMessage *)data;
     if (message.type == WDMessageTypeText){
-        return nil;
+        return [NSImage imageNamed:@"swap"];
     } else if (message.type == WDMessageTypeFile){
         NSImage *icon = [NSImage imageWithPreviewOfFileAtPath:[message.fileURL path] asIcon:YES];
         return icon;
@@ -231,6 +234,30 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     WDMessage *message = (WDMessage *)data;
     DLog(@"index is %@",[_fileHistoryArray indexOfObject:message]);
     return [_fileHistoryArray indexOfObject:message];
+}
+
+#pragma mark - ContextMenuDelegate
+
+- (NSMenu*)tableView:(NSTableView*)aTableView menuForRows:(NSIndexSet*)rows
+{
+    NSMenu *menu = [[[NSMenu alloc] init] autorelease];
+    NSInteger selectedRow = [rows firstIndex];
+    WDMessage *message = [_fileHistoryArray objectAtIndex:selectedRow];
+    if (message.type == WDMessageTypeText) {
+        NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteSelectedRow) keyEquivalent:@""];
+        
+        [menu addItem:deleteItem];
+        [deleteItem release];
+    } else {
+        NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteSelectedRow) keyEquivalent:@""];
+        [menu addItem:deleteItem];
+        [deleteItem release];
+        
+        NSMenuItem *previewItem = [[NSMenuItem alloc]initWithTitle:@"Preview" action:@selector(previewSelectedRow) keyEquivalent:@""];
+        [menu addItem:previewItem];
+        [previewItem release];
+    }
+    return menu;
 }
 
 @end

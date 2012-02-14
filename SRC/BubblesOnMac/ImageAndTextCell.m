@@ -20,8 +20,6 @@
 
 - (void)dealloc
 {
-    //[_previewButton release];
-    //[_deleteButton release];
     [_previewImage release];
     [_auxiliaryText release];
     [_primaryText release];
@@ -62,7 +60,7 @@
     NSColor *auxiliaryTextColor = [self isHighlighted] ? [NSColor alternateSelectedControlTextColor] : 
     [NSColor disabledControlTextColor];
     NSDictionary *auxiliaryTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:auxiliaryTextColor,NSForegroundColorAttributeName,[NSFont systemFontOfSize:8],NSFontAttributeName,nil];
-    [_auxiliaryText drawAtPoint:NSMakePoint(cellFrame.origin.x + cellFrame.size.height, cellFrame.origin.y +cellFrame.size.height / 2) withAttributes:auxiliaryTextAttributes];
+    [_auxiliaryText drawAtPoint:NSMakePoint(cellFrame.origin.x + cellFrame.size.height + 10, cellFrame.origin.y +cellFrame.size.height / 2) withAttributes:auxiliaryTextAttributes];
     
     // Wu:For the previewImage
     [[NSGraphicsContext currentContext] saveGraphicsState];
