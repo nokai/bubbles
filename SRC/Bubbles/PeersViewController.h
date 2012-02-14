@@ -11,7 +11,11 @@
 
 @interface PeersViewController : UITableViewController
 
+// DW: dimiss button is on iPhone
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *dismissButton;
+
+// DW: lock button is on iPad
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *lockButton;
 
 @property (nonatomic, retain) WDBubble *bubble;
 

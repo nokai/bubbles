@@ -21,6 +21,7 @@
 
 @property (nonatomic, retain) NSUndoManager *undoManager;
 @property (nonatomic, retain) id<TextViewControllerDelegate> delegate;
+@property (nonatomic, retain) UIPopoverController *popover;
 
 - (void)setUpUndoManager;
 - (void)cleanUpUndoManager;

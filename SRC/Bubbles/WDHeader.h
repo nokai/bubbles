@@ -19,6 +19,8 @@
 #define kWDBubbleTimeOut        -1
 
 // DW: notifications
-#define kWDBubbleNotification   @"kWDBubbleNotification"
+#define kWDBubbleNotificationServiceUpdated @"kWDBubbleNotificationServiceUpdated"
+#define kWDBubbleNotificationShouldLock     @"kWDBubbleNotificationShouldLock"
+#define kWDBubbleNotificationDidEndLock     @"kWDBubbleNotificationDidEndLock"
 
 #endif

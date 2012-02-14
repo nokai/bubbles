@@ -413,13 +413,13 @@
     [_servicesFound addObject:netService];
     DLog(@"NSNetServiceBrowserDelegate didFindService %@", self.servicesFound);
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kWDBubbleNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kWDBubbleNotificationServiceUpdated object:nil];
 }
 
 - (void)netServiceBrowser:(NSNetServiceBrowser*)netServiceBrowser didRemoveService:(NSNetService*)netService moreComing:(BOOL)moreComing {
 	[_servicesFound removeObject:netService];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kWDBubbleNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kWDBubbleNotificationServiceUpdated object:nil];
 }
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didFindDomain:(NSString *)domainName moreComing:(BOOL)moreDomainsComing {

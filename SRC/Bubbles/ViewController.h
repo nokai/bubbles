@@ -46,7 +46,7 @@ UISplitViewControllerDelegate> {
     NSMutableDictionary *_thumbnails; // DW: key is file url path
     IBOutlet UISegmentedControl *_segmentSwith;
     IBOutlet UITableView *_messagesView;
-    IBOutlet UIButton *_lockButton;
+    IBOutlet UIBarButtonItem *_lockButton;
     IBOutlet UINavigationBar *_bar;
     IBOutlet UIBarButtonItem *_clearButton;
     

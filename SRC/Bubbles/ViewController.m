@@ -30,9 +30,11 @@
 - (void)refreshLockStatus {
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
     if (usePassword) {
-        [_lockButton setImage:[UIImage imageNamed:@"lock_on"] forState:UIControlStateNormal];
+        //[_lockButton setImage:[UIImage imageNamed:@"lock_on"] forState:UIControlStateNormal];
+        _lockButton.title = @"Locked";
     } else {
-        [_lockButton setImage:[UIImage imageNamed:@"lock_off"] forState:UIControlStateNormal];
+        //[_lockButton setImage:[UIImage imageNamed:@"lock_off"] forState:UIControlStateNormal];
+        _lockButton.title = @"Unlocked";
     }
 }
 
@@ -206,7 +208,11 @@
     NSDictionary *t = [NSDictionary dictionaryWithObject:@"NO" forKey:kUserDefaultsUsePassword];
     [[NSUserDefaults standardUserDefaults] registerDefaults:t];
     
-    // DW: bubble
+    // DW: lock
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(shouldLock:) 
+                                                 name:kWDBubbleNotificationShouldLock
+                                               object:nil];
     
     // DW: messages or files
     _thumbnails = [[NSMutableDictionary alloc] init];
@@ -293,10 +299,20 @@
     vc.delegate = self;
     
     UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
-    [self presentModalViewController:nv animated:YES];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        UIPopoverController *pc = [[UIPopoverController alloc] initWithContentViewController:nv];
+        vc.popover = pc;
+        UIButton *b = (UIButton *)sender;
+        [pc presentPopoverFromRect:CGRectMake(0, 0, b.frame.size.width, 0)
+                            inView:b
+          permittedArrowDirections:UIPopoverArrowDirectionAny 
+                          animated:YES];
+    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+        [self presentModalViewController:nv animated:YES];
+    }
     
-    [vc release];
     [nv release];
+    [vc release];
 }
 
 - (IBAction)selectFile:(id)sender {
@@ -311,8 +327,8 @@
             UIPopoverController *pc = [[UIPopoverController alloc] initWithContentViewController:t];
             UIButton *b = (UIButton *)sender;
             DLog(@"VC selectFile %@", b);
-            [pc presentPopoverFromRect:CGRectMake(0, 0, ((UIButton *)sender).frame.size.width, 0)
-                                inView:(UIButton *)sender 
+            [pc presentPopoverFromRect:CGRectMake(0, 0, b.frame.size.width, 0)
+                                inView:b
               permittedArrowDirections:UIPopoverArrowDirectionAny 
                               animated:YES];
         } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
@@ -336,15 +352,16 @@
 - (IBAction)toggleUsePassword:(id)sender {
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
     usePassword = !usePassword;
-    [[NSUserDefaults standardUserDefaults] setBool:usePassword forKey:kUserDefaultsUsePassword];
-    [self refreshLockStatus];
     
     if (usePassword) {
         [self lock];
     } else {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsUsePassword];
         [_bubble stopService];
         [_bubble publishServiceWithPassword:@""];
         [_bubble browseServices];
+        
+        [self refreshLockStatus];
     }
 }
 
@@ -457,12 +474,21 @@
     if (buttonIndex == 0) {
         // DW: user canceled
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsUsePassword];
-        [self refreshLockStatus];
+        
+        [_bubble stopService];
+        [_bubble publishServiceWithPassword:@""];
+        [_bubble browseServices];
     } else if (buttonIndex == 1) {
+        // DW: user inputed password
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserDefaultsUsePassword];
+        
         [_bubble stopService];
         [_bubble publishServiceWithPassword:[alertView textFieldAtIndex:0].text];
         [_bubble browseServices];
     }
+    
+    [self refreshLockStatus];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kWDBubbleNotificationDidEndLock object:nil];
 }
 
 #pragma mark - UITableViewDelegate
@@ -770,6 +796,12 @@
     // Called when the view is shown again in the split view, invalidating the button and popover controller.
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     //self.masterPopoverController = nil;
+}
+
+#pragma mark - NC
+
+- (void)shouldLock:(NSNotification *)notification {
+    [self lock];
 }
 
 @end

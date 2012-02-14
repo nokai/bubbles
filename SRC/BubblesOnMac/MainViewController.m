@@ -188,7 +188,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(servicesUpdated:) 
-                                                 name:kWDBubbleNotification
+                                                 name:kWDBubbleNotificationServiceUpdated
                                                object:nil];  
 
     // Wu: Alloc the two view controller and first add textviewcontroller into superview

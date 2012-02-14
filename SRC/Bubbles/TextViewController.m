@@ -9,7 +9,7 @@
 #import "TextViewController.h"
 
 @implementation TextViewController
-@synthesize undoManager = _undoManager, delegate;
+@synthesize undoManager = _undoManager, popover = _popover, delegate;
 
 // Call this method somewhere in your view controller setup code.
 - (void)registerForKeyboardNotifications {
@@ -21,6 +21,14 @@
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
     
+}
+
+- (void)dismiss {
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [self.popover dismissPopoverAnimated:YES];
+    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+        [self dismissModalViewControllerAnimated:YES];
+    }
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -38,6 +46,11 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
+- (void)dealloc {
+    [_popover release];
+    [super release];
 }
 
 #pragma mark - View lifecycle
@@ -91,14 +104,14 @@
 
 - (IBAction)cancelEditing:(id)sender {
     [_textView resignFirstResponder];
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismiss];
 }
 
 - (IBAction)doneEditing:(id)sender {
     //self.navigationItem.rightBarButtonItem = nil;
     [_textView resignFirstResponder];
     [self.delegate didFinishWithText:_textView.text];
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismiss];
 }
 
 #pragma mark - UITextViewDelegate
