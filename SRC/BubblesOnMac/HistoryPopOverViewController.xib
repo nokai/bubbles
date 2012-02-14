@@ -99,8 +99,8 @@
 													</object>
 												</object>
 												<object class="NSTextFieldCell" key="NSDataCell" id="76647385">
-													<int key="NSCellFlags">337772096</int>
-													<int key="NSCellFlags2">2048</int>
+													<int key="NSCellFlags">337772032</int>
+													<int key="NSCellFlags2">0</int>
 													<string key="NSContents">Text Cell</string>
 													<object class="NSFont" key="NSSupport" id="999420194">
 														<string key="NSName">LucidaGrande</string>
@@ -347,30 +347,30 @@
 				<reference key="NSNextKeyView" ref="367541001"/>
 				<string key="NSClassName">NSView</string>
 			</object>
-			<object class="NSMenu" id="593622234">
+			<object class="NSMenu" id="652648714">
 				<string key="NSTitle"/>
 				<array class="NSMutableArray" key="NSMenuItems">
-					<object class="NSMenuItem" id="64757732">
-						<reference key="NSMenu" ref="593622234"/>
+					<object class="NSMenuItem" id="172527125">
+						<reference key="NSMenu" ref="652648714"/>
 						<string key="NSTitle">Preview</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
-						<object class="NSCustomResource" key="NSOnImage" id="1072832210">
+						<object class="NSCustomResource" key="NSOnImage" id="843267752">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">NSMenuCheckmark</string>
 						</object>
-						<object class="NSCustomResource" key="NSMixedImage" id="299632039">
+						<object class="NSCustomResource" key="NSMixedImage" id="222475247">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">NSMenuMixedState</string>
 						</object>
 					</object>
-					<object class="NSMenuItem" id="709421273">
-						<reference key="NSMenu" ref="593622234"/>
+					<object class="NSMenuItem" id="842356140">
+						<reference key="NSMenu" ref="652648714"/>
 						<string key="NSTitle">Delete</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="1072832210"/>
-						<reference key="NSMixedImage" ref="299632039"/>
+						<reference key="NSOnImage" ref="843267752"/>
+						<reference key="NSMixedImage" ref="222475247"/>
 					</object>
 				</array>
 			</object>
@@ -559,22 +559,22 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">73</int>
-						<reference key="object" ref="593622234"/>
+						<reference key="object" ref="652648714"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="64757732"/>
-							<reference ref="709421273"/>
+							<reference ref="172527125"/>
+							<reference ref="842356140"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">74</int>
-						<reference key="object" ref="64757732"/>
-						<reference key="parent" ref="593622234"/>
+						<reference key="object" ref="172527125"/>
+						<reference key="parent" ref="652648714"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">75</int>
-						<reference key="object" ref="709421273"/>
-						<reference key="parent" ref="593622234"/>
+						<reference key="object" ref="842356140"/>
+						<reference key="parent" ref="652648714"/>
 					</object>
 				</array>
 			</object>
