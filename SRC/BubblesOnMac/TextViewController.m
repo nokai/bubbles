@@ -20,6 +20,11 @@
     return self;
 }
 
+- (void)awakeFromNib
+{
+    //[[_textField cell ]setScrollable:YES];
+}
+
 - (void)dealloc
 {
     [_textField release];

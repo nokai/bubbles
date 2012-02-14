@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11D50b</string>
+		<string key="IBDocument.SystemVersion">11C74</string>
 		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
-		<string key="IBDocument.AppKitVersion">1138.32</string>
-		<string key="IBDocument.HIToolboxVersion">568.00</string>
+		<string key="IBDocument.AppKitVersion">1138.23</string>
+		<string key="IBDocument.HIToolboxVersion">567.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">1938</string>
@@ -70,7 +70,7 @@
 										<array class="NSMutableArray" key="NSTableColumns">
 											<object class="NSTableColumn" id="818955973">
 												<string key="NSIdentifier">Data</string>
-												<double key="NSWidth">223.046875</double>
+												<double key="NSWidth">237.046875</double>
 												<double key="NSMinWidth">40</double>
 												<double key="NSMaxWidth">1000</double>
 												<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -129,8 +129,8 @@
 											</object>
 											<object class="NSTableColumn" id="815478849">
 												<string key="NSIdentifier">Delete</string>
-												<double key="NSWidth">30</double>
-												<double key="NSMinWidth">30</double>
+												<double key="NSWidth">14</double>
+												<double key="NSMinWidth">14</double>
 												<double key="NSMaxWidth">1000</double>
 												<object class="NSTableHeaderCell" key="NSHeaderCell">
 													<int key="NSCellFlags">75628096</int>
@@ -144,23 +144,21 @@
 													<int key="NSCellFlags">337772096</int>
 													<int key="NSCellFlags2">67373056</int>
 													<string key="NSContents">Text Cell</string>
-													<object class="NSFont" key="NSSupport" id="22">
+													<object class="NSFont" key="NSSupport">
 														<string key="NSName">LucidaGrande</string>
 														<double key="NSSize">9</double>
-														<int key="NSfFlags">3614</int>
+														<int key="NSfFlags">16</int>
 													</object>
 													<reference key="NSControlView" ref="632264135"/>
 													<reference key="NSBackgroundColor" ref="509446425"/>
 													<reference key="NSTextColor" ref="742513510"/>
 												</object>
-												<int key="NSResizingMask">3</int>
-												<bool key="NSIsResizeable">YES</bool>
 												<reference key="NSTableView" ref="632264135"/>
 											</object>
 											<object class="NSTableColumn" id="991822119">
 												<string key="NSIdentifier">Preview</string>
-												<double key="NSWidth">31.6171875</double>
-												<double key="NSMinWidth">10</double>
+												<double key="NSWidth">25</double>
+												<double key="NSMinWidth">25</double>
 												<double key="NSMaxWidth">3.4028234663852886e+38</double>
 												<object class="NSTableHeaderCell" key="NSHeaderCell">
 													<int key="NSCellFlags">75628096</int>
@@ -182,7 +180,11 @@
 													<int key="NSCellFlags">337772096</int>
 													<int key="NSCellFlags2">67373056</int>
 													<string key="NSContents">Text Cell</string>
-													<reference key="NSSupport" ref="22"/>
+													<object class="NSFont" key="NSSupport">
+														<string key="NSName">LucidaGrande</string>
+														<double key="NSSize">9</double>
+														<int key="NSfFlags">3614</int>
+													</object>
 													<reference key="NSControlView" ref="632264135"/>
 													<reference key="NSBackgroundColor" ref="509446425"/>
 													<reference key="NSTextColor" ref="742513510"/>
@@ -248,12 +250,12 @@
 								<string key="NSReuseIdentifierKey">_NS:1845</string>
 								<reference key="NSTarget" ref="645614796"/>
 								<string key="NSAction">_doScroller:</string>
-								<double key="NSPercent">0.99492385786802029</double>
+								<double key="NSPercent">0.9242424242424242</double>
 							</object>
 							<object class="NSScroller" id="240672866">
 								<reference key="NSNextResponder" ref="645614796"/>
 								<int key="NSvFlags">-2147483392</int>
-								<string key="NSFrame">{{1, 182}, {283, 15}}</string>
+								<string key="NSFrame">{{0, 183}, {285, 15}}</string>
 								<reference key="NSSuperview" ref="645614796"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
@@ -261,7 +263,7 @@
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="645614796"/>
 								<string key="NSAction">_doScroller:</string>
-								<double key="NSPercent">0.99647887323943662</double>
+								<double key="NSPercent">0.99650349650349646</double>
 							</object>
 						</array>
 						<string key="NSFrameSize">{285, 198}</string>
@@ -295,13 +297,8 @@
 									<reference key="NSSupport" ref="999420194"/>
 									<string key="NSCellIdentifier">_NS:687</string>
 									<reference key="NSControlView" ref="134770340"/>
-									<int key="NSButtonFlags">-2038021889</int>
+									<int key="NSButtonFlags">-2038152961</int>
 									<int key="NSButtonFlags2">129</int>
-									<object class="NSFont" key="NSAlternateImage">
-										<string key="NSName">LucidaGrande</string>
-										<double key="NSSize">13</double>
-										<int key="NSfFlags">16</int>
-									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">200</int>
@@ -560,7 +557,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">62</int>
+			<int key="maxID">72</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

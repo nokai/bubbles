@@ -105,7 +105,6 @@
 				<string key="NSFrameSize">{380, 189}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSImageView" id="227488032">

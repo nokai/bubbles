@@ -69,14 +69,17 @@
     
     NSButtonCell *deleteCell = [[[NSButtonCell alloc]init]autorelease];
     [deleteCell setBordered:NO];
-    [deleteCell setImage:[NSImage imageNamed:@"NSStopProgressTemplate"]];
+    [deleteCell setImage:[NSImage imageNamed:@"NSStopProgressFreestandingTemplate"]];
+    [deleteCell setImageScaling:NSImageScaleProportionallyDown];
     [deleteCell setAction:@selector(deleteSelectedRow)];
      NSTableColumn *columnTwo = [[_fileHistoryTableView tableColumns] objectAtIndex:1];
     [columnTwo setDataCell:deleteCell];
     
+    
     NSButtonCell *previewCell = [[[NSButtonCell alloc]init]autorelease];
     [previewCell setBordered:NO];
     [previewCell setImage:[NSImage imageNamed:@"NSRevealFreestandingTemplate"]];
+    [previewCell setImageScaling:NSImageScaleProportionallyDown];
     [previewCell setAction:@selector(previewSelectedRow)];
     [previewCell setTitle:@""];
     NSTableColumn *columnThree = [[_fileHistoryTableView tableColumns] objectAtIndex:2];
@@ -187,7 +190,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     DLog(@"previewIconForCell");
     WDMessage *message = (WDMessage *)data;
     if (message.type == WDMessageTypeText){
-        return nil;
+        return [NSImage imageNamed:@"swap"];
     } else if (message.type == WDMessageTypeFile){
         NSImage *icon = [NSImage imageWithPreviewOfFileAtPath:[message.fileURL path] asIcon:YES];
         return icon;
