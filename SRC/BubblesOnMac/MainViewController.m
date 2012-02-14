@@ -68,9 +68,9 @@
     [_historyPopOverController.fileHistoryArray addObject:message];
     [_historyPopOverController.fileHistoryArray sortUsingComparator:^NSComparisonResult(WDMessage *obj1, WDMessage * obj2) {
         if ([obj1.time compare:obj2.time] == NSOrderedAscending)
-            return NSOrderedDescending;
-        else if ([obj1.time compare:obj2.time] == NSOrderedDescending)
             return NSOrderedAscending;
+        else if ([obj1.time compare:obj2.time] == NSOrderedDescending)
+            return NSOrderedDescending;
         else
             return NSOrderedSame;
     }];
@@ -79,7 +79,7 @@
 
 - (void)sendFile
 {
-    if (_isView == kTextViewController) {
+    if (_isView == kTextViewController || _fileURL == nil) {
         return ;
     }
     WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
@@ -91,7 +91,7 @@
 - (void)sendText
 {
     DLog(@"MVC sendText %@", _textViewController.textField.stringValue);
-    if (_isView == kTextViewController) {
+    if (_isView == kTextViewController || [_textViewController.textField.stringValue length] == 0) {
         WDMessage *t = [WDMessage messageWithText:_textViewController.textField.stringValue];
         [self storeMessage:t];
         [_bubble broadcastMessage:t];
@@ -212,10 +212,6 @@
 
 - (IBAction)togglePassword:(id)sender {
     NSButton *button = (NSButton *)sender;
-    
-    DLog(@"!!!!!!!!!!!!!");
-    //[[NSUserDefaults standardUserDefaults] setBool:button.state forKey:kUserDefaultsUsePassword];
-    
     if (button.state == NSOnState) {
         // DW: user turned password on.
         if (_passwordController == nil) {
@@ -227,6 +223,22 @@
         [NSApp beginSheet:[_passwordController window] modalForWindow:[NSApplication sharedApplication].keyWindow  modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
         
     } else {
+    
+        NSArray* toolbarVisibleItems = [_toolBar visibleItems];
+        NSEnumerator* enumerator = [toolbarVisibleItems objectEnumerator];
+        NSToolbarItem* anItem = nil;
+        BOOL stillLooking = YES;
+        while ( stillLooking && ( anItem = [enumerator nextObject] ) )
+        {
+            if ( [[anItem itemIdentifier] isEqualToString:@"PasswordIdentifier"] )
+            {
+                [anItem setImage:[NSImage imageNamed:@"NSLockUnlockedTemplate"]];
+                
+                stillLooking = NO;
+            }
+        }
+
+        _lockButton.state = NSOffState;
         [_bubble stopService];
         [_bubble publishServiceWithPassword:@""];
         [_bubble browseServices];
@@ -286,7 +298,6 @@
 #pragma mark - WDBubbleDelegate
 
 - (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text {
-    DLog(@"VC didReceiveText %@", text);
     if (_isView == kTextViewController) {
         _textViewController.textField.stringValue = text;
         [self storeMessage:message];
@@ -294,7 +305,6 @@
 }
 
 - (void)didReceiveMessage:(WDMessage *)message ofFile:(NSURL *)url {
-    DLog(@"MVC didReceiveFile %@", url);
     if (_isView != kDragFileController) {
         return ;
     }

@@ -200,7 +200,12 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     DLog(@"primaryTextForCell");
     WDMessage *message = (WDMessage *)data;
     if (message.type == WDMessageTypeText){
-        return [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
+        NSString *string = [[[NSString alloc]initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
+        if ([string length] >= 20) {
+            string = [string substringWithRange:NSMakeRange(0,15)];
+            string = [string stringByAppendingString:@"......."];
+        }
+        return string;
     } else if (message.type == WDMessageTypeFile){
         return [message.fileURL lastPathComponent];
     }
