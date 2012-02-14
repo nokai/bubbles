@@ -72,7 +72,7 @@
 										<array class="NSMutableArray" key="NSTableColumns">
 											<object class="NSTableColumn" id="818955973">
 												<string key="NSIdentifier">Data</string>
-												<double key="NSWidth">237.046875</double>
+												<double key="NSWidth">243.046875</double>
 												<double key="NSMinWidth">40</double>
 												<double key="NSMaxWidth">1000</double>
 												<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -131,8 +131,8 @@
 											</object>
 											<object class="NSTableColumn" id="815478849">
 												<string key="NSIdentifier">Delete</string>
-												<double key="NSWidth">14</double>
-												<double key="NSMinWidth">14</double>
+												<double key="NSWidth">25</double>
+												<double key="NSMinWidth">25</double>
 												<double key="NSMaxWidth">1000</double>
 												<object class="NSTableHeaderCell" key="NSHeaderCell">
 													<int key="NSCellFlags">75628096</int>
@@ -143,8 +143,8 @@
 													<reference key="NSTextColor" ref="37040903"/>
 												</object>
 												<object class="NSTextFieldCell" key="NSDataCell" id="107620943">
-													<int key="NSCellFlags">337772096</int>
-													<int key="NSCellFlags2">67373056</int>
+													<int key="NSCellFlags">337772033</int>
+													<int key="NSCellFlags2">67371008</int>
 													<string key="NSContents">Text Cell</string>
 													<object class="NSFont" key="NSSupport">
 														<string key="NSName">LucidaGrande</string>
@@ -159,8 +159,8 @@
 											</object>
 											<object class="NSTableColumn" id="991822119">
 												<string key="NSIdentifier">Preview</string>
-												<double key="NSWidth">25</double>
-												<double key="NSMinWidth">25</double>
+												<double key="NSWidth">14</double>
+												<double key="NSMinWidth">14</double>
 												<double key="NSMaxWidth">3.4028234663852886e+38</double>
 												<object class="NSTableHeaderCell" key="NSHeaderCell">
 													<int key="NSCellFlags">75628096</int>
@@ -179,8 +179,8 @@
 													<reference key="NSTextColor" ref="37040903"/>
 												</object>
 												<object class="NSTextFieldCell" key="NSDataCell" id="972946676">
-													<int key="NSCellFlags">337772096</int>
-													<int key="NSCellFlags2">67373056</int>
+													<int key="NSCellFlags">337772033</int>
+													<int key="NSCellFlags2">67371008</int>
 													<string key="NSContents">Text Cell</string>
 													<object class="NSFont" key="NSSupport">
 														<string key="NSName">LucidaGrande</string>
@@ -191,8 +191,6 @@
 													<reference key="NSBackgroundColor" ref="509446425"/>
 													<reference key="NSTextColor" ref="742513510"/>
 												</object>
-												<int key="NSResizingMask">3</int>
-												<bool key="NSIsResizeable">YES</bool>
 												<reference key="NSTableView" ref="632264135"/>
 											</object>
 										</array>
