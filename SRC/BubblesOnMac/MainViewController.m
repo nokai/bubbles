@@ -215,8 +215,8 @@
 #pragma mark - IBActions
 
 - (IBAction)togglePassword:(id)sender {
-    NSButton *button = (NSButton *)sender;
-    if (button.state == NSOnState) {
+    //NSButton *button = (NSButton *)sender;
+    if (_lockButton.state == NSOnState) {
         // DW: user turned password on.
         if (_passwordController == nil) {
             _passwordController = [[PasswordMacViewController alloc]init];
