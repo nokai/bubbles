@@ -50,7 +50,13 @@
     HistoryPopOverViewController *_historyPopOverController;
     NetworkFoundPopOverViewController *_networkPopOverController;
 }
+
 // DW: for binding
 @property (nonatomic, retain) NSURL *fileURL;
 @property (nonatomic, assign) WDBubble *bubble;
+
+// DW: only public methods can drage IBActions now
+- (IBAction)send:(id)sender;
+- (IBAction)swapView:(id)sender;
+
 @end

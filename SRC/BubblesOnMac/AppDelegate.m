@@ -27,6 +27,10 @@
     // Insert code here to initialize your application
 }
 
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
+    return YES;
+}
+
 - (IBAction)showPreview:(id)sender
 {
     if ([QLPreviewPanel sharedPreviewPanelExists] && [[QLPreviewPanel sharedPreviewPanel]isVisible]) {

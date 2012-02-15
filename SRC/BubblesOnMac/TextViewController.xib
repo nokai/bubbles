@@ -68,10 +68,10 @@
 											<string>WebURLsWithTitlesPboardType</string>
 											<string>public.url</string>
 										</set>
-										<string key="NSFrameSize">{374, 101}</string>
+										<string key="NSFrameSize">{381, 12}</string>
 										<reference key="NSSuperview" ref="899786706"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="896482774"/>
+										<reference key="NSNextKeyView" ref="1037716809"/>
 										<string key="NSReuseIdentifierKey">_NS:1480</string>
 										<object class="NSTextContainer" key="NSTextContainer" id="965603486">
 											<object class="NSLayoutManager" key="NSLayoutManager">
@@ -88,7 +88,7 @@
 												<nil key="NSDelegate"/>
 											</object>
 											<reference key="NSTextView" ref="312380960"/>
-											<double key="NSWidth">374</double>
+											<double key="NSWidth">381</double>
 											<int key="NSTCFlags">1</int>
 										</object>
 										<object class="NSTextViewSharedData" key="NSSharedData">
@@ -104,7 +104,7 @@
 													<int key="NSColorSpace">6</int>
 													<string key="NSCatalogName">System</string>
 													<string key="NSColorName">selectedTextBackgroundColor</string>
-													<object class="NSColor" key="NSColor">
+													<object class="NSColor" key="NSColor" id="599109665">
 														<int key="NSColorSpace">3</int>
 														<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 													</object>
@@ -136,12 +136,12 @@
 											<int key="NSPreferredTextFinderStyle">1</int>
 										</object>
 										<int key="NSTVFlags">6</int>
-										<string key="NSMaxSize">{463, 10000000}</string>
-										<string key="NSMinize">{223, 101}</string>
+										<string key="NSMaxSize">{503, 10000000}</string>
+										<string key="NSMinize">{127, 0}</string>
 										<nil key="NSDelegate"/>
 									</object>
 								</array>
-								<string key="NSFrame">{{0.5, -0.5}, {373, 174}}</string>
+								<string key="NSFrameSize">{380, 189}</string>
 								<reference key="NSSuperview" ref="421809714"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="312380960"/>
@@ -150,8 +150,8 @@
 								<object class="NSColor" key="NSBGColor">
 									<int key="NSColorSpace">6</int>
 									<string key="NSCatalogName">System</string>
-									<string key="NSColorName">windowFrameColor</string>
-									<reference key="NSColor" ref="204153999"/>
+									<string key="NSColorName">controlBackgroundColor</string>
+									<reference key="NSColor" ref="599109665"/>
 								</object>
 								<object class="NSCursor" key="NSCursor">
 									<string key="NSHotSpot">{4, 5}</string>
@@ -182,10 +182,9 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<object class="NSScroller" id="896482774">
 								<reference key="NSNextResponder" ref="421809714"/>
 								<int key="NSvFlags">256</int>
-								<string key="NSFrame">{{358, 0}, {15, 174}}</string>
+								<string key="NSFrame">{{365, 0}, {15, 189}}</string>
 								<reference key="NSSuperview" ref="421809714"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:1494</string>
 								<reference key="NSTarget" ref="421809714"/>
 								<string key="NSAction">_doScroller:</string>
@@ -207,10 +206,10 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 								<double key="NSPercent">0.94565218687057495</double>
 							</object>
 						</array>
-						<string key="NSFrame">{{3.5, 7.5}, {373, 174}}</string>
+						<string key="NSFrameSize">{380, 189}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1037716809"/>
+						<reference key="NSNextKeyView" ref="899786706"/>
 						<string key="NSReuseIdentifierKey">_NS:940</string>
 						<int key="NSsFlags">133264</int>
 						<reference key="NSVScroller" ref="896482774"/>

@@ -10,6 +10,7 @@
 
 #define kButtonTitleSendText    @"Text"
 #define kButtonTitleSendFile    @"File"
+#define kTooBarIndexOfSelectButton    2
 
 @implementation MainViewController
 @synthesize fileURL = _fileURL;
@@ -257,10 +258,9 @@
     [_preferenceController showWindow:self];
 }
 
-- (IBAction)swapView:(id)sender
-{
+- (IBAction)swapView:(id)sender {
     if (_isView == kTextViewController) {
-        [_toolBar insertItemWithItemIdentifier:@"SelectItemIdentifier" atIndex:1];
+        [_toolBar insertItemWithItemIdentifier:@"SelectItemIdentifier" atIndex:kTooBarIndexOfSelectButton];
         
         _isView = kDragFileController;
         [_textViewController.view setHidden:YES withFade:YES];
@@ -269,7 +269,7 @@
         _sendButton.stringValue = kButtonTitleSendFile;
     } else {
         
-        [_toolBar removeItemAtIndex:1];
+        [_toolBar removeItemAtIndex:kTooBarIndexOfSelectButton];
         _isView = kTextViewController;
         [_textViewController.view setHidden:NO withFade:YES];
         [_dragFileController.view setHidden:YES withFade:YES];
@@ -289,8 +289,7 @@
     [_networkPopOverController showServicesFoundPopOver:button];
 }
 
-- (IBAction)send:(id)sender
-{
+- (IBAction)send:(id)sender {
     if (_isView == kTextViewController) {
         [self sendText];
     } else {
@@ -394,6 +393,9 @@
     return nil;
 }
 
+// DW: we do not need these codes
+
+/*
 #pragma mark - NSToolBarDelegate
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
@@ -430,6 +432,7 @@
             @"PasswordIdentifier",
             NSToolbarFlexibleSpaceItemIdentifier,@"HistoryIdentifier", @"NetworkIdentifier", @"SelectItemIdentifier",nil];
 }
+*/
 
 /*
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdent willBeInsertedIntoToolbar:(BOOL)willBeInserted {
