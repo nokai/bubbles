@@ -140,6 +140,7 @@
 		C121949914B5A9FB00159A9F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C123285B14E3CFBF006968FE /* ViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewController_iPad.xib; path = Bubbles/ViewController_iPad.xib; sourceTree = SOURCE_ROOT; };
 		C123285D14E3CFE6006968FE /* PeersViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeersViewController_iPad.xib; path = Bubbles/PeersViewController_iPad.xib; sourceTree = SOURCE_ROOT; };
+		C133FAAE14EBF2CD004E406B /* BubblesOnMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BubblesOnMac.entitlements; sourceTree = "<group>"; };
 		C1393F0714D90C83005AFEB6 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextViewController.h; path = Bubbles/TextViewController.h; sourceTree = SOURCE_ROOT; };
 		C1393F0814D90C83005AFEB6 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextViewController.m; path = Bubbles/TextViewController.m; sourceTree = SOURCE_ROOT; };
 		C1393F0914D90C83005AFEB6 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TextViewController.xib; path = Bubbles/TextViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -230,14 +231,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		039C96D214E68BC500BBEEC5 /* Image */ = {
+		039C96D214E68BC500BBEEC5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				039C96D314E68BDD00BBEEC5 /* swap.png */,
 				039C96D714E691FA00BBEEC5 /* bubbles.png */,
 				039C96D514E68D8500BBEEC5 /* bubbleBackground.png */,
 			);
-			name = Image;
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		03A8878514E2A1E3008CA643 /* SubClass */ = {
@@ -390,6 +391,7 @@
 		C1C9371814BB1766005E0EAA /* BubblesOnMac */ = {
 			isa = PBXGroup;
 			children = (
+				039C96D214E68BC500BBEEC5 /* Resources */,
 				03A8878814E2A22B008CA643 /* View */,
 				03A8878714E2A218008CA643 /* Window */,
 				03A8878514E2A1E3008CA643 /* SubClass */,
@@ -400,7 +402,6 @@
 				C1C9372714BB1766005E0EAA /* MainMenu.xib */,
 				0354C95E14BDC3F700417697 /* MainViewController.h */,
 				0354C95F14BDC3F700417697 /* MainViewController.m */,
-				039C96D214E68BC500BBEEC5 /* Image */,
 			);
 			path = BubblesOnMac;
 			sourceTree = "<group>";
@@ -408,6 +409,7 @@
 		C1C9371914BB1766005E0EAA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C133FAAE14EBF2CD004E406B /* BubblesOnMac.entitlements */,
 				C1C9371A14BB1766005E0EAA /* BubblesOnMac-Info.plist */,
 				C1C9371B14BB1766005E0EAA /* InfoPlist.strings */,
 				C1C9371E14BB1766005E0EAA /* main.m */,
@@ -746,6 +748,9 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_ENTITLEMENTS = BubblesOnMac/BubblesOnMac.entitlements;
+				CODE_SIGN_IDENTITY = "Test for Sandbox";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "3rd Party Mac Developer Application";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
@@ -758,6 +763,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
@@ -768,6 +775,9 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_ENTITLEMENTS = BubblesOnMac/BubblesOnMac.entitlements;
+				CODE_SIGN_IDENTITY = "Test for Sandbox";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "3rd Party Mac Developer Application";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -780,6 +790,8 @@
 				INFOPLIST_FILE = "BubblesOnMac/BubblesOnMac-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
