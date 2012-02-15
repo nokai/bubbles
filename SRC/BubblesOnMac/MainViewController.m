@@ -7,6 +7,10 @@
 //
 
 #import "MainViewController.h"
+
+#define kButtonTitleSendText    @"Text"
+#define kButtonTitleSendFile    @"File"
+
 @implementation MainViewController
 @synthesize fileURL = _fileURL;
 @synthesize bubble = _bubble;
@@ -42,22 +46,22 @@
 
 - (void)loadUserPreference
 {
-   /* if (_passwordController != nil) {
-        //[[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
-        return ;
-    }
-    
-    bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
-    
-    if (status) {
-        _passwordController = [[PasswordMacViewController alloc]init];
-        _passwordController.delegate = self;
-        
-        [NSApp beginSheet:[_passwordController window] modalForWindow:[NSApplication sharedApplication].mainWindow modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
-        
-    } else {
-        
-    }*/
+    /* if (_passwordController != nil) {
+     //[[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
+     return ;
+     }
+     
+     bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
+     
+     if (status) {
+     _passwordController = [[PasswordMacViewController alloc]init];
+     _passwordController.delegate = self;
+     
+     [NSApp beginSheet:[_passwordController window] modalForWindow:[NSApplication sharedApplication].mainWindow modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+     
+     } else {
+     
+     }*/
     [_bubble publishServiceWithPassword:@""];
     [_bubble browseServices];
 }
@@ -141,7 +145,7 @@
         _networkPopOverController = [[NetworkFoundPopOverViewController alloc]
                                      initWithNibName:@"NetworkFoundPopOverViewController" bundle:nil];
         _networkPopOverController.bubble = _bubble;
-    
+        
         //Wu:the initilization is open the send text view;
         _isView = kTextViewController;
         
@@ -168,10 +172,9 @@
     
     [_lockButton release];
     [_selectFileItem release];
-       
+    
     [_bubble release];
     [_fileURL release];
-    [_viewIndicator release];
     [_selectFileItem release];
     [_networkItem release];
     [_historyItem release];
@@ -182,14 +185,14 @@
 {
     // Wu:Add observer to get the notification when the main menu become key window then the sheet window will appear
     /*[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(delayNotification)
-                                                 name:@"NSWindowDidBecomeKeyNotification" object:nil];*/
+     selector:@selector(delayNotification)
+     name:@"NSWindowDidBecomeKeyNotification" object:nil];*/
     
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(servicesUpdated:) 
                                                  name:kWDBubbleNotificationServiceUpdated
                                                object:nil];  
-
+    
     // Wu: Alloc the two view controller and first add textviewcontroller into superview
     _textViewController = [[TextViewController alloc]initWithNibName:@"TextViewController" bundle:nil];
     _dragFileController = [[DragFileViewController alloc]initWithNibName:@"DragFileViewController" bundle:nil];
@@ -203,7 +206,8 @@
     _dragFileController.imageView.delegate = self;
     [_dragFileController.view setHidden:YES];
     
-    _viewIndicator.stringValue = @"Bubbles Message";
+    _sendButton.stringValue = kButtonTitleSendText;
+    //_viewIndicator.stringValue = @"Bubbles Message";
     
 }
 
@@ -222,7 +226,7 @@
         [NSApp beginSheet:[_passwordController window] modalForWindow:[NSApplication sharedApplication].keyWindow  modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
         
     } else {
-    
+        
         NSArray* toolbarVisibleItems = [_toolBar visibleItems];
         NSEnumerator* enumerator = [toolbarVisibleItems objectEnumerator];
         NSToolbarItem* anItem = nil;
@@ -236,7 +240,7 @@
                 stillLooking = NO;
             }
         }
-
+        
         _lockButton.state = NSOffState;
         [_bubble stopService];
         [_bubble publishServiceWithPassword:@""];
@@ -261,15 +265,15 @@
         _isView = kDragFileController;
         [_textViewController.view setHidden:YES withFade:YES];
         [_dragFileController.view setHidden:NO withFade:YES];
-        _viewIndicator.stringValue = @"Bubbles File";
-        
+        //_viewIndicator.stringValue = @"Bubbles File";
+        _sendButton.stringValue = kButtonTitleSendFile;
     } else {
         
         [_toolBar removeItemAtIndex:1];
-         _isView = kTextViewController;
+        _isView = kTextViewController;
         [_textViewController.view setHidden:NO withFade:YES];
         [_dragFileController.view setHidden:YES withFade:YES];
-         _viewIndicator.stringValue = @"Bubbles Message";
+        _sendButton.stringValue = kButtonTitleSendText;
     }
 }
 
@@ -314,7 +318,7 @@
         [_fileURL release];
     }
     _fileURL = [url retain];
-   
+    
     NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
     if (image != nil) {
         [_dragFileController.imageView setImage:image];
@@ -409,7 +413,7 @@
 
 - (void) toolbarWillAddItem:(NSNotification *)notification {
     NSToolbarItem *addedItem = [[notification userInfo] objectForKey: @"item"];
-
+    
     if ([[addedItem itemIdentifier] isEqual: @"SelectItemIdentifier"]) {
         DLog(@"kjhfkjsdhkjsdhfkjsdhf!!!!");
     }
@@ -427,6 +431,7 @@
             NSToolbarFlexibleSpaceItemIdentifier,@"HistoryIdentifier", @"NetworkIdentifier", @"SelectItemIdentifier",nil];
 }
 
+/*
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdent willBeInsertedIntoToolbar:(BOOL)willBeInserted {
     // Required delegate method:  Given an item identifier, this method returns an item 
     // The toolbar will use this method to obtain toolbar items that can be displayed in the customization sheet, or in the toolbar itself 
@@ -434,7 +439,7 @@
     DLog(@"itemForItemIdentifier");
     NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdent] autorelease];
     if ([[toolbarItem itemIdentifier] isEqual:@"SelectItemIdentifier"]) {
-        [toolbarItem setImage:[NSImage imageNamed:@"NSFolderSmart"]];
+        [toolbarItem setImage:[NSImage imageNamed:@"NSAddTemplate"]];
         [toolbarItem setLabel:@"Select"];
         [toolbarItem setPaletteLabel:@"Select"];
         [toolbarItem setTarget:self];
@@ -443,9 +448,6 @@
     
     return toolbarItem;
 }
-
-
-
-
+*/
 
 @end

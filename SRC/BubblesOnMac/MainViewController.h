@@ -31,11 +31,9 @@
     NSToolbarItem *_selectFileItem;
     IBOutlet NSToolbarItem *_networkItem;
     IBOutlet NSToolbarItem *_historyItem;
-    
-    IBOutlet NSTextField *_viewIndicator;
-    
+    //IBOutlet NSTextField *_viewIndicator;
+    IBOutlet NSButton *_sendButton;
     IBOutlet NSButton *_lockButton;
-    
     IBOutlet NSToolbar *_toolBar;
     
     BOOL _isView;
