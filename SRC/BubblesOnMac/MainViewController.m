@@ -45,6 +45,14 @@
     }
 }
 
+- (void)initFirstResponder
+{
+    // Wu:Make the NSTextView as the first responder
+    AppDelegate *appDel = (AppDelegate *)[NSApp delegate];
+    [appDel.window makeFirstResponder:_textViewController.textField];
+    appDel.window.initialFirstResponder = _textViewController.textField;
+}
+
 - (void)loadUserPreference
 {
     /* if (_passwordController != nil) {
@@ -164,6 +172,8 @@
      selector:@selector(delayNotification)
      name:@"NSWindowDidBecomeKeyNotification" object:nil];*/
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFirstResponder) name:@"NSWindowDidBecomeKeyNotification" object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(servicesUpdated:) 
                                                  name:kWDBubbleNotificationServiceUpdated
@@ -183,11 +193,6 @@
     [_dragFileController.view setHidden:YES];
     
     _sendButton.stringValue = kButtonTitleSendText;
-    //_viewIndicator.stringValue = @"Bubbles Message";
-    AppDelegate *appDel = (AppDelegate *)[NSApp delegate];
-    [appDel.window makeKeyWindow];
-   // [appDel.window initialFirstResponder:_textViewController.textField];
-    appDel.window.initialFirstResponder = _textViewController.textField;
 }
 
 #pragma mark - IBActions
@@ -246,7 +251,9 @@
         //_viewIndicator.stringValue = @"Bubbles File";
         _sendButton.stringValue = kButtonTitleSendFile;
     } else {
-        
+        AppDelegate *appDel = (AppDelegate *)[NSApp delegate];
+        [appDel.window makeFirstResponder:_textViewController.textField];
+        appDel.window.initialFirstResponder = _textViewController.textField;
         [_toolBar removeItemAtIndex:kTooBarIndexOfSelectButton];
         _isView = kTextViewController;
         [_textViewController.view setHidden:NO withFade:YES];

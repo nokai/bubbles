@@ -21,6 +21,11 @@
     return self;
 }
 
+- (void)awakeFromNib
+{
+    [_textField becomeFirstResponder];
+}
+
 - (BOOL)acceptsFirstResponder
 {
     return YES;
