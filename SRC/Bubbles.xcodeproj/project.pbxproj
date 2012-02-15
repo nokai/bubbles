@@ -18,7 +18,7 @@
 		0354C9AB14BDE4FA00417697 /* PasswordMacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */; };
 		0354C9AD14BDE51800417697 /* PasswordWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0354C9AC14BDE51800417697 /* PasswordWindowView.xib */; };
 		037D71E114C954530082FB64 /* PreferenceViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 037D71E014C954530082FB64 /* PreferenceViewContoller.m */; };
-		037D71E414C954D60082FB64 /* PreferenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 037D71E314C954D60082FB64 /* PreferenceViewController.xib */; };
+		03861E6D14EC1E8000D9DBD4 /* PreferenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03861E6F14EC1E8000D9DBD4 /* PreferenceViewController.xib */; };
 		039C96D414E68BDD00BBEEC5 /* swap.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C96D314E68BDD00BBEEC5 /* swap.png */; };
 		039C96D614E68D8500BBEEC5 /* bubbleBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C96D514E68D8500BBEEC5 /* bubbleBackground.png */; };
 		039C96D814E691FA00BBEEC5 /* bubbles.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C96D714E691FA00BBEEC5 /* bubbles.png */; };
@@ -108,7 +108,8 @@
 		0354C9AC14BDE51800417697 /* PasswordWindowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordWindowView.xib; sourceTree = "<group>"; };
 		037D71DF14C954530082FB64 /* PreferenceViewContoller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceViewContoller.h; sourceTree = "<group>"; };
 		037D71E014C954530082FB64 /* PreferenceViewContoller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceViewContoller.m; sourceTree = "<group>"; };
-		037D71E314C954D60082FB64 /* PreferenceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferenceViewController.xib; sourceTree = "<group>"; };
+		03861E6E14EC1E8000D9DBD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PreferenceViewController.xib; sourceTree = "<group>"; };
+		03861E7114EC22BD00D9DBD4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/PreferenceViewController.xib"; sourceTree = "<group>"; };
 		039C96D314E68BDD00BBEEC5 /* swap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swap.png; sourceTree = "<group>"; };
 		039C96D514E68D8500BBEEC5 /* bubbleBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubbleBackground.png; sourceTree = "<group>"; };
 		039C96D714E691FA00BBEEC5 /* bubbles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubbles.png; sourceTree = "<group>"; };
@@ -273,7 +274,7 @@
 				0354C9AC14BDE51800417697 /* PasswordWindowView.xib */,
 				037D71DF14C954530082FB64 /* PreferenceViewContoller.h */,
 				037D71E014C954530082FB64 /* PreferenceViewContoller.m */,
-				037D71E314C954D60082FB64 /* PreferenceViewController.xib */,
+				03861E6F14EC1E8000D9DBD4 /* PreferenceViewController.xib */,
 			);
 			name = Window;
 			sourceTree = "<group>";
@@ -519,6 +520,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = C121945414B591D700159A9F;
 			productRefGroup = C121946014B591D700159A9F /* Products */;
@@ -571,7 +573,7 @@
 				C1C9372914BB1766005E0EAA /* MainMenu.xib in Resources */,
 				C1C9372E14BB17C3005E0EAA /* Icon-Mac.icns in Resources */,
 				0354C9AD14BDE51800417697 /* PasswordWindowView.xib in Resources */,
-				037D71E414C954D60082FB64 /* PreferenceViewController.xib in Resources */,
+				03861E6D14EC1E8000D9DBD4 /* PreferenceViewController.xib in Resources */,
 				03A8878D14E2A272008CA643 /* DragFileViewController.xib in Resources */,
 				03A8879A14E2B108008CA643 /* TextViewController.xib in Resources */,
 				032A05C414E39F5B005C4F6E /* HistoryPopOverViewController.xib in Resources */,
@@ -636,6 +638,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		03861E6F14EC1E8000D9DBD4 /* PreferenceViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03861E6E14EC1E8000D9DBD4 /* en */,
+				03861E7114EC22BD00D9DBD4 /* zh-Hans */,
+			);
+			name = PreferenceViewController.xib;
+			sourceTree = "<group>";
+		};
 		C1C9371B14BB1766005E0EAA /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -755,7 +766,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = BubblesOnMac/BubblesOnMac.entitlements;
-				CODE_SIGN_IDENTITY = "Test for Sandbox";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "3rd Party Mac Developer Application";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -769,7 +780,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -782,7 +792,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = BubblesOnMac/BubblesOnMac.entitlements;
-				CODE_SIGN_IDENTITY = "Test for Sandbox";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "3rd Party Mac Developer Application";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -796,7 +806,6 @@
 				INFOPLIST_FILE = "BubblesOnMac/BubblesOnMac-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
