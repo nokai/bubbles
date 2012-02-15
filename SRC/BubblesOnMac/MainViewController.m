@@ -102,31 +102,6 @@
     }   
 }
 
-- (void)selectFile
-{
-    if (_isView == kTextViewController) {
-        return ;
-    }
-    
-    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-    
-	[openPanel setTitle:@"Choose File"];
-	[openPanel setPrompt:@"Browse"];
-	[openPanel setNameFieldLabel:@"Choose a file:"];
-    
-    if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
-        _fileURL = [[openPanel URL] retain];//the path of your selected photo
-        NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
-        if (image != nil) {
-            [_dragFileController.imageView setImage:image];
-            [image release];   
-        }else {
-            NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
-            [_dragFileController.imageView setImage:quicklook];
-        }
-    }
-}
-
 #pragma mark - init & dealloc
 
 - (id)init
@@ -209,7 +184,10 @@
     
     _sendButton.stringValue = kButtonTitleSendText;
     //_viewIndicator.stringValue = @"Bubbles Message";
-    
+    AppDelegate *appDel = (AppDelegate *)[NSApp delegate];
+    [appDel.window makeKeyWindow];
+   // [appDel.window initialFirstResponder:_textViewController.textField];
+    appDel.window.initialFirstResponder = _textViewController.textField;
 }
 
 #pragma mark - IBActions
@@ -290,10 +268,36 @@
 }
 
 - (IBAction)send:(id)sender {
+    
     if (_isView == kTextViewController) {
         [self sendText];
     } else {
         [self sendFile];
+    }
+}
+
+- (IBAction)selectFile:(id)sender
+{
+    if (_isView == kTextViewController) {
+        return ;
+    }
+    
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    
+	[openPanel setTitle:@"Choose File"];
+	[openPanel setPrompt:@"Browse"];
+	[openPanel setNameFieldLabel:@"Choose a file:"];
+    
+    if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
+        _fileURL = [[openPanel URL] retain];//the path of your selected photo
+        NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
+        if (image != nil) {
+            [_dragFileController.imageView setImage:image];
+            [image release];   
+        }else {
+            NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
+            [_dragFileController.imageView setImage:quicklook];
+        }
     }
 }
 

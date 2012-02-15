@@ -43,7 +43,7 @@
 			<object class="NSWindowTemplate" id="1005">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{196, 240}, {480, 270}}</string>
+				<string key="NSWindowRect">{{196, 240}, {327, 59}}</string>
 				<int key="NSWTFlags">544735232</int>
 				<string key="NSWindowTitle">Preference</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -56,8 +56,8 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSTextField" id="641883847">
 							<reference key="NSNextResponder" ref="1006"/>
-							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{39, 152}, {95, 17}}</string>
+							<int key="NSvFlags">258</int>
+							<string key="NSFrame">{{12, 22}, {95, 17}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="618044272"/>
@@ -96,8 +96,8 @@
 						</object>
 						<object class="NSPopUpButton" id="618044272">
 							<reference key="NSNextResponder" ref="1006"/>
-							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{176, 146}, {161, 26}}</string>
+							<int key="NSvFlags">258</int>
+							<string key="NSFrame">{{149, 16}, {161, 26}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<string key="NSReuseIdentifierKey">_NS:868</string>
@@ -140,7 +140,7 @@
 							</object>
 						</object>
 					</object>
-					<string key="NSFrameSize">{480, 270}</string>
+					<string key="NSFrameSize">{327, 59}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="641883847"/>

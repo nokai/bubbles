@@ -8,6 +8,7 @@
 
 #import "TextViewController.h"
 
+
 @implementation TextViewController
 @synthesize textField = _textField;
 
@@ -20,9 +21,9 @@
     return self;
 }
 
-- (void)awakeFromNib
+- (BOOL)acceptsFirstResponder
 {
-    //[[_textField cell ]setScrollable:YES];
+    return YES;
 }
 
 - (void)dealloc
