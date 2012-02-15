@@ -329,12 +329,12 @@
     }
     _fileURL = [url retain];
     
-    NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
+    NSImage *image = [[NSImage alloc] initWithContentsOfURL:message.fileURL];
     if (image != nil) {
         [_dragFileController.imageView setImage:image];
         [image release];
     } else {
-        NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[url path] asIcon:YES];
+        NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[message.fileURL path] asIcon:YES];
         [_dragFileController.imageView setImage:quicklook];
     }
 }

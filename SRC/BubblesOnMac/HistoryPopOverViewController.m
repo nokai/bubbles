@@ -120,6 +120,9 @@
         [_fileHistoryTableView noteNumberOfRowsChanged];
         [_fileHistoryTableView reloadData];
     }
+    
+    // Wu:Force it to close
+    [_historyPopOver close];
 }
 
 #pragma mark - NSTableViewDataSource
