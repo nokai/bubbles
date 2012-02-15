@@ -42,6 +42,7 @@
 		C121949A14B5A9FC00159A9F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121949914B5A9FB00159A9F /* CFNetwork.framework */; };
 		C123285C14E3CFBF006968FE /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C123285B14E3CFBF006968FE /* ViewController_iPad.xib */; };
 		C123285E14E3CFE6006968FE /* PeersViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C123285D14E3CFE6006968FE /* PeersViewController_iPad.xib */; };
+		C133FAB514EBFBF4004E406B /* UIImage+Normalize.m in Sources */ = {isa = PBXBuildFile; fileRef = C133FAB414EBFBF4004E406B /* UIImage+Normalize.m */; };
 		C1393F0A14D90C83005AFEB6 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1393F0814D90C83005AFEB6 /* TextViewController.m */; };
 		C1393F0B14D90C83005AFEB6 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1393F0914D90C83005AFEB6 /* TextViewController.xib */; };
 		C1393F1C14D9165D005AFEB6 /* addfile.png in Resources */ = {isa = PBXBuildFile; fileRef = C1393F1214D9165D005AFEB6 /* addfile.png */; };
@@ -141,6 +142,8 @@
 		C123285B14E3CFBF006968FE /* ViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewController_iPad.xib; path = Bubbles/ViewController_iPad.xib; sourceTree = SOURCE_ROOT; };
 		C123285D14E3CFE6006968FE /* PeersViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeersViewController_iPad.xib; path = Bubbles/PeersViewController_iPad.xib; sourceTree = SOURCE_ROOT; };
 		C133FAAE14EBF2CD004E406B /* BubblesOnMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BubblesOnMac.entitlements; sourceTree = "<group>"; };
+		C133FAB314EBFBF4004E406B /* UIImage+Normalize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Normalize.h"; path = "Bubbles/UIImage+Normalize.h"; sourceTree = SOURCE_ROOT; };
+		C133FAB414EBFBF4004E406B /* UIImage+Normalize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Normalize.m"; path = "Bubbles/UIImage+Normalize.m"; sourceTree = SOURCE_ROOT; };
 		C1393F0714D90C83005AFEB6 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextViewController.h; path = Bubbles/TextViewController.h; sourceTree = SOURCE_ROOT; };
 		C1393F0814D90C83005AFEB6 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextViewController.m; path = Bubbles/TextViewController.m; sourceTree = SOURCE_ROOT; };
 		C1393F0914D90C83005AFEB6 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TextViewController.xib; path = Bubbles/TextViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -334,6 +337,7 @@
 		C121946914B591D700159A9F /* Bubbles */ = {
 			isa = PBXGroup;
 			children = (
+				C1393F1114D91621005AFEB6 /* Resources */,
 				C1E624D114BD940B0010F395 /* iPad */,
 				C1E624D014BD94020010F395 /* iPhone */,
 				C121946A14B591D700159A9F /* Supporting Files */,
@@ -357,6 +361,8 @@
 				C167CE1014E8F5CF00B419CD /* UIImage+Alpha.m */,
 				C167CE1114E8F5CF00B419CD /* UIImage+RoundedCorner.h */,
 				C167CE1214E8F5CF00B419CD /* UIImage+RoundedCorner.m */,
+				C133FAB314EBFBF4004E406B /* UIImage+Normalize.h */,
+				C133FAB414EBFBF4004E406B /* UIImage+Normalize.m */,
 				C167CE0B14E8F3A700B419CD /* UIImage+Resize.h */,
 				C167CE0C14E8F3A700B419CD /* UIImage+Resize.m */,
 				C1393F2614D91BBF005AFEB6 /* UINavigationBar+Custom.h */,
@@ -436,7 +442,6 @@
 		C1E624D014BD94020010F395 /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
-				C1393F1114D91621005AFEB6 /* Resources */,
 				C1CFCD2014B985D2008A1B1F /* ViewController.h */,
 				C1CFCD2114B985D2008A1B1F /* ViewController.m */,
 				C1CFCD1D14B985CC008A1B1F /* ViewController.xib */,
@@ -598,6 +603,7 @@
 				C167CE0D14E8F3A700B419CD /* UIImage+Resize.m in Sources */,
 				C167CE1314E8F5CF00B419CD /* UIImage+Alpha.m in Sources */,
 				C167CE1414E8F5CF00B419CD /* UIImage+RoundedCorner.m in Sources */,
+				C133FAB514EBFBF4004E406B /* UIImage+Normalize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "UIImage+Resize.h"
+#import "UIImage+Normalize.h"
 #import "PeersViewController.h"
 #import <MobileCoreServices/UTType.h>
 #import <MobileCoreServices/UTCoreTypes.h>
@@ -161,9 +162,9 @@
     if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
         UIImage *image = [_thumbnails objectForKey:fileURL.path];
         if (!image) {
-            image = [[[UIImage imageWithContentsOfFile:[fileURL path]] resizedImageWithContentMode:UIViewContentModeScaleAspectFill
-                                                                                            bounds:CGSizeMake(kTableViewCellHeight, kTableViewCellHeight)
-                                                                              interpolationQuality:kCGInterpolationHigh] 
+            image = [[[[UIImage imageWithContentsOfFile:[fileURL path]] normalize] resizedImageWithContentMode:UIViewContentModeScaleAspectFill
+                                                                                                        bounds:CGSizeMake(kTableViewCellHeight, kTableViewCellHeight)
+                                                                                          interpolationQuality:kCGInterpolationHigh] 
                      croppedImage:CGRectMake(0, 0, kTableViewCellHeight, kTableViewCellHeight)];
             [_thumbnails setObject:image forKey:fileURL.path];
         }

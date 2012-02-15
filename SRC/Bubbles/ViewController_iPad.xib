@@ -37,7 +37,7 @@
 				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 			</object>
 			<object class="IBUIBarButtonItem" id="193765355">
-				<string key="IBUITitle">Lock</string>
+				<string key="IBUITitle">Clear</string>
 				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 				<int key="IBUIStyle">1</int>
 			</object>
@@ -413,7 +413,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="_bar">UINavigationBar</string>
 						<string key="_clearButton">UIBarButtonItem</string>
-						<string key="_lockButton">UIButton</string>
+						<string key="_lockButton">UIBarButtonItem</string>
 						<string key="_messagesView">UITableView</string>
 						<string key="_segmentSwith">UISegmentedControl</string>
 					</dictionary>
@@ -428,7 +428,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="_lockButton">
 							<string key="name">_lockButton</string>
-							<string key="candidateClassName">UIButton</string>
+							<string key="candidateClassName">UIBarButtonItem</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_messagesView">
 							<string key="name">_messagesView</string>
