@@ -67,24 +67,25 @@
     NSTableColumn *column = [[_fileHistoryTableView tableColumns] objectAtIndex:0];
     [column setDataCell:_imageAndTextCell];
     
-    NSButtonCell *deleteCell = [[[NSButtonCell alloc]init]autorelease];
-    [deleteCell setBordered:NO];
-    [deleteCell setImage:[NSImage imageNamed:@"NSStopProgressFreestandingTemplate"]];
-    [deleteCell setImageScaling:NSImageScaleProportionallyDown];
-    [deleteCell setAction:@selector(deleteSelectedRow)];
-     NSTableColumn *columnTwo = [[_fileHistoryTableView tableColumns] objectAtIndex:1];
-    [columnTwo setDataCell:deleteCell];
-    
-    
     NSButtonCell *previewCell = [[[NSButtonCell alloc]init]autorelease];
     [previewCell setBordered:NO];
     [previewCell setImage:[NSImage imageNamed:@"NSRevealFreestandingTemplate"]];
     [previewCell setImageScaling:NSImageScaleProportionallyDown];
     [previewCell setAction:@selector(previewSelectedRow)];
     [previewCell setTitle:@""];
-    NSTableColumn *columnThree = [[_fileHistoryTableView tableColumns] objectAtIndex:2];
+   // [previewCell highlightsBy:NSContentsCellMask];
+    previewCell.highlightsBy = NSContentsCellMask;
+    NSTableColumn *columnThree = [[_fileHistoryTableView tableColumns] objectAtIndex:1];
     [columnThree setDataCell:previewCell];
     
+    NSButtonCell *deleteCell = [[[NSButtonCell alloc]init]autorelease];
+    [deleteCell setBordered:NO];
+    [deleteCell setImage:[NSImage imageNamed:@"NSStopProgressFreestandingTemplate"]];
+    [deleteCell setImageScaling:NSImageScaleProportionallyDown];
+    [deleteCell setAction:@selector(deleteSelectedRow)];
+    deleteCell.highlightsBy = NSContentsCellMask;
+    NSTableColumn *columnTwo = [[_fileHistoryTableView tableColumns] objectAtIndex:2];
+    [columnTwo setDataCell:deleteCell];
     
     // Wu:Set the tableview can accept being dragged from
     [_fileHistoryTableView registerForDraggedTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType,NSFilenamesPboardType,NSTIFFPboardType,nil]];
@@ -171,12 +172,12 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
 - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     WDMessage *message = [_fileHistoryArray objectAtIndex:row];
-    if (message .type == WDMessageTypeText && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:2])
+    if (message .type == WDMessageTypeText && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:1])
     {
         NSButtonCell *buttonCell = (NSButtonCell *)cell;
         [buttonCell setImagePosition:NSNoImage];
     }
-    else if (message .type == WDMessageTypeFile && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:2])
+    else if (message .type == WDMessageTypeFile && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:1])
     {
         NSButtonCell *buttonCell = (NSButtonCell *)cell;
         [buttonCell setImagePosition:NSImageOverlaps];
@@ -245,17 +246,17 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     WDMessage *message = [_fileHistoryArray objectAtIndex:selectedRow];
     if (message.type == WDMessageTypeText) {
         NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteSelectedRow) keyEquivalent:@""];
-        
         [menu addItem:deleteItem];
         [deleteItem release];
     } else {
-        NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteSelectedRow) keyEquivalent:@""];
-        [menu addItem:deleteItem];
-        [deleteItem release];
         
         NSMenuItem *previewItem = [[NSMenuItem alloc]initWithTitle:@"Preview" action:@selector(previewSelectedRow) keyEquivalent:@""];
         [menu addItem:previewItem];
         [previewItem release];
+        
+        NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteSelectedRow) keyEquivalent:@""];
+        [menu addItem:deleteItem];
+        [deleteItem release];
     }
     return menu;
 }
