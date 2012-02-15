@@ -188,7 +188,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
 
 - (NSImage *)previewIconForCell:(NSObject *)data
 {
-    DLog(@"previewIconForCell");
+    //DLog(@"previewIconForCell");
     WDMessage *message = (WDMessage *)data;
     if (message.type == WDMessageTypeText){
         return [NSImage imageNamed:@"swap"];
@@ -201,7 +201,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
 
 - (NSString *)primaryTextForCell:(NSObject *)data
 {
-    DLog(@"primaryTextForCell");
+    //DLog(@"primaryTextForCell");
     WDMessage *message = (WDMessage *)data;
     if (message.type == WDMessageTypeText){
         NSString *string = [[[NSString alloc]initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];

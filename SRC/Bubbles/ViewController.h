@@ -44,6 +44,7 @@ UISplitViewControllerDelegate> {
     // DW: UI
     NSMutableArray *_itemsToShow;
     NSMutableDictionary *_thumbnails; // DW: key is file url path
+    UIPopoverController *_popover;
     IBOutlet UISegmentedControl *_segmentSwith;
     IBOutlet UITableView *_messagesView;
     IBOutlet UIBarButtonItem *_lockButton;

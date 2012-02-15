@@ -300,13 +300,10 @@
     
     UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        UIPopoverController *pc = [[UIPopoverController alloc] initWithContentViewController:nv];
-        vc.popover = pc;
-        UIButton *b = (UIButton *)sender;
-        [pc presentPopoverFromRect:CGRectMake(0, 0, b.frame.size.width, 0)
-                            inView:b
-          permittedArrowDirections:UIPopoverArrowDirectionAny 
-                          animated:YES];
+        _popover = [[UIPopoverController alloc] initWithContentViewController:nv];
+        vc.popover = _popover;
+        UIBarButtonItem *b = (UIBarButtonItem *)sender;
+        [_popover presentPopoverFromBarButtonItem:b permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
         [self presentModalViewController:nv animated:YES];
     }
@@ -324,13 +321,9 @@
         t.delegate = self;
         
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            UIPopoverController *pc = [[UIPopoverController alloc] initWithContentViewController:t];
-            UIButton *b = (UIButton *)sender;
-            DLog(@"VC selectFile %@", b);
-            [pc presentPopoverFromRect:CGRectMake(0, 0, b.frame.size.width, 0)
-                                inView:b
-              permittedArrowDirections:UIPopoverArrowDirectionAny 
-                              animated:YES];
+            _popover = [[UIPopoverController alloc] initWithContentViewController:t];
+            UIBarButtonItem *b = (UIBarButtonItem *)sender;
+            [_popover presentPopoverFromBarButtonItem:b permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
         } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
             [self presentModalViewController:t animated:YES];
             [t release];
@@ -407,6 +400,11 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     DLog(@"VC didFinishPickingMediaWithInfo %@", info);
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [_popover dismissPopoverAnimated:YES];
+        [_popover release];
+    }
+    
     if (_fileURL) {
         [_fileURL release];
         _fileURL = nil;
@@ -423,7 +421,7 @@
         // 20120209 DW: we changed back to previous rule, store files selected from photo album to /Documents
         NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", 
                                                 [NSURL iOSDocumentsDirectoryURL], 
-                                                fileName]];
+                                                [fileName lowercaseString]]];
         storeURL = [storeURL URLWithoutNameConflict];
         if ([fileExtention isEqualToString:@"jpg"]) {
             fileData = UIImageJPEGRepresentation(image, 1.0);
@@ -461,6 +459,11 @@
 #pragma mark - TextViewControllerDelegate
 
 - (void)didFinishWithText:(NSString *)text {
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [_popover dismissPopoverAnimated:YES];
+        [_popover release];
+    }
+    
     WDMessage *t = [[WDMessage messageWithText:text] retain];
     [self storeMessage:t];
     [_bubble broadcastMessage:t];
