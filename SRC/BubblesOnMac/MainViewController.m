@@ -45,6 +45,14 @@
     }
 }
 
+- (void)initFirstResponder
+{
+    // Wu:Make the NSTextView as the first responder
+    AppDelegate *appDel = (AppDelegate *)[NSApp delegate];
+    [appDel.window makeFirstResponder:_textViewController.textField];
+    appDel.window.initialFirstResponder = _textViewController.textField;
+}
+
 - (void)loadUserPreference
 {
     /* if (_passwordController != nil) {
@@ -100,31 +108,6 @@
         [self storeMessage:t];
         [_bubble broadcastMessage:t];
     }   
-}
-
-- (void)selectFile
-{
-    if (_isView == kTextViewController) {
-        return ;
-    }
-    
-    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-    
-	[openPanel setTitle:@"Choose File"];
-	[openPanel setPrompt:@"Browse"];
-	[openPanel setNameFieldLabel:@"Choose a file:"];
-    
-    if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
-        _fileURL = [[openPanel URL] retain];//the path of your selected photo
-        NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
-        if (image != nil) {
-            [_dragFileController.imageView setImage:image];
-            [image release];   
-        }else {
-            NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
-            [_dragFileController.imageView setImage:quicklook];
-        }
-    }
 }
 
 #pragma mark - init & dealloc
@@ -189,6 +172,8 @@
      selector:@selector(delayNotification)
      name:@"NSWindowDidBecomeKeyNotification" object:nil];*/
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initFirstResponder) name:@"NSWindowDidBecomeKeyNotification" object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(servicesUpdated:) 
                                                  name:kWDBubbleNotificationServiceUpdated
@@ -208,8 +193,6 @@
     [_dragFileController.view setHidden:YES];
     
     _sendButton.stringValue = kButtonTitleSendText;
-    //_viewIndicator.stringValue = @"Bubbles Message";
-    
 }
 
 #pragma mark - IBActions
@@ -268,7 +251,9 @@
         //_viewIndicator.stringValue = @"Bubbles File";
         _sendButton.stringValue = kButtonTitleSendFile;
     } else {
-        
+        AppDelegate *appDel = (AppDelegate *)[NSApp delegate];
+        [appDel.window makeFirstResponder:_textViewController.textField];
+        appDel.window.initialFirstResponder = _textViewController.textField;
         [_toolBar removeItemAtIndex:kTooBarIndexOfSelectButton];
         _isView = kTextViewController;
         [_textViewController.view setHidden:NO withFade:YES];
@@ -290,10 +275,36 @@
 }
 
 - (IBAction)send:(id)sender {
+    
     if (_isView == kTextViewController) {
         [self sendText];
     } else {
         [self sendFile];
+    }
+}
+
+- (IBAction)selectFile:(id)sender
+{
+    if (_isView == kTextViewController) {
+        return ;
+    }
+    
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    
+	[openPanel setTitle:@"Choose File"];
+	[openPanel setPrompt:@"Browse"];
+	[openPanel setNameFieldLabel:@"Choose a file:"];
+    
+    if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
+        _fileURL = [[openPanel URL] retain];//the path of your selected photo
+        NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
+        if (image != nil) {
+            [_dragFileController.imageView setImage:image];
+            [image release];   
+        }else {
+            NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
+            [_dragFileController.imageView setImage:quicklook];
+        }
     }
 }
 

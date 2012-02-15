@@ -7,11 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "WUTextView.h"
 
 @interface TextViewController : NSViewController {
-    NSTextView *_textField;
+    WUTextView *_textField;
 }
 
-@property (nonatomic ,retain) IBOutlet NSTextView *textField;
+@property (nonatomic ,retain) IBOutlet WUTextView *textField;
 
 @end
