@@ -12,6 +12,7 @@
 // DW: user defaults
 #define kUserDefaultMacSavingPath   @"kUserDefaultMacSavingPath"
 #define kUserDefaultsUsePassword    @"kUserDefaultsUsePassword"
+#define kUserDefaultsShouldShowHelp     @"kUserDefaultsShouldShowHelp"
 
 // DW: network
 #define kWDBubbleWebServiceType @"_bubbles._tcp."

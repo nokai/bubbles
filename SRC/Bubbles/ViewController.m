@@ -202,12 +202,15 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-        HelpViewController *vc = [[[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil] autorelease];
-        [self.view addSubview:vc.view];
-    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        HelpViewController *vc = [[[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil] autorelease];
-        [[UIApplication sharedApplication].keyWindow addSubview:vc.view];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsShouldShowHelp]) {
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+            HelpViewController *vc = [[[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil] autorelease];
+            [self.view addSubview:vc.view];
+        } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            HelpViewController *vc = [[[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil] autorelease];
+            [[UIApplication sharedApplication].keyWindow addSubview:vc.view];
+        }
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsShouldShowHelp];
     }
     
     // DW: user defauts
