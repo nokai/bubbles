@@ -22,13 +22,13 @@
 - (NSURL *)URLWithRemoteChangedToLocal;
 - (NSURL *)URLWithoutNameConflict;
 @end
-   
+
 @protocol WDBubbleDelegate
 - (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text;
 - (void)didReceiveMessage:(WDMessage *)message ofFile:(NSURL *)url;
 @end
 
-@interface WDBubble : NSObject <AsyncSocketDelegate, NSNetServiceDelegate, NSNetServiceBrowserDelegate> {
+@interface WDBubble : NSObject <AsyncSocketDelegate, NSNetServiceDelegate, NSNetServiceBrowserDelegate, NSStreamDelegate> {
     // DW: Bonjour
     NSNetService    *_service;
     NSNetServiceBrowser *_browser;
@@ -44,6 +44,12 @@
     // DW: Message
     WDMessage *_currentMessage;
     NSMutableData *_dataBuffer;
+    
+    // DW: streamed file read and write
+    NSInteger _streamBytesRead;
+    NSMutableData *_streamDataBufferReader;
+    NSInputStream *_streamFileReader;
+    NSOutputStream *_streamFileWriter;
     
     // 20120114 DW: timer to check progress
     NSTimer *_timer;

@@ -323,7 +323,10 @@
 
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     //DLog(@"AsyncSocketDelegate didReadData %@: %@", sock, data);
-    [_dataBuffer appendData:data];
+    
+    // DW: we append and write data to file
+    //[_dataBuffer appendData:data];
+    
     
     [sock readDataToLength:[data length] withTimeout:-1 buffer:nil bufferOffset:0 tag:20];
     [sock readDataWithTimeout:kWDBubbleTimeOut tag:0];
@@ -344,9 +347,15 @@
     if (_socketsConnect.count > 0) {
         // DW: a sender
         
-        NSData *t = [NSKeyedArchiver archivedDataWithRootObject:_currentMessage];
-        [sock writeData:t withTimeout:kWDBubbleTimeOut tag:0];
+        //NSData *t = [NSKeyedArchiver archivedDataWithRootObject:_currentMessage];
+        //[sock writeData:t withTimeout:kWDBubbleTimeOut tag:0];
         //DLog(@"AsyncSocketDelegate didConnectToHost writing %@", t);
+        
+        _streamFileReader = [[NSInputStream alloc] initWithFileAtPath:_currentMessage.fileURL.path];
+        [_streamFileReader setDelegate:self];
+        [_streamFileReader scheduleInRunLoop:[NSRunLoop currentRunLoop]
+                                     forMode:NSDefaultRunLoopMode];
+        [_streamFileReader open];
     }
 }
 
@@ -424,6 +433,40 @@
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didFindDomain:(NSString *)domainName moreComing:(BOOL)moreDomainsComing {
     DLog(@"NSNetServiceBrowserDelegate didFindDomain %@", domainName);
+}
+
+#pragma mark - NSStreamDelegate
+
+- (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent {
+    switch(streamEvent) {
+        case NSStreamEventHasBytesAvailable: {
+            if(!_streamDataBufferReader) {
+                _streamDataBufferReader = [[NSMutableData data] retain];
+            }
+            uint8_t buf[1024];
+            unsigned int len = 0;
+            len = [(NSInputStream *)theStream read:buf maxLength:1024];
+            if(len) {
+                [_streamDataBufferReader appendBytes:(const void *)buf length:len];
+                // _streamBytesRead is an instance variable of type NSNumber.
+                //[_streamBytesRead setIntValue:[_streamBytesRead intValue]+len];
+                _streamBytesRead = _streamBytesRead+len;
+                
+                // DW: now we send these read data
+            } else {
+                NSLog(@"no buffer!");
+            }
+            break;
+        } case NSStreamEventEndEncountered: {
+            [_streamFileReader close];
+            [_streamFileReader removeFromRunLoop:[NSRunLoop currentRunLoop]
+                                         forMode:NSDefaultRunLoopMode];
+            [_streamFileReader release];
+            _streamFileReader = nil; // stream is ivar, so reinit it
+            break;
+        } default: {
+        }
+    }
 }
 
 @end
