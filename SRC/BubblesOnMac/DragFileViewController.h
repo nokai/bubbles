@@ -12,6 +12,8 @@
 @interface DragFileViewController : NSViewController
 {
     IBOutlet DragAndDropImageView *_imageView;
+    IBOutlet NSTextField *_label;
 }
 @property (nonatomic ,retain) IBOutlet DragAndDropImageView *imageView;
+@property (nonatomic ,assign) NSTextField *label;
 @end

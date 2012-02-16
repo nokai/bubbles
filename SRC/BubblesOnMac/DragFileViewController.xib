@@ -45,6 +45,7 @@
 						<string key="NSFrame">{{137, 72}, {102, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:3944</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="335095834">
@@ -105,6 +106,7 @@
 				<string key="NSFrameSize">{380, 189}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView" ref="40580171"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSImageView" id="227488032">
@@ -150,6 +152,14 @@
 						<reference key="destination" ref="40580171"/>
 					</object>
 					<int key="connectionID">25</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_label</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="576584475"/>
+					</object>
+					<int key="connectionID">26</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -246,7 +256,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">25</int>
+			<int key="maxID">26</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -263,12 +273,17 @@
 					<string key="superclassName">NSViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="_imageView">DragAndDropImageView</string>
+						<string key="_label">NSTextField</string>
 						<string key="imageView">DragAndDropImageView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="_imageView">
 							<string key="name">_imageView</string>
 							<string key="candidateClassName">DragAndDropImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_label">
+							<string key="name">_label</string>
+							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="imageView">
 							<string key="name">imageView</string>

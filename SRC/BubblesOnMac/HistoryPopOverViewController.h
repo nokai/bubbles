@@ -21,6 +21,8 @@
     NSMutableArray *_fileHistoryArray;
     
     ImageAndTextCell *_imageAndTextCell;
+    
+    IBOutlet NSButton *_removeButton;
 }
 
 @property (nonatomic ,retain) NSPopover *historyPopOver;

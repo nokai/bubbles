@@ -305,6 +305,8 @@
             NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
             [_dragFileController.imageView setImage:quicklook];
         }
+        
+        [_dragFileController.label setHidden:YES];
     }
 }
 
@@ -392,6 +394,7 @@
         [_fileURL release];
     }
     _fileURL = [url retain];
+    [_dragFileController.label setHidden:YES];
 }
 
 - (NSURL *)dataDraggedToSave

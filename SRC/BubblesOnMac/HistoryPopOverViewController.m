@@ -29,6 +29,9 @@
     if (0 <= [_fileHistoryTableView selectedRow] && [_fileHistoryTableView selectedRow] < [_fileHistoryArray count]) {
         [_fileHistoryArray removeObjectAtIndex:[_fileHistoryTableView selectedRow]];
     }
+    if ([_fileHistoryArray count] == 0) {
+        [_removeButton setHidden:YES];
+    }
     [_fileHistoryTableView reloadData];
 }
 
@@ -105,6 +108,12 @@
         _historyPopOver.delegate = self;
     }
     
+    if ([_fileHistoryArray count] != 0) {
+        [_removeButton setHidden:NO];
+    } else
+    {
+        [_removeButton setHidden:YES];
+    }
     // Wu:CGRectMaxXEdge means appear in the right of button
     [_historyPopOver showRelativeToRect:[attachedView bounds] ofView:attachedView preferredEdge:CGRectMinYEdge];
 }
@@ -123,6 +132,7 @@
     
     // Wu:Force it to close
     [_historyPopOver close];
+    
 }
 
 #pragma mark - NSTableViewDataSource
