@@ -40,7 +40,7 @@
     [[_savePathButton menu] addItem:[NSMenuItem separatorItem]];
     [_savePathButton addItemWithTitle:@"其他"];
     
-    [_toolBar setSelectedItemIdentifier:@"GeneralIdentifier"];
+    [_toolBar setSelectedItemIdentifier:kGeneralIdentifier];
 }
 
 - (void)windowDidLoad
@@ -85,7 +85,7 @@
 
 -(NSArray*) toolbarSelectableItemIdentifiers: (NSToolbar*)toolbar
 {
-	return [NSArray arrayWithObjects:@"GeneralIdentifier",nil];
+	return [NSArray arrayWithObjects:kGeneralIdentifier,nil];
 }
 
 
