@@ -20,6 +20,9 @@
 {
     _bubble = [[WDBubble alloc] init];
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+        self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+        
         ViewController *detailViewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
         UINavigationController *detailNavigationController = [[[UINavigationController alloc] initWithRootViewController:detailViewController] autorelease];
     	detailViewController.bubble = _bubble;
@@ -34,6 +37,7 @@
         self.splitViewController.viewControllers = [NSArray arrayWithObjects:masterNavigationController, detailNavigationController, nil];
         
         self.window.rootViewController = self.splitViewController;
+        [self.window makeKeyAndVisible];
     } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
         self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
@@ -45,7 +49,7 @@
         self.window.rootViewController = self.viewController;
         [self.window makeKeyAndVisible];
     }
-
+    
     return YES;
 }
 

@@ -74,6 +74,7 @@
 		C192663E14ECD7460090D8F7 /* help15.png in Resources */ = {isa = PBXBuildFile; fileRef = C192663914ECD7460090D8F7 /* help15.png */; };
 		C192664314ECD7820090D8F7 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C192664114ECD7820090D8F7 /* HelpViewController.m */; };
 		C192664414ECD7820090D8F7 /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C192664214ECD7820090D8F7 /* HelpViewController.xib */; };
+		C192665D14ECEB450090D8F7 /* HelpViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C192665C14ECEB450090D8F7 /* HelpViewController_iPad.xib */; };
 		C1C9371D14BB1766005E0EAA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1C9371B14BB1766005E0EAA /* InfoPlist.strings */; };
 		C1C9371F14BB1766005E0EAA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C9371E14BB1766005E0EAA /* main.m */; };
 		C1C9372314BB1766005E0EAA /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C1C9372114BB1766005E0EAA /* Credits.rtf */; };
@@ -194,6 +195,7 @@
 		C192664014ECD7820090D8F7 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpViewController.h; path = Bubbles/HelpViewController.h; sourceTree = SOURCE_ROOT; };
 		C192664114ECD7820090D8F7 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelpViewController.m; path = Bubbles/HelpViewController.m; sourceTree = SOURCE_ROOT; };
 		C192664214ECD7820090D8F7 /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpViewController.xib; path = Bubbles/HelpViewController.xib; sourceTree = SOURCE_ROOT; };
+		C192665C14ECEB450090D8F7 /* HelpViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpViewController_iPad.xib; path = Bubbles/HelpViewController_iPad.xib; sourceTree = SOURCE_ROOT; };
 		C1AC4D2F14D81DCC008FACE0 /* WDHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WDHeader.h; path = Bubbles/WDHeader.h; sourceTree = "<group>"; };
 		C1C9371014BB1766005E0EAA /* BubblesOnMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BubblesOnMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C9371A14BB1766005E0EAA /* BubblesOnMac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BubblesOnMac-Info.plist"; sourceTree = "<group>"; };
@@ -510,6 +512,7 @@
 			children = (
 				C123285B14E3CFBF006968FE /* ViewController_iPad.xib */,
 				C123285D14E3CFE6006968FE /* PeersViewController_iPad.xib */,
+				C192665C14ECEB450090D8F7 /* HelpViewController_iPad.xib */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -618,6 +621,7 @@
 				C192663D14ECD7460090D8F7 /* help14.png in Resources */,
 				C192663E14ECD7460090D8F7 /* help15.png in Resources */,
 				C192664414ECD7820090D8F7 /* HelpViewController.xib in Resources */,
+				C192665D14ECEB450090D8F7 /* HelpViewController_iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

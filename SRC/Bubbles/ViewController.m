@@ -202,8 +202,13 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    HelpViewController *vc = [[[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil] autorelease];
-    [self.view addSubview:vc.view];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+        HelpViewController *vc = [[[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil] autorelease];
+        [self.view addSubview:vc.view];
+    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        HelpViewController *vc = [[[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil] autorelease];
+        [[UIApplication sharedApplication].keyWindow addSubview:vc.view];
+    }
     
     // DW: user defauts
     NSDictionary *t = [NSDictionary dictionaryWithObject:@"NO" forKey:kUserDefaultsUsePassword];
