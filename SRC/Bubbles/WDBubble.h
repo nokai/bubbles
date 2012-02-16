@@ -37,7 +37,6 @@
     
     // DW: sockets
 	AsyncSocket *_socketListen;
-    //AsyncSocket *_socketConnect; // DW: the first connect socket, used to determine local or not
     AsyncSocket *_socketReceive;
     NSMutableArray *_socketsConnect;
     
@@ -46,27 +45,30 @@
     NSMutableData *_dataBuffer;
     
     // DW: streamed file read and write
+    // both side
+    NSURL *_currentFileURL; // DW: indicates sender is sending file
+    // sender side
+    BOOL _isWritingDataToSendingSocket;
     NSInteger _streamBytesRead;
-    NSMutableData *_streamDataBufferReader;
     NSInputStream *_streamFileReader;
+    NSMutableData *_streamDataBufferReader;
+    // receiver side
+    BOOL _isReceivingFile;  // DW: indicates receiver is receiving file
+    NSMutableArray *_receivedDataArray;
+    NSInteger _streamBytesIndex;
     NSOutputStream *_streamFileWriter;
+    NSMutableData *_streamDataBufferWriter;
     
     // 20120114 DW: timer to check progress
     NSTimer *_timer;
     
     // Wuziqi:Percentage of current exceution
-    
     float _pertangeIndicatior;
 }
 
 @property (nonatomic, retain) NSNetService *service;
-//@property (nonatomic, retain) NSNetServiceBrowser *browser;
-//@property (nonatomic, retain) NSString *netServiceType;
-//@property (nonatomic, retain) AsyncSocket *socketListen;
-//@property (nonatomic, retain) AsyncSocket *socketConnect;
 @property (nonatomic, retain) NSArray *servicesFound;
 @property (nonatomic, retain) id<WDBubbleDelegate> delegate;
-//@property (nonatomic, assign) float percentageIndicator;
 
 - (void)publishServiceWithPassword:(NSString *)pwd;
 - (void)browseServices;

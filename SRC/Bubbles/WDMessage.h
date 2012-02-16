@@ -10,9 +10,15 @@
 
 enum {
     WDMessageTypeText, 
-    WDMessageTypeFile
+    WDMessageTypeFile, 
+    WDMessageTypeControl
 };
 typedef NSUInteger WDMessageType;
+
+#define kWDMessageControlBegin  @"kWDMessageControlBegin"
+#define kWDMessageControlReady  @"kWDMessageControlReady"
+#define kWDMessageControlSend   @"kWDMessageControlSend"
+#define kWDMessageControlEnd    @"kWDMessageControlEnd"
 
 @interface WDMessage : NSObject <NSCoding,NSCopying> {
     NSString *_sender;
@@ -31,6 +37,7 @@ typedef NSUInteger WDMessageType;
 + (BOOL)isImageURL:(NSURL *)url;
 + (id)messageWithText:(NSString *)text;
 + (id)messageWithFile:(NSURL *)url;
++ (id)messageWithFile:(NSURL *)url andCommand:(NSString *)command;
 + (id)messageInfoFromMessage:(WDMessage *)message;
 
 @end

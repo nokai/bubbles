@@ -29,16 +29,26 @@
     WDMessage *m = [[[WDMessage alloc] init] autorelease];
     m.content = [text dataUsingEncoding:NSUTF8StringEncoding];
     m.type = WDMessageTypeText;
-    DLog(@"WDMessage messageWithText %@", m);
+    //DLog(@"WDMessage messageWithText %@", m);
     return m;
 }
 
 + (id)messageWithFile:(NSURL *)url {
     WDMessage *m = [[[WDMessage alloc] init] autorelease];
     m.fileURL = url;
+#ifdef TEMP_USE_OLD_WDBUBBLE
     m.content = [NSData dataWithContentsOfURL:url];
+#endif
     m.type = WDMessageTypeFile;
     //DLog(@"WDMessage messageWithFile %@", m);
+    return m;
+}
+
++ (id)messageWithFile:(NSURL *)url andCommand:(NSString *)command {
+    WDMessage *m = [[[WDMessage alloc] init] autorelease];
+    m.fileURL = url;
+    m.content = [command dataUsingEncoding:NSUTF8StringEncoding];
+    m.type = WDMessageTypeControl;
     return m;
 }
 
