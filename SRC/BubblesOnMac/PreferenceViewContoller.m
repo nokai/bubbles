@@ -38,7 +38,7 @@
     [_savePathButton addItemWithTitle:string];
     [[_savePathButton itemAtIndex:0] setImage:folderIcon];
     [[_savePathButton menu] addItem:[NSMenuItem separatorItem]];
-    [_savePathButton addItemWithTitle:@"其他"];
+    [_savePathButton addItemWithTitle:@"Other..."];
     
     [_toolBar setSelectedItemIdentifier:kGeneralIdentifier];
 }

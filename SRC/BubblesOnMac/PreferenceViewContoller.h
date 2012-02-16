@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "WDHeader.h"
 
-@interface PreferenceViewContoller : NSWindowController<NSToolbarDelegate>
+@interface PreferenceViewContoller : NSWindowController <NSToolbarDelegate>
 {
     IBOutlet NSPopUpButton *_savePathButton;
     IBOutlet NSToolbar *_toolBar;

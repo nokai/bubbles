@@ -123,7 +123,6 @@
 		037D71DF14C954530082FB64 /* PreferenceViewContoller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceViewContoller.h; sourceTree = "<group>"; };
 		037D71E014C954530082FB64 /* PreferenceViewContoller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceViewContoller.m; sourceTree = "<group>"; };
 		03861E6E14EC1E8000D9DBD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PreferenceViewController.xib; sourceTree = "<group>"; };
-		03861E7114EC22BD00D9DBD4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/PreferenceViewController.xib"; sourceTree = "<group>"; };
 		039C96D314E68BDD00BBEEC5 /* swap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swap.png; sourceTree = "<group>"; };
 		039C96D514E68D8500BBEEC5 /* bubbleBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubbleBackground.png; sourceTree = "<group>"; };
 		039C96D714E691FA00BBEEC5 /* bubbles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubbles.png; sourceTree = "<group>"; };
@@ -708,7 +707,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				03861E6E14EC1E8000D9DBD4 /* en */,
-				03861E7114EC22BD00D9DBD4 /* zh-Hans */,
 			);
 			name = PreferenceViewController.xib;
 			sourceTree = "<group>";
