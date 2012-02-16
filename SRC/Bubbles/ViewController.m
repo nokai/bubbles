@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "UIImage+Resize.h"
 #import "UIImage+Normalize.h"
+#import "HelpViewController.h"
 #import "PeersViewController.h"
 #import <MobileCoreServices/UTType.h>
 #import <MobileCoreServices/UTCoreTypes.h>
@@ -200,6 +201,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    HelpViewController *vc = [[[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil] autorelease];
+    [self.view addSubview:vc.view];
     
     // DW: user defauts
     NSDictionary *t = [NSDictionary dictionaryWithObject:@"NO" forKey:kUserDefaultsUsePassword];
