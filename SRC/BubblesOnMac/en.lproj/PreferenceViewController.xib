@@ -89,6 +89,7 @@
 									<int key="NSvFlags">258</int>
 									<string key="NSFrame">{{3, 14}, {43, 25}}</string>
 									<reference key="NSSuperview"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:687</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="850122634">
@@ -234,7 +235,7 @@
 							</object>
 						</object>
 					</object>
-					<object class="NSMutableArray" key="NSToolbarIBAllowedItems">
+					<object class="NSArray" key="NSToolbarIBAllowedItems">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<reference ref="979629474"/>
 						<reference ref="600988760"/>
@@ -263,7 +264,7 @@
 						<object class="NSTextField" id="641883847">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">258</int>
-							<string key="NSFrame">{{12, 22}, {95, 17}}</string>
+							<string key="NSFrame">{{10, 23}, {133, 17}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="618044272"/>
@@ -272,7 +273,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="1066776335">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">将文件保存到：</string>
+								<string key="NSContents">Save received file to:</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">STHeitiSC-Light</string>
 									<double key="NSSize">13</double>
@@ -303,7 +304,7 @@
 						<object class="NSPopUpButton" id="618044272">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">258</int>
-							<string key="NSFrame">{{149, 16}, {161, 26}}</string>
+							<string key="NSFrame">{{186, 16}, {106, 26}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView"/>
@@ -312,16 +313,16 @@
 							<object class="NSPopUpButtonCell" key="NSCell" id="108768705">
 								<int key="NSCellFlags">-2080244160</int>
 								<int key="NSCellFlags2">2048</int>
-								<object class="NSFont" key="NSSupport" id="484085169">
-									<string key="NSName">LucidaGrande</string>
-									<double key="NSSize">13</double>
-									<int key="NSfFlags">16</int>
-								</object>
+								<reference key="NSSupport" ref="683766336"/>
 								<string key="NSCellIdentifier">_NS:868</string>
 								<reference key="NSControlView" ref="618044272"/>
 								<int key="NSButtonFlags">-2034614017</int>
 								<int key="NSButtonFlags2">129</int>
-								<reference key="NSAlternateImage" ref="484085169"/>
+								<object class="NSFont" key="NSAlternateImage">
+									<string key="NSName">LucidaGrande</string>
+									<double key="NSSize">13</double>
+									<int key="NSfFlags">16</int>
+								</object>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">400</int>
@@ -587,7 +588,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">28</int>
+			<int key="maxID">40</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
