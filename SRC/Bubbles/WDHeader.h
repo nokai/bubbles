@@ -9,6 +9,8 @@
 #ifndef Bubbles_WDHeader_h
 #define Bubbles_WDHeader_h
 
+#define TEMP_USE_OLD_WDBUBBLE
+
 // DW: user defaults
 #define kUserDefaultMacSavingPath   @"kUserDefaultMacSavingPath"
 #define kUserDefaultsUsePassword    @"kUserDefaultsUsePassword"

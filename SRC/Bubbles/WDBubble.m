@@ -324,9 +324,10 @@
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     //DLog(@"AsyncSocketDelegate didReadData %@: %@", sock, data);
     
+#ifdef TEMP_USE_OLD_WDBUBBLE
     // DW: we append and write data to file
-    //[_dataBuffer appendData:data];
-    
+    [_dataBuffer appendData:data];
+#endif
     
     [sock readDataToLength:[data length] withTimeout:-1 buffer:nil bufferOffset:0 tag:20];
     [sock readDataWithTimeout:kWDBubbleTimeOut tag:0];
@@ -347,15 +348,17 @@
     if (_socketsConnect.count > 0) {
         // DW: a sender
         
-        //NSData *t = [NSKeyedArchiver archivedDataWithRootObject:_currentMessage];
-        //[sock writeData:t withTimeout:kWDBubbleTimeOut tag:0];
+#ifdef TEMP_USE_OLD_WDBUBBLE
+        NSData *t = [NSKeyedArchiver archivedDataWithRootObject:_currentMessage];
+        [sock writeData:t withTimeout:kWDBubbleTimeOut tag:0];
         //DLog(@"AsyncSocketDelegate didConnectToHost writing %@", t);
-        
+#else
         _streamFileReader = [[NSInputStream alloc] initWithFileAtPath:_currentMessage.fileURL.path];
         [_streamFileReader setDelegate:self];
         [_streamFileReader scheduleInRunLoop:[NSRunLoop currentRunLoop]
                                      forMode:NSDefaultRunLoopMode];
         [_streamFileReader open];
+#endif
     }
 }
 
@@ -444,9 +447,7 @@
                 _streamDataBufferReader = [[NSMutableData data] retain];
             }
             uint8_t buf[1024];
-            unsigned int len = 0;
-            
-            // DW: we have different conversions between Mac and iOS
+            NSUInteger len = 0;
             len = [(NSInputStream *)theStream read:buf maxLength:1024];
             if(len) {
                 [_streamDataBufferReader appendBytes:(const void *)buf length:len];
