@@ -131,15 +131,11 @@
 // DW: this deletes acutal documents and their referencing messages if they have
 - (void)deleteDocumentAndMessageInURL:(NSURL *)fileURL {      
     // DW: delete records in messages
-    for (WDMessage *m in _messages) {
+    // iterating and removing with a new array
+    NSArray *originalMessages = [NSArray arrayWithArray:_messages];
+    for (WDMessage *m in originalMessages) {
         if ([m.fileURL.path isEqualToString:fileURL.path]) {
-            // DW: when we find it, we delete it and return
-            
             [_messages removeObject:m];
-            [[NSFileManager defaultManager] removeItemAtPath:fileURL.path
-                                                       error:nil];
-            
-            return;
         }
     }
     
