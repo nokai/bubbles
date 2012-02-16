@@ -445,6 +445,8 @@
             }
             uint8_t buf[1024];
             unsigned int len = 0;
+            
+            // DW: we have different conversions between Mac and iOS
             len = [(NSInputStream *)theStream read:buf maxLength:1024];
             if(len) {
                 [_streamDataBufferReader appendBytes:(const void *)buf length:len];

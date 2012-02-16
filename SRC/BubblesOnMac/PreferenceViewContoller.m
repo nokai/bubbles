@@ -8,6 +8,8 @@
 
 #import "PreferenceViewContoller.h"
 
+#define kGeneralIdentifier @"GeneralIdentifier"
+
 @implementation PreferenceViewContoller
 
 - (id)init {
@@ -37,6 +39,8 @@
     [[_savePathButton itemAtIndex:0] setImage:folderIcon];
     [[_savePathButton menu] addItem:[NSMenuItem separatorItem]];
     [_savePathButton addItemWithTitle:@"其他"];
+    
+    [_toolBar setSelectedItemIdentifier:kGeneralIdentifier];
 }
 
 - (void)windowDidLoad
@@ -76,5 +80,14 @@
         }
     }
 }
+
+#pragma mark - NSToolbarItem
+
+-(NSArray*) toolbarSelectableItemIdentifiers: (NSToolbar*)toolbar
+{
+	return [NSArray arrayWithObjects:kGeneralIdentifier,nil];
+}
+
+
 
 @end

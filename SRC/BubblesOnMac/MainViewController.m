@@ -248,7 +248,6 @@
         _isView = kDragFileController;
         [_textViewController.view setHidden:YES withFade:YES];
         [_dragFileController.view setHidden:NO withFade:YES];
-        //_viewIndicator.stringValue = @"Bubbles File";
         _sendButton.stringValue = kButtonTitleSendFile;
     } else {
         AppDelegate *appDel = (AppDelegate *)[NSApp delegate];
