@@ -54,6 +54,7 @@
     NSMutableData *_streamDataBufferReader;
     // receiver side
     BOOL _isReceivingFile;  // DW: indicates receiver is receiving file
+    NSData *_sendersAddress;
     NSMutableArray *_receivedDataArray;
     NSInteger _streamBytesIndex;
     NSOutputStream *_streamFileWriter;

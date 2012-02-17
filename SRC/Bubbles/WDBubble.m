@@ -182,7 +182,7 @@
     //const struct sockaddr_in *a = (const struct sockaddr_in *)d;
     if (s.addresses.count <= 0)
         return;
-    [self connectService:[s.addresses objectAtIndex:0]];
+    [self connectAddress:[s.addresses objectAtIndex:0]];
 }
 
 - (void)timerCheckProgress:(NSTimer*)theTimer {
@@ -256,9 +256,6 @@
 
 - (void)broadcastMessage:(WDMessage *)msg {
     _currentMessage = [msg retain];
-    if (_currentMessage.type == WDMessageTypeControl) {
-        _currentFileURL = _currentMessage.fileURL;
-    }
     
     // DW: timer
     _timer = [[NSTimer scheduledTimerWithTimeInterval:-1 target:self selector:@selector(timerCheckProgress:) userInfo:nil repeats:YES] retain];
@@ -390,6 +387,9 @@
             [sock writeData:t withTimeout:kWDBubbleTimeOut tag:0];
         }
 #endif
+    } else {
+        // DW: a receiver
+        _sendersAddress = [sock.connectedAddress retain];
     }
 }
 
@@ -440,7 +440,8 @@
                     if (_currentMessage == nil) {
                         // DW: send back a ready control message
                         _currentMessage = [[WDMessage messageWithFile:nil andCommand:kWDMessageControlReady] retain];
-                        [self connectAddress:sock.connectedAddress];
+                        [self connectAddress:_sendersAddress];
+                        [_sendersAddress release];
                     }
                 } else if ([command isEqualToString:kWDMessageControlReady]) {
                     // DW: receiver is readly for the file, send it then
@@ -462,6 +463,12 @@
         }
     } else {
         // DW: a sending socket
+        
+        // DW: we store _currentFileURL here
+        if (_currentMessage.type == WDMessageTypeControl) {
+            _currentFileURL = _currentMessage.fileURL;
+        }
+        
         [_currentMessage release];
         _currentMessage = nil;
         [_socketsConnect removeObject:sock];

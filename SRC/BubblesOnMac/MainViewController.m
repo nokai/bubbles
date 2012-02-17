@@ -95,8 +95,12 @@
     if (_isView == kTextViewController || _fileURL == nil) {
         return ;
     }
+#ifdef TEMP_USE_OLD_WDBUBBLE
     WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
-    [self storeMessage:t];
+#else
+    WDMessage *t = [[WDMessage messageWithFile:_fileURL andCommand:kWDMessageControlBegin] retain];
+#endif
+    [self storeMessage:[WDMessage messageInfoFromMessage:t]];
     [_bubble broadcastMessage:t];
     [t release];  
 }
@@ -409,61 +413,61 @@
 // DW: we do not need these codes
 
 /*
-#pragma mark - NSToolBarDelegate
-
-- (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
-{
-    DLog(@"validateToolbarItem");
-    if ([[theItem itemIdentifier] isEqual: @"SelectItemIdentifier"]) {
-        return YES;
-    } else if ([[theItem itemIdentifier] isEqual:@"PasswordIdentifier"]) {
-        return YES;
-    } else if ([[theItem itemIdentifier] isEqual:@"HistoryIdentifier"]) {
-        return YES;
-    } else if ([[theItem itemIdentifier] isEqual:@"NetworkIdentifier"]) {
-        return YES;
-    }
-    return NO;
-}
-
-- (void) toolbarWillAddItem:(NSNotification *)notification {
-    NSToolbarItem *addedItem = [[notification userInfo] objectForKey: @"item"];
-    
-    if ([[addedItem itemIdentifier] isEqual: @"SelectItemIdentifier"]) {
-        DLog(@"kjhfkjsdhkjsdhfkjsdhf!!!!");
-    }
-}
-
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar {
-    return [NSArray arrayWithObjects:
-            @"PasswordIdentifier", NSToolbarFlexibleSpaceItemIdentifier,
-            @"HistoryIdentifier", @"NetworkIdentifier", nil];
-}
-
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar {
-    return [NSArray arrayWithObjects:
-            @"PasswordIdentifier",
-            NSToolbarFlexibleSpaceItemIdentifier,@"HistoryIdentifier", @"NetworkIdentifier", @"SelectItemIdentifier",nil];
-}
-*/
+ #pragma mark - NSToolBarDelegate
+ 
+ - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
+ {
+ DLog(@"validateToolbarItem");
+ if ([[theItem itemIdentifier] isEqual: @"SelectItemIdentifier"]) {
+ return YES;
+ } else if ([[theItem itemIdentifier] isEqual:@"PasswordIdentifier"]) {
+ return YES;
+ } else if ([[theItem itemIdentifier] isEqual:@"HistoryIdentifier"]) {
+ return YES;
+ } else if ([[theItem itemIdentifier] isEqual:@"NetworkIdentifier"]) {
+ return YES;
+ }
+ return NO;
+ }
+ 
+ - (void) toolbarWillAddItem:(NSNotification *)notification {
+ NSToolbarItem *addedItem = [[notification userInfo] objectForKey: @"item"];
+ 
+ if ([[addedItem itemIdentifier] isEqual: @"SelectItemIdentifier"]) {
+ DLog(@"kjhfkjsdhkjsdhfkjsdhf!!!!");
+ }
+ }
+ 
+ - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar {
+ return [NSArray arrayWithObjects:
+ @"PasswordIdentifier", NSToolbarFlexibleSpaceItemIdentifier,
+ @"HistoryIdentifier", @"NetworkIdentifier", nil];
+ }
+ 
+ - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar {
+ return [NSArray arrayWithObjects:
+ @"PasswordIdentifier",
+ NSToolbarFlexibleSpaceItemIdentifier,@"HistoryIdentifier", @"NetworkIdentifier", @"SelectItemIdentifier",nil];
+ }
+ */
 
 /*
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdent willBeInsertedIntoToolbar:(BOOL)willBeInserted {
-    // Required delegate method:  Given an item identifier, this method returns an item 
-    // The toolbar will use this method to obtain toolbar items that can be displayed in the customization sheet, or in the toolbar itself 
-    
-    DLog(@"itemForItemIdentifier");
-    NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdent] autorelease];
-    if ([[toolbarItem itemIdentifier] isEqual:@"SelectItemIdentifier"]) {
-        [toolbarItem setImage:[NSImage imageNamed:@"NSAddTemplate"]];
-        [toolbarItem setLabel:@"Select"];
-        [toolbarItem setPaletteLabel:@"Select"];
-        [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(selectFile)];
-    }
-    
-    return toolbarItem;
-}
-*/
+ - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdent willBeInsertedIntoToolbar:(BOOL)willBeInserted {
+ // Required delegate method:  Given an item identifier, this method returns an item 
+ // The toolbar will use this method to obtain toolbar items that can be displayed in the customization sheet, or in the toolbar itself 
+ 
+ DLog(@"itemForItemIdentifier");
+ NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdent] autorelease];
+ if ([[toolbarItem itemIdentifier] isEqual:@"SelectItemIdentifier"]) {
+ [toolbarItem setImage:[NSImage imageNamed:@"NSAddTemplate"]];
+ [toolbarItem setLabel:@"Select"];
+ [toolbarItem setPaletteLabel:@"Select"];
+ [toolbarItem setTarget:self];
+ [toolbarItem setAction:@selector(selectFile)];
+ }
+ 
+ return toolbarItem;
+ }
+ */
 
 @end
