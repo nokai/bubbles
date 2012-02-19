@@ -32,7 +32,7 @@ typedef NSUInteger WDMessageType;
 @property (nonatomic, retain) NSDate *time;
 @property (nonatomic, retain) NSURL *fileURL;
 @property (nonatomic, retain) NSData *content;
-@property (nonatomic, assign) NSUInteger type;
+@property (nonatomic, assign) WDMessageType type;
 
 + (BOOL)isImageURL:(NSURL *)url;
 + (id)messageWithText:(NSString *)text;

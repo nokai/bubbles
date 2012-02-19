@@ -178,11 +178,35 @@
 }
 
 - (void)connectService:(NSNetService *)s {
-    //const void *d = [[sender.addresses objectAtIndex:0] bytes];
-    //const struct sockaddr_in *a = (const struct sockaddr_in *)d;
+    // DW: update the state on every transfer
+    _isReceiver = NO;
+    if (_currentMessage.type == WDMessageTypeControl) {
+        NSString *command = [[NSString alloc] initWithData:_currentMessage.content encoding:NSUTF8StringEncoding];
+        if ([command isEqualToString:kWDMessageControlBegin]) {
+            _currentState = WDMessageStateFileBegin;
+        } else if ([command isEqualToString:kWDMessageControlReady]) {
+            _currentState = WDMessageStateFileReady;
+        }
+    } else {
+        _currentState = WDMessageStateText;
+    }
+    
     if (s.addresses.count <= 0)
         return;
     [self connectAddress:[s.addresses objectAtIndex:0]];
+}
+
+- (void)connectToServiceNamed:(NSString *)name {
+    for (NSNetService *s in self.servicesFound) {
+        if ([s.name isEqualToString:name]) {
+            if (s.addresses.count > 0) {
+                [self connectService:s];
+            } else {
+                [self resolveService:s];
+            }
+            break;
+        }
+    }
 }
 
 - (void)timerCheckProgress:(NSTimer*)theTimer {
@@ -202,6 +226,7 @@
         DLog(@"WDBubble initSocket");
         
         _currentMessage = nil;
+        _currentState = WDMessageStateText; // DW: text by default
         _currentFileURL = nil;
         _dataBuffer = nil;
         
@@ -309,17 +334,21 @@
 
 #pragma mark AsyncSocketDelegate
 
+// DW: it's always a receiver
 - (void)onSocket:(AsyncSocket *)sock didAcceptNewSocket:(AsyncSocket *)newSocket {
     DLog(@"AsyncSocketDelegate didAcceptNewSocket %@: %@", sock, newSocket);
     
     // DW: this "newSocket" is connected to remote's "socketSender", use it to read data then.
     // It is the very first place to read data.
+    _isReceiver = YES;
     _dataBuffer = [[NSMutableData alloc] init];
-    [newSocket readDataWithTimeout:kWDBubbleTimeOut tag:0];
+    _socketReceive = [newSocket retain];
+    [_socketReceive readDataWithTimeout:kWDBubbleTimeOut tag:0];
     
 #ifdef TEMP_USE_OLD_WDBUBBLE
 #else
-    if (_isReceivingFile) {
+    // DW: _currentState is always updated if it's transfering file
+    if (_currentState == WDMessageStateFileTransfering) {
         _streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:_currentFileURL.path append:YES];
         [_streamFileWriter setDelegate:self];
         [_streamFileWriter scheduleInRunLoop:[NSRunLoop currentRunLoop]
@@ -327,8 +356,6 @@
         [_streamFileWriter open];
     }
 #endif
-    
-    _socketReceive = [newSocket retain];
     //_timer = [[NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(timerCheckProgress:) userInfo:nil repeats:YES] retain];
     // [_timer fire];
 }
@@ -340,7 +367,7 @@
     // DW: we append and write data to file
     [_dataBuffer appendData:data];
 #else
-    if (_isReceivingFile) {
+    if (_currentState == WDMessageStateFileTransfering) {
         // DW: we are receiving file now
         if (!_receivedDataArray) {
             _receivedDataArray = [[NSMutableArray array] retain];
@@ -361,13 +388,11 @@
 }
 
 - (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port {
-    //DLog(@"AsyncSocketDelegate didConnectToHost %@ (l%@)", sock, _socketListen);
-    
     // DW: after connected, "socketSender" will send data.
-    //AsyncSocket *sc = [_socketsConnect objectAtIndex:0];
-    //DLog(@"AsyncSocketDelegate didConnectToHost IP %@ : %@", sock.localHost, sc.localHost);
-    //if ([sock.localHost isEqualToString:sc.localHost]) {
-    if (_socketsConnect.count > 0) {
+    
+    if (_isReceiver) {
+        // DW: a receiver
+    } else {
         // DW: a sender
         
 #ifdef TEMP_USE_OLD_WDBUBBLE
@@ -375,21 +400,24 @@
         [sock writeData:t withTimeout:kWDBubbleTimeOut tag:0];
         //DLog(@"AsyncSocketDelegate didConnectToHost writing %@", t);
 #else
-        if (_currentFileURL) {
-            // DW: we will send raw file data
-            _streamFileReader = [[NSInputStream alloc] initWithFileAtPath:_currentMessage.fileURL.path];
-            [_streamFileReader setDelegate:self];
-            [_streamFileReader scheduleInRunLoop:[NSRunLoop currentRunLoop]
-                                         forMode:NSDefaultRunLoopMode];
-            [_streamFileReader open];
-        } else {
-            NSData *t = [NSKeyedArchiver archivedDataWithRootObject:_currentMessage];
-            [sock writeData:t withTimeout:kWDBubbleTimeOut tag:0];
+        switch (_currentState) {
+            case WDMessageStateFileBegin:
+            case WDMessageStateFileReady:
+            case WDMessageStateText: {
+                // DW: text transfering
+                NSData *t = [NSKeyedArchiver archivedDataWithRootObject:_currentMessage];
+                [sock writeData:t withTimeout:kWDBubbleTimeOut tag:0];
+                break;
+            } case WDMessageStateFileTransfering: {
+                _streamFileReader = [[NSInputStream alloc] initWithFileAtPath:_currentMessage.fileURL.path];
+                [_streamFileReader setDelegate:self];
+                [_streamFileReader scheduleInRunLoop:[NSRunLoop currentRunLoop]
+                                             forMode:NSDefaultRunLoopMode];
+                [_streamFileReader open];
+            } default:
+                break;
         }
 #endif
-    } else {
-        // DW: a receiver
-        _sendersAddress = [sock.connectedAddress retain];
     }
 }
 
@@ -397,7 +425,7 @@
     DLog(@"AsyncSocketDelegate didWriteDataWithTag %@", sock);
     
     // DW: anyone of the two connected sockets call "disconnect" will disconnect the connection. XD
-    if (_currentFileURL) {
+    if (_currentState == WDMessageStateFileTransfering) {
         // DW: if is sending file, release reader data buffer first
         // disconnecting will be done later in stream delegate methods
         [_streamDataBufferReader release];
@@ -435,19 +463,18 @@
                 NSString *command = [[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding];
                 if ([command isEqualToString:kWDMessageControlBegin]) {
                     // DW: begin of a file transfer
-                    _isReceivingFile = YES;
+                    _currentState = WDMessageStateFileReady;
                     _currentFileURL = [t.fileURL retain];
                     if (_currentMessage == nil) {
                         // DW: send back a ready control message
-                        _currentMessage = [[WDMessage messageWithFile:nil andCommand:kWDMessageControlReady] retain];
-                        [self connectAddress:_sendersAddress];
-                        [_sendersAddress release];
+                        _currentMessage = [[WDMessage messageWithFile:t.fileURL andCommand:kWDMessageControlReady] retain];
+                        [self connectToServiceNamed:t.sender];
                     }
                 } else if ([command isEqualToString:kWDMessageControlReady]) {
                     // DW: receiver is readly for the file, send it then
+                    _currentState = WDMessageStateFileTransfering;
                     [self connectAddress:sock.connectedAddress];
                 } else if ([command isEqualToString:kWDMessageControlEnd]) {
-                    _isReceivingFile = NO;
                 }
             } else if (t.type == WDMessageTypeFile) {
                 NSURL *storeURL = [[t.fileURL URLWithRemoteChangedToLocal] URLWithoutNameConflict];
@@ -544,7 +571,7 @@
             if (!_receivedDataArray || _receivedDataArray.count <= 0) {
                 // DW: this will be the end of the NSOutputStream
                 DLog(@"WDBubble file receiving complete!");
-                _isReceivingFile = NO;
+                _currentState = WDMessageStateFileEnd;
                 [_currentFileURL release];
                 _currentFileURL = nil;
                 // DW: we can optionally tell the sender the receiving is complete
@@ -577,7 +604,7 @@
             if (_streamFileReader) {
                 [theStream close];
                 [theStream removeFromRunLoop:[NSRunLoop currentRunLoop]
-                                             forMode:NSDefaultRunLoopMode];
+                                     forMode:NSDefaultRunLoopMode];
                 [theStream release];
                 _streamFileReader = nil; // stream is ivar, so reinit it
             }
@@ -585,12 +612,12 @@
             if (_streamFileWriter) {
                 [theStream close];
                 [theStream removeFromRunLoop:[NSRunLoop currentRunLoop]
-                                  forMode:NSDefaultRunLoopMode];
+                                     forMode:NSDefaultRunLoopMode];
                 [theStream release];
                 _streamFileWriter = nil; // oStream is instance variable
                 break;
             }
-
+            
             break;
         } default: {
         }
