@@ -53,7 +53,7 @@
     [_helpPages release];
     [_helpPageControl release];
     
-    [super release];
+    [super dealloc];
 }
 
 #pragma mark - View lifecycle

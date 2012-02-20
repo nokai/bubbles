@@ -196,7 +196,7 @@
     [_directoryWatcher release];
     [_passwordViewController release];
     
-    [super release];
+    [super dealloc];
 }
 
 #pragma mark - View lifecycle

@@ -160,7 +160,7 @@
 #pragma mark - Private Methods
 
 - (void)dealloc {
-    
+    [super dealloc];
 }
 
 - (void)resolveService:(NSNetService *)s {

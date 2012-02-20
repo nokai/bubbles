@@ -90,7 +90,7 @@
     [_time release];
     [_sender release];
     
-    [super release];
+    [super dealloc];
 }
 
 #pragma mark - NSCoding

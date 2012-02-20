@@ -50,7 +50,7 @@
 
 - (void)dealloc {
     [_popover release];
-    [super release];
+    [super dealloc];
 }
 
 #pragma mark - View lifecycle

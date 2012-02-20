@@ -9,7 +9,7 @@
 #ifndef Bubbles_WDHeader_h
 #define Bubbles_WDHeader_h
 
-//#define TEMP_USE_OLD_WDBUBBLE
+#define TEMP_USE_OLD_WDBUBBLE
 
 // DW: user defaults
 #define kUserDefaultMacSavingPath   @"kUserDefaultMacSavingPath"

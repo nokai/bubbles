@@ -52,7 +52,7 @@
 
 - (void)dealloc
 {
-    [_savePathButton release];
+    [super dealloc];
 }
 
 #pragma mark - IBAction
