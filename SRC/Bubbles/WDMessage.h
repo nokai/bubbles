@@ -15,10 +15,12 @@ enum {
 };
 typedef NSUInteger WDMessageType;
 
-#define kWDMessageControlBegin  @"kWDMessageControlBegin"
-#define kWDMessageControlReady  @"kWDMessageControlReady"
-#define kWDMessageControlSend   @"kWDMessageControlSend"
-#define kWDMessageControlEnd    @"kWDMessageControlEnd"
+// DW: we use these keys as control commands as well as bubble states
+#define kWDMessageControlText           @"kWDMessageControlText"
+#define kWDMessageControlBegin          @"kWDMessageControlBegin"
+#define kWDMessageControlReady          @"kWDMessageControlReady"
+#define kWDMessageControlTransfering    @"kWDMessageControlTransfering"
+#define kWDMessageControlEnd            @"kWDMessageControlEnd"
 
 @interface WDMessage : NSObject <NSCoding,NSCopying> {
     NSString *_sender;

@@ -11,17 +11,6 @@
 #import "WDMessage.h"
 #import "WDHeader.h"
 
-enum {
-    // DW: always sender's states
-    WDMessageStateText, 
-    WDMessageStateFileBegin, 
-    WDMessageStateFileTransfering, 
-    WDMessageStateFileEnd, 
-    // DW: always receiver's states
-    WDMessageStateFileReady
-};
-typedef NSUInteger WDMessageState;
-
 @interface NSURL (Bubbles)
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 + (NSURL *)iOSDocumentsDirectoryURL;
@@ -56,13 +45,12 @@ typedef NSUInteger WDMessageState;
     NSMutableData *_dataBuffer;
     
     // DW: stating system
-    WDMessageState _currentState;
+    NSString *_currentState;
     BOOL _isReceiver;   // DW: whether it's a receiver or sender during a socket connection
     
     // DW: streamed file read and write
     NSURL *_currentFileURL; // DW: we do not use it to denote sender or receiver since they both have it set
     // sender side stream
-    BOOL _isWritingDataToSendingSocket;
     NSInteger _streamBytesRead;
     NSInputStream *_streamFileReader;
     NSMutableData *_streamDataBufferReader;

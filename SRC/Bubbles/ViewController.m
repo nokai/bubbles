@@ -173,7 +173,9 @@
     } else {
         if (fileURL) {
             UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
-            cell.imageView.image = [interactionController.icons objectAtIndex:0];
+            if (interactionController) {
+                cell.imageView.image = [interactionController.icons objectAtIndex:0];
+            }
             [interactionController release];
         } else {
             cell.imageView.image = [UIImage imageNamed:@"Icon"];
