@@ -46,24 +46,23 @@
     
     // DW: stating system
     NSString *_currentState;
-    BOOL _isReceiver;   // DW: whether it's a receiver or sender during a socket connection
+    BOOL _isReceiver;
+    // DW: whether it's a receiver or sender during a socket connection
     
     // DW: streamed file read and write
-    NSURL *_currentFileURL; // DW: we do not use it to denote sender or receiver since they both have it set
     // sender side stream
     NSInteger _streamBytesRead;
     NSInputStream *_streamFileReader;
     NSMutableData *_streamDataBufferReader;
     // receiver side stream
-    NSMutableArray *_receivedDataArray;
-    NSInteger _streamBytesIndex;
+    NSInteger _streamBytesWrote;
     NSOutputStream *_streamFileWriter;
     NSMutableData *_streamDataBufferWriter;
     
     // 20120114 DW: timer to check progress
     NSTimer *_timer;
     
-    // Wuziqi:Percentage of current exceution
+    // Wuziqi: Percentage of current exceution
     float _pertangeIndicatior;
 }
 

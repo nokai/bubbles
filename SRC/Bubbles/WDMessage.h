@@ -15,16 +15,16 @@ enum {
 };
 typedef NSUInteger WDMessageType;
 
-// DW: we use these keys as control commands as well as bubble states
+// DW: states actually
 #define kWDMessageControlText           @"kWDMessageControlText"
 #define kWDMessageControlBegin          @"kWDMessageControlBegin"
 #define kWDMessageControlReady          @"kWDMessageControlReady"
 #define kWDMessageControlTransfering    @"kWDMessageControlTransfering"
-#define kWDMessageControlEnd            @"kWDMessageControlEnd"
 
 @interface WDMessage : NSObject <NSCoding,NSCopying> {
     NSString *_sender;
     NSDate *_time;
+    NSString *_state;   // DW: state is used in file transfer
     NSURL *_fileURL;    // DW: available only in file type
     NSData *_content;
     NSUInteger _type;
@@ -32,6 +32,7 @@ typedef NSUInteger WDMessageType;
 
 @property (nonatomic, retain) NSString *sender;
 @property (nonatomic, retain) NSDate *time;
+@property (nonatomic, retain) NSString *state;
 @property (nonatomic, retain) NSURL *fileURL;
 @property (nonatomic, retain) NSData *content;
 @property (nonatomic, assign) WDMessageType type;
@@ -39,7 +40,10 @@ typedef NSUInteger WDMessageType;
 + (BOOL)isImageURL:(NSURL *)url;
 + (id)messageWithText:(NSString *)text;
 + (id)messageWithFile:(NSURL *)url;
-+ (id)messageWithFile:(NSURL *)url andCommand:(NSString *)command;
++ (id)messageWithFile:(NSURL *)url andState:(NSString *)state;
 + (id)messageInfoFromMessage:(WDMessage *)message;
+
+- (NSUInteger)fileSize;
+- (void)setFileSize:(NSUInteger)fileSize;
 
 @end

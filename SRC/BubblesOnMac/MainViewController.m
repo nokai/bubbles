@@ -95,11 +95,7 @@
     if (_isView == kTextViewController || _fileURL == nil) {
         return ;
     }
-#ifdef TEMP_USE_OLD_WDBUBBLE
     WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
-#else
-    WDMessage *t = [[WDMessage messageWithFile:_fileURL andCommand:kWDMessageControlBegin] retain];
-#endif
     [self storeMessage:[WDMessage messageInfoFromMessage:t]];
     [_bubble broadcastMessage:t];
     [t release];  

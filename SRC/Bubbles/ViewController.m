@@ -68,11 +68,7 @@
 - (void)sendFile {
     if (_fileURL) {
         // DW: a movie or JPG or PNG        
-#ifdef TEMP_USE_OLD_WDBUBBLE
         WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
-#else
-        WDMessage *t = [[WDMessage messageWithFile:_fileURL andCommand:kWDMessageControlBegin] retain];
-#endif
         [_bubble broadcastMessage:t];
         
         // DW: store message metadata without content data
