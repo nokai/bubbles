@@ -45,7 +45,6 @@
     NSMutableData *_dataBuffer;
     
     // DW: stating system
-    NSString *_currentState;
     BOOL _isReceiver;
     // DW: whether it's a receiver or sender during a socket connection
     
