@@ -77,7 +77,7 @@
 
 - (void)storeMessage:(WDMessage *)message
 {
-    DLog(@"storeMessage");
+    //DLog(@"storeMessage");
     [_historyPopOverController.fileHistoryArray addObject:message];
     [_historyPopOverController.fileHistoryArray sortUsingComparator:^NSComparisonResult(WDMessage *obj1, WDMessage * obj2) {
         if ([obj1.time compare:obj2.time] == NSOrderedAscending)

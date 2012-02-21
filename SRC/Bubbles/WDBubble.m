@@ -210,7 +210,6 @@
         DLog(@"WDBubble initSocket");
         
         _currentMessage = nil;
-        _currentMessage.state = kWDMessageControlText; // DW: text by default
         _dataBuffer = nil;
         
         // DW: accepts connections, creates new sockets to connect incoming sockets.
@@ -336,6 +335,8 @@
         [_streamFileWriter scheduleInRunLoop:[NSRunLoop currentRunLoop]
                                      forMode:NSDefaultRunLoopMode];
         [_streamFileWriter open];
+        
+        _streamBytesWrote = 0;
     } else {
         _dataBuffer = [[NSMutableData alloc] init];
     }
@@ -369,9 +370,10 @@
 }
 
 - (void)onSocket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err {
-    DLog(@"AsyncSocketDelegate willDisconnectWithError %@ %@: %@", _currentMessage.state,  sock, err);
+    if (err) {
+        DLog(@"AsyncSocketDelegate willDisconnectWithError %@: %@", _currentMessage.state, err);
+    }
     [sock readDataWithTimeout:kWDBubbleTimeOut tag:0];
-    _currentMessage.state = kWDMessageControlText;
 }
 
 - (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port {
@@ -395,6 +397,7 @@
             [_streamFileReader open];
             
             // DW: we reade and send instantly
+            _streamBytesRead = 0;
             [self readDataFromFile];
         } else {
             // DW: kWDMessageControlBegin, kWDMessageControlReady, kWDMessageControlText
@@ -426,47 +429,30 @@
         
         // DW: file receiving end
         if ([_currentMessage.state isEqualToString:kWDMessageControlReady]) {
-            _currentMessage.state = kWDMessageControlText;
             DLog(@"WDBubble onSocketDidDisconnect file transfer receiver ended with state %@", _currentMessage.state);
-            return;
-        }
-        
-        WDMessage *t = nil;
-        @try {
-            [_dataBuffer writeToFile:@"dataBuffer" atomically:YES];
-            t = [NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer];
-        }
-        @catch (NSException *exception) {
-            DLog(@"AsyncSocketDelegate onSocketDidDisconnect @catch %@", exception);
-            // DW: clean up
-            [_dataBuffer release];
-            _dataBuffer = nil;
-        }
-        @finally {
-            DLog(@"AsyncSocketDelegate onSocketDidDisconnect @finally");
-            if ((!t)||(!_dataBuffer))
-                return;
+            // DW: clean socket, "onDisconnect" is not reliable on file transfer
+            [self.delegate didReceiveMessage:[WDMessage messageWithFile:_currentMessage.fileURL] ofFile:_currentMessage.fileURL];
             
+            [_currentMessage release];
+            _currentMessage = nil;
+            return;
+        } else {
+            WDMessage *t = [NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer];
             if (t.type == WDMessageTypeText) {
-                [self.delegate didReceiveMessage:t ofText:[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding]];
+                [self.delegate didReceiveMessage:t ofText:[[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease]];
             } else if (t.type == WDMessageTypeControl) {
                 if ([t.state isEqualToString:kWDMessageControlBegin]) {
-                    DLog(@"WDBubble onSocketDidDisconnect kWDMessageControlBegin");
+                    DLog(@"WDBubble onSocketDidDisconnect %@ received kWDMessageControlBegin", _currentMessage.state);
                     // DW: begin of a file transfer
                     _currentMessage = [[WDMessage messageWithFile:t.fileURL andState:kWDMessageControlReady] retain];
                     _currentMessage.fileSize = t.fileSize;
                     [self connectToServiceNamed:t.sender];
                 } else if ([t.state isEqualToString:kWDMessageControlReady]) {
-                    DLog(@"WDBubble onSocketDidDisconnect kWDMessageControlReady");
+                    DLog(@"WDBubble onSocketDidDisconnect %@ received kWDMessageControlReady", _currentMessage.state);
                     // DW: receiver is readly for the file, send it then
                     _currentMessage.state = kWDMessageControlTransfering;
                     [self connectToServiceNamed:t.sender];
                 }
-            } else if (t.type == WDMessageTypeFile) {
-                NSURL *storeURL = [[t.fileURL URLWithRemoteChangedToLocal] URLWithoutNameConflict];
-                DLog(@"WDBubble onSocketDidDisconnect %@", storeURL.pathExtension);
-                [t.content writeToURL:storeURL atomically:YES];
-                [self.delegate didReceiveMessage:t ofFile:storeURL];
             }
             
             // DW: clean up
@@ -536,11 +522,8 @@
             //DLog(@"WDBubble NSStreamEventHasBytesAvailable wrote %@ to sock", [NSNumber numberWithInteger:len]);
         }
     } else {
-        DLog(@"WDBubble NSStreamEventHasBytesAvailable will end with %@ sent", [NSNumber numberWithInteger:_streamBytesRead]);
-        // DW: no buffer, we will disconnect now
-        for (AsyncSocket *sock in _socketsConnect) {
-            //[sock disconnectAfterReadingAndWriting];
-        }
+        DLog(@"WDBubble readDataFromFile will end with %@ sent", [NSNumber numberWithInteger:_streamBytesRead]);
+        _streamBytesRead = 0;
     }
 }
 
@@ -565,7 +548,22 @@
     
     _streamBytesWrote += bytesWrote;
     if (_streamBytesWrote >= _currentMessage.fileSize) {
-        [_socketReceive disconnectAfterReadingAndWriting];
+        // DW: file receiving is complete, we will disconnect
+        DLog(@"WDBubble writeDataToFile will end with %@ received", [NSNumber numberWithInteger:_streamBytesWrote]);
+        _streamBytesWrote = 0;
+        [_socketReceive disconnectAfterReading];
+        
+        // DW: clean stream
+        if (_streamFileWriter) {
+            [_streamFileWriter close];
+            [_streamFileWriter removeFromRunLoop:[NSRunLoop currentRunLoop]
+                                         forMode:NSDefaultRunLoopMode];
+            [_streamFileWriter release];
+            _streamFileWriter = nil; // oStream is instance variable
+            
+            // DW: receiver is complete
+            DLog(@"WDBubble writeDataToFile _streamFileWriter released");
+        }
     }
 }
 
@@ -581,7 +579,6 @@
                 _streamFileReader = nil; // stream is ivar, so reinit it
                 
                 // DW: sender is complete
-                _currentMessage.state = kWDMessageControlText;
                 DLog(@"WDBubble NSStreamEventEndEncountered _streamFileReader");
             }
             
@@ -593,7 +590,6 @@
                 _streamFileWriter = nil; // oStream is instance variable
                 
                 // DW: receiver is complete
-                _currentMessage.state = kWDMessageControlText;
                 DLog(@"WDBubble NSStreamEventEndEncountered _streamFileWriter");
             }
             break;
