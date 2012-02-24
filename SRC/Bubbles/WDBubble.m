@@ -527,6 +527,10 @@
     } else {
         DLog(@"WDBubble readDataFromFile will end with %@ sent", [NSNumber numberWithInteger:_streamBytesRead]);
         _streamBytesRead = 0;
+        // DW: now we send these read data
+        for (AsyncSocket *sock in _socketsConnect) {
+            [sock disconnectAfterWriting];
+        }
     }
 }
 
@@ -554,7 +558,7 @@
         // DW: file receiving is complete, we will disconnect
         DLog(@"WDBubble writeDataToFile will end with %@ received", [NSNumber numberWithInteger:_streamBytesWrote]);
         _streamBytesWrote = 0;
-        [_socketReceive disconnectAfterReading];
+        //[_socketReceive disconnectAfterReading];
         
         // DW: clean stream
         if (_streamFileWriter) {
