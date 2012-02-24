@@ -443,7 +443,7 @@
             WDMessage *t = [NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer];
             if (t.type == WDMessageTypeText) {
                 [self.delegate didReceiveMessage:t ofText:[[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease]];
-            } else if (t.type == WDMessageTypeControl) {
+            } else if (t.type == WDMessageTypeFile) {
                 if ([t.state isEqualToString:kWDMessageControlBegin]) {
                     DLog(@"WDBubble onSocketDidDisconnect %@ received kWDMessageControlBegin", _currentMessage.state);
                     // DW: begin of a file transfer

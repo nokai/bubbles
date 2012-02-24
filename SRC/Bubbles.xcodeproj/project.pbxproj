@@ -24,8 +24,6 @@
 		037D71E114C954530082FB64 /* PreferenceViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 037D71E014C954530082FB64 /* PreferenceViewContoller.m */; };
 		03861E6D14EC1E8000D9DBD4 /* PreferenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03861E6F14EC1E8000D9DBD4 /* PreferenceViewController.xib */; };
 		039C96D414E68BDD00BBEEC5 /* swap.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C96D314E68BDD00BBEEC5 /* swap.png */; };
-		039C96D614E68D8500BBEEC5 /* bubbleBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C96D514E68D8500BBEEC5 /* bubbleBackground.png */; };
-		039C96D814E691FA00BBEEC5 /* bubbles.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C96D714E691FA00BBEEC5 /* bubbles.png */; };
 		03A80DE014E97BB3006C77D8 /* TransparentTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A80DDF14E97BB3006C77D8 /* TransparentTableView.m */; };
 		03A8878C14E2A272008CA643 /* DragFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A8878A14E2A272008CA643 /* DragFileViewController.m */; };
 		03A8878D14E2A272008CA643 /* DragFileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03A8878B14E2A272008CA643 /* DragFileViewController.xib */; };
@@ -132,8 +130,6 @@
 		037D71E014C954530082FB64 /* PreferenceViewContoller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceViewContoller.m; sourceTree = "<group>"; };
 		03861E6E14EC1E8000D9DBD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PreferenceViewController.xib; sourceTree = "<group>"; };
 		039C96D314E68BDD00BBEEC5 /* swap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swap.png; sourceTree = "<group>"; };
-		039C96D514E68D8500BBEEC5 /* bubbleBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubbleBackground.png; sourceTree = "<group>"; };
-		039C96D714E691FA00BBEEC5 /* bubbles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubbles.png; sourceTree = "<group>"; };
 		03A80DDE14E97BB3006C77D8 /* TransparentTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransparentTableView.h; sourceTree = "<group>"; };
 		03A80DDF14E97BB3006C77D8 /* TransparentTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransparentTableView.m; sourceTree = "<group>"; };
 		03A8878914E2A272008CA643 /* DragFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragFileViewController.h; sourceTree = "<group>"; };
@@ -279,8 +275,6 @@
 				0378FCF014F601620044A43B /* history.png */,
 				0378FCF114F601620044A43B /* peers.png */,
 				0378FCF214F601620044A43B /* send.png */,
-				039C96D714E691FA00BBEEC5 /* bubbles.png */,
-				039C96D514E68D8500BBEEC5 /* bubbleBackground.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -655,8 +649,6 @@
 				032A05C414E39F5B005C4F6E /* HistoryPopOverViewController.xib in Resources */,
 				032A05CA14E3A525005C4F6E /* NetworkFoundPopOverViewController.xib in Resources */,
 				039C96D414E68BDD00BBEEC5 /* swap.png in Resources */,
-				039C96D614E68D8500BBEEC5 /* bubbleBackground.png in Resources */,
-				039C96D814E691FA00BBEEC5 /* bubbles.png in Resources */,
 				0378FCF314F601620044A43B /* add txt.png in Resources */,
 				0378FCF414F601620044A43B /* history.png in Resources */,
 				0378FCF514F601620044A43B /* peers.png in Resources */,

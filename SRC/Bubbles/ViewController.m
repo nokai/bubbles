@@ -712,7 +712,7 @@
     } else if ([buttonTitle isEqualToString:kActionSheetButtonPreview]) {
         UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:message.fileURL] retain];
         interactionController.delegate = self;
-        DLog(@"VC clickedButtonAtIndex present %i", [interactionController presentPreviewAnimated:YES]);
+        [interactionController presentPreviewAnimated:YES];
     } else if ([buttonTitle isEqualToString:kActionSheetButtonSave]) {
         UIImage *image = [UIImage imageWithContentsOfFile:message.fileURL.path];
         if (image) {

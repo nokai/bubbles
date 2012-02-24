@@ -10,8 +10,7 @@
 
 enum {
     WDMessageTypeText, 
-    WDMessageTypeFile, 
-    WDMessageTypeControl
+    WDMessageTypeFile
 };
 typedef NSUInteger WDMessageType;
 

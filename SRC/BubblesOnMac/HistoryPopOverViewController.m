@@ -211,7 +211,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
         NSButtonCell *buttonCell = (NSButtonCell *)cell;
         [buttonCell setImagePosition:NSNoImage];
     }
-    else if (message .type == WDMessageTypeFile && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:1])
+    else if (message.type == WDMessageTypeFile && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:1])
     {
         NSButtonCell *buttonCell = (NSButtonCell *)cell;
         [buttonCell setImagePosition:NSImageOverlaps];
