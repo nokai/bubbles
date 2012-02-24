@@ -14,6 +14,19 @@
 
 NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 
+#pragma mark - private method
+
+- (NSString *)escapedStringFromURL:(NSURL *)aURL
+{
+    // Wu:In case the url contains unicode string
+    NSString *lastComponents = [NSString stringWithString:[aURL lastPathComponent]];
+    NSString *unescapedString = [lastComponents stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *escapedString = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)unescapedString, NULL, NULL, kCFStringEncodingUTF8);
+    return [escapedString autorelease];
+}
+
+#pragma mark - Lifecycle
+
 - (id)initWithCoder:(NSCoder *)coder
 {
     self=[super initWithCoder:coder];
@@ -30,8 +43,6 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     [self unregisterDraggedTypes];
     [super dealloc];
 }
-
-
 
 #pragma mark - Destination Operations : Allow for drag in
 
@@ -156,12 +167,21 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     if (draggedDataURL == nil) {
         return nil;
     }
-
+    
+       
     NSURL *newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
                                                   dropDestination.path, 
                                                   [draggedDataURL.lastPathComponent stringByReplacingOccurrencesOfString:@" " 
                                                                                                               withString:@"%20"]]];
-    newURL = [newURL URLWithoutNameConflict];
+    if (newURL == nil) {
+        NSString *escapedString = [self escapedStringFromURL:draggedDataURL];
+        newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
+                                       dropDestination.path, 
+                                       [escapedString stringByReplacingOccurrencesOfString:@" " 
+                                                                                                   withString:@"%20"]]];
+    } else {
+        newURL = [newURL URLWithoutNameConflict];
+    }
     NSData *data = [NSData dataWithContentsOfURL:draggedDataURL];
     [[NSFileManager defaultManager] createFileAtPath:newURL.path contents:data attributes:nil];
     
