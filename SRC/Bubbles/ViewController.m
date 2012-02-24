@@ -153,31 +153,33 @@
 }
 
 - (void)fillCell:(UITableViewCell *)cell withFileURL:(NSURL *)fileURL {
-    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (CFStringRef)fileURL.pathExtension, NULL);
-    
-    if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-        UIImage *image = [_thumbnails objectForKey:fileURL.path];
+    // DW: we now cache all image files
+    UIImage *image = [_thumbnails objectForKey:fileURL.path];
+    if (!image) {
+        // DW: firstly try image
+        image = [[[[UIImage imageWithContentsOfFile:[fileURL path]] normalize] resizedImageWithContentMode:UIViewContentModeScaleAspectFill
+                                                                                                    bounds:CGSizeMake(kTableViewCellHeight, kTableViewCellHeight)
+                                                                                      interpolationQuality:kCGInterpolationHigh] 
+                 croppedImage:CGRectMake(0, 0, kTableViewCellHeight, kTableViewCellHeight)];
         if (!image) {
-            image = [[[[UIImage imageWithContentsOfFile:[fileURL path]] normalize] resizedImageWithContentMode:UIViewContentModeScaleAspectFill
-                                                                                                        bounds:CGSizeMake(kTableViewCellHeight, kTableViewCellHeight)
-                                                                                          interpolationQuality:kCGInterpolationHigh] 
-                     croppedImage:CGRectMake(0, 0, kTableViewCellHeight, kTableViewCellHeight)];
-            [_thumbnails setObject:image forKey:fileURL.path];
-        }
-        cell.imageView.image = image;
-    } else {
-        if (fileURL) {
-            UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
-            if (interactionController) {
-                cell.imageView.image = [interactionController.icons objectAtIndex:0];
+            // DW: secondly a normal file
+            if (fileURL) {
+                UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
+                if (interactionController && interactionController.icons.count > 0) {
+                    image = [interactionController.icons objectAtIndex:0];
+                } else {
+                    image = [UIImage imageNamed:@"Icon"];
+                }
+                [interactionController release];
+            } else {
+                image = [UIImage imageNamed:@"Icon"];
             }
-            [interactionController release];
-        } else {
-            cell.imageView.image = [UIImage imageNamed:@"Icon"];
         }
+        
+        // DW: finally we get a good image to show and cache
+        cell.imageView.image = image;
+        [_thumbnails setObject:image forKey:fileURL.path];
     }
-    
-    CFRelease(fileUTI);
 }
 
 - (void)didReceiveMemoryWarning
