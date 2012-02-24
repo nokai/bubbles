@@ -13,6 +13,7 @@
 
 #import "WDBubble.h"
 #import "DirectoryWatcher.h"
+#import "HelpViewController.h"
 #import "PasswordViewController.h"
 #import "TextViewController.h"
 
@@ -53,6 +54,9 @@ UISplitViewControllerDelegate> {
     
     // DW: password
     PasswordViewController *_passwordViewController;
+    
+    // DW: help
+    HelpViewController *_helpViewController;
 }
 
 @property (nonatomic, retain) WDBubble *bubble;

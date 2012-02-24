@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import "UIImage+Resize.h"
 #import "UIImage+Normalize.h"
-#import "HelpViewController.h"
 #import "PeersViewController.h"
 #import <MobileCoreServices/UTType.h>
 #import <MobileCoreServices/UTCoreTypes.h>
@@ -193,6 +192,7 @@
     [_documents release];
     [_directoryWatcher release];
     [_passwordViewController release];
+    [_helpViewController release];
     
     [super dealloc];
 }
@@ -206,13 +206,12 @@
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsShouldShowHelp]) {
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-            HelpViewController *vc = [[[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil] autorelease];
-            [self.view addSubview:vc.view];
+            _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil];
+            [self.view addSubview:_helpViewController.view];
         } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            HelpViewController *vc = [[[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil] autorelease];
-            [[UIApplication sharedApplication].keyWindow addSubview:vc.view];
+            _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil];
+            [[UIApplication sharedApplication].keyWindow addSubview:_helpViewController.view];
         }
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsShouldShowHelp];
     }
     
     // DW: user defauts

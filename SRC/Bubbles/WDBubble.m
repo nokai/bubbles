@@ -154,6 +154,9 @@
 #pragma mark - Private Methods
 
 - (void)dealloc {
+    [_socketListen release];
+    [_socketsConnect release];
+    
     [super dealloc];
 }
 
