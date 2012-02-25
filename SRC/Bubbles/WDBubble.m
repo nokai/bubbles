@@ -333,7 +333,8 @@
 #else
     // DW: _currentMessage.state is always updated if it's transfering file
     if ([_currentMessage.state isEqualToString:kWDMessageControlReady]) {
-        _streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:[[_currentMessage.fileURL URLWithRemoteChangedToLocal] URLWithoutNameConflict].path  append:YES];
+        _currentMessage.fileURL = [[_currentMessage.fileURL URLWithRemoteChangedToLocal] URLWithoutNameConflict];
+        _streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:_currentMessage.fileURL.path  append:YES];
         [_streamFileWriter setDelegate:self];
         [_streamFileWriter scheduleInRunLoop:[NSRunLoop currentRunLoop]
                                      forMode:NSDefaultRunLoopMode];
