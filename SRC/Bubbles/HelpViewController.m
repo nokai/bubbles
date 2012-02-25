@@ -7,6 +7,7 @@
 //
 
 #import "HelpViewController.h"
+#import "WDHeader.h"
 
 #define kNumberOfPages  5
 
@@ -126,6 +127,7 @@
     // DW: quit on last scroll
     if (page >= kNumberOfPages-1) {
         [self.view removeFromSuperview];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsShouldShowHelp];
     }
     // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
     //[self loadScrollViewWithPage:page - 1];

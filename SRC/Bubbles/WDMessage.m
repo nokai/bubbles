@@ -54,7 +54,7 @@
     // DW: content will be file size
     NSUInteger fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:m.fileURL.path error:nil] fileSize]; 
     m.content = [NSData dataWithBytes:&fileSize length:sizeof(fileSize)];
-    m.type = WDMessageTypeControl;
+    m.type = WDMessageTypeFile;
     return m;
 }
 

@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import "UIImage+Resize.h"
 #import "UIImage+Normalize.h"
-#import "HelpViewController.h"
 #import "PeersViewController.h"
 #import <MobileCoreServices/UTType.h>
 #import <MobileCoreServices/UTCoreTypes.h>
@@ -130,7 +129,10 @@
 }
 
 // DW: this deletes acutal documents and their referencing messages if they have
-- (void)deleteDocumentAndMessageInURL:(NSURL *)fileURL {      
+- (void)deleteDocumentAndMessageInURL:(NSURL *)fileURL {
+    // DW: delete cached thumbnail
+    [_thumbnails removeObjectForKey:fileURL.path];
+    
     // DW: delete records in messages
     // iterating and removing with a new array
     NSArray *originalMessages = [NSArray arrayWithArray:_messages];
@@ -154,31 +156,33 @@
 }
 
 - (void)fillCell:(UITableViewCell *)cell withFileURL:(NSURL *)fileURL {
-    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (CFStringRef)fileURL.pathExtension, NULL);
-    
-    if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-        UIImage *image = [_thumbnails objectForKey:fileURL.path];
+    // DW: we now cache all image files
+    UIImage *image = [_thumbnails objectForKey:fileURL.path];
+    if (!image) {
+        // DW: firstly try image
+        image = [[[[UIImage imageWithContentsOfFile:[fileURL path]] normalize] resizedImageWithContentMode:UIViewContentModeScaleAspectFill
+                                                                                                    bounds:CGSizeMake(kTableViewCellHeight, kTableViewCellHeight)
+                                                                                      interpolationQuality:kCGInterpolationHigh] 
+                 croppedImage:CGRectMake(0, 0, kTableViewCellHeight, kTableViewCellHeight)];
         if (!image) {
-            image = [[[[UIImage imageWithContentsOfFile:[fileURL path]] normalize] resizedImageWithContentMode:UIViewContentModeScaleAspectFill
-                                                                                                        bounds:CGSizeMake(kTableViewCellHeight, kTableViewCellHeight)
-                                                                                          interpolationQuality:kCGInterpolationHigh] 
-                     croppedImage:CGRectMake(0, 0, kTableViewCellHeight, kTableViewCellHeight)];
-            [_thumbnails setObject:image forKey:fileURL.path];
-        }
-        cell.imageView.image = image;
-    } else {
-        if (fileURL) {
-            UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
-            if (interactionController) {
-                cell.imageView.image = [interactionController.icons objectAtIndex:0];
+            // DW: secondly a normal file
+            if (fileURL) {
+                UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
+                if (interactionController && interactionController.icons.count > 0) {
+                    image = [interactionController.icons objectAtIndex:0];
+                } else {
+                    image = [UIImage imageNamed:@"Icon"];
+                }
+                [interactionController release];
+            } else {
+                image = [UIImage imageNamed:@"Icon"];
             }
-            [interactionController release];
-        } else {
-            cell.imageView.image = [UIImage imageNamed:@"Icon"];
         }
+        
+        // DW: finally we get a good image to show and cache
+        [_thumbnails setObject:image forKey:fileURL.path];
     }
-    
-    CFRelease(fileUTI);
+    cell.imageView.image = image;
 }
 
 - (void)didReceiveMemoryWarning
@@ -193,6 +197,7 @@
     [_documents release];
     [_directoryWatcher release];
     [_passwordViewController release];
+    [_helpViewController release];
     
     [super dealloc];
 }
@@ -206,13 +211,12 @@
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsShouldShowHelp]) {
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-            HelpViewController *vc = [[[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil] autorelease];
-            [self.view addSubview:vc.view];
+            _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil];
+            [self.view addSubview:_helpViewController.view];
         } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            HelpViewController *vc = [[[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil] autorelease];
-            [[UIApplication sharedApplication].keyWindow addSubview:vc.view];
+            _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil];
+            [[UIApplication sharedApplication].keyWindow addSubview:_helpViewController.view];
         }
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsShouldShowHelp];
     }
     
     // DW: user defauts
@@ -711,7 +715,7 @@
     } else if ([buttonTitle isEqualToString:kActionSheetButtonPreview]) {
         UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:message.fileURL] retain];
         interactionController.delegate = self;
-        DLog(@"VC clickedButtonAtIndex present %i", [interactionController presentPreviewAnimated:YES]);
+        [interactionController presentPreviewAnimated:YES];
     } else if ([buttonTitle isEqualToString:kActionSheetButtonSave]) {
         UIImage *image = [UIImage imageWithContentsOfFile:message.fileURL.path];
         if (image) {
@@ -774,6 +778,7 @@
 #pragma mark - DirectoryWatcherDelegate
 
 - (void)directoryDidChange:(DirectoryWatcher *)directoryWatcher {
+    [_thumbnails removeAllObjects];
 	[_documents removeAllObjects];    // clear out the old docs and start over
     
     [_documents addObjectsFromArray:[[NSFileManager defaultManager] contentsOfDirectoryAtURL:[NSURL iOSDocumentsDirectoryURL] 

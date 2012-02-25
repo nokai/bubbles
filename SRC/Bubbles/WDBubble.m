@@ -154,6 +154,9 @@
 #pragma mark - Private Methods
 
 - (void)dealloc {
+    [_socketListen release];
+    [_socketsConnect release];
+    
     [super dealloc];
 }
 
@@ -330,7 +333,8 @@
 #else
     // DW: _currentMessage.state is always updated if it's transfering file
     if ([_currentMessage.state isEqualToString:kWDMessageControlReady]) {
-        _streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:[[_currentMessage.fileURL URLWithRemoteChangedToLocal] URLWithoutNameConflict].path  append:YES];
+        _currentMessage.fileURL = [[_currentMessage.fileURL URLWithRemoteChangedToLocal] URLWithoutNameConflict];
+        _streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:_currentMessage.fileURL.path  append:YES];
         [_streamFileWriter setDelegate:self];
         [_streamFileWriter scheduleInRunLoop:[NSRunLoop currentRunLoop]
                                      forMode:NSDefaultRunLoopMode];
@@ -440,7 +444,7 @@
             WDMessage *t = [NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer];
             if (t.type == WDMessageTypeText) {
                 [self.delegate didReceiveMessage:t ofText:[[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease]];
-            } else if (t.type == WDMessageTypeControl) {
+            } else if (t.type == WDMessageTypeFile) {
                 if ([t.state isEqualToString:kWDMessageControlBegin]) {
                     DLog(@"WDBubble onSocketDidDisconnect %@ received kWDMessageControlBegin", _currentMessage.state);
                     // DW: begin of a file transfer
@@ -524,6 +528,10 @@
     } else {
         DLog(@"WDBubble readDataFromFile will end with %@ sent", [NSNumber numberWithInteger:_streamBytesRead]);
         _streamBytesRead = 0;
+        // DW: now we send these read data
+        for (AsyncSocket *sock in _socketsConnect) {
+            [sock disconnectAfterWriting];
+        }
     }
 }
 
@@ -551,7 +559,7 @@
         // DW: file receiving is complete, we will disconnect
         DLog(@"WDBubble writeDataToFile will end with %@ received", [NSNumber numberWithInteger:_streamBytesWrote]);
         _streamBytesWrote = 0;
-        [_socketReceive disconnectAfterReading];
+        //[_socketReceive disconnectAfterReading];
         
         // DW: clean stream
         if (_streamFileWriter) {
