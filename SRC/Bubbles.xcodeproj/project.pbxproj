@@ -277,12 +277,6 @@
 				0378FCF014F601620044A43B /* history.png */,
 				0378FCF114F601620044A43B /* peers.png */,
 				0378FCF214F601620044A43B /* send.png */,
-<<<<<<< HEAD
-				039C96D714E691FA00BBEEC5 /* bubbles.png */,
-				03C4DED014F6856C0005DD89 /* text.png */,
-				039C96D514E68D8500BBEEC5 /* bubbleBackground.png */,
-=======
->>>>>>> a6399610e5908bf471359550787748ab25296327
 			);
 			name = Resources;
 			sourceTree = "<group>";
