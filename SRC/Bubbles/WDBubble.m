@@ -206,6 +206,74 @@
     }
 }
 
+- (void)readDataFromFile {
+    if(!_streamDataBufferReader) {
+        _streamDataBufferReader = [[NSMutableData data] retain];
+    }
+    uint8_t buf[1024];
+    NSUInteger len = 0;
+    len = [_streamFileReader read:buf maxLength:1024];
+    if(len) {
+        [_streamDataBufferReader appendBytes:(const void *)buf length:len];
+        // _streamBytesRead is an instance variable of type NSNumber.
+        //[_streamBytesRead setIntValue:[_streamBytesRead intValue]+len];
+        _streamBytesRead = _streamBytesRead+len;
+        
+        // DW: now we send these read data
+        for (AsyncSocket *sock in _socketsConnect) {
+            [sock writeData:_streamDataBufferReader withTimeout:kWDBubbleTimeOut tag:0];
+            //DLog(@"WDBubble NSStreamEventHasBytesAvailable wrote %@ to sock", [NSNumber numberWithInteger:len]);
+        }
+    } else {
+        DLog(@"WDBubble readDataFromFile will end with %@ sent", [NSNumber numberWithInteger:_streamBytesRead]);
+        _streamBytesRead = 0;
+        // DW: now we send these read data
+        for (AsyncSocket *sock in _socketsConnect) {
+            [sock disconnectAfterWriting];
+        }
+    }
+}
+
+- (void)writeDataToFile {
+    NSUInteger bytesWrote = 0;
+    while (bytesWrote < [_streamDataBufferWriter length]) {
+        // DW: we are faced with mutable array storing mutable data here
+        // we will use unique way to write the array of data to file
+        uint8_t *readBytes = (uint8_t *)[_streamDataBufferWriter mutableBytes];
+        readBytes += bytesWrote; // instance variable to move pointer
+        NSInteger data_len = [_streamDataBufferWriter length];
+        NSUInteger len = ((data_len - bytesWrote >= 1024) ?
+                          1024 : (data_len-bytesWrote));
+        uint8_t buf[len];
+        (void)memcpy(buf, readBytes, len);
+        len = [_streamFileWriter write:(const uint8_t *)buf maxLength:len];
+        bytesWrote += len;
+    }
+    
+    [_streamDataBufferWriter release];
+    _streamDataBufferWriter = nil;
+    
+    _streamBytesWrote += bytesWrote;
+    if (_streamBytesWrote >= _currentMessage.fileSize) {
+        // DW: file receiving is complete, we will disconnect
+        DLog(@"WDBubble writeDataToFile will end with %@ received", [NSNumber numberWithInteger:_streamBytesWrote]);
+        _streamBytesWrote = 0;
+        //[_socketReceive disconnectAfterReading];
+        
+        // DW: clean stream
+        if (_streamFileWriter) {
+            [_streamFileWriter close];
+            [_streamFileWriter removeFromRunLoop:[NSRunLoop currentRunLoop]
+                                         forMode:NSDefaultRunLoopMode];
+            [_streamFileWriter release];
+            _streamFileWriter = nil; // oStream is instance variable
+            
+            // DW: receiver is complete
+            DLog(@"WDBubble writeDataToFile _streamFileWriter released");
+        }
+    }
+}
+
 #pragma mark - Publice Methods
 
 - (id)init {
@@ -505,74 +573,6 @@
 }
 
 #pragma mark - NSStreamDelegate
-
-- (void)readDataFromFile {
-    if(!_streamDataBufferReader) {
-        _streamDataBufferReader = [[NSMutableData data] retain];
-    }
-    uint8_t buf[1024];
-    NSUInteger len = 0;
-    len = [_streamFileReader read:buf maxLength:1024];
-    if(len) {
-        [_streamDataBufferReader appendBytes:(const void *)buf length:len];
-        // _streamBytesRead is an instance variable of type NSNumber.
-        //[_streamBytesRead setIntValue:[_streamBytesRead intValue]+len];
-        _streamBytesRead = _streamBytesRead+len;
-        
-        // DW: now we send these read data
-        for (AsyncSocket *sock in _socketsConnect) {
-            [sock writeData:_streamDataBufferReader withTimeout:kWDBubbleTimeOut tag:0];
-            //DLog(@"WDBubble NSStreamEventHasBytesAvailable wrote %@ to sock", [NSNumber numberWithInteger:len]);
-        }
-    } else {
-        DLog(@"WDBubble readDataFromFile will end with %@ sent", [NSNumber numberWithInteger:_streamBytesRead]);
-        _streamBytesRead = 0;
-        // DW: now we send these read data
-        for (AsyncSocket *sock in _socketsConnect) {
-            [sock disconnectAfterWriting];
-        }
-    }
-}
-
-- (void)writeDataToFile {
-    NSUInteger bytesWrote = 0;
-    while (bytesWrote < [_streamDataBufferWriter length]) {
-        // DW: we are faced with mutable array storing mutable data here
-        // we will use unique way to write the array of data to file
-        uint8_t *readBytes = (uint8_t *)[_streamDataBufferWriter mutableBytes];
-        readBytes += bytesWrote; // instance variable to move pointer
-        NSInteger data_len = [_streamDataBufferWriter length];
-        NSUInteger len = ((data_len - bytesWrote >= 1024) ?
-                          1024 : (data_len-bytesWrote));
-        uint8_t buf[len];
-        (void)memcpy(buf, readBytes, len);
-        len = [_streamFileWriter write:(const uint8_t *)buf maxLength:len];
-        bytesWrote += len;
-    }
-    
-    [_streamDataBufferWriter release];
-    _streamDataBufferWriter = nil;
-    
-    _streamBytesWrote += bytesWrote;
-    if (_streamBytesWrote >= _currentMessage.fileSize) {
-        // DW: file receiving is complete, we will disconnect
-        DLog(@"WDBubble writeDataToFile will end with %@ received", [NSNumber numberWithInteger:_streamBytesWrote]);
-        _streamBytesWrote = 0;
-        //[_socketReceive disconnectAfterReading];
-        
-        // DW: clean stream
-        if (_streamFileWriter) {
-            [_streamFileWriter close];
-            [_streamFileWriter removeFromRunLoop:[NSRunLoop currentRunLoop]
-                                         forMode:NSDefaultRunLoopMode];
-            [_streamFileWriter release];
-            _streamFileWriter = nil; // oStream is instance variable
-            
-            // DW: receiver is complete
-            DLog(@"WDBubble writeDataToFile _streamFileWriter released");
-        }
-    }
-}
 
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent {
     // DW: we do not include cases like NSStreamEventHasBytesAvailable or NSStreamEventHasSpaceAvailable here since we do not need them
