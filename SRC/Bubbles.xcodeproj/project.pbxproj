@@ -33,6 +33,7 @@
 		03A8879A14E2B108008CA643 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03A8879814E2B108008CA643 /* TextViewController.xib */; };
 		03A887AE14E2BFAD008CA643 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A887AD14E2BFAD008CA643 /* QuartzCore.framework */; };
 		03BF64B314C32D8200CD52AB /* DragAndDropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */; };
+		03C4DED114F6856C0005DD89 /* text.png in Resources */ = {isa = PBXBuildFile; fileRef = 03C4DED014F6856C0005DD89 /* text.png */; };
 		03C4EC5114D6A320006FB4BD /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EEBE7614D597AF0026B318 /* QuickLook.framework */; };
 		03D710A514EBB52E00162DFB /* WUTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D710A414EBB52E00162DFB /* WUTextView.m */; };
 		03E8C3EA14EA39C2001F5091 /* NSTableView+ContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */; };
@@ -145,6 +146,7 @@
 		03A887AD14E2BFAD008CA643 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		03BF64B114C32D8200CD52AB /* DragAndDropImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragAndDropImageView.h; sourceTree = "<group>"; };
 		03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragAndDropImageView.m; sourceTree = "<group>"; };
+		03C4DED014F6856C0005DD89 /* text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text.png; sourceTree = "<group>"; };
 		03D710A314EBB52E00162DFB /* WUTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUTextView.h; sourceTree = "<group>"; };
 		03D710A414EBB52E00162DFB /* WUTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUTextView.m; sourceTree = "<group>"; };
 		03E8C3E814EA39C2001F5091 /* NSTableView+ContextMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTableView+ContextMenu.h"; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				0378FCF114F601620044A43B /* peers.png */,
 				0378FCF214F601620044A43B /* send.png */,
 				039C96D714E691FA00BBEEC5 /* bubbles.png */,
+				03C4DED014F6856C0005DD89 /* text.png */,
 				039C96D514E68D8500BBEEC5 /* bubbleBackground.png */,
 			);
 			name = Resources;
@@ -661,6 +664,7 @@
 				0378FCF414F601620044A43B /* history.png in Resources */,
 				0378FCF514F601620044A43B /* peers.png in Resources */,
 				0378FCF614F601620044A43B /* send.png in Resources */,
+				03C4DED114F6856C0005DD89 /* text.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
