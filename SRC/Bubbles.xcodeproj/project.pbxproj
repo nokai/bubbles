@@ -22,6 +22,7 @@
 		0378FCF514F601620044A43B /* peers.png in Resources */ = {isa = PBXBuildFile; fileRef = 0378FCF114F601620044A43B /* peers.png */; };
 		0378FCF614F601620044A43B /* send.png in Resources */ = {isa = PBXBuildFile; fileRef = 0378FCF214F601620044A43B /* send.png */; };
 		037D71E114C954530082FB64 /* PreferenceViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 037D71E014C954530082FB64 /* PreferenceViewContoller.m */; };
+		0385FDA314F9546700BED92E /* text.png in Resources */ = {isa = PBXBuildFile; fileRef = 0385FDA214F9546700BED92E /* text.png */; };
 		03861E6D14EC1E8000D9DBD4 /* PreferenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03861E6F14EC1E8000D9DBD4 /* PreferenceViewController.xib */; };
 		039C96D414E68BDD00BBEEC5 /* swap.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C96D314E68BDD00BBEEC5 /* swap.png */; };
 		03A80DE014E97BB3006C77D8 /* TransparentTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A80DDF14E97BB3006C77D8 /* TransparentTableView.m */; };
@@ -131,6 +132,7 @@
 		0378FCF214F601620044A43B /* send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send.png; sourceTree = "<group>"; };
 		037D71DF14C954530082FB64 /* PreferenceViewContoller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceViewContoller.h; sourceTree = "<group>"; };
 		037D71E014C954530082FB64 /* PreferenceViewContoller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceViewContoller.m; sourceTree = "<group>"; };
+		0385FDA214F9546700BED92E /* text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text.png; sourceTree = "<group>"; };
 		03861E6E14EC1E8000D9DBD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PreferenceViewController.xib; sourceTree = "<group>"; };
 		039C96D314E68BDD00BBEEC5 /* swap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swap.png; sourceTree = "<group>"; };
 		03A80DDE14E97BB3006C77D8 /* TransparentTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransparentTableView.h; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 				039C96D314E68BDD00BBEEC5 /* swap.png */,
 				0378FCEF14F601620044A43B /* add txt.png */,
 				0378FCF014F601620044A43B /* history.png */,
+				0385FDA214F9546700BED92E /* text.png */,
 				0378FCF114F601620044A43B /* peers.png */,
 				0378FCF214F601620044A43B /* send.png */,
 				189222CA14F8F692003CD713 /* text.png */,
@@ -661,8 +664,13 @@
 				0378FCF414F601620044A43B /* history.png in Resources */,
 				0378FCF514F601620044A43B /* peers.png in Resources */,
 				0378FCF614F601620044A43B /* send.png in Resources */,
+<<<<<<< HEAD
 				18913F1314F86F5700089802 /* BubblesHelp in Resources */,
 				189222CB14F8F692003CD713 /* text.png in Resources */,
+=======
+				03C4DED114F6856C0005DD89 /* text.png in Resources */,
+				0385FDA314F9546700BED92E /* text.png in Resources */,
+>>>>>>> Wu:Open Preview in Finder and Bind shortcuts
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

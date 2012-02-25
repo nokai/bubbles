@@ -197,8 +197,10 @@
 
 #pragma mark - IBActions
 
-- (IBAction)togglePassword:(id)sender {
+- (IBAction)togglePassword:(id)sender
+{
     //NSButton *button = (NSButton *)sender;
+    DLog(@"wokao");
     if (_lockButton.state == NSOnState) {
         // DW: user turned password on.
         if (_passwordController == nil) {
@@ -323,6 +325,7 @@
         return ;
     }
     [self storeMessage:message];
+    [_dragFileController.label setHidden:YES];
     
     // DW: store this url for drag and drop
     if (_fileURL) {

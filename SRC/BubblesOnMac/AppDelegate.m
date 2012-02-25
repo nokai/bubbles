@@ -31,6 +31,8 @@
     return YES;
 }
 
+#pragma mark - Show Preview
+
 - (IBAction)showPreview:(id)sender
 {
     if ([QLPreviewPanel sharedPreviewPanelExists] && [[QLPreviewPanel sharedPreviewPanel]isVisible]) {
