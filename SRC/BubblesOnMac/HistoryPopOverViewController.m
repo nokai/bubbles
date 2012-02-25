@@ -15,6 +15,7 @@
 @synthesize filehistoryTableView = _fileHistoryTableView;
 
 #pragma mark - Private Methods
+
 - (void)showItPreview:(NSURL *)aFileURL
 {
     AppDelegate *del = (AppDelegate *)[NSApp delegate];
@@ -24,6 +25,12 @@
     [del showPreviewInHistory];
 }
 
+- (void)showItFinder:(NSURL *)aFileURL
+{
+    // Wu:Use NSWorkspace to open Finder with specific NSURL and show the selected status 
+    [[NSWorkspace sharedWorkspace]selectFile:[aFileURL path] inFileViewerRootedAtPath:nil];
+}
+
 - (void)deleteSelectedRow
 {
     if (0 <= [_fileHistoryTableView selectedRow] && [_fileHistoryTableView selectedRow] < [_fileHistoryArray count]) {
@@ -31,6 +38,7 @@
     }
     if ([_fileHistoryArray count] == 0) {
         [_removeButton setHidden:YES];
+        [_historyPopOver close];
     }
     [_fileHistoryTableView reloadData];
 }
@@ -39,7 +47,7 @@
 {
     if (0 <= [_fileHistoryTableView selectedRow] && [_fileHistoryTableView selectedRow] < [_fileHistoryArray count]) {
         WDMessage *message = (WDMessage *)[_fileHistoryArray objectAtIndex:[_fileHistoryTableView selectedRow]];
-        [self showItPreview:message.fileURL];
+        [self showItFinder:message.fileURL];
     }
 }
 
@@ -106,6 +114,20 @@
 	// Wu:Tell NSTableView we want to drag and drop accross applications the default is YES means can be only interact with current application
 	[_fileHistoryTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }
+
+- (void)keyDown:(NSEvent *)theEvent
+{
+    /*if (0 <= [_fileHistoryTableView selectedRow] && [_fileHistoryTableView selectedRow] < [_fileHistoryArray count] && [[theEvent characters] isEqualToString:@" "]) {
+        WDMessage *message = (WDMessage *)[_fileHistoryArray objectAtIndex:[_fileHistoryTableView selectedRow]];
+        [self showItPreview:message.fileURL];
+    }
+    else
+        [super keyDown:theEvent];*/
+    DLog(@"jsdhfkjsdhf");
+    [super keyDown:theEvent];
+}
+
+#pragma mark - Public Method
 
 - (void)showHistoryPopOver:(NSView *)attachedView
 {
@@ -226,7 +248,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     WDMessage *message = (WDMessage *)data;
     if (message.type == WDMessageTypeText){
         return [NSImage imageNamed:@"text"];
-    } else if (message.type == WDMessageTypeFile || message.type == WDMessageTypeFile){
+    } else if (message.type == WDMessageTypeFile){
         NSImage *icon = [NSImage imageWithPreviewOfFileAtPath:[message.fileURL path] asIcon:YES];
         return icon;
     }
@@ -284,7 +306,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
         [deleteItem release];
     } else {
         
-        NSMenuItem *previewItem = [[NSMenuItem alloc]initWithTitle:@"Preview" action:@selector(previewSelectedRow) keyEquivalent:@""];
+        NSMenuItem *previewItem = [[NSMenuItem alloc]initWithTitle:@"Show in Finder" action:@selector(previewSelectedRow) keyEquivalent:@""];
         [menu addItem:previewItem];
         [previewItem release];
         

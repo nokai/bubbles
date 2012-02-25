@@ -25,4 +25,10 @@
     // don't draw a background rect
 }
 
+- (void)keyDown:(NSEvent *)theEvent
+{
+    [super keyDown:theEvent];
+}
+
+
 @end
