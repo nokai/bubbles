@@ -14,9 +14,9 @@
 - (void)refreshLockStatus {
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
     if (usePassword) {
-        self.lockButton.title = @"Locked";
+        self.lockButton.image = [UIImage imageNamed:@"lock_on"];
     } else {
-        self.lockButton.title = @"Unlocked";
+        self.lockButton.image = [UIImage imageNamed:@"lock_off"];
     }
 }
 
