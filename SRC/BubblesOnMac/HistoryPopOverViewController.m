@@ -248,11 +248,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     WDMessage *message = (WDMessage *)data;
     if (message.type == WDMessageTypeText){
         return [NSImage imageNamed:@"text"];
-<<<<<<< HEAD
-    } else if (message.type == WDMessageTypeFile || message.type == WDMessageTypeFile){
-=======
     } else if (message.type == WDMessageTypeFile){
->>>>>>> Wu:Open Preview in Finder and Bind shortcuts
         NSImage *icon = [NSImage imageWithPreviewOfFileAtPath:[message.fileURL path] asIcon:YES];
         return icon;
     }

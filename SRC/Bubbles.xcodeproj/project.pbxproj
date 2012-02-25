@@ -664,13 +664,6 @@
 				0378FCF414F601620044A43B /* history.png in Resources */,
 				0378FCF514F601620044A43B /* peers.png in Resources */,
 				0378FCF614F601620044A43B /* send.png in Resources */,
-<<<<<<< HEAD
-				18913F1314F86F5700089802 /* BubblesHelp in Resources */,
-				189222CB14F8F692003CD713 /* text.png in Resources */,
-=======
-				03C4DED114F6856C0005DD89 /* text.png in Resources */,
-				0385FDA314F9546700BED92E /* text.png in Resources */,
->>>>>>> Wu:Open Preview in Finder and Bind shortcuts
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
