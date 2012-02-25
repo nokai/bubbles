@@ -129,7 +129,10 @@
 }
 
 // DW: this deletes acutal documents and their referencing messages if they have
-- (void)deleteDocumentAndMessageInURL:(NSURL *)fileURL {      
+- (void)deleteDocumentAndMessageInURL:(NSURL *)fileURL {
+    // DW: delete cached thumbnail
+    [_thumbnails removeObjectForKey:fileURL.path];
+    
     // DW: delete records in messages
     // iterating and removing with a new array
     NSArray *originalMessages = [NSArray arrayWithArray:_messages];
@@ -177,9 +180,9 @@
         }
         
         // DW: finally we get a good image to show and cache
-        cell.imageView.image = image;
         [_thumbnails setObject:image forKey:fileURL.path];
     }
+    cell.imageView.image = image;
 }
 
 - (void)didReceiveMemoryWarning
@@ -775,6 +778,7 @@
 #pragma mark - DirectoryWatcherDelegate
 
 - (void)directoryDidChange:(DirectoryWatcher *)directoryWatcher {
+    [_thumbnails removeAllObjects];
 	[_documents removeAllObjects];    // clear out the old docs and start over
     
     [_documents addObjectsFromArray:[[NSFileManager defaultManager] contentsOfDirectoryAtURL:[NSURL iOSDocumentsDirectoryURL] 

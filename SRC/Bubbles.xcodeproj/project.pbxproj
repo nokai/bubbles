@@ -38,6 +38,7 @@
 		03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		18913F1214F86F5700089802 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 18913F1114F86F5700089802 /* BubblesHelp */; };
 		18913F1314F86F5700089802 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 18913F1114F86F5700089802 /* BubblesHelp */; };
+		189222CB14F8F692003CD713 /* text.png in Resources */ = {isa = PBXBuildFile; fileRef = 189222CA14F8F692003CD713 /* text.png */; };
 		C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C111265514DE2C7800884F7D /* DirectoryWatcher.m */; };
 		C11FC3A814DB8D75002A92A2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11FC3A714DB8D75002A92A2 /* MessageUI.framework */; };
 		C121946414B591D700159A9F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121946314B591D700159A9F /* UIKit.framework */; };
@@ -152,6 +153,7 @@
 		03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+NSView_Fade_.m"; sourceTree = "<group>"; };
 		03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		18913F1114F86F5700089802 /* BubblesHelp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BubblesHelp; sourceTree = "<group>"; };
+		189222CA14F8F692003CD713 /* text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text.png; sourceTree = "<group>"; };
 		C111265414DE2C7800884F7D /* DirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryWatcher.h; path = Bubbles/DirectoryWatcher.h; sourceTree = SOURCE_ROOT; };
 		C111265514DE2C7800884F7D /* DirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectoryWatcher.m; path = Bubbles/DirectoryWatcher.m; sourceTree = SOURCE_ROOT; };
 		C11FC3A714DB8D75002A92A2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -279,6 +281,7 @@
 				0378FCF014F601620044A43B /* history.png */,
 				0378FCF114F601620044A43B /* peers.png */,
 				0378FCF214F601620044A43B /* send.png */,
+				189222CA14F8F692003CD713 /* text.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -659,6 +662,7 @@
 				0378FCF514F601620044A43B /* peers.png in Resources */,
 				0378FCF614F601620044A43B /* send.png in Resources */,
 				18913F1314F86F5700089802 /* BubblesHelp in Resources */,
+				189222CB14F8F692003CD713 /* text.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

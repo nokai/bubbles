@@ -225,8 +225,8 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     //DLog(@"previewIconForCell");
     WDMessage *message = (WDMessage *)data;
     if (message.type == WDMessageTypeText){
-        return [NSImage imageNamed:@"swap"];
-    } else if (message.type == WDMessageTypeFile){
+        return [NSImage imageNamed:@"text"];
+    } else if (message.type == WDMessageTypeFile || message.type == WDMessageTypeFile){
         NSImage *icon = [NSImage imageWithPreviewOfFileAtPath:[message.fileURL path] asIcon:YES];
         return icon;
     }
