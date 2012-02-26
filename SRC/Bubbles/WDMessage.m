@@ -88,7 +88,7 @@
             self.sender, 
             self.time, 
             self.fileURL, 
-            //self.content, 
+            self.content, 
             self.type];
 }
 

@@ -22,7 +22,6 @@
 		0378FCF514F601620044A43B /* peers.png in Resources */ = {isa = PBXBuildFile; fileRef = 0378FCF114F601620044A43B /* peers.png */; };
 		0378FCF614F601620044A43B /* send.png in Resources */ = {isa = PBXBuildFile; fileRef = 0378FCF214F601620044A43B /* send.png */; };
 		037D71E114C954530082FB64 /* PreferenceViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 037D71E014C954530082FB64 /* PreferenceViewContoller.m */; };
-		0385FDA314F9546700BED92E /* text.png in Resources */ = {isa = PBXBuildFile; fileRef = 0385FDA214F9546700BED92E /* text.png */; };
 		03861E6D14EC1E8000D9DBD4 /* PreferenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03861E6F14EC1E8000D9DBD4 /* PreferenceViewController.xib */; };
 		039C96D414E68BDD00BBEEC5 /* swap.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C96D314E68BDD00BBEEC5 /* swap.png */; };
 		03A80DE014E97BB3006C77D8 /* TransparentTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A80DDF14E97BB3006C77D8 /* TransparentTableView.m */; };
@@ -38,8 +37,6 @@
 		03EFE64B14E2EF04007FA2B6 /* NSView+NSView_Fade_.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */; };
 		03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		18913F1214F86F5700089802 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 18913F1114F86F5700089802 /* BubblesHelp */; };
-		18913F1314F86F5700089802 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 18913F1114F86F5700089802 /* BubblesHelp */; };
-		189222CB14F8F692003CD713 /* text.png in Resources */ = {isa = PBXBuildFile; fileRef = 189222CA14F8F692003CD713 /* text.png */; };
 		C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C111265514DE2C7800884F7D /* DirectoryWatcher.m */; };
 		C11A3A5314F9277600892631 /* add_file.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4E14F9277600892631 /* add_file.png */; };
 		C11A3A5414F9277600892631 /* add_txt.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4F14F9277600892631 /* add_txt.png */; };
@@ -62,6 +59,8 @@
 		C1393F0A14D90C83005AFEB6 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1393F0814D90C83005AFEB6 /* TextViewController.m */; };
 		C1393F0B14D90C83005AFEB6 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1393F0914D90C83005AFEB6 /* TextViewController.xib */; };
 		C1393F2814D91BBF005AFEB6 /* UINavigationBar+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */; };
+		C15859C514FA31CD0097FD41 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C15859C414FA31CD0097FD41 /* Default-Portrait~ipad.png */; };
+		C15859C814FA33250097FD41 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C15859C714FA33250097FD41 /* Default-Landscape~ipad.png */; };
 		C167CE0D14E8F3A700B419CD /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = C167CE0C14E8F3A700B419CD /* UIImage+Resize.m */; };
 		C167CE1314E8F5CF00B419CD /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = C167CE1014E8F5CF00B419CD /* UIImage+Alpha.m */; };
 		C167CE1414E8F5CF00B419CD /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = C167CE1214E8F5CF00B419CD /* UIImage+RoundedCorner.m */; };
@@ -183,6 +182,8 @@
 		C1393F0914D90C83005AFEB6 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TextViewController.xib; path = Bubbles/TextViewController.xib; sourceTree = SOURCE_ROOT; };
 		C1393F2614D91BBF005AFEB6 /* UINavigationBar+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+Custom.h"; path = "Bubbles/UINavigationBar+Custom.h"; sourceTree = SOURCE_ROOT; };
 		C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+Custom.m"; path = "Bubbles/UINavigationBar+Custom.m"; sourceTree = SOURCE_ROOT; };
+		C15859C414FA31CD0097FD41 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = SOURCE_ROOT; };
+		C15859C714FA33250097FD41 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = SOURCE_ROOT; };
 		C167CE0B14E8F3A700B419CD /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "Bubbles/UIImage+Resize.h"; sourceTree = SOURCE_ROOT; };
 		C167CE0C14E8F3A700B419CD /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "Bubbles/UIImage+Resize.m"; sourceTree = SOURCE_ROOT; };
 		C167CE0F14E8F5CF00B419CD /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Alpha.h"; path = "Bubbles/UIImage+Alpha.h"; sourceTree = SOURCE_ROOT; };
@@ -403,6 +404,8 @@
 				C121946A14B591D700159A9F /* Supporting Files */,
 				C111265414DE2C7800884F7D /* DirectoryWatcher.h */,
 				C111265514DE2C7800884F7D /* DirectoryWatcher.m */,
+				C15859C714FA33250097FD41 /* Default-Landscape~ipad.png */,
+				C15859C414FA31CD0097FD41 /* Default-Portrait~ipad.png */,
 				C1CFCD2C14B986CB008A1B1F /* Default.png */,
 				C1CFCD2D14B986CB008A1B1F /* Default@2x.png */,
 				C1CFCD2E14B986CB008A1B1F /* Icon.png */,
@@ -646,6 +649,8 @@
 				C11A3A5F14F92C1600892631 /* lock_off@2x.png in Resources */,
 				C11A3A6014F92C1600892631 /* lock_on@2x.png in Resources */,
 				C11A3A6114F92C1600892631 /* peer@2x.png in Resources */,
+				C15859C514FA31CD0097FD41 /* Default-Portrait~ipad.png in Resources */,
+				C15859C814FA33250097FD41 /* Default-Landscape~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
