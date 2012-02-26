@@ -77,7 +77,6 @@
 
 - (void)storeMessage:(WDMessage *)message
 {
-    //DLog(@"storeMessage");
     [_historyPopOverController.fileHistoryArray addObject:message];
     [_historyPopOverController.fileHistoryArray sortUsingComparator:^NSComparisonResult(WDMessage *obj1, WDMessage * obj2) {
         if ([obj1.time compare:obj2.time] == NSOrderedAscending)
@@ -153,6 +152,7 @@
     // Wu:Release two window controller
     [_passwordController release];
     [_preferenceController release];
+    [_featureController release];
     
     [_lockButton release];
     [_selectFileItem release];
@@ -309,6 +309,14 @@
         
         [_dragFileController.label setHidden:YES];
     }
+}
+
+- (IBAction)openFeatureWindow:(id)sender
+{
+    if (_featureController == nil) {
+        _featureController = [[FeatureWindowController alloc]init];
+    }
+    [_featureController showWindow:self];
 }
 
 #pragma mark - WDBubbleDelegate

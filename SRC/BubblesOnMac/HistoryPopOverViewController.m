@@ -16,13 +16,16 @@
 
 #pragma mark - Private Methods
 
-- (void)showItPreview:(NSURL *)aFileURL
+- (void)showItPreview
 {
-    AppDelegate *del = (AppDelegate *)[NSApp delegate];
-    if (![del.array containsObject:aFileURL]) {
-        del.array = [NSArray arrayWithObject:aFileURL];
+    if (0 <= [_fileHistoryTableView selectedRow] && [_fileHistoryTableView selectedRow] < [_fileHistoryArray count]) {
+        WDMessage *message = (WDMessage *)[_fileHistoryArray objectAtIndex:[_fileHistoryTableView selectedRow]];
+        AppDelegate *del = (AppDelegate *)[NSApp delegate];
+        if (![del.array containsObject:message.fileURL]) {
+            del.array = [NSArray arrayWithObject:message.fileURL];
+        }
+        [del showPreviewInHistory];
     }
-    [del showPreviewInHistory];
 }
 
 - (void)showItFinder:(NSURL *)aFileURL
@@ -113,18 +116,6 @@
     [_fileHistoryTableView registerForDraggedTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType,NSFilenamesPboardType,NSTIFFPboardType,nil]];
 	// Wu:Tell NSTableView we want to drag and drop accross applications the default is YES means can be only interact with current application
 	[_fileHistoryTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
-}
-
-- (void)keyDown:(NSEvent *)theEvent
-{
-    /*if (0 <= [_fileHistoryTableView selectedRow] && [_fileHistoryTableView selectedRow] < [_fileHistoryArray count] && [[theEvent characters] isEqualToString:@" "]) {
-        WDMessage *message = (WDMessage *)[_fileHistoryArray objectAtIndex:[_fileHistoryTableView selectedRow]];
-        [self showItPreview:message.fileURL];
-    }
-    else
-        [super keyDown:theEvent];*/
-    DLog(@"jsdhfkjsdhf");
-    [super keyDown:theEvent];
 }
 
 #pragma mark - Public Method
@@ -313,6 +304,10 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
         NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteSelectedRow) keyEquivalent:@""];
         [menu addItem:deleteItem];
         [deleteItem release];
+        
+        NSMenuItem *quicklookItem = [[NSMenuItem alloc]initWithTitle:@"Quicklook" action:@selector(showItPreview) keyEquivalent:@""];
+        [menu addItem:quicklookItem];
+        [quicklookItem release];
     }
     return menu;
 }

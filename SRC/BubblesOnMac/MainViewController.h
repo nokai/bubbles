@@ -17,6 +17,7 @@
 #import "NSView+NSView_Fade_.h"
 #import "HistoryPopOverViewController.h"
 #import "NetworkFoundPopOverViewController.h"
+#import "FeatureWindowController.h"
 
 #define kTextViewController 0
 #define kDragFileController 1
@@ -41,6 +42,7 @@
     // Wu:The window controller : for password sheet window and preference window
     PasswordMacViewController *_passwordController;
     PreferenceViewContoller *_preferenceController;
+    FeatureWindowController *_featureController;
     
     // Wu:The viewcontroller for sending files and messages
     DragFileViewController *_dragFileController;
@@ -62,5 +64,6 @@
 - (IBAction)openHistoryPopOver:(id)sender;
 - (IBAction)selectFile:(id)sender;
 - (IBAction)openServiceFoundPopOver:(id)sender;
+- (IBAction)openFeatureWindow:(id)sender;
 
 @end

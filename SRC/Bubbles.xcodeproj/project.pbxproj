@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		03008FFF14D81C2800C93A14 /* NSImage+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */; };
 		0311924414DE4CE700E0DFEB /* ImageAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0311924314DE4CE700E0DFEB /* ImageAndTextCell.m */; };
+		0322FC9314F9226000647B89 /* FeatureWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0322FC9214F9226000647B89 /* FeatureWindowController.m */; };
+		0322FC9614F9228100647B89 /* FeatureWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0322FC9514F9228100647B89 /* FeatureWindowController.xib */; };
 		032A05C314E39F5B005C4F6E /* HistoryPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A05C114E39F5B005C4F6E /* HistoryPopOverViewController.m */; };
 		032A05C414E39F5B005C4F6E /* HistoryPopOverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 032A05C214E39F5B005C4F6E /* HistoryPopOverViewController.xib */; };
 		032A05C914E3A525005C4F6E /* NetworkFoundPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A05C714E3A525005C4F6E /* NetworkFoundPopOverViewController.m */; };
@@ -30,6 +32,8 @@
 		03A8879914E2B108008CA643 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A8879714E2B108008CA643 /* TextViewController.m */; };
 		03A8879A14E2B108008CA643 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03A8879814E2B108008CA643 /* TextViewController.xib */; };
 		03A887AE14E2BFAD008CA643 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A887AD14E2BFAD008CA643 /* QuartzCore.framework */; };
+		03A8F4D114FA556F0065F057 /* DuxScrollViewAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A8F4D014FA556F0065F057 /* DuxScrollViewAnimation.m */; };
+		03BF24DE14F930A6002809A3 /* NSPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BF24DD14F930A6002809A3 /* NSPageControl.m */; };
 		03BF64B314C32D8200CD52AB /* DragAndDropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */; };
 		03C4EC5114D6A320006FB4BD /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EEBE7614D597AF0026B318 /* QuickLook.framework */; };
 		03D710A514EBB52E00162DFB /* WUTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D710A414EBB52E00162DFB /* WUTextView.m */; };
@@ -38,6 +42,7 @@
 		03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		18E832FA14FA4245001F0709 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 18E832F914FA4245001F0709 /* BubblesHelp */; };
 		18E832FB14FA4245001F0709 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 18E832F914FA4245001F0709 /* BubblesHelp */; };
+		18913F1214F86F5700089802 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 18913F1114F86F5700089802 /* BubblesHelp */; };
 		C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C111265514DE2C7800884F7D /* DirectoryWatcher.m */; };
 		C11A3A5314F9277600892631 /* add_file.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4E14F9277600892631 /* add_file.png */; };
 		C11A3A5414F9277600892631 /* add_txt.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4F14F9277600892631 /* add_txt.png */; };
@@ -113,6 +118,9 @@
 		03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+QuickLook.m"; sourceTree = "<group>"; };
 		0311924214DE4CE700E0DFEB /* ImageAndTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageAndTextCell.h; sourceTree = "<group>"; };
 		0311924314DE4CE700E0DFEB /* ImageAndTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageAndTextCell.m; sourceTree = "<group>"; };
+		0322FC9114F9226000647B89 /* FeatureWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureWindowController.h; sourceTree = "<group>"; };
+		0322FC9214F9226000647B89 /* FeatureWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureWindowController.m; sourceTree = "<group>"; };
+		0322FC9514F9228100647B89 /* FeatureWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeatureWindowController.xib; sourceTree = "<group>"; };
 		032A05C014E39F5B005C4F6E /* HistoryPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryPopOverViewController.h; sourceTree = "<group>"; };
 		032A05C114E39F5B005C4F6E /* HistoryPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryPopOverViewController.m; sourceTree = "<group>"; };
 		032A05C214E39F5B005C4F6E /* HistoryPopOverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryPopOverViewController.xib; sourceTree = "<group>"; };
@@ -143,6 +151,10 @@
 		03A8879714E2B108008CA643 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
 		03A8879814E2B108008CA643 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextViewController.xib; sourceTree = "<group>"; };
 		03A887AD14E2BFAD008CA643 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		03A8F4CF14FA556F0065F057 /* DuxScrollViewAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxScrollViewAnimation.h; sourceTree = "<group>"; };
+		03A8F4D014FA556F0065F057 /* DuxScrollViewAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxScrollViewAnimation.m; sourceTree = "<group>"; };
+		03BF24DC14F930A6002809A3 /* NSPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSPageControl.h; sourceTree = "<group>"; };
+		03BF24DD14F930A6002809A3 /* NSPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPageControl.m; sourceTree = "<group>"; };
 		03BF64B114C32D8200CD52AB /* DragAndDropImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragAndDropImageView.h; sourceTree = "<group>"; };
 		03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragAndDropImageView.m; sourceTree = "<group>"; };
 		03D710A314EBB52E00162DFB /* WUTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUTextView.h; sourceTree = "<group>"; };
@@ -300,10 +312,14 @@
 				03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */,
 				03EFE64914E2EF04007FA2B6 /* NSView+NSView_Fade_.h */,
 				03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */,
+				03A8F4CF14FA556F0065F057 /* DuxScrollViewAnimation.h */,
+				03A8F4D014FA556F0065F057 /* DuxScrollViewAnimation.m */,
 				03A80DDE14E97BB3006C77D8 /* TransparentTableView.h */,
 				03A80DDF14E97BB3006C77D8 /* TransparentTableView.m */,
 				03E8C3E814EA39C2001F5091 /* NSTableView+ContextMenu.h */,
 				03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */,
+				03BF24DC14F930A6002809A3 /* NSPageControl.h */,
+				03BF24DD14F930A6002809A3 /* NSPageControl.m */,
 				03D710A314EBB52E00162DFB /* WUTextView.h */,
 				03D710A414EBB52E00162DFB /* WUTextView.m */,
 			);
@@ -319,6 +335,9 @@
 				037D71DF14C954530082FB64 /* PreferenceViewContoller.h */,
 				037D71E014C954530082FB64 /* PreferenceViewContoller.m */,
 				03861E6F14EC1E8000D9DBD4 /* PreferenceViewController.xib */,
+				0322FC9114F9226000647B89 /* FeatureWindowController.h */,
+				0322FC9214F9226000647B89 /* FeatureWindowController.m */,
+				0322FC9514F9228100647B89 /* FeatureWindowController.xib */,
 			);
 			name = Window;
 			sourceTree = "<group>";
@@ -675,6 +694,7 @@
 				0378FCF514F601620044A43B /* peers.png in Resources */,
 				0378FCF614F601620044A43B /* send.png in Resources */,
 				18E832FB14FA4245001F0709 /* BubblesHelp in Resources */,
+				0322FC9614F9228100647B89 /* FeatureWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -727,6 +747,9 @@
 				03A80DE014E97BB3006C77D8 /* TransparentTableView.m in Sources */,
 				03E8C3EA14EA39C2001F5091 /* NSTableView+ContextMenu.m in Sources */,
 				03D710A514EBB52E00162DFB /* WUTextView.m in Sources */,
+				0322FC9314F9226000647B89 /* FeatureWindowController.m in Sources */,
+				03BF24DE14F930A6002809A3 /* NSPageControl.m in Sources */,
+				03A8F4D114FA556F0065F057 /* DuxScrollViewAnimation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
