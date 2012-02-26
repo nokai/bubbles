@@ -167,7 +167,7 @@
 		C11A3A5B14F92C1600892631 /* lock_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lock_on@2x.png"; path = "Resources/iPhone/lock_on@2x.png"; sourceTree = SOURCE_ROOT; };
 		C11A3A5C14F92C1600892631 /* peer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "peer@2x.png"; path = "Resources/iPhone/peer@2x.png"; sourceTree = SOURCE_ROOT; };
 		C11FC3A714DB8D75002A92A2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		C121945F14B591D700159A9F /* Bubbles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bubbles.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C121945F14B591D700159A9F /* Deliver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Deliver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C121946314B591D700159A9F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C121946514B591D700159A9F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C121946714B591D700159A9F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -208,7 +208,7 @@
 		C192665C14ECEB450090D8F7 /* HelpViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpViewController_iPad.xib; path = Bubbles/HelpViewController_iPad.xib; sourceTree = SOURCE_ROOT; };
 		C192666B14ECF7690090D8F7 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = Bubbles/Settings.bundle; sourceTree = SOURCE_ROOT; };
 		C1AC4D2F14D81DCC008FACE0 /* WDHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WDHeader.h; path = Bubbles/WDHeader.h; sourceTree = "<group>"; };
-		C1C9371014BB1766005E0EAA /* BubblesOnMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BubblesOnMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1C9371014BB1766005E0EAA /* Deliver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Deliver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C9371A14BB1766005E0EAA /* BubblesOnMac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BubblesOnMac-Info.plist"; sourceTree = "<group>"; };
 		C1C9371C14BB1766005E0EAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C1C9371E14BB1766005E0EAA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -372,8 +372,8 @@
 		C121946014B591D700159A9F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C121945F14B591D700159A9F /* Bubbles.app */,
-				C1C9371014BB1766005E0EAA /* BubblesOnMac.app */,
+				C121945F14B591D700159A9F /* Deliver.app */,
+				C1C9371014BB1766005E0EAA /* Deliver.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -560,7 +560,7 @@
 			);
 			name = Bubbles;
 			productName = LearnBonjour;
-			productReference = C121945F14B591D700159A9F /* Bubbles.app */;
+			productReference = C121945F14B591D700159A9F /* Deliver.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C1C9370F14BB1766005E0EAA /* BubblesOnMac */ = {
@@ -577,7 +577,7 @@
 			);
 			name = BubblesOnMac;
 			productName = BubblesOnMac;
-			productReference = C1C9371014BB1766005E0EAA /* BubblesOnMac.app */;
+			productReference = C1C9371014BB1766005E0EAA /* Deliver.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -831,7 +831,7 @@
 				INFOPLIST_FILE = "Bubbles/Bubbles-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DDEBUG";
-				PRODUCT_NAME = Bubbles;
+				PRODUCT_NAME = Deliver;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -847,7 +847,7 @@
 				GCC_PREFIX_HEADER = "Bubbles/Bubbles-Prefix.pch";
 				INFOPLIST_FILE = "Bubbles/Bubbles-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = Bubbles;
+				PRODUCT_NAME = Deliver;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -873,7 +873,7 @@
 				INFOPLIST_FILE = "BubblesOnMac/BubblesOnMac-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Deliver;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
@@ -899,7 +899,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "BubblesOnMac/BubblesOnMac-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Deliver;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
