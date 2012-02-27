@@ -14,17 +14,6 @@
 
 NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 
-#pragma mark - private method
-
-- (NSString *)escapedStringFromURL:(NSURL *)aURL
-{
-    // Wu:In case the url contains unicode string
-    NSString *lastComponents = [NSString stringWithString:[aURL lastPathComponent]];
-    NSString *unescapedString = [lastComponents stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *escapedString = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)unescapedString, NULL, NULL, kCFStringEncodingUTF8);
-    return [escapedString autorelease];
-}
-
 #pragma mark - Lifecycle
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -168,17 +157,18 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
         return nil;
     }
     
-       
     NSURL *newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
                                                   dropDestination.path, 
                                                   [draggedDataURL.lastPathComponent stringByReplacingOccurrencesOfString:@" " 
                                                                                                               withString:@"%20"]]];
     if (newURL == nil) {
-        NSString *escapedString = [self escapedStringFromURL:draggedDataURL];
+        NSString *escapedString = [draggedDataURL escapedStringFromURL];
         newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
                                        dropDestination.path, 
                                        [escapedString stringByReplacingOccurrencesOfString:@" " 
                                                                                                    withString:@"%20"]]];
+        newURL = [newURL UnicodeURLWithoutNameConflict];
+        
     } else {
         newURL = [newURL URLWithoutNameConflict];
     }
