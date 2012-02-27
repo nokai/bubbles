@@ -244,6 +244,10 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     WDMessage *message = (WDMessage *)data;
     if (message.type == WDMessageTypeText){
         NSString *string = [[[NSString alloc]initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
+        string = [string stringByReplacingOccurrencesOfString:@" " 
+                                                   withString:@"."];
+        string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@"."];
+        DLog(@"string is %@",string);
         if ([string length] >= 20) {
             string = [string substringWithRange:NSMakeRange(0,15)];
             string = [string stringByAppendingString:@"......."];
