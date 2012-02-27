@@ -34,7 +34,7 @@
 
 @interface WDBubble : NSObject <AsyncSocketDelegate, NSNetServiceDelegate, NSNetServiceBrowserDelegate, NSStreamDelegate> {
     // DW: Bonjour
-    NSNetService    *_service;
+    NSNetService *_service;
     NSNetServiceBrowser *_browser;
     NSMutableArray *_servicesFound;
     NSString *_netServiceType;
@@ -76,5 +76,6 @@
 
 // DW: transfer percent, from 0 to 1
 - (float)percentTransfered;
+- (NSUInteger)bytesTransfered;
 
 @end

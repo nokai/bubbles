@@ -408,6 +408,14 @@
     }
 }
 
+- (NSUInteger)bytesTransfered {
+    if (_isReceiver) {
+        return _streamBytesWrote;
+    } else {
+        return _streamBytesRead;
+    }
+}
+
 #pragma mark NSNetServiceDelegate
 
 // Publish

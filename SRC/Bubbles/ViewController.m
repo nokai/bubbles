@@ -47,6 +47,31 @@
     [av release];
 }
 
+- (void)refreshImageAtURL:(NSURL *)fileURL {
+    // DW: firstly try image
+    UIImage *image = [[[[UIImage imageWithContentsOfFile:[fileURL path]] normalize] resizedImageWithContentMode:UIViewContentModeScaleAspectFill
+                                                                                                bounds:CGSizeMake(kTableViewCellHeight, kTableViewCellHeight)
+                                                                                  interpolationQuality:kCGInterpolationHigh] 
+             croppedImage:CGRectMake(0, 0, kTableViewCellHeight, kTableViewCellHeight)];
+    if (!image) {
+        // DW: secondly a normal file
+        if (fileURL) {
+            UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
+            if (interactionController && interactionController.icons.count > 0) {
+                image = [interactionController.icons objectAtIndex:0];
+            } else {
+                image = [UIImage imageNamed:@"Icon"];
+            }
+            [interactionController release];
+        } else {
+            image = [UIImage imageNamed:@"Icon"];
+        }
+    }
+    
+    // DW: finally we get a good image to show and cache
+    [_thumbnails setObject:image forKey:fileURL.path];
+}
+
 - (void)storeMessage:(WDMessage *)message {
     // DW: replace transfering messages if needed
     
@@ -56,6 +81,7 @@
             if (([m.fileURL.path isEqualToString:message.fileURL.path])
                 &&(![m.state isEqualToString:kWDMessageStateFile])) {
                 // DW: found a message with same file path but "unstable" state, replace it
+                [self refreshImageAtURL:m.fileURL];
                 m.state = kWDMessageStateFile;
             };
         }
@@ -187,28 +213,7 @@
     // DW: we now cache all image files
     UIImage *image = [_thumbnails objectForKey:fileURL.path];
     if (!image) {
-        // DW: firstly try image
-        image = [[[[UIImage imageWithContentsOfFile:[fileURL path]] normalize] resizedImageWithContentMode:UIViewContentModeScaleAspectFill
-                                                                                                    bounds:CGSizeMake(kTableViewCellHeight, kTableViewCellHeight)
-                                                                                      interpolationQuality:kCGInterpolationHigh] 
-                 croppedImage:CGRectMake(0, 0, kTableViewCellHeight, kTableViewCellHeight)];
-        if (!image) {
-            // DW: secondly a normal file
-            if (fileURL) {
-                UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
-                if (interactionController && interactionController.icons.count > 0) {
-                    image = [interactionController.icons objectAtIndex:0];
-                } else {
-                    image = [UIImage imageNamed:@"Icon"];
-                }
-                [interactionController release];
-            } else {
-                image = [UIImage imageNamed:@"Icon"];
-            }
-        }
-        
-        // DW: finally we get a good image to show and cache
-        [_thumbnails setObject:image forKey:fileURL.path];
+        [self refreshImageAtURL:fileURL];
     }
     cell.imageView.image = image;
 }
@@ -434,7 +439,7 @@
 
 - (void)percentUpdated {
     [_messagesView reloadData];
-    DLog(@"VC persent %f", [self.bubble percentTransfered]*100);
+    //DLog(@"VC persent %f", [self.bubble percentTransfered]*100);
 }
 
 - (void)willReceiveMessage:(WDMessage *)message {
@@ -676,9 +681,13 @@
             // DW: we show percentage we transfered the file here
             if (([t.state isEqualToString:kWDMessageStateReadyToSend])
                 ||([t.state isEqualToString:kWDMessageStateSending])) {
-                cell.textLabel.text = [NSString stringWithFormat:@"%.0f%% sent", [self.bubble percentTransfered]*100];
+                cell.textLabel.text = [NSString stringWithFormat:@"%.0f%% %@ sent", 
+                                       [self.bubble percentTransfered]*100, 
+                                       [NSURL formattedFileSize:[self.bubble bytesTransfered]]];
             } else if ([t.state isEqualToString:kWDMessageStateReadyToReceive]) {
-                cell.textLabel.text = [NSString stringWithFormat:@"%.0f%% received", [self.bubble percentTransfered]*100];
+                cell.textLabel.text = [NSString stringWithFormat:@"%.0f%% %@ received", 
+                                       [self.bubble percentTransfered]*100, 
+                                       [NSURL formattedFileSize:[self.bubble bytesTransfered]]];
             }
             
             [self fillCell:cell withFileURL:t.fileURL];
