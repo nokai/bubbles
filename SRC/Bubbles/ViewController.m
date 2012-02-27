@@ -65,11 +65,11 @@
 - (void)sendFile {
     if (_fileURL) {
         // DW: a movie or JPG or PNG        
-        WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
+        WDMessage *t = [[WDMessage messageWithFile:_fileURL andState:kWDMessageStateReadyToSend] retain];
         [_bubble broadcastMessage:t];
         
         // DW: store message metadata without content data
-        [self storeMessage:[WDMessage messageInfoFromMessage:t]];
+        [self storeMessage:t];
         [t release];
     } else {
         DLog(@"VC sendFile no good file URL");
@@ -397,20 +397,9 @@
     //[_messagesView reloadData];
 }
 
-- (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text {
-    DLog(@"VC didReceiveText %@", text);
-    // DW: change time to received time since time may be different
+- (void)didReceiveMessage:(WDMessage *)message {
     message.time = [NSDate date];
     [self storeMessage:message];
-}
-
-- (void)didReceiveMessage:(WDMessage *)message ofFile:(NSURL *)url {
-    // DW: change original file URL to local one
-    message.fileURL = url;
-    // DW: store message metadata without content data
-    // DW: change time to received time since time may be different
-    message.time = [NSDate date];
-    [self storeMessage:[WDMessage messageInfoFromMessage:message]];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -523,12 +512,10 @@
     
     // DW: construct a WDMessage
     if (_segmentSwith.selectedSegmentIndex == 0) {
-        t = [_messages objectAtIndex:indexPath.row];
+        t = [[_messages objectAtIndex:indexPath.row] retain];
     } else if (_segmentSwith.selectedSegmentIndex == 1) {
         NSURL *fileURL = [_documents objectAtIndex:indexPath.row];
-        t = [[[WDMessage alloc] init] autorelease];
-        t.type = WDMessageTypeFile;
-        t.fileURL = fileURL;
+        t = [[WDMessage messageWithFile:fileURL andState:kWDMessageStateFile] retain];
     }
     
     // DW: chose an action
@@ -538,7 +525,7 @@
                                 cancelButtonTitle:kActionSheetButtonCancel
                            destructiveButtonTitle:nil
                                 otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonMessage, nil];
-    } else if (t.type == WDMessageTypeFile) {
+    } else if ([t.state isEqualToString:kWDMessageStateFile]) {
         if ([WDMessage isImageURL:t.fileURL]) {
             as = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self 
@@ -558,6 +545,7 @@
     } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
         [as showInView:self.view];
     }
+    [t release];
     [as release];
 }
 
@@ -629,7 +617,7 @@
             DLog(@"VC cellForRowAtIndexPath t is %@", t);
             cell.textLabel.text = [[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease];
             cell.imageView.image = [UIImage imageNamed:@"Icon-Text"];
-        } else if (t.type == WDMessageTypeFile) {
+        } else if ([t.state isEqualToString:kWDMessageStateFile]) {
             cell.textLabel.text = [t.fileURL lastPathComponent];
             
             // DW: we show percentage we transfered the file here
@@ -704,9 +692,7 @@
         message = [[_messages objectAtIndex:[_messagesView indexPathForSelectedRow].row] retain];
     } else if (_segmentSwith.selectedSegmentIndex == 1) {
         NSURL *fileURL = [_documents objectAtIndex:_messagesView.indexPathForSelectedRow.row];
-        message = [[WDMessage alloc] init];
-        message.type = WDMessageTypeFile;
-        message.fileURL = fileURL;
+        message = [[WDMessage messageWithFile:fileURL andState:kWDMessageStateFile] retain];
     }
     
     // DW: chose an action
@@ -717,7 +703,7 @@
     } else if ([buttonTitle isEqualToString:kActionSheetButtonCopy]) {
         if ([message.state isEqualToString: kWDMessageStateText]) {
             [UIPasteboard generalPasteboard].string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
-        } else if (message.type == WDMessageTypeFile) {
+        } else if ([message.state isEqualToString:kWDMessageStateFile]) {
             [UIPasteboard generalPasteboard].image = [UIImage imageWithContentsOfFile:message.fileURL.path];
         }
     } else if ([buttonTitle isEqualToString:kActionSheetButtonPreview]) {
@@ -740,8 +726,8 @@
             [self storeMessage:t];
             [_bubble broadcastMessage:t];
             [t release];
-        } else if (message.type == WDMessageTypeFile) {
-            WDMessage *t = [[WDMessage messageWithFile:message.fileURL] retain];
+        } else if ([message.state isEqualToString:kWDMessageStateFile]) {
+            WDMessage *t = [[WDMessage messageWithFile:message.fileURL andState:kWDMessageStateReadyToSend] retain];
             [self storeMessage:t];
             [_bubble broadcastMessage:t];
             [t release];

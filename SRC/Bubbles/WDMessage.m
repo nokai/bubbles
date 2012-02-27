@@ -16,7 +16,7 @@
 #define kWDMessageType      @"kWDMessageType"
 
 @implementation WDMessage
-@synthesize sender = _sender, time = _time, state = _state, fileURL = _fileURL, content = _content, type = _type;
+@synthesize sender = _sender, time = _time, state = _state, fileURL = _fileURL, content = _content;
 
 + (BOOL)isImageURL:(NSURL *)url {
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
@@ -30,22 +30,7 @@
     WDMessage *m = [[[WDMessage alloc] init] autorelease];
     m.state = kWDMessageStateText;
     m.content = [text dataUsingEncoding:NSUTF8StringEncoding];
-    //m.type = WDMessageTypeText;
-    //DLog(@"WDMessage messageWithText %@", m);
     return m;
-}
-
-+ (id)messageWithFile:(NSURL *)url {
-#ifdef TEMP_USE_OLD_WDBUBBLE
-    WDMessage *m = [[[WDMessage alloc] init] autorelease];
-    m.fileURL = url;
-    m.content = [NSData dataWithContentsOfURL:url];
-    m.type = WDMessageTypeFile;
-    //DLog(@"WDMessage messageWithFile %@", m);
-    return m;
-#else
-    return [WDMessage messageWithFile:url andState:kWDMessageStateReadyToSend];
-#endif
 }
 
 + (id)messageWithFile:(NSURL *)url andState:(NSString *)state {
@@ -55,7 +40,6 @@
     // DW: content will be file size
     NSUInteger fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:m.fileURL.path error:nil] fileSize]; 
     m.content = [NSData dataWithBytes:&fileSize length:sizeof(fileSize)];
-    m.type = WDMessageTypeFile;
     return m;
 }
 
@@ -64,7 +48,6 @@
     m.sender = message.sender;
     m.time = message.time;
     m.fileURL = message.fileURL;
-    m.type = message.type;
     return m;
 }
 
@@ -85,12 +68,12 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"WDMessage %@, %@, %@, %@, %i", 
+    return [NSString stringWithFormat:@"WDMessage %@, %@, %@, %@, %@", 
             self.sender, 
             self.time, 
+            self.state, 
             self.fileURL, 
-            self.content, 
-            self.type];
+            self.content];
 }
 
 - (id)init {
@@ -126,7 +109,6 @@
     [encoder encodeObject:_state forKey:kWDMessageState];
     [encoder encodeObject:_fileURL forKey:kWDMessageFileURL];
     [encoder encodeObject:_content forKey:kWDMessageContent];
-    [encoder encodeInteger:_type forKey:kWDMessageType];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
@@ -136,7 +118,6 @@
     _state = [[decoder decodeObjectForKey:kWDMessageState] retain];
     _fileURL = [[decoder decodeObjectForKey:kWDMessageFileURL] retain];
     _content = [[decoder decodeObjectForKey:kWDMessageContent] retain];
-    _type = [decoder decodeIntegerForKey:kWDMessageType];
     return self;
 }
 
@@ -146,16 +127,13 @@
                  withTime:(NSDate *)aTime 
                 withState:(NSString *)aState 
                   withUrl:(NSURL *)aURL 
-              withContent:(NSData *)aContent 
-                 withType:(NSUInteger)aType
-{
+              withContent:(NSData *)aContent {
     if (self = [super init]) {
         _sender = [aSender retain];
         _time = [aTime retain];
         _state = [aState retain];
         _fileURL = [aURL retain];
         _content = [aContent retain];
-        _type = aType;
     }
     return self;
 }
@@ -165,8 +143,7 @@
                                                                      withTime:_time
                                                                     withState:_state
                                                                       withUrl:_fileURL 
-                                                                  withContent:_content 
-                                                                     withType:_type];
+                                                                  withContent:_content];
     return copy;
 }
 

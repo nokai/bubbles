@@ -8,12 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-enum {
-    WDMessageTypeText, 
-    WDMessageTypeFile
-};
-typedef NSUInteger WDMessageType;
-
 // DW: states actually
 #define kWDMessageStateText             @"kWDMessageStateText"
 
@@ -29,7 +23,6 @@ typedef NSUInteger WDMessageType;
     NSString *_state;   // DW: state is used in file transfer
     NSURL *_fileURL;    // DW: available only in file type
     NSData *_content;
-    NSUInteger _type;
 }
 
 @property (nonatomic, retain) NSString *sender;
@@ -37,13 +30,10 @@ typedef NSUInteger WDMessageType;
 @property (nonatomic, retain) NSString *state;
 @property (nonatomic, retain) NSURL *fileURL;
 @property (nonatomic, retain) NSData *content;
-@property (nonatomic, assign) WDMessageType type;
 
 + (BOOL)isImageURL:(NSURL *)url;
 + (id)messageWithText:(NSString *)text;
-+ (id)messageWithFile:(NSURL *)url;
 + (id)messageWithFile:(NSURL *)url andState:(NSString *)state;
-+ (id)messageInfoFromMessage:(WDMessage *)message;
 
 - (NSUInteger)fileSize;
 - (void)setFileSize:(NSUInteger)fileSize;

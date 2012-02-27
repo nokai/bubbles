@@ -222,7 +222,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     if ([message.state isEqualToString: kWDMessageStateText] && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:1]) {
         NSButtonCell *buttonCell = (NSButtonCell *)cell;
         [buttonCell setImagePosition:NSNoImage];
-    } else if (message.type == WDMessageTypeFile && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:1]) {
+    } else if ([message.state isEqualToString:kWDMessageStateFile] && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:1]) {
         NSButtonCell *buttonCell = (NSButtonCell *)cell;
         [buttonCell setImagePosition:NSImageOverlaps];
     }
@@ -236,7 +236,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     WDMessage *message = (WDMessage *)data;
     if ([message.state isEqualToString: kWDMessageStateText]){
         return [NSImage imageNamed:@"text"];
-    } else if (message.type == WDMessageTypeFile){
+    } else if ([message.state isEqualToString:kWDMessageStateFile]){
         NSImage *icon = [NSImage imageWithPreviewOfFileAtPath:[message.fileURL path] asIcon:YES];
         return icon;
     }
@@ -254,7 +254,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
             string = [string stringByAppendingString:@"......."];
         }
         return string;
-    } else if (message.type == WDMessageTypeFile){
+    } else if ([message.state isEqualToString:kWDMessageStateFile]){
         return [message.fileURL lastPathComponent];
     }
     return nil;

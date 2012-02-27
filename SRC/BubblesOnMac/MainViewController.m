@@ -89,19 +89,17 @@
     [_historyPopOverController.filehistoryTableView reloadData];
 }
 
-- (void)sendFile
-{
+- (void)sendFile {
     if (_isView == kTextViewController || _fileURL == nil) {
         return ;
     }
-    WDMessage *t = [[WDMessage messageWithFile:_fileURL] retain];
-    [self storeMessage:[WDMessage messageInfoFromMessage:t]];
+    WDMessage *t = [[WDMessage messageWithFile:_fileURL andState:kWDMessageStateReadyToSend] retain];
+    [self storeMessage:t];
     [_bubble broadcastMessage:t];
     [t release];  
 }
 
-- (void)sendText
-{
+- (void)sendText {
     if (_isView == kTextViewController || [_textViewController.textField.string length] == 0) {
         WDMessage *t = [WDMessage messageWithText:_textViewController.textField.string];
         [self storeMessage:t];
@@ -323,6 +321,13 @@
 
 - (void)percentUpdated {
     //[_messagesView reloadData];
+}
+
+- (void)didReceiveMessage:(WDMessage *)message {
+    if (_isView == kTextViewController) {
+        _textViewController.textField.string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
+        [self storeMessage:message];
+    } 
 }
 
 - (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text {

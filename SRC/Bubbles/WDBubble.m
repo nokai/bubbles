@@ -511,7 +511,7 @@
         if ([_currentMessage.state isEqualToString:kWDMessageStateReadyToReceive]) {
             DLog(@"WDBubble onSocketDidDisconnect file transfer receiver ended with state %@", _currentMessage.state);
             // DW: clean socket, "onDisconnect" is not reliable on file transfer
-            [self.delegate didReceiveMessage:[WDMessage messageWithFile:_currentMessage.fileURL] ofFile:_currentMessage.fileURL];
+            [self.delegate didReceiveMessage:[WDMessage messageWithFile:_currentMessage.fileURL andState:kWDMessageStateFile]];
             
             [_currentMessage release];
             _currentMessage = nil;
@@ -519,22 +519,20 @@
         } else {
             WDMessage *t = [NSKeyedUnarchiver unarchiveObjectWithData:_dataBuffer];
             if ([t.state isEqualToString: kWDMessageStateText]) {
-                [self.delegate didReceiveMessage:t ofText:[[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease]];
-            } else if (t.type == WDMessageTypeFile) {
-                if ([t.state isEqualToString:kWDMessageStateReadyToSend]) {
-                    DLog(@"WDBubble onSocketDidDisconnect %@ received kWDMessageStateReadyToSend", _currentMessage.state);
-                    // DW: begin of a file transfer
-                    _streamBytesWrote = 0;
-                    _currentMessage = [[WDMessage messageWithFile:t.fileURL andState:kWDMessageStateReadyToReceive] retain];
-                    _currentMessage.fileSize = t.fileSize;
-                    [self connectToServiceNamed:t.sender];
-                } else if ([t.state isEqualToString:kWDMessageStateReadyToReceive]) {
-                    DLog(@"WDBubble onSocketDidDisconnect %@ received kWDMessageStateReadyToReceive", _currentMessage.state);
-                    // DW: receiver is readly for the file, send it then
-                    _streamBytesRead = 0;
-                    _currentMessage.state = kWDMessageStateSending;
-                    [self connectToServiceNamed:t.sender];
-                }
+                [self.delegate didReceiveMessage:t];
+            } else if ([t.state isEqualToString:kWDMessageStateReadyToSend]) {
+                DLog(@"WDBubble onSocketDidDisconnect %@ received kWDMessageStateReadyToSend", _currentMessage.state);
+                // DW: begin of a file transfer
+                _streamBytesWrote = 0;
+                _currentMessage = [[WDMessage messageWithFile:t.fileURL andState:kWDMessageStateReadyToReceive] retain];
+                _currentMessage.fileSize = t.fileSize;
+                [self connectToServiceNamed:t.sender];
+            } else if ([t.state isEqualToString:kWDMessageStateReadyToReceive]) {
+                DLog(@"WDBubble onSocketDidDisconnect %@ received kWDMessageStateReadyToReceive", _currentMessage.state);
+                // DW: receiver is readly for the file, send it then
+                _streamBytesRead = 0;
+                _currentMessage.state = kWDMessageStateSending;
+                [self connectToServiceNamed:t.sender];
             }
             
             // DW: clean up
