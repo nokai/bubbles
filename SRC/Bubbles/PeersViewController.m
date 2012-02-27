@@ -9,7 +9,7 @@
 #import "PeersViewController.h"
 
 @implementation PeersViewController
-@synthesize dismissButton, lockButton, bubble = _bubble;
+@synthesize selectedServiceName = _selectedServiceName, dismissButton, lockButton, bubble = _bubble, delegate;
 
 - (void)refreshLockStatus {
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
@@ -119,7 +119,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
     }
     
     // Configure the cell...
@@ -129,6 +129,12 @@
         cell.textLabel.text = [t.name stringByAppendingString:@" (local)"];
     } else {
         cell.textLabel.text = t.name;
+    }
+    
+    if ([t.name isEqualToString:self.selectedServiceName]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
     return cell;
@@ -175,22 +181,21 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Configure the cell...
+    NSNetService *t = [self.bubble.servicesFound objectAtIndex:indexPath.row];
+    if ([t.name isEqualToString:self.bubble.service.name]) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        return;
+    } 
+    self.selectedServiceName = t.name;
+    [tableView reloadData];
 }
 
 #pragma mark - IBOutlets
 
 - (IBAction)dismiss:(id)sender {
+    [self.delegate didSelectServiceName:self.selectedServiceName];
     [self dismissModalViewControllerAnimated:YES];
 }
 

@@ -14,6 +14,7 @@
 #import "WDBubble.h"
 #import "DirectoryWatcher.h"
 #import "HelpViewController.h"
+#import "PeersViewController.h"
 #import "PasswordViewController.h"
 #import "TextViewController.h"
 
@@ -32,9 +33,11 @@ MFMailComposeViewControllerDelegate,
 MFMessageComposeViewControllerDelegate, 
 UIDocumentInteractionControllerDelegate, 
 DirectoryWatcherDelegate, 
-UISplitViewControllerDelegate> {
+UISplitViewControllerDelegate, 
+PeersViewControllerDelegate> {
     // DW: bubbles core
     WDBubble *_bubble;
+    NSString *_selectedServiceName;
     NSURL *_fileURL;
     NSMutableArray *_messages;
     

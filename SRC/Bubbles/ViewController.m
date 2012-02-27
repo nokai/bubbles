@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import "UIImage+Resize.h"
 #import "UIImage+Normalize.h"
-#import "PeersViewController.h"
 #import <MobileCoreServices/UTType.h>
 #import <MobileCoreServices/UTCoreTypes.h>
 
@@ -75,12 +74,29 @@
     [_messagesView reloadData];
 }
 
+
+// DW: NO for can not send, YES for will send
+- (BOOL)sendToSelectedServiceOfMessage:(WDMessage *)message {
+    if (!_selectedServiceName || [_selectedServiceName isEqualToString:@""]) {
+        return NO;
+    }
+    
+    [_bubble sendMessage:message toServiceNamed:_selectedServiceName];
+    return YES;
+}
+
 // DW: can only send images and movies for now.
 - (void)sendFile {
     if (_fileURL) {
         // DW: a movie or JPG or PNG        
         WDMessage *t = [[WDMessage messageWithFile:_fileURL andState:kWDMessageStateReadyToSend] retain];
-        [_bubble broadcastMessage:t];
+        
+        // DW: we use one to one sending for now
+        //[_bubble broadcastMessage:t];
+        if (![self sendToSelectedServiceOfMessage:t]) {
+            [t release];
+            return;
+        }
         
         // DW: store message metadata without content data
         [self storeMessage:t];
@@ -205,6 +221,7 @@
 
 - (void)dealloc {
     [_bubble release];
+    [_selectedServiceName release];
     [_messages release];
     [_documents release];
     [_directoryWatcher release];
@@ -235,13 +252,19 @@
     NSDictionary *t = [NSDictionary dictionaryWithObject:@"NO" forKey:kUserDefaultsUsePassword];
     [[NSUserDefaults standardUserDefaults] registerDefaults:t];
     
-    // DW: lock
+    // DW: NC
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(servicesUpdated:) 
+                                                 name:kWDBubbleNotificationServiceUpdated
+                                               object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(shouldLock:) 
                                                  name:kWDBubbleNotificationShouldLock
                                                object:nil];
     
     // DW: messages or files
+    _selectedServiceName = nil;
     _thumbnails = [[NSMutableDictionary alloc] init];
     _messages = [[NSMutableArray alloc] init];
     _directoryWatcher = [[DirectoryWatcher watchFolderWithPath:[NSURL iOSDocumentsDirectoryPath] delegate:self] retain];
@@ -360,6 +383,8 @@
 
 - (IBAction)showPeers:(id)sender {
     PeersViewController *vc = [[PeersViewController alloc] initWithNibName:@"PeersViewController" bundle:nil];
+    vc.delegate = self;
+    vc.selectedServiceName = _selectedServiceName;
     vc.bubble = _bubble;
     
     UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
@@ -495,8 +520,11 @@
     }
     
     WDMessage *t = [[WDMessage messageWithText:text] retain];
+    if (![self sendToSelectedServiceOfMessage:t]) {
+        [t release];
+        return;
+    }
     [self storeMessage:t];
-    [_bubble broadcastMessage:t];
     [t release];
 }
 
@@ -752,17 +780,19 @@
     } else if ([buttonTitle isEqualToString:kActionSheetButtonCancel]) {
         [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
     } else if ([buttonTitle isEqualToString:kActionSheetButtonSend]) {
+        WDMessage *t = nil;        
         if ([message.state isEqualToString: kWDMessageStateText]) {
-            WDMessage *t = [[WDMessage messageWithText:[[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease]] retain];
-            [self storeMessage:t];
-            [_bubble broadcastMessage:t];
-            [t release];
+            t = [[WDMessage messageWithText:[[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease]] retain];
         } else if ([message.state isEqualToString:kWDMessageStateFile]) {
-            WDMessage *t = [[WDMessage messageWithFile:message.fileURL andState:kWDMessageStateReadyToSend] retain];
-            [self storeMessage:t];
-            [_bubble broadcastMessage:t];
-            [t release];
+            t = [[WDMessage messageWithFile:message.fileURL andState:kWDMessageStateReadyToSend] retain];
         }
+
+        if (![self sendToSelectedServiceOfMessage:t]) {
+            [t release];
+            return;
+        }
+        [self storeMessage:t];
+        [t release];
     }
     
     [message release];
@@ -842,7 +872,30 @@
     //self.masterPopoverController = nil;
 }
 
+#pragma mark - PeersViewControllerDelegate
+
+- (void)didSelectServiceName:(NSString *)serviceName {
+    _selectedServiceName = [serviceName retain];
+}
+
 #pragma mark - NC
+
+- (void)servicesUpdated:(NSNotification *)notification {
+    if (self.bubble.servicesFound.count > 1) {
+        for (NSNetService *s in self.bubble.servicesFound) {
+            if ([s.name isEqualToString:self.bubble.service.name]) {
+                continue;
+            } else {
+                _selectedServiceName = [s.name retain];
+            }
+        }
+    } else {
+        if (_selectedServiceName) {
+            [_selectedServiceName release];
+        }
+        _selectedServiceName = nil;
+    }
+}
 
 - (void)shouldLock:(NSNotification *)notification {
     [self lock];

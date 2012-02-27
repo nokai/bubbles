@@ -246,16 +246,6 @@
     }
 }
 
-- (void)timerCheckProgress:(NSTimer*)theTimer {
-    _pertangeIndicatior = [_socketReceive progressOfReadReturningTag:nil bytesDone:nil total:nil];
-    //DLog(@"percent is %f",_pertangeIndicatior);
-    if (_pertangeIndicatior == 1.0) {
-        [_timer invalidate];
-        [_timer release];
-        _timer = nil;
-    }
-}
-
 - (void)readDataFromFile {
     if(!_streamDataBufferReader) {
         _streamDataBufferReader = [[NSMutableData data] retain];
@@ -380,12 +370,8 @@
     //[_browser searchForBrowsableDomains];
 }
 
-- (void)broadcastMessage:(WDMessage *)msg {
-    _currentMessage = [msg retain];
-    
-    // DW: timer
-    _timer = [[NSTimer scheduledTimerWithTimeInterval:-1 target:self selector:@selector(timerCheckProgress:) userInfo:nil repeats:YES] retain];
-    //[_timer fire];
+- (void)broadcastMessage:(WDMessage *)message {
+    _currentMessage = [message retain];
     
     for (NSNetService *s in self.servicesFound) {
         if ([s.name isEqualToString:_service.name]) {
@@ -398,6 +384,11 @@
             [self resolveService:s];
         }
     }
+}
+
+- (void)sendMessage:(WDMessage *)message toServiceNamed:(NSString *)name {
+    _currentMessage = [message retain];
+    [self connectToServiceNamed:name];
 }
 
 - (void)stopService {

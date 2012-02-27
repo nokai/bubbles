@@ -61,12 +61,6 @@
     NSInteger _streamBytesWrote;
     NSOutputStream *_streamFileWriter;
     NSMutableData *_streamDataBufferWriter;
-    
-    // 20120114 DW: timer to check progress
-    NSTimer *_timer;
-    
-    // Wuziqi: Percentage of current exceution
-    float _pertangeIndicatior;
 }
 
 @property (nonatomic, retain) NSNetService *service;
@@ -75,8 +69,10 @@
 
 - (void)publishServiceWithPassword:(NSString *)pwd;
 - (void)browseServices;
-- (void)broadcastMessage:(WDMessage *)msg;
 - (void)stopService;
+
+- (void)broadcastMessage:(WDMessage *)message;
+- (void)sendMessage:(WDMessage *)message toServiceNamed:(NSString *)name;
 
 // DW: transfer percent, from 0 to 1
 - (float)percentTransfered;

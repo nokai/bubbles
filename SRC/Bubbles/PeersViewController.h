@@ -9,7 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "WDBubble.h"
 
+@protocol PeersViewControllerDelegate
+- (void)didSelectServiceName:(NSString *)serviceName;
+@end
+
 @interface PeersViewController : UITableViewController
+
+@property (nonatomic, retain) NSString *selectedServiceName;
+
+@property (nonatomic, retain) id<PeersViewControllerDelegate> delegate;
 
 // DW: dimiss button is on iPhone
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *dismissButton;
