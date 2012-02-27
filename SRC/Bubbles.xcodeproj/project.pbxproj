@@ -43,8 +43,6 @@
 		03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		188E022414FB2BF500B1B319 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 188E022314FB2BF500B1B319 /* BubblesHelp */; };
 		188E022514FB2BF500B1B319 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 188E022314FB2BF500B1B319 /* BubblesHelp */; };
-		18E832FA14FA4245001F0709 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 18E832F914FA4245001F0709 /* BubblesHelp */; };
-		18E832FB14FA4245001F0709 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 18E832F914FA4245001F0709 /* BubblesHelp */; };
 		C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C111265514DE2C7800884F7D /* DirectoryWatcher.m */; };
 		C11A3A5314F9277600892631 /* add_file.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4E14F9277600892631 /* add_file.png */; };
 		C11A3A5414F9277600892631 /* add_txt.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4F14F9277600892631 /* add_txt.png */; };
@@ -113,6 +111,9 @@
 		C1F80FC714BA7A1B006F0779 /* PeersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F80FC514BA7A1B006F0779 /* PeersViewController.xib */; };
 		C1F80FDD14BA84A6006F0779 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F80FDB14BA84A6006F0779 /* PasswordViewController.m */; };
 		C1F80FDE14BA84A6006F0779 /* PasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F80FDC14BA84A6006F0779 /* PasswordViewController.xib */; };
+		C1F950CB14FBE50700482ECF /* WDSound.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F950CA14FBE50700482ECF /* WDSound.m */; };
+		C1F950CF14FBE62A00482ECF /* kWDSoundFileReceived.aif in Resources */ = {isa = PBXBuildFile; fileRef = C1F950CE14FBE62A00482ECF /* kWDSoundFileReceived.aif */; };
+		C1F950D114FBE6FE00482ECF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1F950D014FBE6FE00482ECF /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -168,8 +169,6 @@
 		03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+NSView_Fade_.m"; sourceTree = "<group>"; };
 		03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		188E022314FB2BF500B1B319 /* BubblesHelp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BubblesHelp; sourceTree = "<group>"; };
-		189222CA14F8F692003CD713 /* text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text.png; sourceTree = "<group>"; };
-		18E832F914FA4245001F0709 /* BubblesHelp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BubblesHelp; sourceTree = "<group>"; };
 		C111265414DE2C7800884F7D /* DirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryWatcher.h; path = Bubbles/DirectoryWatcher.h; sourceTree = SOURCE_ROOT; };
 		C111265514DE2C7800884F7D /* DirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectoryWatcher.m; path = Bubbles/DirectoryWatcher.m; sourceTree = SOURCE_ROOT; };
 		C11A3A4E14F9277600892631 /* add_file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_file.png; path = Resources/iPhone/add_file.png; sourceTree = SOURCE_ROOT; };
@@ -259,6 +258,10 @@
 		C1F80FDA14BA84A6006F0779 /* PasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PasswordViewController.h; path = Bubbles/PasswordViewController.h; sourceTree = SOURCE_ROOT; };
 		C1F80FDB14BA84A6006F0779 /* PasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PasswordViewController.m; path = Bubbles/PasswordViewController.m; sourceTree = SOURCE_ROOT; };
 		C1F80FDC14BA84A6006F0779 /* PasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PasswordViewController.xib; path = Bubbles/PasswordViewController.xib; sourceTree = SOURCE_ROOT; };
+		C1F950C914FBE50700482ECF /* WDSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WDSound.h; path = Bubbles/WDSound.h; sourceTree = "<group>"; };
+		C1F950CA14FBE50700482ECF /* WDSound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WDSound.m; path = Bubbles/WDSound.m; sourceTree = "<group>"; };
+		C1F950CE14FBE62A00482ECF /* kWDSoundFileReceived.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = kWDSoundFileReceived.aif; sourceTree = "<group>"; };
+		C1F950D014FBE6FE00482ECF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +269,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1F950D114FBE6FE00482ECF /* AudioToolbox.framework in Frameworks */,
 				C1F4B9AC14E8E39900E878CD /* MobileCoreServices.framework in Frameworks */,
 				C11FC3A814DB8D75002A92A2 /* MessageUI.framework in Frameworks */,
 				C121949A14B5A9FC00159A9F /* CFNetwork.framework in Frameworks */,
@@ -403,6 +407,7 @@
 		C121946214B591D700159A9F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C1F950D014FBE6FE00482ECF /* AudioToolbox.framework */,
 				C1F4B9AB14E8E39900E878CD /* MobileCoreServices.framework */,
 				03A887AD14E2BFAD008CA643 /* QuartzCore.framework */,
 				C11FC3A714DB8D75002A92A2 /* MessageUI.framework */,
@@ -420,6 +425,7 @@
 		C121946914B591D700159A9F /* Bubbles */ = {
 			isa = PBXGroup;
 			children = (
+				C1F950CD14FBE62A00482ECF /* Sounds */,
 				C1393F1114D91621005AFEB6 /* Resources */,
 				C1E624D114BD940B0010F395 /* iPad */,
 				C1E624D014BD94020010F395 /* iPhone */,
@@ -529,6 +535,8 @@
 				C1CFCD1114B98552008A1B1F /* WDBubble.m */,
 				C1CFCD1214B98552008A1B1F /* WDMessage.h */,
 				C1CFCD1314B98552008A1B1F /* WDMessage.m */,
+				C1F950C914FBE50700482ECF /* WDSound.h */,
+				C1F950CA14FBE50700482ECF /* WDSound.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -564,6 +572,14 @@
 			);
 			name = iPad;
 			sourceTree = "<group>";
+		};
+		C1F950CD14FBE62A00482ECF /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				C1F950CE14FBE62A00482ECF /* kWDSoundFileReceived.aif */,
+			);
+			path = Sounds;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -673,6 +689,7 @@
 				C15859C514FA31CD0097FD41 /* Default-Portrait~ipad.png in Resources */,
 				C15859C814FA33250097FD41 /* Default-Landscape~ipad.png in Resources */,
 				188E022414FB2BF500B1B319 /* BubblesHelp in Resources */,
+				C1F950CF14FBE62A00482ECF /* kWDSoundFileReceived.aif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -724,6 +741,7 @@
 				C167CE1414E8F5CF00B419CD /* UIImage+RoundedCorner.m in Sources */,
 				C133FAB514EBFBF4004E406B /* UIImage+Normalize.m in Sources */,
 				C192664314ECD7820090D8F7 /* HelpViewController.m in Sources */,
+				C1F950CB14FBE50700482ECF /* WDSound.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

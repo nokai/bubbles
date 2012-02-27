@@ -11,6 +11,7 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 
+#import "WDSound.h"
 #import "WDBubble.h"
 #import "DirectoryWatcher.h"
 #import "HelpViewController.h"
@@ -60,6 +61,9 @@ PeersViewControllerDelegate> {
     
     // DW: help
     HelpViewController *_helpViewController;
+    
+    // DW: sound
+    WDSound *_sound;
 }
 
 @property (nonatomic, retain) WDBubble *bubble;

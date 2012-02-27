@@ -50,9 +50,9 @@
 - (void)refreshImageAtURL:(NSURL *)fileURL {
     // DW: firstly try image
     UIImage *image = [[[[UIImage imageWithContentsOfFile:[fileURL path]] normalize] resizedImageWithContentMode:UIViewContentModeScaleAspectFill
-                                                                                                bounds:CGSizeMake(kTableViewCellHeight, kTableViewCellHeight)
-                                                                                  interpolationQuality:kCGInterpolationHigh] 
-             croppedImage:CGRectMake(0, 0, kTableViewCellHeight, kTableViewCellHeight)];
+                                                                                                         bounds:CGSizeMake(kTableViewCellHeight, kTableViewCellHeight)
+                                                                                           interpolationQuality:kCGInterpolationHigh] 
+                      croppedImage:CGRectMake(0, 0, kTableViewCellHeight, kTableViewCellHeight)];
     if (!image) {
         // DW: secondly a normal file
         if (fileURL) {
@@ -253,6 +253,9 @@
         }
     }
     
+    // DW: sound
+    _sound = [[WDSound alloc] init];
+    
     // DW: user defauts
     NSDictionary *t = [NSDictionary dictionaryWithObject:@"NO" forKey:kUserDefaultsUsePassword];
     [[NSUserDefaults standardUserDefaults] registerDefaults:t];
@@ -449,11 +452,13 @@
 - (void)didReceiveMessage:(WDMessage *)message {
     message.time = [NSDate date];
     [self storeMessage:message];
+    [_sound playSoundForKey:kWDSoundFileReceived];
 }
 
 - (void)didSendMessage:(WDMessage *)message {
     message.state = kWDMessageStateFile;
     //[self storeMessage:message];
+    [_sound playSoundForKey:kWDSoundFileReceived];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -795,7 +800,7 @@
         } else if ([message.state isEqualToString:kWDMessageStateFile]) {
             t = [[WDMessage messageWithFile:message.fileURL andState:kWDMessageStateReadyToSend] retain];
         }
-
+        
         if (![self sendToSelectedServiceOfMessage:t]) {
             [t release];
             return;
