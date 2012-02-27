@@ -40,9 +40,8 @@
 		03E8C3EA14EA39C2001F5091 /* NSTableView+ContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */; };
 		03EFE64B14E2EF04007FA2B6 /* NSView+NSView_Fade_.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */; };
 		03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		18E832FA14FA4245001F0709 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 18E832F914FA4245001F0709 /* BubblesHelp */; };
-		18E832FB14FA4245001F0709 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 18E832F914FA4245001F0709 /* BubblesHelp */; };
-		18913F1214F86F5700089802 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 18913F1114F86F5700089802 /* BubblesHelp */; };
+		188E022414FB2BF500B1B319 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 188E022314FB2BF500B1B319 /* BubblesHelp */; };
+		188E022514FB2BF500B1B319 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 188E022314FB2BF500B1B319 /* BubblesHelp */; };
 		C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C111265514DE2C7800884F7D /* DirectoryWatcher.m */; };
 		C11A3A5314F9277600892631 /* add_file.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4E14F9277600892631 /* add_file.png */; };
 		C11A3A5414F9277600892631 /* add_txt.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4F14F9277600892631 /* add_txt.png */; };
@@ -165,8 +164,8 @@
 		03EFE64914E2EF04007FA2B6 /* NSView+NSView_Fade_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+NSView_Fade_.h"; sourceTree = "<group>"; };
 		03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+NSView_Fade_.m"; sourceTree = "<group>"; };
 		03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		188E022314FB2BF500B1B319 /* BubblesHelp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BubblesHelp; sourceTree = "<group>"; };
 		189222CA14F8F692003CD713 /* text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text.png; sourceTree = "<group>"; };
-		18E832F914FA4245001F0709 /* BubblesHelp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BubblesHelp; sourceTree = "<group>"; };
 		C111265414DE2C7800884F7D /* DirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryWatcher.h; path = Bubbles/DirectoryWatcher.h; sourceTree = SOURCE_ROOT; };
 		C111265514DE2C7800884F7D /* DirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectoryWatcher.m; path = Bubbles/DirectoryWatcher.m; sourceTree = SOURCE_ROOT; };
 		C11A3A4E14F9277600892631 /* add_file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_file.png; path = Resources/iPhone/add_file.png; sourceTree = SOURCE_ROOT; };
@@ -289,7 +288,7 @@
 		039C96D214E68BC500BBEEC5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				18E832F914FA4245001F0709 /* BubblesHelp */,
+				188E022314FB2BF500B1B319 /* BubblesHelp */,
 				039C96D314E68BDD00BBEEC5 /* swap.png */,
 				0378FCEF14F601620044A43B /* add txt.png */,
 				0378FCF014F601620044A43B /* history.png */,
@@ -670,7 +669,7 @@
 				C11A3A6114F92C1600892631 /* peer@2x.png in Resources */,
 				C15859C514FA31CD0097FD41 /* Default-Portrait~ipad.png in Resources */,
 				C15859C814FA33250097FD41 /* Default-Landscape~ipad.png in Resources */,
-				18E832FA14FA4245001F0709 /* BubblesHelp in Resources */,
+				188E022414FB2BF500B1B319 /* BubblesHelp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -693,8 +692,8 @@
 				0378FCF414F601620044A43B /* history.png in Resources */,
 				0378FCF514F601620044A43B /* peers.png in Resources */,
 				0378FCF614F601620044A43B /* send.png in Resources */,
-				18E832FB14FA4245001F0709 /* BubblesHelp in Resources */,
 				0322FC9614F9228100647B89 /* FeatureWindowController.xib in Resources */,
+				188E022514FB2BF500B1B319 /* BubblesHelp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
