@@ -24,6 +24,7 @@
 @end
 
 @protocol WDBubbleDelegate
+- (void)percentUpdated;
 - (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text;
 - (void)didReceiveMessage:(WDMessage *)message ofFile:(NSURL *)url;
 @end
@@ -73,5 +74,9 @@
 - (void)browseServices;
 - (void)broadcastMessage:(WDMessage *)msg;
 - (void)stopService;
+
+// DW: transfer percent, from 0 to 1
+- (float)percentReceived;
+- (float)percentSent;
 
 @end

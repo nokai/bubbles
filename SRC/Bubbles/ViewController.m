@@ -393,6 +393,10 @@
 
 #pragma mark - WDBubbleDelegate
 
+- (void)percentUpdated {
+    //[_messagesView reloadData];
+}
+
 - (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text {
     DLog(@"VC didReceiveText %@", text);
     // DW: change time to received time since time may be different
@@ -627,6 +631,9 @@
             cell.imageView.image = [UIImage imageNamed:@"Icon-Text"];
         } else if (t.type == WDMessageTypeFile) {
             cell.textLabel.text = [t.fileURL lastPathComponent];
+            
+            // DW: we show percentage we transfered the file here
+            
             [self fillCell:cell withFileURL:t.fileURL];
         }
     } else if (_segmentSwith.selectedSegmentIndex == 1) {
@@ -636,6 +643,9 @@
         
         
         cell.textLabel.text = [[fileURL path] lastPathComponent];
+        
+        // DW: we show percentage we transfered the file here
+        
         [self fillCell:cell withFileURL:fileURL];
         
         // DW: size info in detail label
@@ -665,11 +675,11 @@
 	}
 }
 
-#pragma mark - UIActionSheetDelegate
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return kTableViewCellHeight;
 }
+
+#pragma mark - UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];

@@ -235,7 +235,7 @@
 		C1CFCD0E14B98552008A1B1F /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = Bubbles/AsyncSocket.h; sourceTree = SOURCE_ROOT; };
 		C1CFCD0F14B98552008A1B1F /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsyncSocket.m; path = Bubbles/AsyncSocket.m; sourceTree = SOURCE_ROOT; };
 		C1CFCD1014B98552008A1B1F /* WDBubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WDBubble.h; path = Bubbles/WDBubble.h; sourceTree = SOURCE_ROOT; };
-		C1CFCD1114B98552008A1B1F /* WDBubble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WDBubble.m; path = Bubbles/WDBubble.m; sourceTree = SOURCE_ROOT; };
+		C1CFCD1114B98552008A1B1F /* WDBubble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = WDBubble.m; path = Bubbles/WDBubble.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		C1CFCD1214B98552008A1B1F /* WDMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WDMessage.h; path = Bubbles/WDMessage.h; sourceTree = SOURCE_ROOT; };
 		C1CFCD1314B98552008A1B1F /* WDMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WDMessage.m; path = Bubbles/WDMessage.m; sourceTree = SOURCE_ROOT; };
 		C1CFCD1814B985AE008A1B1F /* Bubbles-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Bubbles-Info.plist"; path = "Bubbles/Bubbles-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -895,7 +895,7 @@
 				GCC_PREFIX_HEADER = "BubblesOnMac/BubblesOnMac-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "BubblesOnMac/BubblesOnMac-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Deliver;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -922,7 +922,7 @@
 				GCC_PREFIX_HEADER = "BubblesOnMac/BubblesOnMac-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "BubblesOnMac/BubblesOnMac-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Deliver;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = macosx10.7;

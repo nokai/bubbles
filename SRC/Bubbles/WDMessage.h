@@ -16,8 +16,8 @@ typedef NSUInteger WDMessageType;
 
 // DW: states actually
 #define kWDMessageControlText           @"kWDMessageControlText"
-#define kWDMessageControlBegin          @"kWDMessageControlBegin"
-#define kWDMessageControlReady          @"kWDMessageControlReady"
+#define kWDMessageControlReadyToSend    @"kWDMessageControlReadyToSend"
+#define kWDMessageControlReadyToReceive @"kWDMessageControlReadyToReceive"
 #define kWDMessageControlTransfering    @"kWDMessageControlTransfering"
 
 @interface WDMessage : NSObject <NSCoding,NSCopying> {

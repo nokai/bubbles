@@ -321,6 +321,10 @@
 
 #pragma mark - WDBubbleDelegate
 
+- (void)percentUpdated {
+    //[_messagesView reloadData];
+}
+
 - (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text {
     if (_isView == kTextViewController) {
         _textViewController.textField.string = text;

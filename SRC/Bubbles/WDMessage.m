@@ -43,7 +43,7 @@
     //DLog(@"WDMessage messageWithFile %@", m);
     return m;
 #else
-    return [WDMessage messageWithFile:url andState:kWDMessageControlBegin];
+    return [WDMessage messageWithFile:url andState:kWDMessageControlReadyToSend];
 #endif
 }
 
