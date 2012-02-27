@@ -126,35 +126,40 @@
 // Wu:Added on 2-27 
 // Wu:To solve the problem of NSURL with unicode character
 
-- (NSURL *)UnicodeURLWithoutNameConflict
-{
+- (NSURL *)UnicodeURLWithoutNameConflict {
     NSString *eacapedString = [[self URLByDeletingPathExtension] escapedStringFromURL];
-    NSString *orginFileName = [eacapedString stringByReplacingOccurrencesOfString:@" " 
-                                                                   withString:@"%20"];
-    NSString *fileName = orginFileName;
-    NSInteger filePostFix = 2;
+    NSString *originalFileName = [eacapedString stringByReplacingOccurrencesOfString:@" " 
+                                                                          withString:@"%20"];
+    NSString *currentFileName = originalFileName;
+    NSInteger currentFileNamePostfix = 2;
     
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-    
-    
+    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@.%@", 
+                                            [NSURL iOSDocumentsDirectoryURL], 
+                                            currentFileName, 
+                                            [self pathExtension]]];
+    while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
+        currentFileName = [NSString stringWithFormat:@"%@%%20%i", originalFileName, currentFileNamePostfix++];
+        storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@.%@", currentFileName, [self pathExtension]] 
+                          relativeToURL:[self URLByDeletingLastPathComponent]];
+    }
 #elif TARGET_OS_MAC
     NSURL *defaultURL = [self URLByDeletingLastPathComponent];
     NSURL *storeURL = [NSURL URLWithString:
                        [NSString stringWithFormat:@"%@%@.%@", 
                         [defaultURL absoluteString], 
-                        fileName, 
+                        currentFileName, 
                         [[self pathExtension] lowercaseString]]];
     while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
-        fileName = [NSString stringWithFormat:@"%@%%20%i", orginFileName, filePostFix++];
+        currentFileName = [NSString stringWithFormat:@"%@%%20%i", originalFileName, currentFileNamePostfix++];
         storeURL = [NSURL URLWithString:
                     [NSString stringWithFormat:@"%@%@.%@", 
                      [defaultURL absoluteString], 
-                     fileName, 
+                     currentFileName, 
                      [[self pathExtension] lowercaseString]]];
     }
 #endif
     return storeURL;
-    
 }
 
 - (NSString *)escapedStringFromURL

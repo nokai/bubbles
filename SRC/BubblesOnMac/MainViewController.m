@@ -323,41 +323,43 @@
     //[_messagesView reloadData];
 }
 
+- (void)willReceiveMessage:(WDMessage *)message {
+    
+}
+
 - (void)didReceiveMessage:(WDMessage *)message {
-    if (_isView == kTextViewController) {
-        _textViewController.textField.string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
+    if ([message.state isEqualToString:kWDMessageStateText]) {
+        if (_isView == kTextViewController) {
+            _textViewController.textField.string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
+            [self storeMessage:message];
+        }
+    } else if ([message.state isEqualToString:kWDMessageStateFile]) {
+        if (_isView != kDragFileController) {
+            return ;
+        }
         [self storeMessage:message];
-    } 
+        [_dragFileController.label setHidden:YES];
+        
+        // DW: store this url for drag and drop
+        if (_fileURL) {
+            [_fileURL release];
+        }
+        _fileURL = [message.fileURL retain];
+        
+        NSImage *image = [[NSImage alloc] initWithContentsOfURL:message.fileURL];
+        if (image != nil) {
+            [_dragFileController.imageView setImage:image];
+            [image release];
+        } else {
+            NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[message.fileURL path] asIcon:YES];
+            [_dragFileController.imageView setImage:quicklook];
+        }
+    }
+ 
 }
 
-- (void)didReceiveMessage:(WDMessage *)message ofText:(NSString *)text {
-    if (_isView == kTextViewController) {
-        _textViewController.textField.string = text;
-        [self storeMessage:message];
-    } 
-}
-
-- (void)didReceiveMessage:(WDMessage *)message ofFile:(NSURL *)url {
-    if (_isView != kDragFileController) {
-        return ;
-    }
-    [self storeMessage:message];
-    [_dragFileController.label setHidden:YES];
+- (void)didSendMessage:(WDMessage *)message {
     
-    // DW: store this url for drag and drop
-    if (_fileURL) {
-        [_fileURL release];
-    }
-    _fileURL = [url retain];
-    
-    NSImage *image = [[NSImage alloc] initWithContentsOfURL:message.fileURL];
-    if (image != nil) {
-        [_dragFileController.imageView setImage:image];
-        [image release];
-    } else {
-        NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[message.fileURL path] asIcon:YES];
-        [_dragFileController.imageView setImage:quicklook];
-    }
 }
 
 #pragma mark - PasswordMacViewControllerDelegate

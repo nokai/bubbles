@@ -309,7 +309,7 @@ CGContextRef UIGraphicsGetCurrentContext(void)
 - (void)callTargetForValueChanged
 {
 	// we get all targets for this object
-	NSSet *allTargets = [self allTargets] ;
+	NSSet *allTargets = [self allTargets];
 	NSArray *allActions ;
 	for (id target in allTargets)
 	{
