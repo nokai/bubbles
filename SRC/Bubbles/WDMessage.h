@@ -15,10 +15,13 @@ enum {
 typedef NSUInteger WDMessageType;
 
 // DW: states actually
-#define kWDMessageControlText           @"kWDMessageControlText"
-#define kWDMessageControlReadyToSend    @"kWDMessageControlReadyToSend"
-#define kWDMessageControlReadyToReceive @"kWDMessageControlReadyToReceive"
-#define kWDMessageControlTransfering    @"kWDMessageControlTransfering"
+#define kWDMessageStateText             @"kWDMessageStateText"
+
+// DW: files are more complicated, "File" is a well transfered file
+#define kWDMessageStateFile             @"kWDMessageStateFile"
+#define kWDMessageStateReadyToSend      @"kWDMessageStateReadyToSend"
+#define kWDMessageStateReadyToReceive   @"kWDMessageStateReadyToReceive"
+#define kWDMessageStateSending          @"kWDMessageStateSending"
 
 @interface WDMessage : NSObject <NSCoding,NSCopying> {
     NSString *_sender;

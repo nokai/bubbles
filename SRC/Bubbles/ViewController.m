@@ -85,7 +85,7 @@
 	picker.mailComposeDelegate = self;
     
 	// Set up recipients
-    if (message.type == WDMessageTypeText) {
+    if ([message.state isEqualToString: kWDMessageStateText]) {
         NSString *emailBody = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
         [picker setMessageBody:emailBody isHTML:YES];
     } else {
@@ -532,7 +532,7 @@
     }
     
     // DW: chose an action
-    if (t.type == WDMessageTypeText) {
+    if ([t.state isEqualToString: kWDMessageStateText]) {
         as = [[UIActionSheet alloc] initWithTitle:nil
                                          delegate:self 
                                 cancelButtonTitle:kActionSheetButtonCancel
@@ -625,7 +625,7 @@
         df.dateFormat = @"hh:mm:ss";
         cell.detailTextLabel.text = [t.sender stringByAppendingFormat:@" %@", [df stringFromDate:t.time]];
         [df release];
-        if (t.type == WDMessageTypeText) {
+        if ([t.state isEqualToString: kWDMessageStateText]) {
             DLog(@"VC cellForRowAtIndexPath t is %@", t);
             cell.textLabel.text = [[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease];
             cell.imageView.image = [UIImage imageNamed:@"Icon-Text"];
@@ -715,7 +715,7 @@
     } else if ([buttonTitle isEqualToString:kActionSheetButtonMessage]) {
         [self displayMessageComposerSheetWithMessage:message];
     } else if ([buttonTitle isEqualToString:kActionSheetButtonCopy]) {
-        if (message.type == WDMessageTypeText) {
+        if ([message.state isEqualToString: kWDMessageStateText]) {
             [UIPasteboard generalPasteboard].string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
         } else if (message.type == WDMessageTypeFile) {
             [UIPasteboard generalPasteboard].image = [UIImage imageWithContentsOfFile:message.fileURL.path];
@@ -735,7 +735,7 @@
     } else if ([buttonTitle isEqualToString:kActionSheetButtonCancel]) {
         [_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
     } else if ([buttonTitle isEqualToString:kActionSheetButtonSend]) {
-        if (message.type == WDMessageTypeText) {
+        if ([message.state isEqualToString: kWDMessageStateText]) {
             WDMessage *t = [[WDMessage messageWithText:[[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease]] retain];
             [self storeMessage:t];
             [_bubble broadcastMessage:t];

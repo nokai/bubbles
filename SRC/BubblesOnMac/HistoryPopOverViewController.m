@@ -219,13 +219,10 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
 - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     WDMessage *message = [_fileHistoryArray objectAtIndex:row];
-    if (message .type == WDMessageTypeText && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:1])
-    {
+    if ([message.state isEqualToString: kWDMessageStateText] && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:1]) {
         NSButtonCell *buttonCell = (NSButtonCell *)cell;
         [buttonCell setImagePosition:NSNoImage];
-    }
-    else if (message.type == WDMessageTypeFile && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:1])
-    {
+    } else if (message.type == WDMessageTypeFile && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:1]) {
         NSButtonCell *buttonCell = (NSButtonCell *)cell;
         [buttonCell setImagePosition:NSImageOverlaps];
     }
@@ -237,7 +234,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
 {
     //DLog(@"previewIconForCell");
     WDMessage *message = (WDMessage *)data;
-    if (message.type == WDMessageTypeText){
+    if ([message.state isEqualToString: kWDMessageStateText]){
         return [NSImage imageNamed:@"text"];
     } else if (message.type == WDMessageTypeFile){
         NSImage *icon = [NSImage imageWithPreviewOfFileAtPath:[message.fileURL path] asIcon:YES];
@@ -250,7 +247,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
 {
     //DLog(@"primaryTextForCell");
     WDMessage *message = (WDMessage *)data;
-    if (message.type == WDMessageTypeText){
+    if ([message.state isEqualToString: kWDMessageStateText]){
         NSString *string = [[[NSString alloc]initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
         if ([string length] >= 20) {
             string = [string substringWithRange:NSMakeRange(0,15)];
@@ -291,7 +288,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     NSMenu *menu = [[[NSMenu alloc] init] autorelease];
     NSInteger selectedRow = [rows firstIndex];
     WDMessage *message = [_fileHistoryArray objectAtIndex:selectedRow];
-    if (message.type == WDMessageTypeText) {
+    if ([message.state isEqualToString: kWDMessageStateText]) {
         NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteSelectedRow) keyEquivalent:@""];
         [menu addItem:deleteItem];
         [deleteItem release];

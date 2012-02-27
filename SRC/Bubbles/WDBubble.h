@@ -76,7 +76,6 @@
 - (void)stopService;
 
 // DW: transfer percent, from 0 to 1
-- (float)percentReceived;
-- (float)percentSent;
+- (float)percentTransfered;
 
 @end

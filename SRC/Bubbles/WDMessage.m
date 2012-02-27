@@ -28,8 +28,9 @@
 
 + (id)messageWithText:(NSString *)text {
     WDMessage *m = [[[WDMessage alloc] init] autorelease];
+    m.state = kWDMessageStateText;
     m.content = [text dataUsingEncoding:NSUTF8StringEncoding];
-    m.type = WDMessageTypeText;
+    //m.type = WDMessageTypeText;
     //DLog(@"WDMessage messageWithText %@", m);
     return m;
 }
@@ -43,7 +44,7 @@
     //DLog(@"WDMessage messageWithFile %@", m);
     return m;
 #else
-    return [WDMessage messageWithFile:url andState:kWDMessageControlReadyToSend];
+    return [WDMessage messageWithFile:url andState:kWDMessageStateReadyToSend];
 #endif
 }
 
@@ -71,7 +72,7 @@
 
 - (NSUInteger)fileSize {
     NSUInteger fileSize = 0;
-    if ([self.state isEqualToString:kWDMessageControlText]) {
+    if ([self.state isEqualToString:kWDMessageStateText]) {
         fileSize = [self.content length];
     } else {
         [self.content getBytes:&fileSize length:sizeof(fileSize)];
@@ -95,7 +96,7 @@
 - (id)init {
     if (self = [super init]) {
         _time = [[NSDate date] retain];
-        _state = kWDMessageControlText;
+        _state = kWDMessageStateText;
         
         // DW: in WDBubble we publish services with this name
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
