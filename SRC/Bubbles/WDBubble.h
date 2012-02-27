@@ -21,6 +21,8 @@
 
 - (NSURL *)URLWithRemoteChangedToLocal;
 - (NSURL *)URLWithoutNameConflict;
+- (NSURL *)UnicodeURLWithoutNameConflict;
+- (NSString *)escapedStringFromURL;
 @end
 
 @protocol WDBubbleDelegate

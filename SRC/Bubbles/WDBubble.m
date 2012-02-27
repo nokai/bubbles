@@ -123,6 +123,51 @@
     return storeURL;
 }
 
+// Wu:Added on 2-27 
+// Wu:To solve the problem of NSURL with unicode character
+
+- (NSURL *)UnicodeURLWithoutNameConflict
+{
+    NSString *eacapedString = [[self URLByDeletingPathExtension] escapedStringFromURL];
+    NSString *orginFileName = [eacapedString stringByReplacingOccurrencesOfString:@" " 
+                                                                   withString:@"%20"];
+    NSString *fileName = orginFileName;
+    NSInteger filePostFix = 2;
+    
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+    
+    
+#elif TARGET_OS_MAC
+    NSURL *defaultURL = [self URLByDeletingLastPathComponent];
+    NSURL *storeURL = [NSURL URLWithString:
+                       [NSString stringWithFormat:@"%@%@.%@", 
+                        [defaultURL absoluteString], 
+                        fileName, 
+                        [[self pathExtension] lowercaseString]]];
+    while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
+        fileName = [NSString stringWithFormat:@"%@%%20%i", orginFileName, filePostFix++];
+        storeURL = [NSURL URLWithString:
+                    [NSString stringWithFormat:@"%@%@.%@", 
+                     [defaultURL absoluteString], 
+                     fileName, 
+                     [[self pathExtension] lowercaseString]]];
+    }
+#endif
+    return storeURL;
+    
+}
+
+- (NSString *)escapedStringFromURL
+{
+    // Wu:In case the url contains unicode string
+    NSString *lastComponents = [NSString stringWithString:[self lastPathComponent]];
+    NSString *unescapedString = [lastComponents stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *escapedString = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)unescapedString, NULL, NULL, kCFStringEncodingUTF8);
+    return [escapedString autorelease];
+}
+
+// @end
+
 + (NSString *)formattedFileSize:(unsigned long long)size {
 	NSString *formattedStr = nil;
     if (size == 0) 

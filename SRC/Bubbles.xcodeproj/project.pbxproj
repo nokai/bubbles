@@ -15,6 +15,7 @@
 		032A05C414E39F5B005C4F6E /* HistoryPopOverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 032A05C214E39F5B005C4F6E /* HistoryPopOverViewController.xib */; };
 		032A05C914E3A525005C4F6E /* NetworkFoundPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A05C714E3A525005C4F6E /* NetworkFoundPopOverViewController.m */; };
 		032A05CA14E3A525005C4F6E /* NetworkFoundPopOverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 032A05C814E3A525005C4F6E /* NetworkFoundPopOverViewController.xib */; };
+		0346C6B814FA5AE900167F63 /* text.png in Resources */ = {isa = PBXBuildFile; fileRef = 0346C6B714FA5AE900167F63 /* text.png */; };
 		034C97BF14D90C9B00E57578 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034C97BE14D90C9B00E57578 /* Quartz.framework */; };
 		0354C96014BDC3F700417697 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C95F14BDC3F700417697 /* MainViewController.m */; };
 		0354C9AB14BDE4FA00417697 /* PasswordMacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */; };
@@ -42,6 +43,8 @@
 		03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		188E022414FB2BF500B1B319 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 188E022314FB2BF500B1B319 /* BubblesHelp */; };
 		188E022514FB2BF500B1B319 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 188E022314FB2BF500B1B319 /* BubblesHelp */; };
+		18E832FA14FA4245001F0709 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 18E832F914FA4245001F0709 /* BubblesHelp */; };
+		18E832FB14FA4245001F0709 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 18E832F914FA4245001F0709 /* BubblesHelp */; };
 		C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C111265514DE2C7800884F7D /* DirectoryWatcher.m */; };
 		C11A3A5314F9277600892631 /* add_file.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4E14F9277600892631 /* add_file.png */; };
 		C11A3A5414F9277600892631 /* add_txt.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4F14F9277600892631 /* add_txt.png */; };
@@ -126,6 +129,7 @@
 		032A05C614E3A525005C4F6E /* NetworkFoundPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkFoundPopOverViewController.h; sourceTree = "<group>"; };
 		032A05C714E3A525005C4F6E /* NetworkFoundPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkFoundPopOverViewController.m; sourceTree = "<group>"; };
 		032A05C814E3A525005C4F6E /* NetworkFoundPopOverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NetworkFoundPopOverViewController.xib; sourceTree = "<group>"; };
+		0346C6B714FA5AE900167F63 /* text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text.png; sourceTree = "<group>"; };
 		034C97BE14D90C9B00E57578 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Quartz.framework; sourceTree = DEVELOPER_DIR; };
 		0354C95E14BDC3F700417697 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		0354C95F14BDC3F700417697 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -138,7 +142,6 @@
 		0378FCF214F601620044A43B /* send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send.png; sourceTree = "<group>"; };
 		037D71DF14C954530082FB64 /* PreferenceViewContoller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceViewContoller.h; sourceTree = "<group>"; };
 		037D71E014C954530082FB64 /* PreferenceViewContoller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceViewContoller.m; sourceTree = "<group>"; };
-		0385FDA214F9546700BED92E /* text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text.png; sourceTree = "<group>"; };
 		03861E6E14EC1E8000D9DBD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PreferenceViewController.xib; sourceTree = "<group>"; };
 		039C96D314E68BDD00BBEEC5 /* swap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swap.png; sourceTree = "<group>"; };
 		03A80DDE14E97BB3006C77D8 /* TransparentTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransparentTableView.h; sourceTree = "<group>"; };
@@ -166,6 +169,7 @@
 		03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		188E022314FB2BF500B1B319 /* BubblesHelp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BubblesHelp; sourceTree = "<group>"; };
 		189222CA14F8F692003CD713 /* text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text.png; sourceTree = "<group>"; };
+		18E832F914FA4245001F0709 /* BubblesHelp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BubblesHelp; sourceTree = "<group>"; };
 		C111265414DE2C7800884F7D /* DirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryWatcher.h; path = Bubbles/DirectoryWatcher.h; sourceTree = SOURCE_ROOT; };
 		C111265514DE2C7800884F7D /* DirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectoryWatcher.m; path = Bubbles/DirectoryWatcher.m; sourceTree = SOURCE_ROOT; };
 		C11A3A4E14F9277600892631 /* add_file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_file.png; path = Resources/iPhone/add_file.png; sourceTree = SOURCE_ROOT; };
@@ -292,10 +296,9 @@
 				039C96D314E68BDD00BBEEC5 /* swap.png */,
 				0378FCEF14F601620044A43B /* add txt.png */,
 				0378FCF014F601620044A43B /* history.png */,
-				0385FDA214F9546700BED92E /* text.png */,
+				0346C6B714FA5AE900167F63 /* text.png */,
 				0378FCF114F601620044A43B /* peers.png */,
 				0378FCF214F601620044A43B /* send.png */,
-				189222CA14F8F692003CD713 /* text.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				0378FCF614F601620044A43B /* send.png in Resources */,
 				0322FC9614F9228100647B89 /* FeatureWindowController.xib in Resources */,
 				188E022514FB2BF500B1B319 /* BubblesHelp in Resources */,
+				0346C6B814FA5AE900167F63 /* text.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

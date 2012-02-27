@@ -54,15 +54,6 @@
     }
 }
 
-- (NSString *)escapedStringFromURL:(NSURL *)aURL
-{
-    // Wu:In case the url contains unicode string
-    NSString *lastComponents = [NSString stringWithString:[aURL lastPathComponent]];
-    NSString *unescapedString = [lastComponents stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *escapedString = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)unescapedString, NULL, NULL, kCFStringEncodingUTF8);
-    return [escapedString autorelease];
-}
-
 #pragma mark - LifeCycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -202,11 +193,12 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
                                                                                                        withString:@"%20"]]];
     
     if (newURL == nil) {
-        NSString *escapedString = [self escapedStringFromURL:message.fileURL];
+        NSString *escapedString = [message.fileURL escapedStringFromURL];
         newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
                                        dropDestination.path, 
                                        [escapedString stringByReplacingOccurrencesOfString:@" " 
                                                                                 withString:@"%20"]]];
+        newURL = [newURL UnicodeURLWithoutNameConflict];
     } else {
         newURL = [newURL URLWithoutNameConflict];
     }
