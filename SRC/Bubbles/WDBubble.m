@@ -359,10 +359,11 @@
 }
 
 - (float)percentTransfered {
+    float total = _currentMessage.fileSize;
     if (_isReceiver) {
-        return _streamBytesWrote/[_currentMessage fileSize];
+        return _streamBytesWrote/total;
     } else {
-        return _streamBytesRead/[_currentMessage fileSize];
+        return _streamBytesRead/total;
     }
 }
 
@@ -527,6 +528,9 @@
                 _currentMessage = [[WDMessage messageWithFile:t.fileURL andState:kWDMessageStateReadyToReceive] retain];
                 _currentMessage.fileSize = t.fileSize;
                 [self connectToServiceNamed:t.sender];
+                
+                // DW; notify VC
+                [self.delegate willReceiveMessage:_currentMessage];
             } else if ([t.state isEqualToString:kWDMessageStateReadyToReceive]) {
                 DLog(@"WDBubble onSocketDidDisconnect %@ received kWDMessageStateReadyToReceive", _currentMessage.state);
                 // DW: receiver is readly for the file, send it then
@@ -544,8 +548,11 @@
         [_socketsConnect removeObject:sock];
         
         // DW: a sending socket
-        if (([_currentMessage.state isEqualToString:kWDMessageStateSending])
-            ||([_currentMessage.state isEqualToString:kWDMessageStateText])) {
+        if ([_currentMessage.state isEqualToString:kWDMessageStateSending]) {
+            [self.delegate didSendMessage:_currentMessage];
+            [_currentMessage release];
+            _currentMessage = nil;
+        } else if ([_currentMessage.state isEqualToString:kWDMessageStateText]) {
             
             // DW: releases _currentMessage
             [_currentMessage release];

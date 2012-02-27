@@ -25,7 +25,9 @@
 
 @protocol WDBubbleDelegate
 - (void)percentUpdated;
+- (void)willReceiveMessage:(WDMessage *)message;
 - (void)didReceiveMessage:(WDMessage *)message;
+- (void)didSendMessage:(WDMessage *)message;
 @end
 
 @interface WDBubble : NSObject <AsyncSocketDelegate, NSNetServiceDelegate, NSNetServiceBrowserDelegate, NSStreamDelegate> {

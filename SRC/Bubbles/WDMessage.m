@@ -68,7 +68,8 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"WDMessage %@, %@, %@, %@, %@", 
+    return [NSString stringWithFormat:@"WDMessage %p, %@, %@, %@, %@, %@", 
+            self, 
             self.sender, 
             self.time, 
             self.state, 

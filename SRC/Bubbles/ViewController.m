@@ -49,7 +49,21 @@
 }
 
 - (void)storeMessage:(WDMessage *)message {
+    // DW: replace transfering messages if needed
+    /*
+     if ([message.state isEqualToString:kWDMessageStateFile]) {
+     NSArray *originalMessages = [NSArray arrayWithArray:_messages];
+     for (WDMessage *m in originalMessages) {
+     if (([m.fileURL.path isEqualToString:message.fileURL.path])
+     &&(![m.state isEqualToString:kWDMessageStateFile])) {
+     // DW: found a message with same file path but "unstable" state, replace it
+     [_messages removeObject:m];
+     };
+     }
+     }
+     */
     [_messages addObject:message];
+    
     [_messages sortUsingComparator:^(WDMessage *obj1, WDMessage * obj2) {
         if ([obj1.time compare:obj2.time] == NSOrderedAscending)
             return NSOrderedDescending;
@@ -394,12 +408,22 @@
 #pragma mark - WDBubbleDelegate
 
 - (void)percentUpdated {
-    //[_messagesView reloadData];
+    [_messagesView reloadData];
+    DLog(@"VC persent %f", [self.bubble percentTransfered]*100);
+}
+
+- (void)willReceiveMessage:(WDMessage *)message {
+    //[self storeMessage:message];
 }
 
 - (void)didReceiveMessage:(WDMessage *)message {
     message.time = [NSDate date];
-    [self storeMessage:message];
+    //[self storeMessage:message];
+}
+
+- (void)didSendMessage:(WDMessage *)message {
+    message.state = kWDMessageStateFile;
+    //[self storeMessage:message];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -617,10 +641,15 @@
             DLog(@"VC cellForRowAtIndexPath t is %@", t);
             cell.textLabel.text = [[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease];
             cell.imageView.image = [UIImage imageNamed:@"Icon-Text"];
-        } else if ([t.state isEqualToString:kWDMessageStateFile]) {
+        } else {
+            // if ([t.state isEqualToString:kWDMessageStateFile])
             cell.textLabel.text = [t.fileURL lastPathComponent];
             
             // DW: we show percentage we transfered the file here
+            if (([t.state isEqualToString:kWDMessageStateReadyToSend])
+                ||([t.state isEqualToString:kWDMessageStateSending])) {
+                cell.textLabel.text = [NSString stringWithFormat:@"%.0f%% sent", [self.bubble percentTransfered]*100];
+            }
             
             [self fillCell:cell withFileURL:t.fileURL];
         }
