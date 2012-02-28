@@ -13,6 +13,7 @@
 @synthesize historyPopOver = _historyPopOver;
 @synthesize fileHistoryArray = _fileHistoryArray;
 @synthesize filehistoryTableView = _fileHistoryTableView;
+@synthesize bubbles = _bubbles;
 
 #pragma mark - Private Methods
 
@@ -244,7 +245,6 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
         string = [string stringByReplacingOccurrencesOfString:@" " 
                                                    withString:@"."];
         string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@"."];
-        DLog(@"string is %@",string);
         if ([string length] >= 20) {
             string = [string substringWithRange:NSMakeRange(0,15)];
             string = [string stringByAppendingString:@"......."];
@@ -252,7 +252,18 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
         return string;
     } else if ([message.state isEqualToString:kWDMessageStateFile]){
         return [message.fileURL lastPathComponent];
+    } else if (([message.state isEqualToString:kWDMessageStateReadyToSend])
+               ||([message.state isEqualToString:kWDMessageStateSending]))
+    {
+        return [NSString stringWithFormat:@"%.0f%% %@ sent", 
+                [self.bubbles percentTransfered]*100, 
+                [NSURL formattedFileSize:[self.bubbles bytesTransfered]]];
+    } else if ([message.state isEqualToString:kWDMessageStateReadyToReceive]){
+        return [NSString stringWithFormat:@"%.0f%% %@ received", 
+                [self.bubbles percentTransfered]*100, 
+                [NSURL formattedFileSize:[self.bubbles bytesTransfered]]];
     }
+       
     return nil;
 }
 

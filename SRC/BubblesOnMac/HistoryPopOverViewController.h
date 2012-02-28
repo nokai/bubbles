@@ -23,11 +23,14 @@
     ImageAndTextCell *_imageAndTextCell;
     
     IBOutlet NSButton *_removeButton;
+    
+    WDBubble *_bubbles;
 }
 
 @property (nonatomic ,retain) NSPopover *historyPopOver;
 @property (nonatomic ,retain) NSMutableArray *fileHistoryArray;
 @property (nonatomic ,retain) TransparentTableView *filehistoryTableView;
+@property (nonatomic ,assign) WDBubble *bubbles;
 
 // Wu:attachedView is the the view which popover attach to like the effect in Safari
 - (void)showHistoryPopOver:(NSView *)attachedView;

@@ -39,6 +39,8 @@
 		03C4EC5114D6A320006FB4BD /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EEBE7614D597AF0026B318 /* QuickLook.framework */; };
 		03D710A514EBB52E00162DFB /* WUTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D710A414EBB52E00162DFB /* WUTextView.m */; };
 		03E70AD314FD0A2600BF0B59 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03E70AD214FD0A2500BF0B59 /* AudioToolbox.framework */; };
+		03E70ADC14FD228000BF0B59 /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E70ADB14FD228000BF0B59 /* AboutWindowController.m */; };
+		03E70ADF14FD229400BF0B59 /* AboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03E70ADE14FD229400BF0B59 /* AboutWindowController.xib */; };
 		03E8C3EA14EA39C2001F5091 /* NSTableView+ContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */; };
 		03EFE64B14E2EF04007FA2B6 /* NSView+NSView_Fade_.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */; };
 		03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -164,6 +166,9 @@
 		03D710A314EBB52E00162DFB /* WUTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUTextView.h; sourceTree = "<group>"; };
 		03D710A414EBB52E00162DFB /* WUTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUTextView.m; sourceTree = "<group>"; };
 		03E70AD214FD0A2500BF0B59 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		03E70ADA14FD228000BF0B59 /* AboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutWindowController.h; sourceTree = "<group>"; };
+		03E70ADB14FD228000BF0B59 /* AboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutWindowController.m; sourceTree = "<group>"; };
+		03E70ADE14FD229400BF0B59 /* AboutWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWindowController.xib; sourceTree = "<group>"; };
 		03E8C3E814EA39C2001F5091 /* NSTableView+ContextMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTableView+ContextMenu.h"; sourceTree = "<group>"; };
 		03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTableView+ContextMenu.m"; sourceTree = "<group>"; };
 		03EEBE7614D597AF0026B318 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuickLook.framework; sourceTree = DEVELOPER_DIR; };
@@ -347,6 +352,9 @@
 				0322FC9114F9226000647B89 /* FeatureWindowController.h */,
 				0322FC9214F9226000647B89 /* FeatureWindowController.m */,
 				0322FC9514F9228100647B89 /* FeatureWindowController.xib */,
+				03E70ADA14FD228000BF0B59 /* AboutWindowController.h */,
+				03E70ADE14FD229400BF0B59 /* AboutWindowController.xib */,
+				03E70ADB14FD228000BF0B59 /* AboutWindowController.m */,
 			);
 			name = Window;
 			sourceTree = "<group>";
@@ -719,6 +727,7 @@
 				0322FC9614F9228100647B89 /* FeatureWindowController.xib in Resources */,
 				188E022514FB2BF500B1B319 /* BubblesHelp in Resources */,
 				0346C6B814FA5AE900167F63 /* text.png in Resources */,
+				03E70ADF14FD229400BF0B59 /* AboutWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -775,6 +784,7 @@
 				0322FC9314F9226000647B89 /* FeatureWindowController.m in Sources */,
 				03BF24DE14F930A6002809A3 /* NSPageControl.m in Sources */,
 				03A8F4D114FA556F0065F057 /* DuxScrollViewAnimation.m in Sources */,
+				03E70ADC14FD228000BF0B59 /* AboutWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

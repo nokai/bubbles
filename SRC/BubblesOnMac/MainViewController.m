@@ -18,10 +18,35 @@
 
 #pragma mark - Private Methods
 
+// Wu: NO for can not send, YES for will send
+- (BOOL)sendToSelectedServiceOfMessage:(WDMessage *)message {
+    if (!_selectedServiceName || [_selectedServiceName isEqualToString:@""]) {
+        return NO;
+    }
+    
+    [_bubble sendMessage:message toServiceNamed:_selectedServiceName];
+    return YES;
+}
+
 - (void)servicesUpdated:(NSNotification *)notification {
     if (_networkPopOverController != nil) {
         [_networkPopOverController reloadNetwork];
     }
+    if (_bubble.servicesFound.count > 1) {
+        for (NSNetService *s in _bubble.servicesFound) {
+            if ([s.name isEqualToString:_bubble.service.name]) {
+                continue;
+            } else {
+                _selectedServiceName = [s.name retain];
+            }
+        }
+    } else {
+        if (_selectedServiceName) {
+            [_selectedServiceName release];
+        }
+        _selectedServiceName = nil;
+    }
+
 }
 
 - (void)initFirstResponder
@@ -69,12 +94,15 @@
 }
 
 - (void)sendFile {
-    if (_isView == kTextViewController || _fileURL == nil) {
+    if (_isView == kTextViewController || _fileURL == nil ) {
         return ;
     }
+    
     WDMessage *t = [[WDMessage messageWithFile:_fileURL andState:kWDMessageStateReadyToSend] retain];
-    [self storeMessage:t];
-    [_bubble broadcastMessage:t];
+    if ([self sendToSelectedServiceOfMessage:t]) {
+        [self storeMessage:t];
+    }
+    //[_bubble broadcastMessage:t];
     [t release];  
 }
 
@@ -101,10 +129,12 @@
         // Wu:Init two popover
         _historyPopOverController = [[HistoryPopOverViewController alloc]
                                      initWithNibName:@"HistoryPopOverViewController" bundle:nil];
+        _historyPopOverController.bubbles = _bubble;
         
         _networkPopOverController = [[NetworkFoundPopOverViewController alloc]
                                      initWithNibName:@"NetworkFoundPopOverViewController" bundle:nil];
         _networkPopOverController.bubble = _bubble;
+        _networkPopOverController.delegate = self;
         
         //Wu:the initilization is open the send text view;
         _isView = kTextViewController;
@@ -132,6 +162,7 @@
     [_passwordController release];
     [_preferenceController release];
     [_featureController release];
+    [_aboutController release];
     
     [_lockButton release];
     [_selectFileItem release];
@@ -250,6 +281,7 @@
 
 - (IBAction)openServiceFoundPopOver:(id)sender
 {
+    _networkPopOverController.selectedServiceName = _selectedServiceName;
     NSButton *button  = (NSButton *)[_networkItem view];
     [_networkPopOverController showServicesFoundPopOver:button];
 }
@@ -299,11 +331,17 @@
     [_featureController showWindow:self];
 }
 
+- (IBAction)openABoutWindow:(id)sender
+{
+    if (_aboutController == nil)
+        _aboutController = [[AboutWindowController alloc]init];
+    [_aboutController showWindow:self];
+}
+
 #pragma mark - WDBubbleDelegate
 
 - (void)percentUpdated {
     [_historyPopOverController.filehistoryTableView reloadData];
-     DLog(@"VC persent %f", [_bubble percentTransfered] * 100);
 }
 
 - (void)willReceiveMessage:(WDMessage *)message {
@@ -413,6 +451,17 @@
         return _fileURL;
     }
     return nil;
+}
+
+#pragma mark - NetworkFoundDelegate
+
+- (void)didSelectServiceName:(NSString *)serviceName
+{
+    /*if (_selectedServiceName ) {
+        [_selectedServiceName release];
+    }*/
+    _selectedServiceName = [serviceName retain];
+    DLog(@"name is %@",_selectedServiceName);
 }
 
 // DW: we do not need these codes

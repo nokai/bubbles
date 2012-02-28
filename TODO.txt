@@ -13,7 +13,6 @@ Dexi
 Ziqi
 
 1. Mac上的单对单
-2. Review NSPageControl allTargets 是不是私有API
 
 Shaobin
 

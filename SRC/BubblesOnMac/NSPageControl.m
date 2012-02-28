@@ -139,6 +139,8 @@ CGContextRef UIGraphicsGetCurrentContext(void)
 		x += diameter + space ;
 	}
 	
+    //[onColor autorelease];
+    //[offColor autorelease];
 	// restore the context
 	CGContextRestoreGState(context) ;
 	 

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 //#import "WDSound.h"
 #import "WDBubble.h"
+#import "AboutWindowController.h"
 #import "PasswordMacViewController.h"
 #import "DragFileViewController.h"
 #import "PreferenceViewContoller.h"
@@ -23,9 +24,10 @@
 #define kTextViewController 0
 #define kDragFileController 1
 
-@interface MainViewController : NSObject <WDBubbleDelegate,PasswordMacViewControllerDelegate,DragAndDropImageViewDelegate> {
+@interface MainViewController : NSObject <WDBubbleDelegate,PasswordMacViewControllerDelegate,DragAndDropImageViewDelegate,NetworkFoundDelegate> {
     WDBubble *_bubble;
     NSURL *_fileURL;
+     NSString *_selectedServiceName;
         
     // Wu:NSView for adding two subView and constrain their bound
     IBOutlet NSView *_superView;
@@ -44,6 +46,7 @@
     PasswordMacViewController *_passwordController;
     PreferenceViewContoller *_preferenceController;
     FeatureWindowController *_featureController;
+    AboutWindowController *_aboutController;
     
     // Wu:The viewcontroller for sending files and messages
     DragFileViewController *_dragFileController;
@@ -68,5 +71,6 @@
 - (IBAction)selectFile:(id)sender;
 - (IBAction)openServiceFoundPopOver:(id)sender;
 - (IBAction)openFeatureWindow:(id)sender;
+- (IBAction)openABoutWindow:(id)sender;
 
 @end
