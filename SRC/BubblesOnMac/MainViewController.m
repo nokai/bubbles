@@ -18,27 +18,6 @@
 
 #pragma mark - Private Methods
 
-/*- (void)delayNotification {
- [self performSelector:@selector(loadUserPreference) withObject:nil afterDelay:1.0f];
- }*/
-
-// DW: we do not need this method now
-/*- (void)directlySave {
- NSURL *url = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];
- if (_fileURL && _imageMessage.image != nil) {
- NSFileManager *manager = [NSFileManager defaultManager];
- 
- NSString *fileExtension = [[_fileURL absoluteString] pathExtension];
- NSString *filename = [NSString stringWithFormat:@"%@.%@",[NSDate date],fileExtension];
- DLog(@"filename is %@!!!!!!!",filename);
- 
- NSData *data = [NSData dataWithContentsOfURL:_fileURL];
- 
- NSString *fullPath = [[url path] stringByAppendingPathComponent:filename];
- [manager createFileAtPath:fullPath contents:data attributes:nil];
- }
- }*/
-
 - (void)servicesUpdated:(NSNotification *)notification {
     if (_networkPopOverController != nil) {
         [_networkPopOverController reloadNetwork];
@@ -244,7 +223,6 @@
 - (IBAction)swapView:(id)sender {
     if (_isView == kTextViewController) {
         [_toolBar insertItemWithItemIdentifier:@"SelectItemIdentifier" atIndex:kTooBarIndexOfSelectButton];
-        
         _isView = kDragFileController;
         [_textViewController.view setHidden:YES withFade:YES];
         [_dragFileController.view setHidden:NO withFade:YES];
@@ -320,11 +298,21 @@
 #pragma mark - WDBubbleDelegate
 
 - (void)percentUpdated {
-    //[_messagesView reloadData];
+    [_historyPopOverController.filehistoryTableView reloadData];
+     DLog(@"VC persent %f", [_bubble percentTransfered] * 100);
 }
 
+<<<<<<< HEAD
 - (void)willReceiveMessage:(WDMessage *)message {
     
+=======
+- (void)didReceiveMessage:(WDMessage *)message {
+    if (_isView == kTextViewController) {
+        _textViewController.textField.string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
+        [self storeMessage:message];
+    }
+    message.time = [NSDate date];
+>>>>>>> Wu:Ignored this commit ,nothing forward
 }
 
 - (void)didReceiveMessage:(WDMessage *)message {
@@ -362,6 +350,10 @@
     
 }
 
+- (void)didSendMessage:(WDMessage *)message
+{
+    message.state = kWDMessageStateFile;
+}
 #pragma mark - PasswordMacViewControllerDelegate
 
 - (void)didCancel {

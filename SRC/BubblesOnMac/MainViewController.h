@@ -22,7 +22,7 @@
 #define kTextViewController 0
 #define kDragFileController 1
 
-@interface MainViewController : NSObject <WDBubbleDelegate,PasswordMacViewControllerDelegate,DragAndDropImageViewDelegate,NSToolbarDelegate> {
+@interface MainViewController : NSObject <WDBubbleDelegate,PasswordMacViewControllerDelegate,DragAndDropImageViewDelegate> {
     WDBubble *_bubble;
     NSURL *_fileURL;
         
