@@ -458,8 +458,7 @@
 
 - (void)didSendMessage:(WDMessage *)message {
     message.state = kWDMessageStateFile;
-    //[self storeMessage:message];
-    [_sound playSoundForKey:kWDSoundFileReceived];
+    [_sound playSoundForKey:kWDSoundFileSent];
 }
 
 #pragma mark - UIImagePickerControllerDelegate

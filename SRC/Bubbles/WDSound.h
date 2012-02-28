@@ -14,7 +14,6 @@
 #define kWDSoundFileReceived    @"kWDSoundFileReceived"
 
 @interface WDSound : NSObject {
-    CFURLRef _soundFileURLRef;
     NSMutableDictionary *_soundObjects;
 }
 

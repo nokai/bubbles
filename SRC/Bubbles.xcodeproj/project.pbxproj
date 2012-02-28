@@ -16,7 +16,6 @@
 		032A05C914E3A525005C4F6E /* NetworkFoundPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A05C714E3A525005C4F6E /* NetworkFoundPopOverViewController.m */; };
 		032A05CA14E3A525005C4F6E /* NetworkFoundPopOverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 032A05C814E3A525005C4F6E /* NetworkFoundPopOverViewController.xib */; };
 		0346C6B814FA5AE900167F63 /* text.png in Resources */ = {isa = PBXBuildFile; fileRef = 0346C6B714FA5AE900167F63 /* text.png */; };
-		034C97BF14D90C9B00E57578 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034C97BE14D90C9B00E57578 /* Quartz.framework */; };
 		0354C96014BDC3F700417697 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C95F14BDC3F700417697 /* MainViewController.m */; };
 		0354C9AB14BDE4FA00417697 /* PasswordMacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */; };
 		0354C9AD14BDE51800417697 /* PasswordWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0354C9AC14BDE51800417697 /* PasswordWindowView.xib */; };
@@ -32,15 +31,12 @@
 		03A8878D14E2A272008CA643 /* DragFileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03A8878B14E2A272008CA643 /* DragFileViewController.xib */; };
 		03A8879914E2B108008CA643 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A8879714E2B108008CA643 /* TextViewController.m */; };
 		03A8879A14E2B108008CA643 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03A8879814E2B108008CA643 /* TextViewController.xib */; };
-		03A887AE14E2BFAD008CA643 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A887AD14E2BFAD008CA643 /* QuartzCore.framework */; };
 		03A8F4D114FA556F0065F057 /* DuxScrollViewAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A8F4D014FA556F0065F057 /* DuxScrollViewAnimation.m */; };
 		03BF24DE14F930A6002809A3 /* NSPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BF24DD14F930A6002809A3 /* NSPageControl.m */; };
 		03BF64B314C32D8200CD52AB /* DragAndDropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */; };
-		03C4EC5114D6A320006FB4BD /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EEBE7614D597AF0026B318 /* QuickLook.framework */; };
 		03D710A514EBB52E00162DFB /* WUTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D710A414EBB52E00162DFB /* WUTextView.m */; };
 		03E8C3EA14EA39C2001F5091 /* NSTableView+ContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */; };
 		03EFE64B14E2EF04007FA2B6 /* NSView+NSView_Fade_.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */; };
-		03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		188E022414FB2BF500B1B319 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 188E022314FB2BF500B1B319 /* BubblesHelp */; };
 		188E022514FB2BF500B1B319 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 188E022314FB2BF500B1B319 /* BubblesHelp */; };
 		C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C111265514DE2C7800884F7D /* DirectoryWatcher.m */; };
@@ -61,6 +57,12 @@
 		C121949A14B5A9FC00159A9F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121949914B5A9FB00159A9F /* CFNetwork.framework */; };
 		C123285C14E3CFBF006968FE /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C123285B14E3CFBF006968FE /* ViewController_iPad.xib */; };
 		C123285E14E3CFE6006968FE /* PeersViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C123285D14E3CFE6006968FE /* PeersViewController_iPad.xib */; };
+		C125260314FD33C8009FC78C /* WDSound.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F950CA14FBE50700482ECF /* WDSound.m */; };
+		C125260614FD33E5009FC78C /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C125260514FD33E5009FC78C /* Quartz.framework */; };
+		C125260814FD33EB009FC78C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C125260714FD33EB009FC78C /* QuartzCore.framework */; };
+		C125260A14FD33F1009FC78C /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C125260914FD33F1009FC78C /* QuickLook.framework */; };
+		C125260C14FD33F5009FC78C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C125260B14FD33F5009FC78C /* Cocoa.framework */; };
+		C125260E14FD3415009FC78C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C125260D14FD3414009FC78C /* AudioToolbox.framework */; };
 		C133FAB514EBFBF4004E406B /* UIImage+Normalize.m in Sources */ = {isa = PBXBuildFile; fileRef = C133FAB414EBFBF4004E406B /* UIImage+Normalize.m */; };
 		C1393F0A14D90C83005AFEB6 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1393F0814D90C83005AFEB6 /* TextViewController.m */; };
 		C1393F0B14D90C83005AFEB6 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1393F0914D90C83005AFEB6 /* TextViewController.xib */; };
@@ -134,7 +136,6 @@
 		032A05C714E3A525005C4F6E /* NetworkFoundPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkFoundPopOverViewController.m; sourceTree = "<group>"; };
 		032A05C814E3A525005C4F6E /* NetworkFoundPopOverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NetworkFoundPopOverViewController.xib; sourceTree = "<group>"; };
 		0346C6B714FA5AE900167F63 /* text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text.png; sourceTree = "<group>"; };
-		034C97BE14D90C9B00E57578 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Quartz.framework; sourceTree = DEVELOPER_DIR; };
 		0354C95E14BDC3F700417697 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		0354C95F14BDC3F700417697 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		0354C9A914BDE4FA00417697 /* PasswordMacViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordMacViewController.h; sourceTree = "<group>"; };
@@ -156,7 +157,6 @@
 		03A8879614E2B108008CA643 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
 		03A8879714E2B108008CA643 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
 		03A8879814E2B108008CA643 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextViewController.xib; sourceTree = "<group>"; };
-		03A887AD14E2BFAD008CA643 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		03A8F4CF14FA556F0065F057 /* DuxScrollViewAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxScrollViewAnimation.h; sourceTree = "<group>"; };
 		03A8F4D014FA556F0065F057 /* DuxScrollViewAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxScrollViewAnimation.m; sourceTree = "<group>"; };
 		03BF24DC14F930A6002809A3 /* NSPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSPageControl.h; sourceTree = "<group>"; };
@@ -167,10 +167,8 @@
 		03D710A414EBB52E00162DFB /* WUTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUTextView.m; sourceTree = "<group>"; };
 		03E8C3E814EA39C2001F5091 /* NSTableView+ContextMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTableView+ContextMenu.h"; sourceTree = "<group>"; };
 		03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTableView+ContextMenu.m"; sourceTree = "<group>"; };
-		03EEBE7614D597AF0026B318 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuickLook.framework; sourceTree = DEVELOPER_DIR; };
 		03EFE64914E2EF04007FA2B6 /* NSView+NSView_Fade_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+NSView_Fade_.h"; sourceTree = "<group>"; };
 		03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+NSView_Fade_.m"; sourceTree = "<group>"; };
-		03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		188E022314FB2BF500B1B319 /* BubblesHelp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BubblesHelp; sourceTree = "<group>"; };
 		C111265414DE2C7800884F7D /* DirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryWatcher.h; path = Bubbles/DirectoryWatcher.h; sourceTree = SOURCE_ROOT; };
 		C111265514DE2C7800884F7D /* DirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectoryWatcher.m; path = Bubbles/DirectoryWatcher.m; sourceTree = SOURCE_ROOT; };
@@ -192,6 +190,12 @@
 		C121949914B5A9FB00159A9F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C123285B14E3CFBF006968FE /* ViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewController_iPad.xib; path = Bubbles/ViewController_iPad.xib; sourceTree = SOURCE_ROOT; };
 		C123285D14E3CFE6006968FE /* PeersViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeersViewController_iPad.xib; path = Bubbles/PeersViewController_iPad.xib; sourceTree = SOURCE_ROOT; };
+		C125260514FD33E5009FC78C /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Quartz.framework; sourceTree = DEVELOPER_DIR; };
+		C125260714FD33EB009FC78C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		C125260914FD33F1009FC78C /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuickLook.framework; sourceTree = DEVELOPER_DIR; };
+		C125260B14FD33F5009FC78C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		C125260D14FD3414009FC78C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		C125260F14FD3476009FC78C /* kWDSoundFileSent.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = kWDSoundFileSent.aif; sourceTree = "<group>"; };
 		C133FAAE14EBF2CD004E406B /* BubblesOnMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BubblesOnMac.entitlements; sourceTree = "<group>"; };
 		C133FAB314EBFBF4004E406B /* UIImage+Normalize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Normalize.h"; path = "Bubbles/UIImage+Normalize.h"; sourceTree = SOURCE_ROOT; };
 		C133FAB414EBFBF4004E406B /* UIImage+Normalize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Normalize.m"; path = "Bubbles/UIImage+Normalize.m"; sourceTree = SOURCE_ROOT; };
@@ -289,10 +293,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03A887AE14E2BFAD008CA643 /* QuartzCore.framework in Frameworks */,
-				034C97BF14D90C9B00E57578 /* Quartz.framework in Frameworks */,
-				03C4EC5114D6A320006FB4BD /* QuickLook.framework in Frameworks */,
-				03F3B1BF14BC7DEE007FF955 /* Cocoa.framework in Frameworks */,
+				C125260E14FD3415009FC78C /* AudioToolbox.framework in Frameworks */,
+				C125260C14FD33F5009FC78C /* Cocoa.framework in Frameworks */,
+				C125260A14FD33F1009FC78C /* QuickLook.framework in Frameworks */,
+				C125260814FD33EB009FC78C /* QuartzCore.framework in Frameworks */,
+				C125260614FD33E5009FC78C /* Quartz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,13 +418,14 @@
 		C121946214B591D700159A9F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C125260D14FD3414009FC78C /* AudioToolbox.framework */,
+				C125260B14FD33F5009FC78C /* Cocoa.framework */,
+				C125260914FD33F1009FC78C /* QuickLook.framework */,
+				C125260714FD33EB009FC78C /* QuartzCore.framework */,
+				C125260514FD33E5009FC78C /* Quartz.framework */,
 				C1F950D014FBE6FE00482ECF /* AudioToolbox.framework */,
 				C1F4B9AB14E8E39900E878CD /* MobileCoreServices.framework */,
-				03A887AD14E2BFAD008CA643 /* QuartzCore.framework */,
 				C11FC3A714DB8D75002A92A2 /* MessageUI.framework */,
-				034C97BE14D90C9B00E57578 /* Quartz.framework */,
-				03EEBE7614D597AF0026B318 /* QuickLook.framework */,
-				03F3B1BE14BC7DEE007FF955 /* Cocoa.framework */,
 				C121946314B591D700159A9F /* UIKit.framework */,
 				C121946514B591D700159A9F /* Foundation.framework */,
 				C121949914B5A9FB00159A9F /* CFNetwork.framework */,
@@ -594,6 +600,7 @@
 			isa = PBXGroup;
 			children = (
 				C1F950CE14FBE62A00482ECF /* kWDSoundFileReceived.aif */,
+				C125260F14FD3476009FC78C /* kWDSoundFileSent.aif */,
 			);
 			path = Sounds;
 			sourceTree = SOURCE_ROOT;
@@ -769,6 +776,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C125260314FD33C8009FC78C /* WDSound.m in Sources */,
 				C1C9373514BB204D005E0EAA /* AsyncSocket.m in Sources */,
 				C1C9373714BB204D005E0EAA /* WDBubble.m in Sources */,
 				C1C9373914BB204D005E0EAA /* WDMessage.m in Sources */,

@@ -114,6 +114,9 @@
     if (self = [super init]) {
         // Wu: init bubbles
         
+        // DW: sound
+        _sound = [[WDSound alloc] init];
+        
         [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObject:@"file://localhost/~/Downloads/" forKey:kUserDefaultMacSavingPath]];
         
         _bubble = [[WDBubble alloc] init];
@@ -137,6 +140,9 @@
 
 - (void)dealloc
 {
+    // DW: sound
+    [_sound release];
+    
     // Wu:Remove observe the notification
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
     
@@ -328,6 +334,8 @@
 }
 
 - (void)didReceiveMessage:(WDMessage *)message {
+    [_sound playSoundForKey:kWDSoundFileReceived];
+    
     if ([message.state isEqualToString:kWDMessageStateText]) {
         if (_isView == kTextViewController) {
             _textViewController.textField.string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
@@ -355,11 +363,11 @@
             [_dragFileController.imageView setImage:quicklook];
         }
     }
- 
+    
 }
 
 - (void)didSendMessage:(WDMessage *)message {
-    
+    [_sound playSoundForKey:kWDSoundFileSent];
 }
 
 #pragma mark - PasswordMacViewControllerDelegate

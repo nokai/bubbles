@@ -11,11 +11,21 @@
 @implementation WDSound
 
 - (void)prepareEffects {
-	NSURL *tapSound = [[NSBundle mainBundle] URLForResource: @"kWDSoundFileReceived" withExtension: @"aif"];
-	_soundFileURLRef = (CFURLRef)[tapSound retain];
+    NSURL *tapSound = nil;
+    CFURLRef soundFileURLRef;
     SystemSoundID o;
-	AudioServicesCreateSystemSoundID(_soundFileURLRef, &o);
+    
+    // kWDSoundFileReceived
+    tapSound = [[NSBundle mainBundle] URLForResource:kWDSoundFileReceived withExtension: @"aif"];
+    soundFileURLRef = (CFURLRef)[tapSound retain];
+	AudioServicesCreateSystemSoundID(soundFileURLRef, &o);
     [_soundObjects setValue:[NSNumber numberWithLong:o] forKey:kWDSoundFileReceived];
+    
+    // kWDSoundFileSent
+    tapSound = [[NSBundle mainBundle] URLForResource:kWDSoundFileSent withExtension: @"aif"];
+    soundFileURLRef = (CFURLRef)[tapSound retain];
+	AudioServicesCreateSystemSoundID(soundFileURLRef, &o);
+    [_soundObjects setValue:[NSNumber numberWithLong:o] forKey:kWDSoundFileSent];
 }
 
 - (id)init {
