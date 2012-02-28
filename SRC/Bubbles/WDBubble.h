@@ -77,8 +77,9 @@
 - (void)broadcastMessage:(WDMessage *)message;
 - (void)sendMessage:(WDMessage *)message toServiceNamed:(NSString *)name;
 
-// DW: transfer percent, from 0 to 1
+// DW: transfer control
 - (float)percentTransfered;
 - (NSUInteger)bytesTransfered;
+- (void)terminateTransfer;
 
 @end

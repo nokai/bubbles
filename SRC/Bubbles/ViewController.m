@@ -37,7 +37,7 @@
 }
 
 - (void)lock {
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Lock Bubbles" 
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Lock" 
                                                  message:@"Please input password:"
                                                 delegate:self 
                                        cancelButtonTitle:@"Cancel" 
@@ -47,7 +47,7 @@
     [av release];
 }
 
-- (void)refreshImageAtURL:(NSURL *)fileURL {
+- (UIImage *)refreshImageAtURL:(NSURL *)fileURL {
     // DW: firstly try image
     UIImage *image = [[[[UIImage imageWithContentsOfFile:[fileURL path]] normalize] resizedImageWithContentMode:UIViewContentModeScaleAspectFill
                                                                                                          bounds:CGSizeMake(kTableViewCellHeight, kTableViewCellHeight)
@@ -70,6 +70,7 @@
     
     // DW: finally we get a good image to show and cache
     [_thumbnails setObject:image forKey:fileURL.path];
+    return image;
 }
 
 - (void)storeMessage:(WDMessage *)message {
@@ -213,7 +214,7 @@
     // DW: we now cache all image files
     UIImage *image = [_thumbnails objectForKey:fileURL.path];
     if (!image) {
-        [self refreshImageAtURL:fileURL];
+        image = [self refreshImageAtURL:fileURL];
     }
     cell.imageView.image = image;
 }
@@ -601,14 +602,23 @@
                                destructiveButtonTitle:nil
                                     otherButtonTitles:kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonPreview, nil];
         }
+    } else  {
+        // DW: states such as kWDMessageStateReadyToReceive, kWDMessageStateReadyToSend, kWDMessageStateSending
+        // we can do a "Pause" feature here
+        NSLog(@"VC didSelectRowAtIndexPath %@", t.state);
+        [self.bubble terminateTransfer];
     }
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        [as showFromRect:[tableView cellForRowAtIndexPath:indexPath].frame inView:_messagesView animated:YES];
-    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-        [as showInView:self.view];
+    
+    if (as) {
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            [as showFromRect:[tableView cellForRowAtIndexPath:indexPath].frame inView:_messagesView animated:YES];
+        } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+            [as showInView:self.view];
+        }
+        [as release];
     }
+
     [t release];
-    [as release];
 }
 
 #pragma mark - UITableViewDataSource
@@ -782,7 +792,12 @@
     } else if ([buttonTitle isEqualToString:kActionSheetButtonPreview]) {
         UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:message.fileURL] retain];
         interactionController.delegate = self;
-        [interactionController presentPreviewAnimated:YES];
+        
+        BOOL result = [interactionController presentPreviewAnimated:YES];
+        if (!result) {
+            // DW: file not supproted
+            DLog(@"VC upported or currpted file.");
+        }
     } else if ([buttonTitle isEqualToString:kActionSheetButtonSave]) {
         UIImage *image = [UIImage imageWithContentsOfFile:message.fileURL.path];
         if (image) {

@@ -459,6 +459,10 @@
     }
 }
 
+- (void)terminateTransfer {
+    DLog(@"WDBubble terminateTransfer");
+}
+
 #pragma mark NSNetServiceDelegate
 
 // Publish
@@ -537,7 +541,10 @@
     }
 #endif
     
-    [sock readDataToLength:[data length] withTimeout:-1 buffer:nil bufferOffset:0 tag:20];
+    // DW: this line of code commented below can be seen as the chief reason that causes sending file with loss of data!
+    // Holy damn lord!
+    //[sock readDataToLength:[data length] withTimeout:-1 buffer:nil bufferOffset:0 tag:20];
+    
     [sock readDataWithTimeout:kWDBubbleTimeOut tag:0];
 }
 
@@ -602,7 +609,13 @@
         
         // DW: file receiving end
         if ([_currentMessage.state isEqualToString:kWDMessageStateReadyToReceive]) {
-            DLog(@"WDBubble onSocketDidDisconnect file transfer receiver ended with state %@", _currentMessage.state);
+            DLog(@"WDBubble onSocketDidDisconnect file transfer receiver ended with state %@, %@ received", _currentMessage.state, [NSNumber numberWithInt:_streamBytesWrote]);
+            
+            // DW: if writing is not yes finished, do it;
+            if (_streamBytesWrote < _currentMessage.fileSize) {
+                [self writeDataToFile];
+            }
+            
             // DW: clean socket, "onDisconnect" is not reliable on file transfer
             [self.delegate didReceiveMessage:[WDMessage messageWithFile:_currentMessage.fileURL andState:kWDMessageStateFile]];
             
