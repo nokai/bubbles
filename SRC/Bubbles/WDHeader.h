@@ -17,7 +17,6 @@
 #define kUserDefaultsShouldShowHelp     @"kUserDefaultsShouldShowHelp"
 
 // DW: network
-#define kWDBubbleWebServiceType @"_bubbles._tcp."
 #define kWDBubbleInitialDomain  @""
 #define kWDBubbleTimeOut        -1
 

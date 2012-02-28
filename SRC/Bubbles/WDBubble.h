@@ -35,7 +35,6 @@
 @interface WDBubble : NSObject <AsyncSocketDelegate, NSNetServiceDelegate, NSNetServiceBrowserDelegate, NSStreamDelegate> {
     // DW: Bonjour
     NSNetService *_service;
-    NSNetServiceBrowser *_browser;
     NSMutableArray *_servicesFound;
     NSString *_netServiceType;
     NSArray *_supportedNetServiceTypes;
