@@ -16,7 +16,6 @@
 @interface WDSound : NSObject {
     CFURLRef _soundFileURLRef;
     NSMutableDictionary *_soundObjects;
-    SystemSoundID o;
 }
 
 - (void)playSoundForKey:(NSString *)key;

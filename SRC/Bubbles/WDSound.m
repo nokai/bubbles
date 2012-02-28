@@ -13,6 +13,7 @@
 - (void)prepareEffects {
 	NSURL *tapSound = [[NSBundle mainBundle] URLForResource: @"kWDSoundFileReceived" withExtension: @"aif"];
 	_soundFileURLRef = (CFURLRef)[tapSound retain];
+    SystemSoundID o;
 	AudioServicesCreateSystemSoundID(_soundFileURLRef, &o);
     [_soundObjects setValue:[NSNumber numberWithLong:o] forKey:kWDSoundFileReceived];
 }
@@ -20,6 +21,7 @@
 - (id)init {
     if (self = [super init]) {
         _soundObjects = [[NSMutableDictionary dictionary] retain];
+        [self prepareEffects];
     }
     return self;
 }
@@ -27,7 +29,7 @@
 #pragma mark - Public Methods
 
 - (void)playSoundForKey:(NSString *)key {
-    AudioServicesPlaySystemSound(o);
+    AudioServicesPlaySystemSound([[_soundObjects objectForKey:key] longValue]);
 }
 
 @end
