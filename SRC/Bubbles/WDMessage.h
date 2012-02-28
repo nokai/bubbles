@@ -16,6 +16,7 @@
 #define kWDMessageStateReadyToSend      @"kWDMessageStateReadyToSend"
 #define kWDMessageStateReadyToReceive   @"kWDMessageStateReadyToReceive"
 #define kWDMessageStateSending          @"kWDMessageStateSending"
+#define kWDMessageStateReceiving        @"kWDMessageStateReceiving"
 
 @interface WDMessage : NSObject <NSCoding,NSCopying> {
     NSString *_sender;

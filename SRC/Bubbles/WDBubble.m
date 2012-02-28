@@ -494,6 +494,19 @@
 - (void)onSocket:(AsyncSocket *)sock didAcceptNewSocket:(AsyncSocket *)newSocket {
     //DLog(@"AsyncSocketDelegate didAcceptNewSocket %@: %@", sock, newSocket);
     
+    // DW: we filter some unwanted sockets here, such as sockets that try to connect when current sender is sending
+    // or current receiver is receiving
+    if (_currentMessage) {
+        // DW: of course at least current message is not nil for filtering
+        // we only want to filter kWDMessageStateSending and 
+        
+        if ([_currentMessage.state isEqualToString:kWDMessageStateSending]) {
+            return;
+        } else if ([_currentMessage.state isEqualToString:kWDMessageStateReceiving]) {
+            return;
+        }
+    }
+    
     // DW: this "newSocket" is connected to remote's "socketSender", use it to read data then.
     // It is the very first place to read data.
     _isReceiver = YES;
@@ -504,6 +517,8 @@
 #else
     // DW: _currentMessage.state is always updated if it's transfering file
     if ([_currentMessage.state isEqualToString:kWDMessageStateReadyToReceive]) {
+        _currentMessage.state = kWDMessageStateReceiving;
+        
         _currentMessage.fileURL = [[_currentMessage.fileURL URLWithRemoteChangedToLocal] URLWithoutNameConflict];
         _streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:_currentMessage.fileURL.path  append:YES];
         [_streamFileWriter setDelegate:self];
@@ -527,7 +542,7 @@
     // DW: we append and write data to file
     [_dataBuffer appendData:data];
 #else
-    if ([_currentMessage.state isEqualToString:kWDMessageStateReadyToReceive]) {
+    if ([_currentMessage.state isEqualToString:kWDMessageStateReceiving]) {
         [self.delegate percentUpdated];
         //_currentMessage.state = kWDMessageStateSending;
         // DW: we are receiving file now
@@ -608,7 +623,7 @@
         // DW: a receive socket
         
         // DW: file receiving end
-        if ([_currentMessage.state isEqualToString:kWDMessageStateReadyToReceive]) {
+        if ([_currentMessage.state isEqualToString:kWDMessageStateReceiving]) {
             DLog(@"WDBubble onSocketDidDisconnect file transfer receiver ended with state %@, %@ received", _currentMessage.state, [NSNumber numberWithInt:_streamBytesWrote]);
             
             // DW: if writing is not yes finished, do it;
