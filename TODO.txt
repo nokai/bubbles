@@ -15,6 +15,7 @@ Ziqi
 1. Mac上的单对单
 2. Review NSPageControl allTargets 是不是私有API
 3. Mac上的“关于程序”
+4. 空的文件传输框，一拖拽就崩
 
 Shaobin
 
