@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+//#import "WDSound.h"
 #import "WDBubble.h"
 #import "PasswordMacViewController.h"
 #import "DragFileViewController.h"
@@ -51,6 +52,8 @@
     // Wu:Two Popover 
     HistoryPopOverViewController *_historyPopOverController;
     NetworkFoundPopOverViewController *_networkPopOverController;
+    
+    //WDSound *_sound;
 }
 
 // DW: for binding

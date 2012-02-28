@@ -109,6 +109,8 @@
         //Wu:the initilization is open the send text view;
         _isView = kTextViewController;
         
+        //_sound = [[WDSound alloc]init];
+        
         [self loadUserPreference];
     }
     return self;
@@ -135,6 +137,7 @@
     [_selectFileItem release];
     
     [_bubble release];
+   // [_sound release];
     [_fileURL release];
     [_selectFileItem release];
     [_networkItem release];
@@ -258,6 +261,7 @@
     } else {
         [self sendFile];
     }
+    //[_sound playSoundForKey:kWDSoundFileSent];
 }
 
 - (IBAction)selectFile:(id)sender
@@ -302,25 +306,19 @@
      DLog(@"VC persent %f", [_bubble percentTransfered] * 100);
 }
 
-<<<<<<< HEAD
 - (void)willReceiveMessage:(WDMessage *)message {
     
-=======
-- (void)didReceiveMessage:(WDMessage *)message {
-    if (_isView == kTextViewController) {
-        _textViewController.textField.string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
-        [self storeMessage:message];
-    }
-    message.time = [NSDate date];
->>>>>>> Wu:Ignored this commit ,nothing forward
 }
-
+    
 - (void)didReceiveMessage:(WDMessage *)message {
+    message.time = [NSDate date];
     if ([message.state isEqualToString:kWDMessageStateText]) {
         if (_isView == kTextViewController) {
             _textViewController.textField.string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
             [self storeMessage:message];
+            //[_sound playSoundForKey:kWDSoundFileReceived];
         }
+        
     } else if ([message.state isEqualToString:kWDMessageStateFile]) {
         if (_isView != kDragFileController) {
             return ;
@@ -342,12 +340,9 @@
             NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[message.fileURL path] asIcon:YES];
             [_dragFileController.imageView setImage:quicklook];
         }
+        //[_sound playSoundForKey:kWDSoundFileReceived];
     }
  
-}
-
-- (void)didSendMessage:(WDMessage *)message {
-    
 }
 
 - (void)didSendMessage:(WDMessage *)message

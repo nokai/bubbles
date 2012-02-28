@@ -136,24 +136,14 @@
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
     NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@.%@", 
                                             [NSURL iOSDocumentsDirectoryURL], 
-<<<<<<< HEAD
                                             currentFileName, 
                                             [self pathExtension]]];
     while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
-        currentFileName = [NSString stringWithFormat:@"%@%%20%i", originalFileName, currentFileNamePostfix++];
+        currentFileName = [NSString stringWithFormat:@"%@%%20%i", currentFileName, currentFileNamePostfix++];
         storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@.%@", currentFileName, [self pathExtension]] 
                           relativeToURL:[self URLByDeletingLastPathComponent]];
     }
-=======
-                                            fileName, 
-                                            [self pathExtension]]];
-    while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
-        fileName = [NSString stringWithFormat:@"%@%%20%i", orginFileName, filePostFix++];
-        storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@.%@", fileName, [self pathExtension]] 
-                          relativeToURL:[self URLByDeletingLastPathComponent]];
-    }
     
->>>>>>> Wu:Ignored this commit ,nothing forward
 #elif TARGET_OS_MAC
     NSURL *defaultURL = [self URLByDeletingLastPathComponent];
     NSURL *storeURL = [NSURL URLWithString:
