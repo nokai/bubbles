@@ -137,6 +137,8 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
+    cell.imageView.image = [UIImage imageNamed:[WDBubble platformForNetService:t]];
+    
     return cell;
 }
 

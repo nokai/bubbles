@@ -21,6 +21,13 @@
 #define kWDBubbleInitialDomain  @""
 #define kWDBubbleTimeOut        -1
 
+// DW: different platforms have different web service type
+#define kWDBubbleWebServiceTypeCount   3
+#define kWDBubbleWebServiceTypePhone    @"_phone_bubbles"
+#define kWDBubbleWebServiceTypePad      @"_pad_bubbles"
+#define kWDBubbleWebServiceTypeMac      @"_mac_bubbles"
+// DW: these types are always followed by "._tcp."
+
 // DW: notifications
 #define kWDBubbleNotificationServiceUpdated @"kWDBubbleNotificationServiceUpdated"
 #define kWDBubbleNotificationShouldLock     @"kWDBubbleNotificationShouldLock"

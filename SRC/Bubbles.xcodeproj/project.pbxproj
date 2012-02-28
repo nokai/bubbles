@@ -65,6 +65,9 @@
 		C1393F0A14D90C83005AFEB6 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1393F0814D90C83005AFEB6 /* TextViewController.m */; };
 		C1393F0B14D90C83005AFEB6 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1393F0914D90C83005AFEB6 /* TextViewController.xib */; };
 		C1393F2814D91BBF005AFEB6 /* UINavigationBar+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */; };
+		C141D40F14FD067A000CB8F7 /* _mac_bubbles.png in Resources */ = {isa = PBXBuildFile; fileRef = C141D40C14FD067A000CB8F7 /* _mac_bubbles.png */; };
+		C141D41014FD067A000CB8F7 /* _pad_bubbles.png in Resources */ = {isa = PBXBuildFile; fileRef = C141D40D14FD067A000CB8F7 /* _pad_bubbles.png */; };
+		C141D41114FD067A000CB8F7 /* _phone_bubbles.png in Resources */ = {isa = PBXBuildFile; fileRef = C141D40E14FD067A000CB8F7 /* _phone_bubbles.png */; };
 		C15859C514FA31CD0097FD41 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C15859C414FA31CD0097FD41 /* Default-Portrait~ipad.png */; };
 		C15859C814FA33250097FD41 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C15859C714FA33250097FD41 /* Default-Landscape~ipad.png */; };
 		C167CE0D14E8F3A700B419CD /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = C167CE0C14E8F3A700B419CD /* UIImage+Resize.m */; };
@@ -197,6 +200,9 @@
 		C1393F0914D90C83005AFEB6 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TextViewController.xib; path = Bubbles/TextViewController.xib; sourceTree = SOURCE_ROOT; };
 		C1393F2614D91BBF005AFEB6 /* UINavigationBar+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+Custom.h"; path = "Bubbles/UINavigationBar+Custom.h"; sourceTree = SOURCE_ROOT; };
 		C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+Custom.m"; path = "Bubbles/UINavigationBar+Custom.m"; sourceTree = SOURCE_ROOT; };
+		C141D40C14FD067A000CB8F7 /* _mac_bubbles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _mac_bubbles.png; path = Resources/iPhone/_mac_bubbles.png; sourceTree = SOURCE_ROOT; };
+		C141D40D14FD067A000CB8F7 /* _pad_bubbles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _pad_bubbles.png; path = Resources/iPhone/_pad_bubbles.png; sourceTree = SOURCE_ROOT; };
+		C141D40E14FD067A000CB8F7 /* _phone_bubbles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _phone_bubbles.png; path = Resources/iPhone/_phone_bubbles.png; sourceTree = SOURCE_ROOT; };
 		C15859C414FA31CD0097FD41 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = SOURCE_ROOT; };
 		C15859C714FA33250097FD41 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = SOURCE_ROOT; };
 		C167CE0B14E8F3A700B419CD /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "Bubbles/UIImage+Resize.h"; sourceTree = SOURCE_ROOT; };
@@ -469,12 +475,23 @@
 		C1393F1114D91621005AFEB6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C141D40A14FD0669000CB8F7 /* Platforms */,
 				C11A3A4C14F9254E00892631 /* Toobar */,
 				C192663F14ECD74B0090D8F7 /* Help */,
 				C18B6F7B14DCC8E7009F502E /* Icon-Text.png */,
 				C18B6F7C14DCC8E7009F502E /* Icon-Text@2x.png */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		C141D40A14FD0669000CB8F7 /* Platforms */ = {
+			isa = PBXGroup;
+			children = (
+				C141D40C14FD067A000CB8F7 /* _mac_bubbles.png */,
+				C141D40D14FD067A000CB8F7 /* _pad_bubbles.png */,
+				C141D40E14FD067A000CB8F7 /* _phone_bubbles.png */,
+			);
+			name = Platforms;
 			sourceTree = "<group>";
 		};
 		C192663F14ECD74B0090D8F7 /* Help */ = {
@@ -690,6 +707,9 @@
 				C15859C814FA33250097FD41 /* Default-Landscape~ipad.png in Resources */,
 				188E022414FB2BF500B1B319 /* BubblesHelp in Resources */,
 				C1F950CF14FBE62A00482ECF /* kWDSoundFileReceived.aif in Resources */,
+				C141D40F14FD067A000CB8F7 /* _mac_bubbles.png in Resources */,
+				C141D41014FD067A000CB8F7 /* _pad_bubbles.png in Resources */,
+				C141D41114FD067A000CB8F7 /* _phone_bubbles.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

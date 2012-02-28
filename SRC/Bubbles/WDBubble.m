@@ -204,10 +204,24 @@
 #pragma mark - Private Methods
 
 - (void)dealloc {
+    [_supportedNetServiceTypes release];
+    [_browsers release];
     [_socketListen release];
     [_socketsConnect release];
     
     [super dealloc];
+}
+
+- (void)updateSupportedNetServiceTypesForPassword:(NSString *)pwd {
+    if (_supportedNetServiceTypes) {
+        [_supportedNetServiceTypes release];
+    }
+    
+    _supportedNetServiceTypes = [[NSArray arrayWithObjects:
+                                 [NSString stringWithFormat:@"%@%@._tcp.", kWDBubbleWebServiceTypePhone, pwd], 
+                                 [NSString stringWithFormat:@"%@%@._tcp.", kWDBubbleWebServiceTypePad, pwd], 
+                                 [NSString stringWithFormat:@"%@%@._tcp.", kWDBubbleWebServiceTypeMac, pwd], 
+                                 nil] retain];
 }
 
 - (void)resolveService:(NSNetService *)s {
@@ -314,6 +328,19 @@
 
 #pragma mark - Publice Methods
 
++ (NSString *)platformForNetService:(NSNetService *)netService {
+    NSString *netServiceType = netService.type;
+    if ([netServiceType rangeOfString:kWDBubbleWebServiceTypeMac].location != NSNotFound) {
+        return kWDBubbleWebServiceTypeMac;
+    } else if ([netServiceType rangeOfString:kWDBubbleWebServiceTypePad].location != NSNotFound) {
+        return kWDBubbleWebServiceTypePad;
+    } else if ([netServiceType rangeOfString:kWDBubbleWebServiceTypePhone].location != NSNotFound) {
+        return kWDBubbleWebServiceTypePhone;
+    } else {
+        return @"";
+    }
+}
+
 - (id)init {
     if (self = [super init]) {
         DLog(@"WDBubble initSocket");
@@ -331,29 +358,39 @@
         //self.socketConnect = [[AsyncSocket alloc] init];
         //self.socketConnect.delegate = self;
         _socketsConnect = [[NSMutableArray alloc] init];
+        
+        _browsers = [[NSMutableArray arrayWithCapacity:kWDBubbleWebServiceTypeCount] retain];
+        for (int i = 0; i < kWDBubbleWebServiceTypeCount; i++) {
+            NSNetServiceBrowser *browser = [[[NSNetServiceBrowser alloc] init] autorelease];
+            browser.delegate = self;
+            [_browsers addObject:browser];
+        }
     }
     return self;
 }
 
 - (void)publishServiceWithPassword:(NSString *)pwd {
     DLog(@"WDBubble publishService <%@>%@ port %i", _service.name, _socketListen, _socketListen.localPort);
-    if ([pwd isEqualToString:@""]) {
-        _netServiceType = kWDBubbleWebServiceType;
-    } else {
-        _netServiceType = [NSString stringWithFormat:@"_bubbles_%@._tcp.", pwd];
-    }
     
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+        _netServiceType = [NSString stringWithFormat:@"%@%@._tcp.", kWDBubbleWebServiceTypePhone, pwd];
+    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        _netServiceType = [NSString stringWithFormat:@"%@%@._tcp.", kWDBubbleWebServiceTypePad, pwd];
+    }
+    
     _service = [[NSNetService alloc] initWithDomain:@""
                                                type:_netServiceType
                                                name:[[UIDevice currentDevice] name]
                                                port:_socketListen.localPort];
 #elif TARGET_OS_MAC
+    _netServiceType = [NSString stringWithFormat:@"%@%@._tcp.", kWDBubbleWebServiceTypeMac, pwd];
     _service = [[NSNetService alloc] initWithDomain:@""
                                                type:_netServiceType
                                                name:[[NSHost currentHost] localizedName]
                                                port:_socketListen.localPort];
 #endif
+    [self updateSupportedNetServiceTypesForPassword:pwd];
     
     _service.delegate = self;
     [_service publish];
@@ -362,9 +399,15 @@
 - (void)browseServices {
     _servicesFound = [[NSMutableArray alloc] init];
     DLog(@"WDBubble browseServices");
-    _browser = [[NSNetServiceBrowser alloc] init];
-    _browser.delegate = self;
-    [_browser searchForServicesOfType:_netServiceType inDomain:kWDBubbleInitialDomain];
+    //_browser = [[NSNetServiceBrowser alloc] init];
+    //_browser.delegate = self;
+    
+    // DW: we browse all supported services now
+    //[_browser searchForServicesOfType:_netServiceType inDomain:kWDBubbleInitialDomain];    
+    for (int i = 0; i < _supportedNetServiceTypes.count; i++) {
+        [[_browsers objectAtIndex:i] searchForServicesOfType:[_supportedNetServiceTypes objectAtIndex:i] 
+                                                    inDomain:kWDBubbleInitialDomain];
+    }
     
     // 20120116 DW: it's not possible to find extra domains, give up
     //[_browser searchForBrowsableDomains];
