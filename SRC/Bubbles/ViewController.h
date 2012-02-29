@@ -66,6 +66,11 @@ UISplitViewControllerDelegate> {
 }
 
 @property (nonatomic, retain) WDBubble *bubble;
+
+// DW: for opening files
+@property (nonatomic, retain) NSURL *launchFile;
+
+// DW: cooperate with peers
 @property (nonatomic, retain) UIBarButtonItem *lockButton;
 @property (nonatomic, retain) NSString *selectedServiceName;
 

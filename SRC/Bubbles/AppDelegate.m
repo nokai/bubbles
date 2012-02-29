@@ -16,8 +16,20 @@
 @synthesize window = _window, bubble = _bubble;
 @synthesize viewController = _viewController, splitViewController = _splitViewController;
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    // DW: we support opening files, check launchOptions here
+    NSURL *newURL = nil;
+    if (launchOptions) {
+        // DW: move files in "Inbox" folder to "Documents"
+        NSURL *fileURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+        newURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@", 
+                                         [[fileURL URLByDeletingLastPathComponent] URLByDeletingLastPathComponent].path, 
+                                         fileURL.lastPathComponent]];
+        DLog(@"AppDelegate didFinishLaunchingWithOptions Old: %@; new: %@.", fileURL, newURL);
+        [[NSFileManager defaultManager] moveItemAtURL:fileURL toURL:newURL error:nil];
+    }
+    
     _bubble = [[WDBubble alloc] init];
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
@@ -25,7 +37,8 @@
         
         ViewController *detailViewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
         UINavigationController *detailNavigationController = [[[UINavigationController alloc] initWithRootViewController:detailViewController] autorelease];
-    	detailViewController.bubble = _bubble;
+        detailViewController.bubble = _bubble;
+        detailViewController.launchFile = newURL;
         _bubble.delegate = detailViewController;
         
         PeersViewController *masterViewController = [[[PeersViewController alloc] initWithNibName:@"PeersViewController_iPad" bundle:nil] autorelease];
@@ -45,6 +58,7 @@
         // Override point for customization after application launch.
         self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
         self.viewController.bubble = _bubble;
+        self.viewController.launchFile = newURL;
         _bubble.delegate = self.viewController;
         
         self.window.rootViewController = self.viewController;
@@ -68,7 +82,7 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
-    [_bubble stopService];
+    //[_bubble stopService];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

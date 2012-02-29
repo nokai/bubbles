@@ -27,8 +27,11 @@
 
 #define kTableViewCellHeight        50
 
+#define kSegmentControlFiles        0
+#define kSegmentControlHistory      1
+
 @implementation ViewController
-@synthesize bubble = _bubble, lockButton = _lockButton, selectedServiceName = _selectedServiceName;
+@synthesize bubble = _bubble, launchFile = _launchFile, lockButton = _lockButton, selectedServiceName = _selectedServiceName;
 
 - (void)refreshLockStatus {
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
@@ -246,7 +249,7 @@
 - (void)restartBubbleWithPassword:(NSString *)password {
     [_selectedServiceName release];
     _selectedServiceName = nil;
-
+    
     [_bubble stopService];
     [_bubble publishServiceWithPassword:password];
     [_bubble browseServices];
@@ -294,9 +297,9 @@
     _directoryWatcher = [[DirectoryWatcher watchFolderWithPath:[NSURL iOSDocumentsDirectoryPath] delegate:self] retain];
     _documents = [[NSMutableArray alloc] init];
     [self directoryDidChange:_directoryWatcher];
-    if (_segmentSwith.selectedSegmentIndex == 0) {
+    if (_segmentSwith.selectedSegmentIndex == kSegmentControlHistory) {
         _itemsToShow = _messages;
-    } else {
+    } else if (_segmentSwith.selectedSegmentIndex == kSegmentControlFiles) {
         _itemsToShow = _documents;
     }
     
@@ -332,6 +335,19 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    // DW: launch file
+    // DW: I give up doing this, since I can now present a preview on start,
+    // and if it's in background and invoke to foreground, nothing will happen anyway.
+    // This feature is now so well supported.
+    /*
+    if (_launchFile) {
+        DLog(@"VC viewDidLoad %@", _launchFile);
+        UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:_launchFile] retain];
+        interactionController.delegate = self;
+        DLog(@"VC viewDidLoad preview %d", [interactionController presentPreviewAnimated:YES]);
+    }
+     */
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -363,7 +379,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) || (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) || (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 #pragma mark - IBOultets
@@ -447,9 +463,9 @@
 
 - (IBAction)toggleView:(id)sender {
     UISegmentedControl *sc = (UISegmentedControl *)sender;
-    if (sc.selectedSegmentIndex == 0) {
+    if (sc.selectedSegmentIndex == kSegmentControlHistory) {
         _itemsToShow = _messages;
-    } else if (sc.selectedSegmentIndex == 1) {
+    } else if (sc.selectedSegmentIndex == kSegmentControlFiles) {
         _itemsToShow = _documents;
     }
     [_messagesView reloadData];
@@ -593,9 +609,9 @@
     UIActionSheet *as = nil;
     
     // DW: construct a WDMessage
-    if (_segmentSwith.selectedSegmentIndex == 0) {
+    if (_segmentSwith.selectedSegmentIndex == kSegmentControlHistory) {
         t = [[_messages objectAtIndex:indexPath.row] retain];
-    } else if (_segmentSwith.selectedSegmentIndex == 1) {
+    } else if (_segmentSwith.selectedSegmentIndex == kSegmentControlFiles) {
         NSURL *fileURL = [_documents objectAtIndex:indexPath.row];
         t = [[WDMessage messageWithFile:fileURL andState:kWDMessageStateFile] retain];
     }
@@ -651,13 +667,13 @@
     // Return the number of rows in the section.
     
     // DW: we can use here to hide bar buttons
-    if (_segmentSwith.selectedSegmentIndex == 0) {
+    if (_segmentSwith.selectedSegmentIndex == kSegmentControlHistory) {
         BOOL canShowEditButton = (_messages.count > 0);
         [_bar.topItem setRightBarButtonItem:canShowEditButton?self.editButtonItem:nil];
         if (!canShowEditButton) {
             [self setEditing:NO];
         }
-    } else if (_segmentSwith.selectedSegmentIndex == 1) {
+    } else if (_segmentSwith.selectedSegmentIndex == kSegmentControlFiles) {
         BOOL canShowEditButton = (_documents.count > 0);
         [_bar.topItem setRightBarButtonItem:(_documents.count > 0)?self.editButtonItem:nil];
         if (!canShowEditButton) {
@@ -669,9 +685,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_segmentSwith.selectedSegmentIndex == 0) {
+    if (_segmentSwith.selectedSegmentIndex == kSegmentControlHistory) {
         [_messages removeObjectAtIndex:indexPath.row];
-    } else if (_segmentSwith.selectedSegmentIndex == 1) {
+    } else if (_segmentSwith.selectedSegmentIndex == kSegmentControlFiles) {
         NSURL *fileURL = [_documents objectAtIndex:indexPath.row];
         [self deleteDocumentAndMessageInURL:fileURL];
         [_documents removeObjectAtIndex:indexPath.row];
@@ -696,7 +712,7 @@
     cell.textLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
     cell.detailTextLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
     
-    if (_segmentSwith.selectedSegmentIndex == 0) {
+    if (_segmentSwith.selectedSegmentIndex == kSegmentControlHistory) {
         // DW: messages, AKA "History"
         
         WDMessage *t = [_itemsToShow objectAtIndex:indexPath.row];
@@ -727,7 +743,7 @@
             
             [self fillCell:cell withFileURL:t.fileURL];
         }
-    } else if (_segmentSwith.selectedSegmentIndex == 1) {
+    } else if (_segmentSwith.selectedSegmentIndex == kSegmentControlFiles) {
         NSURL *fileURL = [_documents objectAtIndex:indexPath.row];
         
         UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
@@ -777,9 +793,9 @@
     
     // DW: special actions that do not need WDMessage
     if ([buttonTitle isEqualToString:kActionSheetButtonDeleteAll]) {
-        if (_segmentSwith.selectedSegmentIndex == 0) {
+        if (_segmentSwith.selectedSegmentIndex == kSegmentControlHistory) {
             [_messages removeAllObjects];
-        } else if (_segmentSwith.selectedSegmentIndex == 1) {
+        } else if (_segmentSwith.selectedSegmentIndex == kSegmentControlFiles) {
             [self deleteAllDocuments];
             [_documents removeAllObjects];
         }
@@ -809,10 +825,10 @@
     
     // DW: construct a WDMessage
     WDMessage *message = nil;
-    if (_segmentSwith.selectedSegmentIndex == 0) {
+    if (_segmentSwith.selectedSegmentIndex == kSegmentControlHistory) {
         // DW: messages
         message = [[_messages objectAtIndex:[_messagesView indexPathForSelectedRow].row] retain];
-    } else if (_segmentSwith.selectedSegmentIndex == 1) {
+    } else if (_segmentSwith.selectedSegmentIndex == kSegmentControlFiles) {
         NSURL *fileURL = [_documents objectAtIndex:_messagesView.indexPathForSelectedRow.row];
         message = [[WDMessage messageWithFile:fileURL andState:kWDMessageStateFile] retain];
     }
@@ -908,6 +924,11 @@
                                                                   includingPropertiesForKeys:nil 
                                                                                      options:NSDirectoryEnumerationSkipsHiddenFiles 
                                                                                        error:nil]];
+    // DW: we need to skip folders here
+    for (NSURL *url in _documents) {
+        
+    }
+    
     [_documents sortUsingComparator:^(NSURL *obj1, NSURL * obj2) {
         return [obj1.path.lowercaseString compare:obj2.path.lowercaseString];
     }];
