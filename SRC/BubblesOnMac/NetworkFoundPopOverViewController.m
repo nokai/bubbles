@@ -10,6 +10,8 @@
 
 @implementation NetworkFoundPopOverViewController
 @synthesize bubble = _bubble;
+@synthesize delegate;
+@synthesize selectedServiceName;
 
 #pragma mark - Private Methods
 
@@ -65,6 +67,21 @@
     } else {
         return t.name;
     }
+}
+
+- (void)tableViewSelectionDidChange:(NSNotification *)aNotification
+{
+    
+    DLog(@"hahaha");
+    // Configure the cell...
+    NSNetService *t = [_bubble.servicesFound objectAtIndex:[_serviceFoundTableView selectedRow]];
+    if ([t.name isEqualToString:_bubble.service.name]) {
+        [_serviceFoundTableView deselectRow:[_serviceFoundTableView selectedRow]];
+        return;
+    } 
+    self.selectedServiceName = t.name;
+    [self.delegate didSelectServiceName:self.selectedServiceName];
+    [_serviceFoundTableView reloadData];
 }
 
 @end

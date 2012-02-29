@@ -18,31 +18,35 @@
 
 #pragma mark - Private Methods
 
-/*- (void)delayNotification {
- [self performSelector:@selector(loadUserPreference) withObject:nil afterDelay:1.0f];
- }*/
-
-// DW: we do not need this method now
-/*- (void)directlySave {
- NSURL *url = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];
- if (_fileURL && _imageMessage.image != nil) {
- NSFileManager *manager = [NSFileManager defaultManager];
- 
- NSString *fileExtension = [[_fileURL absoluteString] pathExtension];
- NSString *filename = [NSString stringWithFormat:@"%@.%@",[NSDate date],fileExtension];
- DLog(@"filename is %@!!!!!!!",filename);
- 
- NSData *data = [NSData dataWithContentsOfURL:_fileURL];
- 
- NSString *fullPath = [[url path] stringByAppendingPathComponent:filename];
- [manager createFileAtPath:fullPath contents:data attributes:nil];
- }
- }*/
+// Wu: NO for can not send, YES for will send
+- (BOOL)sendToSelectedServiceOfMessage:(WDMessage *)message {
+    if (!_selectedServiceName || [_selectedServiceName isEqualToString:@""]) {
+        return NO;
+    }
+    
+    [_bubble sendMessage:message toServiceNamed:_selectedServiceName];
+    return YES;
+}
 
 - (void)servicesUpdated:(NSNotification *)notification {
     if (_networkPopOverController != nil) {
         [_networkPopOverController reloadNetwork];
     }
+    if (_bubble.servicesFound.count > 1) {
+        for (NSNetService *s in _bubble.servicesFound) {
+            if ([s.name isEqualToString:_bubble.service.name]) {
+                continue;
+            } else {
+                _selectedServiceName = [s.name retain];
+            }
+        }
+    } else {
+        if (_selectedServiceName) {
+            [_selectedServiceName release];
+        }
+        _selectedServiceName = nil;
+    }
+
 }
 
 - (void)initFirstResponder
@@ -90,12 +94,15 @@
 }
 
 - (void)sendFile {
-    if (_isView == kTextViewController || _fileURL == nil) {
+    if (_isView == kTextViewController || _fileURL == nil ) {
         return ;
     }
+    
     WDMessage *t = [[WDMessage messageWithFile:_fileURL andState:kWDMessageStateReadyToSend] retain];
-    [self storeMessage:t];
-    [_bubble broadcastMessage:t];
+    if ([self sendToSelectedServiceOfMessage:t]) {
+        [self storeMessage:t];
+    }
+    //[_bubble broadcastMessage:t];
     [t release];  
 }
 
@@ -125,13 +132,17 @@
         // Wu:Init two popover
         _historyPopOverController = [[HistoryPopOverViewController alloc]
                                      initWithNibName:@"HistoryPopOverViewController" bundle:nil];
+        _historyPopOverController.bubbles = _bubble;
         
         _networkPopOverController = [[NetworkFoundPopOverViewController alloc]
                                      initWithNibName:@"NetworkFoundPopOverViewController" bundle:nil];
         _networkPopOverController.bubble = _bubble;
+        _networkPopOverController.delegate = self;
         
         //Wu:the initilization is open the send text view;
         _isView = kTextViewController;
+        
+        //_sound = [[WDSound alloc]init];
         
         [self loadUserPreference];
     }
@@ -157,11 +168,13 @@
     [_passwordController release];
     [_preferenceController release];
     [_featureController release];
+    [_aboutController release];
     
     [_lockButton release];
     [_selectFileItem release];
     
     [_bubble release];
+   // [_sound release];
     [_fileURL release];
     [_selectFileItem release];
     [_networkItem release];
@@ -250,7 +263,6 @@
 - (IBAction)swapView:(id)sender {
     if (_isView == kTextViewController) {
         [_toolBar insertItemWithItemIdentifier:@"SelectItemIdentifier" atIndex:kTooBarIndexOfSelectButton];
-        
         _isView = kDragFileController;
         [_textViewController.view setHidden:YES withFade:YES];
         [_dragFileController.view setHidden:NO withFade:YES];
@@ -275,6 +287,7 @@
 
 - (IBAction)openServiceFoundPopOver:(id)sender
 {
+    _networkPopOverController.selectedServiceName = _selectedServiceName;
     NSButton *button  = (NSButton *)[_networkItem view];
     [_networkPopOverController showServicesFoundPopOver:button];
 }
@@ -286,6 +299,7 @@
     } else {
         [self sendFile];
     }
+    //[_sound playSoundForKey:kWDSoundFileSent];
 }
 
 - (IBAction)selectFile:(id)sender
@@ -323,24 +337,32 @@
     [_featureController showWindow:self];
 }
 
+- (IBAction)openABoutWindow:(id)sender
+{
+    if (_aboutController == nil)
+        _aboutController = [[AboutWindowController alloc]init];
+    [_aboutController showWindow:self];
+}
+
 #pragma mark - WDBubbleDelegate
 
 - (void)percentUpdated {
-    //[_messagesView reloadData];
+    [_historyPopOverController.filehistoryTableView reloadData];
 }
 
 - (void)willReceiveMessage:(WDMessage *)message {
     
 }
-
+    
 - (void)didReceiveMessage:(WDMessage *)message {
     [_sound playSoundForKey:kWDSoundFileReceived];
-    
+    message.time = [NSDate date];
     if ([message.state isEqualToString:kWDMessageStateText]) {
         if (_isView == kTextViewController) {
             _textViewController.textField.string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
             [self storeMessage:message];
         }
+        
     } else if ([message.state isEqualToString:kWDMessageStateFile]) {
         if (_isView != kDragFileController) {
             return ;
@@ -368,6 +390,7 @@
 
 - (void)didSendMessage:(WDMessage *)message {
     [_sound playSoundForKey:kWDSoundFileSent];
+    message.state = kWDMessageStateFile;
 }
 
 #pragma mark - PasswordMacViewControllerDelegate
@@ -434,6 +457,17 @@
         return _fileURL;
     }
     return nil;
+}
+
+#pragma mark - NetworkFoundDelegate
+
+- (void)didSelectServiceName:(NSString *)serviceName
+{
+    /*if (_selectedServiceName ) {
+        [_selectedServiceName release];
+    }*/
+    _selectedServiceName = [serviceName retain];
+    DLog(@"name is %@",_selectedServiceName);
 }
 
 // DW: we do not need these codes
