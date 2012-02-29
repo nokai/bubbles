@@ -53,6 +53,7 @@
 
 - (void)dealloc
 {
+    [_selectDirectoryOpenPanel release];
     [super dealloc];
 }
 
@@ -61,24 +62,34 @@
 - (IBAction)choosePopUp:(NSPopUpButton *)sender
 {
     if ([sender indexOfItem:[sender selectedItem]] == 2) {
-        NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-        [openPanel setCanChooseFiles:NO];
-        [openPanel setCanChooseDirectories:YES];
+        _selectDirectoryOpenPanel = [NSOpenPanel openPanel];
+        [_selectDirectoryOpenPanel setCanChooseFiles:NO];
+        [_selectDirectoryOpenPanel setCanChooseDirectories:YES];
         
-        if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
-            
-            NSURL *url = [openPanel URL];
-            NSImage *folderIcon = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
-            [[NSUserDefaults standardUserDefaults] setValue:url.absoluteString forKey:kUserDefaultMacSavingPath];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [_savePathButton insertItemWithTitle:[url lastPathComponent] atIndex:0];
-            [[_savePathButton itemAtIndex:0] setImage:folderIcon];
-            [_savePathButton selectItemAtIndex:0];
-            [_savePathButton removeItemAtIndex:1];
-            
-        } else{
-            [_savePathButton selectItemAtIndex:0];  
-        }
+        void (^selectFileDirectoryHandler)(NSInteger) = ^( NSInteger result )
+        {
+            if (result == 0) {
+                // Means Cancel 
+                [_savePathButton selectItemAtIndex:0]; 
+            } else {
+                // Means Select
+                NSURL *selectedFileURL = [_selectDirectoryOpenPanel URL];
+                
+                if(selectedFileURL)
+                {
+                    NSImage *folderIcon = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
+                    [[NSUserDefaults standardUserDefaults] setValue:selectedFileURL.absoluteString forKey:kUserDefaultMacSavingPath];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [_savePathButton insertItemWithTitle:[selectedFileURL lastPathComponent] atIndex:0];
+                    [[_savePathButton itemAtIndex:0] setImage:folderIcon];
+                    [_savePathButton selectItemAtIndex:0];
+                    [_savePathButton removeItemAtIndex:1];
+                }
+
+            }
+        };
+        [_selectDirectoryOpenPanel beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow 
+                                     completionHandler:selectFileDirectoryHandler];
     }
 }
 

@@ -27,7 +27,8 @@
 @interface MainViewController : NSObject <WDBubbleDelegate,PasswordMacViewControllerDelegate,DragAndDropImageViewDelegate,NetworkFoundDelegate> {
     WDBubble *_bubble;
     NSURL *_fileURL;
-     NSString *_selectedServiceName;
+    NSString *_selectedServiceName;
+    NSOpenPanel *_selectFileOpenPanel;
         
     // Wu:NSView for adding two subView and constrain their bound
     IBOutlet NSView *_superView;

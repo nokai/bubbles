@@ -13,6 +13,7 @@
 {
     IBOutlet NSPopUpButton *_savePathButton;
     IBOutlet NSToolbar *_toolBar;
+    NSOpenPanel *_selectDirectoryOpenPanel;
 }
 
 @end

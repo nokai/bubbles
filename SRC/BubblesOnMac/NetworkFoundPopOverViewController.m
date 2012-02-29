@@ -45,10 +45,24 @@
     return self;
 }
 
+- (void)awakeFromNib
+{
+    NSButtonCell *clickCell = [[[NSButtonCell alloc]init]autorelease];
+    [clickCell setBordered:NO];
+    [clickCell setImage:[NSImage imageNamed:@"NSSmartBadgeTemplate"]];
+    [clickCell setImageScaling:NSImageScaleProportionallyDown];
+    [clickCell setAction:nil];
+    [clickCell setTitle:@""];
+    clickCell.highlightsBy = NSContentsCellMask;
+    NSTableColumn *columnTwo = [[_serviceFoundTableView tableColumns] objectAtIndex:kClickCellColumn];
+    [columnTwo setDataCell:clickCell];
+}
+
 - (void)dealloc
 {
     [_serviceFoundTableView release];
     [_serviceFoundPopOver release];
+    self.selectedServiceName = nil;
     [super dealloc];
 }
 
@@ -69,9 +83,21 @@
     }
 }
 
+- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    NSNetService *t = [_bubble.servicesFound objectAtIndex:row];
+    DLog(@"selectedServiceName is %@",self.selectedServiceName);
+    if (t.name == self.selectedServiceName && tableColumn == [[_serviceFoundTableView tableColumns] objectAtIndex:kClickCellColumn]) {
+        NSButtonCell *buttonCell = (NSButtonCell *)cell;
+        [buttonCell setImagePosition:NSImageOverlaps];
+    } else if (tableColumn == [[_serviceFoundTableView tableColumns]objectAtIndex:kClickCellColumn] && (self.selectedServiceName == NULL || self.selectedServiceName != t.name)){
+        NSButtonCell *buttonCell = (NSButtonCell *)cell;
+        [buttonCell setImagePosition:NSNoImage];
+    }
+}
+
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
-    
     DLog(@"hahaha");
     // Configure the cell...
     NSNetService *t = [_bubble.servicesFound objectAtIndex:[_serviceFoundTableView selectedRow]];
