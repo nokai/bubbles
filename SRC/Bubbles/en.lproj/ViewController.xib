@@ -178,13 +178,23 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<reference key="IBUIToolbar" ref="673179120"/>
 							</object>
+							<object class="IBUIBarButtonItem" id="393864075">
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<reference key="IBUIToolbar" ref="673179120"/>
+								<int key="IBUISystemItemIdentifier">5</int>
+							</object>
+							<object class="IBUIBarButtonItem" id="257621439">
+								<string key="IBUITitle">？</string>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<reference key="IBUIToolbar" ref="673179120"/>
+							</object>
 						</array>
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
+				<reference key="NSNextKeyView" ref="709842563"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MC43NQA</bytes>
@@ -312,6 +322,14 @@
 					</object>
 					<int key="connectionID">88</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">showHelp:</string>
+						<reference key="source" ref="257621439"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">94</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -385,6 +403,8 @@
 							<reference ref="291941509"/>
 							<reference ref="838382142"/>
 							<reference ref="765524499"/>
+							<reference ref="393864075"/>
+							<reference ref="257621439"/>
 						</array>
 						<reference key="parent" ref="774585933"/>
 					</object>
@@ -423,6 +443,16 @@
 						<reference key="object" ref="765524499"/>
 						<reference key="parent" ref="673179120"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">92</int>
+						<reference key="object" ref="393864075"/>
+						<reference key="parent" ref="673179120"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">93</int>
+						<reference key="object" ref="257621439"/>
+						<reference key="parent" ref="673179120"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -445,12 +475,14 @@
 				<string key="82.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="83.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="84.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="92.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="93.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">91</int>
+			<int key="maxID">94</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -461,6 +493,7 @@
 						<string key="clearButton:">id</string>
 						<string key="selectFile:">id</string>
 						<string key="sendText:">id</string>
+						<string key="showHelp:">id</string>
 						<string key="showPeers:">id</string>
 						<string key="toggleUsePassword:">id</string>
 						<string key="toggleView:">id</string>
@@ -476,6 +509,10 @@
 						</object>
 						<object class="IBActionInfo" key="sendText:">
 							<string key="name">sendText:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showHelp:">
+							<string key="name">showHelp:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showPeers:">
@@ -532,10 +569,10 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="add_file.png">{32, 32}</string>
-			<string key="add_txt.png">{32, 32}</string>
-			<string key="lock_off.png">{32, 32}</string>
-			<string key="peer.png">{32, 32}</string>
+			<string key="add_file.png">{20, 20}</string>
+			<string key="add_txt.png">{20, 20}</string>
+			<string key="lock_off.png">{20, 20}</string>
+			<string key="peer.png">{20, 20}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1420</string>
 	</data>

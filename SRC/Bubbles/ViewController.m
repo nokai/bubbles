@@ -22,6 +22,9 @@
 #define kActionSheetButtonCancel    @"Cancel"
 #define kActionSheetButtonDeleteAll @"Delete All"
 
+#define kActionSheetButtonHelpPDF       @"Help Document"
+#define kActionSheetButtonHelpSplash    @"Splash Screen"
+
 #define kTableViewCellHeight        50
 
 @implementation ViewController
@@ -403,6 +406,21 @@
     [nv release];
 }
 
+- (IBAction)showHelp:(id)sender {
+    
+    UIActionSheet *as = [[UIActionSheet alloc] initWithTitle:nil
+                                                    delegate:self 
+                                           cancelButtonTitle:kActionSheetButtonCancel
+                                      destructiveButtonTitle:nil
+                                           otherButtonTitles:kActionSheetButtonHelpPDF, kActionSheetButtonHelpSplash, nil];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [as showFromBarButtonItem:nil animated:YES];
+    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+        [as showInView:self.view];
+    }
+    [as release];
+}
+
 - (IBAction)toggleUsePassword:(id)sender {
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
     usePassword = !usePassword;
@@ -765,6 +783,25 @@
         }
         [_messagesView reloadData];
         [self setEditing:NO animated:YES];
+        return;
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonHelpPDF]) {
+        NSURL *manualURL = [[NSBundle mainBundle] URLForResource:@"manual" withExtension:@"pdf"];
+        UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:manualURL] retain];
+        interactionController.delegate = self;
+        [interactionController presentPreviewAnimated:YES];
+        return;
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonHelpSplash]) {
+        if (_helpViewController) {
+            [_helpViewController release];
+            _helpViewController = nil;
+        }
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+            _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil];
+            [self.view addSubview:_helpViewController.view];
+        } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil];
+            [[UIApplication sharedApplication].keyWindow addSubview:_helpViewController.view];
+        }
         return;
     }
     

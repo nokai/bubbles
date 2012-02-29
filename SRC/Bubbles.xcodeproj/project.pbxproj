@@ -55,6 +55,7 @@
 		C1057A9614FE0BB700D02DA4 /* help15.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8814FE0BB700D02DA4 /* help15.png */; };
 		C1057A9714FE0BB700D02DA4 /* help16.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8914FE0BB700D02DA4 /* help16.png */; };
 		C1057A9814FE0BB700D02DA4 /* help17.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8A14FE0BB700D02DA4 /* help17.png */; };
+		C1057A9A14FE148B00D02DA4 /* manual.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9914FE148B00D02DA4 /* manual.pdf */; };
 		C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C111265514DE2C7800884F7D /* DirectoryWatcher.m */; };
 		C11A3A5314F9277600892631 /* add_file.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4E14F9277600892631 /* add_file.png */; };
 		C11A3A5414F9277600892631 /* add_txt.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4F14F9277600892631 /* add_txt.png */; };
@@ -198,6 +199,7 @@
 		C1057A8814FE0BB700D02DA4 /* help15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help15.png; path = Resources/iPhone/help15.png; sourceTree = SOURCE_ROOT; };
 		C1057A8914FE0BB700D02DA4 /* help16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help16.png; path = Resources/iPhone/help16.png; sourceTree = SOURCE_ROOT; };
 		C1057A8A14FE0BB700D02DA4 /* help17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help17.png; path = Resources/iPhone/help17.png; sourceTree = SOURCE_ROOT; };
+		C1057A9914FE148B00D02DA4 /* manual.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = manual.pdf; path = Resources/manual.pdf; sourceTree = SOURCE_ROOT; };
 		C111265414DE2C7800884F7D /* DirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryWatcher.h; path = Bubbles/DirectoryWatcher.h; sourceTree = SOURCE_ROOT; };
 		C111265514DE2C7800884F7D /* DirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectoryWatcher.m; path = Bubbles/DirectoryWatcher.m; sourceTree = SOURCE_ROOT; };
 		C11A3A4E14F9277600892631 /* add_file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_file.png; path = Resources/iPhone/add_file.png; sourceTree = SOURCE_ROOT; };
@@ -517,6 +519,7 @@
 				C192663F14ECD74B0090D8F7 /* Help */,
 				C18B6F7B14DCC8E7009F502E /* Icon-Text.png */,
 				C18B6F7C14DCC8E7009F502E /* Icon-Text@2x.png */,
+				C1057A9914FE148B00D02DA4 /* manual.pdf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -761,6 +764,7 @@
 				C1057A9614FE0BB700D02DA4 /* help15.png in Resources */,
 				C1057A9714FE0BB700D02DA4 /* help16.png in Resources */,
 				C1057A9814FE0BB700D02DA4 /* help17.png in Resources */,
+				C1057A9A14FE148B00D02DA4 /* manual.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

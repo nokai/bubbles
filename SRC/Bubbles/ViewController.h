@@ -74,6 +74,7 @@ PeersViewControllerDelegate> {
 - (IBAction)sendText:(id)sender;
 - (IBAction)selectFile:(id)sender;
 - (IBAction)showPeers:(id)sender;
+- (IBAction)showHelp:(id)sender;
 - (IBAction)toggleUsePassword:(id)sender;
 - (IBAction)toggleView:(id)sender;
 - (IBAction)clearButton:(id)sender;
