@@ -69,6 +69,7 @@
 @property (nonatomic, retain) id<WDBubbleDelegate> delegate;
 
 + (NSString *)platformForNetService:(NSNetService *)netService;
++ (BOOL)isLockedNetService:(NSNetService *)netService;
 
 - (void)publishServiceWithPassword:(NSString *)pwd;
 - (void)browseServices;

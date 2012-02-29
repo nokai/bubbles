@@ -345,6 +345,18 @@
     }
 }
 
++ (BOOL)isLockedNetService:(NSNetService *)netService {
+    NSString *netServiceType = netService.type;
+    NSArray *normalArray = [[NSString stringWithFormat:@"%@._tcp.", kWDBubbleWebServiceTypeMac] componentsSeparatedByString:@"_"];
+    NSArray *currentArray = [netServiceType componentsSeparatedByString:@"_"];
+    // DW: a normal _mac_bubbles_._tcp. is different to _mac_bubbles_XXX._tcp., has shorter components such as "." compared to "XXX."
+    if ([[currentArray objectAtIndex:2] length] > [[normalArray objectAtIndex:2] length]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 - (id)init {
     if (self = [super init]) {
         DLog(@"WDBubble initSocket");
@@ -362,13 +374,6 @@
         //self.socketConnect = [[AsyncSocket alloc] init];
         //self.socketConnect.delegate = self;
         _socketsConnect = [[NSMutableArray alloc] init];
-        
-        _browsers = [[NSMutableArray arrayWithCapacity:kWDBubbleWebServiceTypeCount] retain];
-        for (int i = 0; i < kWDBubbleWebServiceTypeCount; i++) {
-            NSNetServiceBrowser *browser = [[[NSNetServiceBrowser alloc] init] autorelease];
-            browser.delegate = self;
-            [_browsers addObject:browser];
-        }
     }
     return self;
 }
@@ -407,7 +412,16 @@
     //_browser.delegate = self;
     
     // DW: we browse all supported services now
-    //[_browser searchForServicesOfType:_netServiceType inDomain:kWDBubbleInitialDomain];    
+    //[_browser searchForServicesOfType:_netServiceType inDomain:kWDBubbleInitialDomain];
+    
+    // DW: set up browsers
+    _browsers = [[NSMutableArray arrayWithCapacity:kWDBubbleWebServiceTypeCount] retain];
+    for (int i = 0; i < kWDBubbleWebServiceTypeCount; i++) {
+        NSNetServiceBrowser *browser = [[[NSNetServiceBrowser alloc] init] autorelease];
+        browser.delegate = self;
+        [_browsers addObject:browser];
+    }
+    
     for (int i = 0; i < _supportedNetServiceTypes.count; i++) {
         [[_browsers objectAtIndex:i] searchForServicesOfType:[_supportedNetServiceTypes objectAtIndex:i] 
                                                     inDomain:kWDBubbleInitialDomain];
@@ -439,6 +453,10 @@
 }
 
 - (void)stopService {
+    [_browsers release];
+    
+    [_servicesFound release];
+    
     [_service stop];
     [_service release];
     _service = nil;
@@ -467,7 +485,7 @@
     DLog(@"WDBubble terminateTransfer");
 }
 
-#pragma mark NSNetServiceDelegate
+#pragma mark - NSNetServiceDelegate
 
 // Publish
 
@@ -492,7 +510,7 @@
     [self connectService:sender];
 }
 
-#pragma mark AsyncSocketDelegate
+#pragma mark - AsyncSocketDelegate
 
 // DW: it's always a receiver
 - (void)onSocket:(AsyncSocket *)sock didAcceptNewSocket:(AsyncSocket *)newSocket {
@@ -687,7 +705,7 @@
     
 }
 
-#pragma mark NSNetServiceBrowserDelegate
+#pragma mark - NSNetServiceBrowserDelegate
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didFindService:(NSNetService *)netService moreComing:(BOOL)moreServicesComing {
     if (![netService.domain isEqualToString:@"local."]) {

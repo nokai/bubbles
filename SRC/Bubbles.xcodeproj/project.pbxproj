@@ -56,6 +56,12 @@
 		C1057A9714FE0BB700D02DA4 /* help16.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8914FE0BB700D02DA4 /* help16.png */; };
 		C1057A9814FE0BB700D02DA4 /* help17.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8A14FE0BB700D02DA4 /* help17.png */; };
 		C1057A9A14FE148B00D02DA4 /* manual.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9914FE148B00D02DA4 /* manual.pdf */; };
+		C1057AA114FE231000D02DA4 /* _mac_bubbles_0.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9B14FE231000D02DA4 /* _mac_bubbles_0.png */; };
+		C1057AA214FE231000D02DA4 /* _mac_bubbles_1.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9C14FE231000D02DA4 /* _mac_bubbles_1.png */; };
+		C1057AA314FE231000D02DA4 /* _pad_bubbles_0.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9D14FE231000D02DA4 /* _pad_bubbles_0.png */; };
+		C1057AA414FE231000D02DA4 /* _pad_bubbles_1.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9E14FE231000D02DA4 /* _pad_bubbles_1.png */; };
+		C1057AA514FE231000D02DA4 /* _phone_bubbles_0.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9F14FE231000D02DA4 /* _phone_bubbles_0.png */; };
+		C1057AA614FE231000D02DA4 /* _phone_bubbles_1.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057AA014FE231000D02DA4 /* _phone_bubbles_1.png */; };
 		C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C111265514DE2C7800884F7D /* DirectoryWatcher.m */; };
 		C11A3A5314F9277600892631 /* add_file.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4E14F9277600892631 /* add_file.png */; };
 		C11A3A5414F9277600892631 /* add_txt.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4F14F9277600892631 /* add_txt.png */; };
@@ -84,9 +90,6 @@
 		C1393F0A14D90C83005AFEB6 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1393F0814D90C83005AFEB6 /* TextViewController.m */; };
 		C1393F0B14D90C83005AFEB6 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1393F0914D90C83005AFEB6 /* TextViewController.xib */; };
 		C1393F2814D91BBF005AFEB6 /* UINavigationBar+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */; };
-		C141D40F14FD067A000CB8F7 /* _mac_bubbles.png in Resources */ = {isa = PBXBuildFile; fileRef = C141D40C14FD067A000CB8F7 /* _mac_bubbles.png */; };
-		C141D41014FD067A000CB8F7 /* _pad_bubbles.png in Resources */ = {isa = PBXBuildFile; fileRef = C141D40D14FD067A000CB8F7 /* _pad_bubbles.png */; };
-		C141D41114FD067A000CB8F7 /* _phone_bubbles.png in Resources */ = {isa = PBXBuildFile; fileRef = C141D40E14FD067A000CB8F7 /* _phone_bubbles.png */; };
 		C15859C514FA31CD0097FD41 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C15859C414FA31CD0097FD41 /* Default-Portrait~ipad.png */; };
 		C15859C814FA33250097FD41 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C15859C714FA33250097FD41 /* Default-Landscape~ipad.png */; };
 		C167CE0D14E8F3A700B419CD /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = C167CE0C14E8F3A700B419CD /* UIImage+Resize.m */; };
@@ -200,6 +203,12 @@
 		C1057A8914FE0BB700D02DA4 /* help16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help16.png; path = Resources/iPhone/help16.png; sourceTree = SOURCE_ROOT; };
 		C1057A8A14FE0BB700D02DA4 /* help17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help17.png; path = Resources/iPhone/help17.png; sourceTree = SOURCE_ROOT; };
 		C1057A9914FE148B00D02DA4 /* manual.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = manual.pdf; path = Resources/manual.pdf; sourceTree = SOURCE_ROOT; };
+		C1057A9B14FE231000D02DA4 /* _mac_bubbles_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _mac_bubbles_0.png; path = Resources/iPhone/_mac_bubbles_0.png; sourceTree = SOURCE_ROOT; };
+		C1057A9C14FE231000D02DA4 /* _mac_bubbles_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _mac_bubbles_1.png; path = Resources/iPhone/_mac_bubbles_1.png; sourceTree = SOURCE_ROOT; };
+		C1057A9D14FE231000D02DA4 /* _pad_bubbles_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _pad_bubbles_0.png; path = Resources/iPhone/_pad_bubbles_0.png; sourceTree = SOURCE_ROOT; };
+		C1057A9E14FE231000D02DA4 /* _pad_bubbles_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _pad_bubbles_1.png; path = Resources/iPhone/_pad_bubbles_1.png; sourceTree = SOURCE_ROOT; };
+		C1057A9F14FE231000D02DA4 /* _phone_bubbles_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _phone_bubbles_0.png; path = Resources/iPhone/_phone_bubbles_0.png; sourceTree = SOURCE_ROOT; };
+		C1057AA014FE231000D02DA4 /* _phone_bubbles_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _phone_bubbles_1.png; path = Resources/iPhone/_phone_bubbles_1.png; sourceTree = SOURCE_ROOT; };
 		C111265414DE2C7800884F7D /* DirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryWatcher.h; path = Bubbles/DirectoryWatcher.h; sourceTree = SOURCE_ROOT; };
 		C111265514DE2C7800884F7D /* DirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectoryWatcher.m; path = Bubbles/DirectoryWatcher.m; sourceTree = SOURCE_ROOT; };
 		C11A3A4E14F9277600892631 /* add_file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_file.png; path = Resources/iPhone/add_file.png; sourceTree = SOURCE_ROOT; };
@@ -234,9 +243,6 @@
 		C1393F0914D90C83005AFEB6 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TextViewController.xib; path = Bubbles/TextViewController.xib; sourceTree = SOURCE_ROOT; };
 		C1393F2614D91BBF005AFEB6 /* UINavigationBar+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+Custom.h"; path = "Bubbles/UINavigationBar+Custom.h"; sourceTree = SOURCE_ROOT; };
 		C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+Custom.m"; path = "Bubbles/UINavigationBar+Custom.m"; sourceTree = SOURCE_ROOT; };
-		C141D40C14FD067A000CB8F7 /* _mac_bubbles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _mac_bubbles.png; path = Resources/iPhone/_mac_bubbles.png; sourceTree = SOURCE_ROOT; };
-		C141D40D14FD067A000CB8F7 /* _pad_bubbles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _pad_bubbles.png; path = Resources/iPhone/_pad_bubbles.png; sourceTree = SOURCE_ROOT; };
-		C141D40E14FD067A000CB8F7 /* _phone_bubbles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _phone_bubbles.png; path = Resources/iPhone/_phone_bubbles.png; sourceTree = SOURCE_ROOT; };
 		C15859C414FA31CD0097FD41 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = SOURCE_ROOT; };
 		C15859C714FA33250097FD41 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = SOURCE_ROOT; };
 		C167CE0B14E8F3A700B419CD /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "Bubbles/UIImage+Resize.h"; sourceTree = SOURCE_ROOT; };
@@ -527,9 +533,12 @@
 		C141D40A14FD0669000CB8F7 /* Platforms */ = {
 			isa = PBXGroup;
 			children = (
-				C141D40C14FD067A000CB8F7 /* _mac_bubbles.png */,
-				C141D40D14FD067A000CB8F7 /* _pad_bubbles.png */,
-				C141D40E14FD067A000CB8F7 /* _phone_bubbles.png */,
+				C1057A9B14FE231000D02DA4 /* _mac_bubbles_0.png */,
+				C1057A9C14FE231000D02DA4 /* _mac_bubbles_1.png */,
+				C1057A9D14FE231000D02DA4 /* _pad_bubbles_0.png */,
+				C1057A9E14FE231000D02DA4 /* _pad_bubbles_1.png */,
+				C1057A9F14FE231000D02DA4 /* _phone_bubbles_0.png */,
+				C1057AA014FE231000D02DA4 /* _phone_bubbles_1.png */,
 			);
 			name = Platforms;
 			sourceTree = "<group>";
@@ -740,9 +749,6 @@
 				C15859C814FA33250097FD41 /* Default-Landscape~ipad.png in Resources */,
 				188E022414FB2BF500B1B319 /* BubblesHelp in Resources */,
 				C1F950CF14FBE62A00482ECF /* kWDSoundFileReceived.aif in Resources */,
-				C141D40F14FD067A000CB8F7 /* _mac_bubbles.png in Resources */,
-				C141D41014FD067A000CB8F7 /* _pad_bubbles.png in Resources */,
-				C141D41114FD067A000CB8F7 /* _phone_bubbles.png in Resources */,
 				C19DB61E14FDB6CF00C61A1E /* Icon-72.png in Resources */,
 				C19DB61F14FDB6CF00C61A1E /* Icon-Small-50.png in Resources */,
 				C19DB62014FDB6CF00C61A1E /* Icon-Small.png in Resources */,
@@ -765,6 +771,12 @@
 				C1057A9714FE0BB700D02DA4 /* help16.png in Resources */,
 				C1057A9814FE0BB700D02DA4 /* help17.png in Resources */,
 				C1057A9A14FE148B00D02DA4 /* manual.pdf in Resources */,
+				C1057AA114FE231000D02DA4 /* _mac_bubbles_0.png in Resources */,
+				C1057AA214FE231000D02DA4 /* _mac_bubbles_1.png in Resources */,
+				C1057AA314FE231000D02DA4 /* _pad_bubbles_0.png in Resources */,
+				C1057AA414FE231000D02DA4 /* _pad_bubbles_1.png in Resources */,
+				C1057AA514FE231000D02DA4 /* _phone_bubbles_0.png in Resources */,
+				C1057AA614FE231000D02DA4 /* _phone_bubbles_1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

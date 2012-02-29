@@ -948,6 +948,12 @@
 
 - (void)servicesUpdated:(NSNotification *)notification {
     if (self.bubble.servicesFound.count > 1) {
+        
+        // DW: if we already have one service selected, we do not update the selection now
+        if (_selectedServiceName) {
+            return;
+        }
+        
         for (NSNetService *s in self.bubble.servicesFound) {
             if ([s.name isEqualToString:self.bubble.service.name]) {
                 continue;

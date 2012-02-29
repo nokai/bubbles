@@ -137,7 +137,9 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    cell.imageView.image = [UIImage imageNamed:[WDBubble platformForNetService:t]];
+    cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_%d", 
+                                                [WDBubble platformForNetService:t], 
+                                                [WDBubble isLockedNetService:t]]];
     
     return cell;
 }
