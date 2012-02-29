@@ -72,7 +72,7 @@
     }
     
     // DW: finally we get a good image to show and cache
-    [_thumbnails setObject:image forKey:fileURL.path];
+    [_thumbnails setObject:image forKey:fileURL.path.lastPathComponent];
     return image;
 }
 
@@ -108,6 +108,7 @@
 // DW: NO for can not send, YES for will send
 - (BOOL)sendToSelectedServiceOfMessage:(WDMessage *)message {
     if (!_selectedServiceName || [_selectedServiceName isEqualToString:@""]) {
+        // DW: there is actually no receiver, so we do not send
         return NO;
     }
     
@@ -189,13 +190,13 @@
 // DW: this deletes acutal documents and their referencing messages if they have
 - (void)deleteDocumentAndMessageInURL:(NSURL *)fileURL {
     // DW: delete cached thumbnail
-    [_thumbnails removeObjectForKey:fileURL.path];
+    [_thumbnails removeObjectForKey:fileURL.path.lastPathComponent];
     
     // DW: delete records in messages
     // iterating and removing with a new array
     NSArray *originalMessages = [NSArray arrayWithArray:_messages];
     for (WDMessage *m in originalMessages) {
-        if ([m.fileURL.path isEqualToString:fileURL.path]) {
+        if ([m.fileURL.path.lastPathComponent isEqualToString:fileURL.path.lastPathComponent]) {
             [_messages removeObject:m];
         }
     }
@@ -215,7 +216,7 @@
 
 - (void)fillCell:(UITableViewCell *)cell withFileURL:(NSURL *)fileURL {
     // DW: we now cache all image files
-    UIImage *image = [_thumbnails objectForKey:fileURL.path];
+    UIImage *image = [_thumbnails objectForKey:fileURL.path.lastPathComponent];
     if (!image) {
         image = [self refreshImageAtURL:fileURL];
     }
@@ -429,6 +430,11 @@
         [self lock];
     } else {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsUsePassword];
+        
+        // DW: do not select any one
+        [_selectedServiceName release];
+        _selectedServiceName = nil;
+        
         [_bubble stopService];
         [_bubble publishServiceWithPassword:@""];
         [_bubble browseServices];
@@ -511,7 +517,7 @@
             [fileData writeToURL:storeURL atomically:YES];
             _fileURL = [storeURL retain];
         } else {
-            DLog(@"VC didFinishPickingMediaWithInfo %@ not PNG or JPG", fileExtention);
+            DLog(@"VC didFinishPickingMediaWithInfo %@ not JPG", fileExtention);
             fileData = UIImagePNGRepresentation(image);
             [fileData writeToURL:storeURL atomically:YES];
             _fileURL = [storeURL retain];
