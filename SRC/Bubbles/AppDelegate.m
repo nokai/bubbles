@@ -31,6 +31,7 @@
         PeersViewController *masterViewController = [[[PeersViewController alloc] initWithNibName:@"PeersViewController_iPad" bundle:nil] autorelease];
         UINavigationController *masterNavigationController = [[[UINavigationController alloc] initWithRootViewController:masterViewController] autorelease];
         masterViewController.bubble = detailViewController.bubble;
+        masterViewController.viewController = detailViewController;
         
         self.splitViewController = [[[UISplitViewController alloc] init] autorelease];
         self.splitViewController.delegate = detailViewController;

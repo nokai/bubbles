@@ -222,10 +222,10 @@
     }
     
     _supportedNetServiceTypes = [[NSArray arrayWithObjects:
-                                 [NSString stringWithFormat:@"%@%@._tcp.", kWDBubbleWebServiceTypePhone, pwd], 
-                                 [NSString stringWithFormat:@"%@%@._tcp.", kWDBubbleWebServiceTypePad, pwd], 
-                                 [NSString stringWithFormat:@"%@%@._tcp.", kWDBubbleWebServiceTypeMac, pwd], 
-                                 nil] retain];
+                                  [NSString stringWithFormat:@"%@%@._tcp.", kWDBubbleWebServiceTypePhone, pwd], 
+                                  [NSString stringWithFormat:@"%@%@._tcp.", kWDBubbleWebServiceTypePad, pwd], 
+                                  [NSString stringWithFormat:@"%@%@._tcp.", kWDBubbleWebServiceTypeMac, pwd], 
+                                  nil] retain];
 }
 
 - (void)resolveService:(NSNetService *)s {
@@ -453,7 +453,11 @@
 }
 
 - (void)stopService {
-    [_browsers release];
+    if (_browsers) {
+        [_browsers release];
+        _browsers = nil;
+    }
+    
     
     [_servicesFound release];
     

@@ -7,18 +7,10 @@
 //
 
 #import "PeersViewController.h"
+#import "ViewController.h"
 
 @implementation PeersViewController
-@synthesize selectedServiceName = _selectedServiceName, dismissButton, lockButton, bubble = _bubble, delegate;
-
-- (void)refreshLockStatus {
-    BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
-    if (usePassword) {
-        self.lockButton.image = [UIImage imageNamed:@"lock_on"];
-    } else {
-        self.lockButton.image = [UIImage imageNamed:@"lock_off"];
-    }
-}
+@synthesize dismissButton, lockButton, bubble = _bubble;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -47,6 +39,8 @@
     // this will appear as the title in the navigation bar
     self.title = @"Peers";
     
+    self.viewController.lockButton = self.lockButton;
+    
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         self.navigationItem.leftBarButtonItem = self.lockButton;
     } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
@@ -57,13 +51,6 @@
                                              selector:@selector(servicesUpdated:) 
                                                  name:kWDBubbleNotificationServiceUpdated
                                                object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(didEndLock:) 
-                                                 name:kWDBubbleNotificationDidEndLock
-                                               object:nil];
-    
-    [self refreshLockStatus];
 }
 
 - (void)viewDidUnload
@@ -131,7 +118,7 @@
         cell.textLabel.text = t.name;
     }
     
-    if ([t.name isEqualToString:self.selectedServiceName]) {
+    if ([t.name isEqualToString:self.viewController.selectedServiceName]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -192,41 +179,25 @@
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         return;
     } 
-    self.selectedServiceName = t.name;
+    self.viewController.selectedServiceName = t.name;
     [tableView reloadData];
 }
 
 #pragma mark - IBOutlets
 
 - (IBAction)dismiss:(id)sender {
-    [self.delegate didSelectServiceName:self.selectedServiceName];
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (IBAction)toggleUsePassword:(id)sender {
-    BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
-    usePassword = !usePassword;
-    
-    if (usePassword) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kWDBubbleNotificationShouldLock object:nil];
-    } else {
-        // DW: unlock
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsUsePassword];
-        [_bubble stopService];
-        [_bubble publishServiceWithPassword:@""];
-        [_bubble browseServices];
-    }
-    [self refreshLockStatus];
+    //self.viewController.bubble = self.bubble;
+    [self.viewController toggleUsePassword:sender];
 }
 
 #pragma mark - NC
 
 - (void)servicesUpdated:(NSNotification *)notification {
     [self.tableView reloadData];
-}
-
-- (void)didEndLock:(NSNotification *)notification {
-    [self refreshLockStatus];
 }
 
 @end

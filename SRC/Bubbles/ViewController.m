@@ -28,7 +28,7 @@
 #define kTableViewCellHeight        50
 
 @implementation ViewController
-@synthesize bubble = _bubble;
+@synthesize bubble = _bubble, lockButton = _lockButton, selectedServiceName = _selectedServiceName;
 
 - (void)refreshLockStatus {
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
@@ -37,17 +37,6 @@
     } else {
         _lockButton.image = [UIImage imageNamed:@"lock_off"];
     }
-}
-
-- (void)lock {
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Lock" 
-                                                 message:@"Please input password:"
-                                                delegate:self 
-                                       cancelButtonTitle:@"Cancel" 
-                                       otherButtonTitles:@"OK", nil];
-    av.alertViewStyle = UIAlertViewStyleSecureTextInput;
-    [av show];
-    [av release];
 }
 
 - (UIImage *)refreshImageAtURL:(NSURL *)fileURL {
@@ -241,6 +230,28 @@
     [super dealloc];
 }
 
+#pragma mark - Public Methods
+
+- (void)lock {
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Lock" 
+                                                 message:@"Please input password:"
+                                                delegate:self 
+                                       cancelButtonTitle:@"Cancel" 
+                                       otherButtonTitles:@"OK", nil];
+    av.alertViewStyle = UIAlertViewStyleSecureTextInput;
+    [av show];
+    [av release];
+}
+
+- (void)restartBubbleWithPassword:(NSString *)password {
+    [_selectedServiceName release];
+    _selectedServiceName = nil;
+
+    [_bubble stopService];
+    [_bubble publishServiceWithPassword:password];
+    [_bubble browseServices];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -396,8 +407,7 @@
 
 - (IBAction)showPeers:(id)sender {
     PeersViewController *vc = [[PeersViewController alloc] initWithNibName:@"PeersViewController" bundle:nil];
-    vc.delegate = self;
-    vc.selectedServiceName = _selectedServiceName;
+    vc.viewController = self;
     vc.bubble = _bubble;
     
     UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
@@ -430,15 +440,7 @@
         [self lock];
     } else {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsUsePassword];
-        
-        // DW: do not select any one
-        [_selectedServiceName release];
-        _selectedServiceName = nil;
-        
-        [_bubble stopService];
-        [_bubble publishServiceWithPassword:@""];
-        [_bubble browseServices];
-        
+        [self restartBubbleWithPassword:@""];
         [self refreshLockStatus];
     }
 }
@@ -569,17 +571,11 @@
     if (buttonIndex == 0) {
         // DW: user canceled
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsUsePassword];
-        
-        [_bubble stopService];
-        [_bubble publishServiceWithPassword:@""];
-        [_bubble browseServices];
+        [self restartBubbleWithPassword:@""];
     } else if (buttonIndex == 1) {
         // DW: user inputed password
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserDefaultsUsePassword];
-        
-        [_bubble stopService];
-        [_bubble publishServiceWithPassword:[alertView textFieldAtIndex:0].text];
-        [_bubble browseServices];
+        [self restartBubbleWithPassword:[alertView textFieldAtIndex:0].text];
     }
     
     [self refreshLockStatus];
@@ -942,12 +938,6 @@
     // Called when the view is shown again in the split view, invalidating the button and popover controller.
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     //self.masterPopoverController = nil;
-}
-
-#pragma mark - PeersViewControllerDelegate
-
-- (void)didSelectServiceName:(NSString *)serviceName {
-    _selectedServiceName = [serviceName retain];
 }
 
 #pragma mark - NC

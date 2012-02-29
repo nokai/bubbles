@@ -34,8 +34,7 @@ MFMailComposeViewControllerDelegate,
 MFMessageComposeViewControllerDelegate, 
 UIDocumentInteractionControllerDelegate, 
 DirectoryWatcherDelegate, 
-UISplitViewControllerDelegate, 
-PeersViewControllerDelegate> {
+UISplitViewControllerDelegate> {
     // DW: bubbles core
     WDBubble *_bubble;
     NSString *_selectedServiceName;
@@ -67,8 +66,11 @@ PeersViewControllerDelegate> {
 }
 
 @property (nonatomic, retain) WDBubble *bubble;
+@property (nonatomic, retain) UIBarButtonItem *lockButton;
+@property (nonatomic, retain) NSString *selectedServiceName;
 
 - (void)lock;
+- (void)restartBubbleWithPassword:(NSString *)password;
 
 // DW: it's very weird that sometimes I can't drag actions to this vc unless I declare these methods as public
 - (IBAction)sendText:(id)sender;
