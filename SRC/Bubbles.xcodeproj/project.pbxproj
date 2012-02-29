@@ -41,6 +41,20 @@
 		03EFE64B14E2EF04007FA2B6 /* NSView+NSView_Fade_.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */; };
 		188E022414FB2BF500B1B319 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 188E022314FB2BF500B1B319 /* BubblesHelp */; };
 		188E022514FB2BF500B1B319 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 188E022314FB2BF500B1B319 /* BubblesHelp */; };
+		C1057A8B14FE0BB700D02DA4 /* help01.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A7D14FE0BB700D02DA4 /* help01.png */; };
+		C1057A8C14FE0BB700D02DA4 /* help02.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A7E14FE0BB700D02DA4 /* help02.png */; };
+		C1057A8D14FE0BB700D02DA4 /* help03.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A7F14FE0BB700D02DA4 /* help03.png */; };
+		C1057A8E14FE0BB700D02DA4 /* help04.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8014FE0BB700D02DA4 /* help04.png */; };
+		C1057A8F14FE0BB700D02DA4 /* help05.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8114FE0BB700D02DA4 /* help05.png */; };
+		C1057A9014FE0BB700D02DA4 /* help06.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8214FE0BB700D02DA4 /* help06.png */; };
+		C1057A9114FE0BB700D02DA4 /* help07.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8314FE0BB700D02DA4 /* help07.png */; };
+		C1057A9214FE0BB700D02DA4 /* help11.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8414FE0BB700D02DA4 /* help11.png */; };
+		C1057A9314FE0BB700D02DA4 /* help12.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8514FE0BB700D02DA4 /* help12.png */; };
+		C1057A9414FE0BB700D02DA4 /* help13.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8614FE0BB700D02DA4 /* help13.png */; };
+		C1057A9514FE0BB700D02DA4 /* help14.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8714FE0BB700D02DA4 /* help14.png */; };
+		C1057A9614FE0BB700D02DA4 /* help15.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8814FE0BB700D02DA4 /* help15.png */; };
+		C1057A9714FE0BB700D02DA4 /* help16.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8914FE0BB700D02DA4 /* help16.png */; };
+		C1057A9814FE0BB700D02DA4 /* help17.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8A14FE0BB700D02DA4 /* help17.png */; };
 		C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C111265514DE2C7800884F7D /* DirectoryWatcher.m */; };
 		C11A3A5314F9277600892631 /* add_file.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4E14F9277600892631 /* add_file.png */; };
 		C11A3A5414F9277600892631 /* add_txt.png in Resources */ = {isa = PBXBuildFile; fileRef = C11A3A4F14F9277600892631 /* add_txt.png */; };
@@ -79,16 +93,6 @@
 		C167CE1414E8F5CF00B419CD /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = C167CE1214E8F5CF00B419CD /* UIImage+RoundedCorner.m */; };
 		C18B6F7D14DCC8E7009F502E /* Icon-Text.png in Resources */ = {isa = PBXBuildFile; fileRef = C18B6F7B14DCC8E7009F502E /* Icon-Text.png */; };
 		C18B6F7E14DCC8E7009F502E /* Icon-Text@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C18B6F7C14DCC8E7009F502E /* Icon-Text@2x.png */; };
-		C192662F14ECD51F0090D8F7 /* help01.png in Resources */ = {isa = PBXBuildFile; fileRef = C192662A14ECD51F0090D8F7 /* help01.png */; };
-		C192663014ECD51F0090D8F7 /* help02.png in Resources */ = {isa = PBXBuildFile; fileRef = C192662B14ECD51F0090D8F7 /* help02.png */; };
-		C192663114ECD51F0090D8F7 /* help03.png in Resources */ = {isa = PBXBuildFile; fileRef = C192662C14ECD51F0090D8F7 /* help03.png */; };
-		C192663214ECD51F0090D8F7 /* help04.png in Resources */ = {isa = PBXBuildFile; fileRef = C192662D14ECD51F0090D8F7 /* help04.png */; };
-		C192663314ECD51F0090D8F7 /* help05.png in Resources */ = {isa = PBXBuildFile; fileRef = C192662E14ECD51F0090D8F7 /* help05.png */; };
-		C192663A14ECD7460090D8F7 /* help11.png in Resources */ = {isa = PBXBuildFile; fileRef = C192663514ECD7460090D8F7 /* help11.png */; };
-		C192663B14ECD7460090D8F7 /* help12.png in Resources */ = {isa = PBXBuildFile; fileRef = C192663614ECD7460090D8F7 /* help12.png */; };
-		C192663C14ECD7460090D8F7 /* help13.png in Resources */ = {isa = PBXBuildFile; fileRef = C192663714ECD7460090D8F7 /* help13.png */; };
-		C192663D14ECD7460090D8F7 /* help14.png in Resources */ = {isa = PBXBuildFile; fileRef = C192663814ECD7460090D8F7 /* help14.png */; };
-		C192663E14ECD7460090D8F7 /* help15.png in Resources */ = {isa = PBXBuildFile; fileRef = C192663914ECD7460090D8F7 /* help15.png */; };
 		C192664314ECD7820090D8F7 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C192664114ECD7820090D8F7 /* HelpViewController.m */; };
 		C192664414ECD7820090D8F7 /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C192664214ECD7820090D8F7 /* HelpViewController.xib */; };
 		C192665D14ECEB450090D8F7 /* HelpViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C192665C14ECEB450090D8F7 /* HelpViewController_iPad.xib */; };
@@ -180,6 +184,20 @@
 		03EFE64914E2EF04007FA2B6 /* NSView+NSView_Fade_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+NSView_Fade_.h"; sourceTree = "<group>"; };
 		03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+NSView_Fade_.m"; sourceTree = "<group>"; };
 		188E022314FB2BF500B1B319 /* BubblesHelp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BubblesHelp; sourceTree = "<group>"; };
+		C1057A7D14FE0BB700D02DA4 /* help01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help01.png; path = Resources/iPhone/help01.png; sourceTree = SOURCE_ROOT; };
+		C1057A7E14FE0BB700D02DA4 /* help02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help02.png; path = Resources/iPhone/help02.png; sourceTree = SOURCE_ROOT; };
+		C1057A7F14FE0BB700D02DA4 /* help03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help03.png; path = Resources/iPhone/help03.png; sourceTree = SOURCE_ROOT; };
+		C1057A8014FE0BB700D02DA4 /* help04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help04.png; path = Resources/iPhone/help04.png; sourceTree = SOURCE_ROOT; };
+		C1057A8114FE0BB700D02DA4 /* help05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help05.png; path = Resources/iPhone/help05.png; sourceTree = SOURCE_ROOT; };
+		C1057A8214FE0BB700D02DA4 /* help06.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help06.png; path = Resources/iPhone/help06.png; sourceTree = SOURCE_ROOT; };
+		C1057A8314FE0BB700D02DA4 /* help07.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help07.png; path = Resources/iPhone/help07.png; sourceTree = SOURCE_ROOT; };
+		C1057A8414FE0BB700D02DA4 /* help11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help11.png; path = Resources/iPhone/help11.png; sourceTree = SOURCE_ROOT; };
+		C1057A8514FE0BB700D02DA4 /* help12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help12.png; path = Resources/iPhone/help12.png; sourceTree = SOURCE_ROOT; };
+		C1057A8614FE0BB700D02DA4 /* help13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help13.png; path = Resources/iPhone/help13.png; sourceTree = SOURCE_ROOT; };
+		C1057A8714FE0BB700D02DA4 /* help14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help14.png; path = Resources/iPhone/help14.png; sourceTree = SOURCE_ROOT; };
+		C1057A8814FE0BB700D02DA4 /* help15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help15.png; path = Resources/iPhone/help15.png; sourceTree = SOURCE_ROOT; };
+		C1057A8914FE0BB700D02DA4 /* help16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help16.png; path = Resources/iPhone/help16.png; sourceTree = SOURCE_ROOT; };
+		C1057A8A14FE0BB700D02DA4 /* help17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help17.png; path = Resources/iPhone/help17.png; sourceTree = SOURCE_ROOT; };
 		C111265414DE2C7800884F7D /* DirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryWatcher.h; path = Bubbles/DirectoryWatcher.h; sourceTree = SOURCE_ROOT; };
 		C111265514DE2C7800884F7D /* DirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectoryWatcher.m; path = Bubbles/DirectoryWatcher.m; sourceTree = SOURCE_ROOT; };
 		C11A3A4E14F9277600892631 /* add_file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_file.png; path = Resources/iPhone/add_file.png; sourceTree = SOURCE_ROOT; };
@@ -227,16 +245,6 @@
 		C167CE1214E8F5CF00B419CD /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+RoundedCorner.m"; path = "Bubbles/UIImage+RoundedCorner.m"; sourceTree = SOURCE_ROOT; };
 		C18B6F7B14DCC8E7009F502E /* Icon-Text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Text.png"; path = "Resources/iPhone/Icon-Text.png"; sourceTree = SOURCE_ROOT; };
 		C18B6F7C14DCC8E7009F502E /* Icon-Text@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Text@2x.png"; path = "Resources/iPhone/Icon-Text@2x.png"; sourceTree = SOURCE_ROOT; };
-		C192662A14ECD51F0090D8F7 /* help01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help01.png; path = Resources/iPhone/help01.png; sourceTree = SOURCE_ROOT; };
-		C192662B14ECD51F0090D8F7 /* help02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help02.png; path = Resources/iPhone/help02.png; sourceTree = SOURCE_ROOT; };
-		C192662C14ECD51F0090D8F7 /* help03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help03.png; path = Resources/iPhone/help03.png; sourceTree = SOURCE_ROOT; };
-		C192662D14ECD51F0090D8F7 /* help04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help04.png; path = Resources/iPhone/help04.png; sourceTree = SOURCE_ROOT; };
-		C192662E14ECD51F0090D8F7 /* help05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help05.png; path = Resources/iPhone/help05.png; sourceTree = SOURCE_ROOT; };
-		C192663514ECD7460090D8F7 /* help11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help11.png; path = Resources/iPhone/help11.png; sourceTree = SOURCE_ROOT; };
-		C192663614ECD7460090D8F7 /* help12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help12.png; path = Resources/iPhone/help12.png; sourceTree = SOURCE_ROOT; };
-		C192663714ECD7460090D8F7 /* help13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help13.png; path = Resources/iPhone/help13.png; sourceTree = SOURCE_ROOT; };
-		C192663814ECD7460090D8F7 /* help14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help14.png; path = Resources/iPhone/help14.png; sourceTree = SOURCE_ROOT; };
-		C192663914ECD7460090D8F7 /* help15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help15.png; path = Resources/iPhone/help15.png; sourceTree = SOURCE_ROOT; };
 		C192664014ECD7820090D8F7 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpViewController.h; path = Bubbles/HelpViewController.h; sourceTree = SOURCE_ROOT; };
 		C192664114ECD7820090D8F7 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelpViewController.m; path = Bubbles/HelpViewController.m; sourceTree = SOURCE_ROOT; };
 		C192664214ECD7820090D8F7 /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpViewController.xib; path = Bubbles/HelpViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -526,16 +534,20 @@
 		C192663F14ECD74B0090D8F7 /* Help */ = {
 			isa = PBXGroup;
 			children = (
-				C192662A14ECD51F0090D8F7 /* help01.png */,
-				C192662B14ECD51F0090D8F7 /* help02.png */,
-				C192662C14ECD51F0090D8F7 /* help03.png */,
-				C192662D14ECD51F0090D8F7 /* help04.png */,
-				C192662E14ECD51F0090D8F7 /* help05.png */,
-				C192663514ECD7460090D8F7 /* help11.png */,
-				C192663614ECD7460090D8F7 /* help12.png */,
-				C192663714ECD7460090D8F7 /* help13.png */,
-				C192663814ECD7460090D8F7 /* help14.png */,
-				C192663914ECD7460090D8F7 /* help15.png */,
+				C1057A7D14FE0BB700D02DA4 /* help01.png */,
+				C1057A7E14FE0BB700D02DA4 /* help02.png */,
+				C1057A7F14FE0BB700D02DA4 /* help03.png */,
+				C1057A8014FE0BB700D02DA4 /* help04.png */,
+				C1057A8114FE0BB700D02DA4 /* help05.png */,
+				C1057A8214FE0BB700D02DA4 /* help06.png */,
+				C1057A8314FE0BB700D02DA4 /* help07.png */,
+				C1057A8414FE0BB700D02DA4 /* help11.png */,
+				C1057A8514FE0BB700D02DA4 /* help12.png */,
+				C1057A8614FE0BB700D02DA4 /* help13.png */,
+				C1057A8714FE0BB700D02DA4 /* help14.png */,
+				C1057A8814FE0BB700D02DA4 /* help15.png */,
+				C1057A8914FE0BB700D02DA4 /* help16.png */,
+				C1057A8A14FE0BB700D02DA4 /* help17.png */,
 			);
 			name = Help;
 			sourceTree = "<group>";
@@ -708,16 +720,6 @@
 				C18B6F7E14DCC8E7009F502E /* Icon-Text@2x.png in Resources */,
 				C123285C14E3CFBF006968FE /* ViewController_iPad.xib in Resources */,
 				C123285E14E3CFE6006968FE /* PeersViewController_iPad.xib in Resources */,
-				C192662F14ECD51F0090D8F7 /* help01.png in Resources */,
-				C192663014ECD51F0090D8F7 /* help02.png in Resources */,
-				C192663114ECD51F0090D8F7 /* help03.png in Resources */,
-				C192663214ECD51F0090D8F7 /* help04.png in Resources */,
-				C192663314ECD51F0090D8F7 /* help05.png in Resources */,
-				C192663A14ECD7460090D8F7 /* help11.png in Resources */,
-				C192663B14ECD7460090D8F7 /* help12.png in Resources */,
-				C192663C14ECD7460090D8F7 /* help13.png in Resources */,
-				C192663D14ECD7460090D8F7 /* help14.png in Resources */,
-				C192663E14ECD7460090D8F7 /* help15.png in Resources */,
 				C192664414ECD7820090D8F7 /* HelpViewController.xib in Resources */,
 				C192665D14ECEB450090D8F7 /* HelpViewController_iPad.xib in Resources */,
 				C192666C14ECF7690090D8F7 /* Settings.bundle in Resources */,
@@ -745,6 +747,20 @@
 				C19DB62214FDB6CF00C61A1E /* Icon.png in Resources */,
 				C19DB62314FDB6CF00C61A1E /* Icon@2x.png in Resources */,
 				C19DB62414FDB6CF00C61A1E /* iTunesArtwork.png in Resources */,
+				C1057A8B14FE0BB700D02DA4 /* help01.png in Resources */,
+				C1057A8C14FE0BB700D02DA4 /* help02.png in Resources */,
+				C1057A8D14FE0BB700D02DA4 /* help03.png in Resources */,
+				C1057A8E14FE0BB700D02DA4 /* help04.png in Resources */,
+				C1057A8F14FE0BB700D02DA4 /* help05.png in Resources */,
+				C1057A9014FE0BB700D02DA4 /* help06.png in Resources */,
+				C1057A9114FE0BB700D02DA4 /* help07.png in Resources */,
+				C1057A9214FE0BB700D02DA4 /* help11.png in Resources */,
+				C1057A9314FE0BB700D02DA4 /* help12.png in Resources */,
+				C1057A9414FE0BB700D02DA4 /* help13.png in Resources */,
+				C1057A9514FE0BB700D02DA4 /* help14.png in Resources */,
+				C1057A9614FE0BB700D02DA4 /* help15.png in Resources */,
+				C1057A9714FE0BB700D02DA4 /* help16.png in Resources */,
+				C1057A9814FE0BB700D02DA4 /* help17.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

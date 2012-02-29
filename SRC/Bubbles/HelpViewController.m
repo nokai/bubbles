@@ -9,7 +9,7 @@
 #import "HelpViewController.h"
 #import "WDHeader.h"
 
-#define kNumberOfPages  5
+#define kNumberOfPages  7
 
 @implementation HelpViewController
 @synthesize helpPages = _helpPages, helpPageControl = _helpPageControl;
