@@ -16,6 +16,7 @@ Ziqi
 2. Review NSPageControl allTargets 是不是私有API
 3. Mac上的“关于程序”
 4. 空的文件传输框，一拖拽就崩
+5. 在文字输入框的状态下接收文件，文件没有存到历史记录里
 
 Shaobin
 

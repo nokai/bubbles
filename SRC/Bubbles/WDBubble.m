@@ -50,15 +50,18 @@
 
 @end
 
+// DW: when we do URL operations, we make sure that a folder's URL is always NOT ended with "/"
+// of couse methods like NSURL::URLByDeletingLastPathComponent are exceptions, we treat them differently
+
 @implementation NSURL (Bubbles)
-#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATO
 
 + (NSURL *)iOSDocumentsDirectoryURL {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
 + (NSString *)iOSDocumentsDirectoryPath {
-    return [[[NSURL iOSDocumentsDirectoryURL] path] stringByAppendingString:@"/"];
+    return [[NSURL iOSDocumentsDirectoryURL] path];
 }
 
 #elif TARGET_OS_MAC
@@ -67,12 +70,12 @@
 - (NSURL *)URLWithRemoteChangedToLocal {
     NSString *currentFileName = [[self URLByDeletingPathExtension].lastPathComponent stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@.%@", 
+    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@.%@", 
                                             [NSURL iOSDocumentsDirectoryURL], 
                                             currentFileName, 
                                             [[self pathExtension] lowercaseString]]];
 #elif TARGET_OS_MAC
-    NSURL *defaultURL = [[NSUserDefaults standardUserDefaults] URLForKey:kUserDefaultMacSavingPath];
+    NSURL *defaultURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultMacSavingPath]];
     
     // DW: Mac do not use ".xxx" files, remove the first "."
     if ([currentFileName hasPrefix:@"."]) {
@@ -80,7 +83,7 @@
     }
     
     NSURL *storeURL = [NSURL URLWithString:
-                       [NSString stringWithFormat:@"%@%@.%@", 
+                       [NSString stringWithFormat:@"%@/%@.%@", 
                         [defaultURL absoluteString], 
                         currentFileName, 
                         [[self pathExtension] lowercaseString]]];
@@ -95,7 +98,7 @@
     NSString *currentFileName = originalFileName;
     NSInteger currentFileNamePostfix = 2;
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@.%@", 
+    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@.%@", 
                                             [NSURL iOSDocumentsDirectoryURL], 
                                             currentFileName, 
                                             [self pathExtension]]];
@@ -105,7 +108,7 @@
                           relativeToURL:[self URLByDeletingLastPathComponent]];
     }
 #elif TARGET_OS_MAC
-    NSURL *defaultURL = [self URLByDeletingLastPathComponent];
+    NSURL *defaultURL = [self URLByDeletingLastPathComponent]; // DW: this causes a URL ends with "/"Ω
     NSURL *storeURL = [NSURL URLWithString:
                        [NSString stringWithFormat:@"%@%@.%@", 
                         [defaultURL absoluteString], 
@@ -497,6 +500,7 @@
     
     // DW: we filter some unwanted sockets here, such as sockets that try to connect when current sender is sending
     // or current receiver is receiving
+    
     if (_currentMessage) {
         // DW: of course at least current message is not nil for filtering
         // we only want to filter kWDMessageStateSending and 
@@ -741,7 +745,7 @@
             break;
         } case NSStreamEventErrorOccurred: {
             NSError *theError = [theStream streamError];
-            DLog(@"WDBubble steam NSStreamEventErrorOccurred %@", theError);
+            DLog(@"WDBubble steam %@ NSStreamEventErrorOccurred %@", theStream, theError);
             [theStream close];
             [theStream release];
             break;

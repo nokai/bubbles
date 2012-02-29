@@ -12,8 +12,8 @@
 //#define TEMP_USE_OLD_WDBUBBLE
 
 // DW: user defaults
-#define kUserDefaultMacSavingPath   @"kUserDefaultMacSavingPath"
-#define kUserDefaultsUsePassword    @"kUserDefaultsUsePassword"
+#define kUserDefaultMacSavingPath       @"kUserDefaultMacSavingPath"
+#define kUserDefaultsUsePassword        @"kUserDefaultsUsePassword"
 #define kUserDefaultsShouldShowHelp     @"kUserDefaultsShouldShowHelp"
 
 // DW: network

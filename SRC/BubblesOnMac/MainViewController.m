@@ -46,7 +46,7 @@
         }
         _selectedServiceName = nil;
     }
-
+    
 }
 
 - (void)initFirstResponder
@@ -124,7 +124,14 @@
         // DW: sound
         _sound = [[WDSound alloc] init];
         
-        [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObject:@"file://localhost/~/Downloads/" forKey:kUserDefaultMacSavingPath]];
+        // DW: we specify user's home directory by NSHomeDirectory()
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"file://localhost%@/Documents/Deliver/", NSHomeDirectory()]];
+        NSFileManager *fileManager= [NSFileManager defaultManager]; 
+        if(![fileManager fileExistsAtPath:url.path isDirectory:nil])
+            if(![fileManager createDirectoryAtPath:url.path withIntermediateDirectories:YES attributes:nil error:NULL])
+                NSLog(@"Error: Create folder failed %@", url);
+        [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObject:url.path
+                                                                                            forKey:kUserDefaultMacSavingPath]];
         
         _bubble = [[WDBubble alloc] init];
         _bubble.delegate = self;
@@ -174,7 +181,7 @@
     [_selectFileItem release];
     
     [_bubble release];
-   // [_sound release];
+    // [_sound release];
     [_fileURL release];
     [_selectFileItem release];
     [_networkItem release];
@@ -353,7 +360,7 @@
 - (void)willReceiveMessage:(WDMessage *)message {
     
 }
-    
+
 - (void)didReceiveMessage:(WDMessage *)message {
     [_sound playSoundForKey:kWDSoundFileReceived];
     message.time = [NSDate date];
@@ -464,8 +471,8 @@
 - (void)didSelectServiceName:(NSString *)serviceName
 {
     /*if (_selectedServiceName ) {
-        [_selectedServiceName release];
-    }*/
+     [_selectedServiceName release];
+     }*/
     _selectedServiceName = [serviceName retain];
     DLog(@"name is %@",_selectedServiceName);
 }

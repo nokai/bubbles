@@ -35,7 +35,6 @@
 		03BF24DE14F930A6002809A3 /* NSPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BF24DD14F930A6002809A3 /* NSPageControl.m */; };
 		03BF64B314C32D8200CD52AB /* DragAndDropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */; };
 		03D710A514EBB52E00162DFB /* WUTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D710A414EBB52E00162DFB /* WUTextView.m */; };
-		03E70AD314FD0A2600BF0B59 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03E70AD214FD0A2500BF0B59 /* AudioToolbox.framework */; };
 		03E70ADC14FD228000BF0B59 /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E70ADB14FD228000BF0B59 /* AboutWindowController.m */; };
 		03E70ADF14FD229400BF0B59 /* AboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03E70ADE14FD229400BF0B59 /* AboutWindowController.xib */; };
 		03E8C3EA14EA39C2001F5091 /* NSTableView+ContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */; };
@@ -173,7 +172,6 @@
 		03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragAndDropImageView.m; sourceTree = "<group>"; };
 		03D710A314EBB52E00162DFB /* WUTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUTextView.h; sourceTree = "<group>"; };
 		03D710A414EBB52E00162DFB /* WUTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUTextView.m; sourceTree = "<group>"; };
-		03E70AD214FD0A2500BF0B59 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		03E70ADA14FD228000BF0B59 /* AboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutWindowController.h; sourceTree = "<group>"; };
 		03E70ADB14FD228000BF0B59 /* AboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutWindowController.m; sourceTree = "<group>"; };
 		03E70ADE14FD229400BF0B59 /* AboutWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWindowController.xib; sourceTree = "<group>"; };
@@ -966,7 +964,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = BubblesOnMac/BubblesOnMac.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Test for Sandbox";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Test for Sandbox";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -980,6 +978,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Deliver;
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
@@ -992,7 +991,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = BubblesOnMac/BubblesOnMac.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Test for Sandbox";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Test for Sandbox";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1006,6 +1005,7 @@
 				INFOPLIST_FILE = "BubblesOnMac/BubblesOnMac-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Deliver;
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;

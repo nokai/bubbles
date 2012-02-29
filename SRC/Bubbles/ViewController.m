@@ -616,7 +616,7 @@
         }
         [as release];
     }
-
+    
     [t release];
 }
 
@@ -698,7 +698,8 @@
                 cell.textLabel.text = [NSString stringWithFormat:@"%.0f%% %@ sent", 
                                        [self.bubble percentTransfered]*100, 
                                        [NSURL formattedFileSize:[self.bubble bytesTransfered]]];
-            } else if ([t.state isEqualToString:kWDMessageStateReadyToReceive]) {
+            } else if (([t.state isEqualToString:kWDMessageStateReadyToReceive])
+                       ||([t.state isEqualToString:kWDMessageStateReceiving])) {
                 cell.textLabel.text = [NSString stringWithFormat:@"%.0f%% %@ received", 
                                        [self.bubble percentTransfered]*100, 
                                        [NSURL formattedFileSize:[self.bubble bytesTransfered]]];
