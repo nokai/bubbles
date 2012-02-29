@@ -414,7 +414,7 @@
                                       destructiveButtonTitle:nil
                                            otherButtonTitles:kActionSheetButtonHelpPDF, kActionSheetButtonHelpSplash, nil];
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        [as showFromBarButtonItem:nil animated:YES];
+        [as showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
     } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
         [as showInView:self.view];
     }
