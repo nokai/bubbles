@@ -82,7 +82,18 @@
 
 - (void)storeMessage:(WDMessage *)message
 {
-    [_historyPopOverController.fileHistoryArray addObject:message];
+    if ([message.state isEqualToString:kWDMessageStateFile]) {
+        NSArray *originalMessages = [NSArray arrayWithArray:_historyPopOverController.fileHistoryArray];
+        for (WDMessage *m in originalMessages) {
+            if (([m.fileURL.path isEqualToString:message.fileURL.path])
+                &&(![m.state isEqualToString:kWDMessageStateFile])) {
+                m.state = kWDMessageStateFile;
+            };
+        }
+    } else {
+        [_historyPopOverController.fileHistoryArray addObject:message];
+    }
+
     [_historyPopOverController.fileHistoryArray sortUsingComparator:^NSComparisonResult(WDMessage *obj1, WDMessage * obj2) {
         if ([obj1.time compare:obj2.time] == NSOrderedAscending)
             return NSOrderedAscending;
@@ -378,7 +389,7 @@
 }
 
 - (void)willReceiveMessage:(WDMessage *)message {
-    
+    [self storeMessage:message];
 }
 
 - (void)didReceiveMessage:(WDMessage *)message {

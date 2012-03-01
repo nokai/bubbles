@@ -266,7 +266,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
         return [NSString stringWithFormat:@"%.0f%% %@ sent", 
                 [self.bubbles percentTransfered]*100, 
                 [NSURL formattedFileSize:[self.bubbles bytesTransfered]]];
-    } else if ([message.state isEqualToString:kWDMessageStateReadyToReceive]){
+    } else if ([message.state isEqualToString:kWDMessageStateReadyToReceive] || [message.state isEqualToString:kWDMessageStateReceiving]){
         return [NSString stringWithFormat:@"%.0f%% %@ received", 
                 [self.bubbles percentTransfered]*100, 
                 [NSURL formattedFileSize:[self.bubbles bytesTransfered]]];
