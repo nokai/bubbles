@@ -71,6 +71,7 @@ UISplitViewControllerDelegate> {
 @property (nonatomic, retain) NSString *selectedServiceName;
 
 - (void)lock;
+- (void)refreshLockStatus;
 - (void)restartBubbleWithPassword:(NSString *)password;
 
 // DW: it's very weird that sometimes I can't drag actions to this vc unless I declare these methods as public

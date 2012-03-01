@@ -70,7 +70,7 @@
 				</object>
 				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 				<bool key="IBUIHorizontal">YES</bool>
-				<object class="IBUINavigationController" key="IBUIMasterViewController" id="357367184">
+				<object class="IBUINavigationController" key="IBUIMasterViewController" id="468944987">
 					<reference key="IBUIParentViewController" ref="988537570"/>
 					<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics">
 						<int key="IBUIStatusBarStyle">2</int>
@@ -82,7 +82,7 @@
 					<bool key="IBUIDefinesPresentationContext">YES</bool>
 					<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 					<bool key="IBUIHorizontal">NO</bool>
-					<object class="IBUINavigationBar" key="IBUINavigationBar" id="629934190">
+					<object class="IBUINavigationBar" key="IBUINavigationBar" id="931130252">
 						<nil key="NSNextResponder"/>
 						<int key="NSvFlags">256</int>
 						<string key="NSFrameSize">{0, 0}</string>
@@ -92,12 +92,13 @@
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 					</object>
 					<array class="NSMutableArray" key="IBUIViewControllers">
-						<object class="IBUIViewController" id="125265618">
-							<object class="IBUINavigationItem" key="IBUINavigationItem" id="983936886">
+						<object class="IBUIViewController" id="517072334">
+							<object class="IBUINavigationItem" key="IBUINavigationItem" id="805136510">
 								<string key="IBUITitle">Root View Controller</string>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 							</object>
-							<reference key="IBUIParentViewController" ref="357367184"/>
+							<reference key="IBUIParentViewController" ref="468944987"/>
+							<string key="IBUINibName">PeersViewController_iPad</string>
 							<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
 								<int key="IBUIInterfaceOrientation">1</int>
 								<int key="interfaceOrientation">1</int>
@@ -132,6 +133,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">rootViewController</string>
+						<reference key="source" ref="380026005"/>
+						<reference key="destination" ref="988537570"/>
+					</object>
+					<int key="connectionID">21</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">splitViewController</string>
 						<reference key="source" ref="987256611"/>
 						<reference key="destination" ref="988537570"/>
@@ -153,6 +162,14 @@
 						<reference key="destination" ref="263500745"/>
 					</object>
 					<int key="connectionID">14</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">peersViewController</string>
+						<reference key="source" ref="987256611"/>
+						<reference key="destination" ref="517072334"/>
+					</object>
+					<int key="connectionID">20</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -190,7 +207,7 @@
 						<reference key="object" ref="988537570"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="263500745"/>
-							<reference ref="357367184"/>
+							<reference ref="468944987"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -201,30 +218,31 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">16</int>
-						<reference key="object" ref="357367184"/>
+						<reference key="object" ref="468944987"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="629934190"/>
-							<reference ref="125265618"/>
+							<reference ref="931130252"/>
+							<reference ref="517072334"/>
 						</array>
 						<reference key="parent" ref="988537570"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">17</int>
-						<reference key="object" ref="629934190"/>
-						<reference key="parent" ref="357367184"/>
+						<reference key="object" ref="931130252"/>
+						<reference key="parent" ref="468944987"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">18</int>
-						<reference key="object" ref="125265618"/>
+						<reference key="object" ref="517072334"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="983936886"/>
+							<reference ref="805136510"/>
 						</array>
-						<reference key="parent" ref="357367184"/>
+						<reference key="parent" ref="468944987"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">19</int>
-						<reference key="object" ref="983936886"/>
-						<reference key="parent" ref="125265618"/>
+						<reference key="object" ref="805136510"/>
+						<array class="NSMutableArray" key="children"/>
+						<reference key="parent" ref="517072334"/>
 					</object>
 				</array>
 			</object>
@@ -235,6 +253,7 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="17.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="18.CustomClassName">PeersViewController</string>
 				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="19.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<dictionary class="NSMutableDictionary" key="2.IBAttributePlaceholdersKey"/>
@@ -249,7 +268,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">19</int>
+			<int key="maxID">24</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

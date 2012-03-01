@@ -38,9 +38,9 @@
         detailViewController.launchFile = newURL;
         _bubble.delegate = detailViewController;
         
-        PeersViewController *masterViewController = [[[PeersViewController alloc] initWithNibName:@"PeersViewController_iPad" bundle:nil] autorelease];
+        PeersViewController *masterViewController = self.peersViewController;//[[[PeersViewController alloc] initWithNibName:@"PeersViewController_iPad" bundle:nil] autorelease];
         //UINavigationController *masterNavigationController = [[[UINavigationController alloc] initWithRootViewController:masterViewController] autorelease];
-        masterViewController.bubble = detailViewController.bubble;
+        masterViewController.bubble = _bubble;
         masterViewController.viewController = detailViewController;
         
         //self.splitViewController = [[[UISplitViewController alloc] init] autorelease];
