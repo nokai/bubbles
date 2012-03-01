@@ -194,7 +194,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
                                                                                                        withString:@"%20"]]];
     
     if (newURL == nil) {
-        NSString *escapedString = [message.fileURL escapedStringFromURL];
+        NSString *escapedString = message.fileURL.path;
         newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
                                        dropDestination.path, 
                                        [escapedString stringByReplacingOccurrencesOfString:@" " 

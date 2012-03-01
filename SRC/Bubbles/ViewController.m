@@ -25,6 +25,8 @@
 #define kActionSheetButtonHelpPDF       @"Help Document"
 #define kActionSheetButtonHelpSplash    @"Splash Screen"
 
+#define kActionSheetButtonTransferTerminate @"Terminate"
+
 #define kTableViewCellHeight        50
 
 #define kSegmentControlFiles        0
@@ -32,6 +34,21 @@
 
 @implementation ViewController
 @synthesize bubble = _bubble, launchFile = _launchFile, lockButton = _lockButton, selectedServiceName = _selectedServiceName;
+
++ (NSString*)mimeTypeForFileAtPath:(NSString *)path {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        return nil;
+    }
+    // Borrowed from http://stackoverflow.com/questions/5996797/determine-mime-type-of-nsdata-loaded-from-a-file
+    // itself, derived from  http://stackoverflow.com/questions/2439020/wheres-the-iphone-mime-type-database
+    CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (CFStringRef)[path pathExtension], NULL);
+    CFStringRef mimeType = UTTypeCopyPreferredTagWithClass (UTI, kUTTagClassMIMEType);
+    CFRelease(UTI);
+    if (!mimeType) {
+        return @"application/octet-stream";
+    }
+    return [NSMakeCollectable((NSString *)mimeType) autorelease];
+}
 
 - (void)refreshLockStatus {
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
@@ -147,7 +164,9 @@
         NSURLResponse *res = nil;
         [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
         DLog(@"VC displayMailComposerSheetWithMessage UTI %@", [res MIMEType]);
-        [picker addAttachmentData:myData mimeType:@"image/jpeg" fileName:@"attachment"];
+        [picker addAttachmentData:myData 
+                         mimeType:[ViewController mimeTypeForFileAtPath:message.fileURL.path]
+                         fileName:[message.fileURL URLByDeletingPathExtension].lastPathComponent];
 	}
     
 	[self presentModalViewController:picker animated:YES];
@@ -641,7 +660,11 @@
         // DW: states such as kWDMessageStateReadyToReceive, kWDMessageStateReadyToSend, kWDMessageStateSending
         // we can do a "Pause" feature here
         NSLog(@"VC didSelectRowAtIndexPath %@", t.state);
-        [self.bubble terminateTransfer];
+        as = [[UIActionSheet alloc] initWithTitle:nil
+                                         delegate:self 
+                                cancelButtonTitle:kActionSheetButtonCancel
+                           destructiveButtonTitle:kActionSheetButtonTransferTerminate
+                                otherButtonTitles:nil];
     }
     
     if (as) {
@@ -877,6 +900,8 @@
         }
         [self storeMessage:t];
         [t release];
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonTransferTerminate]) {
+        [self.bubble terminateTransfer];
     }
     
     [message release];

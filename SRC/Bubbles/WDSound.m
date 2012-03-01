@@ -10,27 +10,22 @@
 
 @implementation WDSound
 
+- (void)dealloc {
+    AudioServicesDisposeSystemSoundID (_soundID);
+    CFRelease (_soundFileURLRef);
+    
+    [super dealloc];
+}
+
 - (void)prepareEffects {
-    NSURL *tapSound = nil;
-    CFURLRef soundFileURLRef;
-    SystemSoundID o;
-    
     // kWDSoundFileReceived
-    tapSound = [[NSBundle mainBundle] URLForResource:kWDSoundFileReceived withExtension: @"aif"];
-    soundFileURLRef = (CFURLRef)[tapSound retain];
-	AudioServicesCreateSystemSoundID(soundFileURLRef, &o);
-    [_soundObjects setValue:[NSNumber numberWithLong:o] forKey:kWDSoundFileReceived];
-    
-    // kWDSoundFileSent
-    tapSound = [[NSBundle mainBundle] URLForResource:kWDSoundFileSent withExtension: @"aif"];
-    soundFileURLRef = (CFURLRef)[tapSound retain];
-	AudioServicesCreateSystemSoundID(soundFileURLRef, &o);
-    [_soundObjects setValue:[NSNumber numberWithLong:o] forKey:kWDSoundFileSent];
+    NSURL * tapSound = [[NSBundle mainBundle] URLForResource:kWDSoundFileSent withExtension: @"aif"];
+    _soundFileURLRef = (CFURLRef)[tapSound retain];
+	AudioServicesCreateSystemSoundID(_soundFileURLRef, &_soundID);
 }
 
 - (id)init {
     if (self = [super init]) {
-        _soundObjects = [[NSMutableDictionary dictionary] retain];
         [self prepareEffects];
     }
     return self;
@@ -39,7 +34,7 @@
 #pragma mark - Public Methods
 
 - (void)playSoundForKey:(NSString *)key {
-    AudioServicesPlaySystemSound([[_soundObjects objectForKey:key] longValue]);
+    AudioServicesPlaySystemSound(_soundID);
 }
 
 @end

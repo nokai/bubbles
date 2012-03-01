@@ -107,23 +107,23 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 }
 
 /*- (NSRect)windowWillUseStandardFrame:(NSWindow *)window defaultFrame:(NSRect)newFrame
-{
-    NSRect ContentRect=self.window.frame;
-    
-    //set it to the image frame size
-    ContentRect.size = [[self image] size];
-    
-    return [NSWindow frameRectForContentRect:ContentRect styleMask: [window styleMask]];
-}*/
+ {
+ NSRect ContentRect=self.window.frame;
+ 
+ //set it to the image frame size
+ ContentRect.size = [[self image] size];
+ 
+ return [NSWindow frameRectForContentRect:ContentRect styleMask: [window styleMask]];
+ }*/
 
 #pragma mark - Source Operations
 
 - (void)mouseDown:(NSEvent*)event
 {
-
+    
     NSPoint dragPosition;
     NSRect imageLocation;
-        
+    
     dragPosition = [self convertPoint:[event locationInWindow] fromView:nil];
     dragPosition.x -= 16;
     dragPosition.y -= 16;
@@ -161,15 +161,15 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     }
     
     NSURL *newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
-                                                  dropDestination.path, 
-                                                  [draggedDataURL.lastPathComponent stringByReplacingOccurrencesOfString:@" " 
-                                                                                                              withString:@"%20"]]];
+                                          dropDestination.path, 
+                                          [draggedDataURL.lastPathComponent stringByReplacingOccurrencesOfString:@" " 
+                                                                                                      withString:@"%20"]]];
     if (newURL == nil) {
-        NSString *escapedString = [draggedDataURL escapedStringFromURL];
+        NSString *escapedString = draggedDataURL.path;
         newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
                                        dropDestination.path, 
                                        [escapedString stringByReplacingOccurrencesOfString:@" " 
-                                                                                                   withString:@"%20"]]];
+                                                                                withString:@"%20"]]];
         newURL = [newURL URLWithoutNameConflict];
         
     } else {
@@ -202,16 +202,16 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 }
 
 /*- (void)pasteboard:(NSPasteboard *)sender item:(NSPasteboardItem *)item provideDataForType:(NSString *)type
-{
-    if ( [type compare: NSPasteboardTypeTIFF] == NSOrderedSame ) {
-        
-        //set data for TIFF type on the pasteboard as requested
-        [sender setData:[[self image] TIFFRepresentation] forType:NSPasteboardTypeTIFF];
-        
-    } else if ( [type compare: NSFilenamesPboardType] == NSOrderedSame ) {
-        
-        //set data for Other type on the pasteboard as requested
-        [sender setData:[self dataWithPDFInsideRect:[self bounds]] forType:NSPasteboardTypePDF];
-    }
-}*/
+ {
+ if ( [type compare: NSPasteboardTypeTIFF] == NSOrderedSame ) {
+ 
+ //set data for TIFF type on the pasteboard as requested
+ [sender setData:[[self image] TIFFRepresentation] forType:NSPasteboardTypeTIFF];
+ 
+ } else if ( [type compare: NSFilenamesPboardType] == NSOrderedSame ) {
+ 
+ //set data for Other type on the pasteboard as requested
+ [sender setData:[self dataWithPDFInsideRect:[self bounds]] forType:NSPasteboardTypePDF];
+ }
+ }*/
 @end

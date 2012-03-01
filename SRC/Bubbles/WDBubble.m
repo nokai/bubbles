@@ -72,6 +72,26 @@
 #elif TARGET_OS_MAC
 #endif
 
++ (NSString *)formattedFileSize:(unsigned long long)size {
+	NSString *formattedStr = nil;
+    if (size == 0) 
+		formattedStr = @"Empty";
+	else 
+		if (size > 0 && size < 1024) 
+			formattedStr = [NSString stringWithFormat:@"%qu bytes", size];
+        else 
+            if (size >= 1024 && size < pow(1024, 2)) 
+                formattedStr = [NSString stringWithFormat:@"%.1f KB", (size / 1024.)];
+            else 
+                if (size >= pow(1024, 2) && size < pow(1024, 3))
+                    formattedStr = [NSString stringWithFormat:@"%.2f MB", (size / pow(1024, 2))];
+                else 
+                    if (size >= pow(1024, 3)) 
+                        formattedStr = [NSString stringWithFormat:@"%.3f GB", (size / pow(1024, 3))];
+	
+	return formattedStr;
+}
+
 - (NSURL *)URLWithRemoteChangedToLocal {
     NSString *currentFileName = [[self URLByDeletingPathExtension].lastPathComponent stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
@@ -136,26 +156,6 @@
                                             [[self URLByDeletingLastPathComponent] URLByDeletingLastPathComponent].path, 
                                             self.lastPathComponent]];
     return newURL;
-}
-
-+ (NSString *)formattedFileSize:(unsigned long long)size {
-	NSString *formattedStr = nil;
-    if (size == 0) 
-		formattedStr = @"Empty";
-	else 
-		if (size > 0 && size < 1024) 
-			formattedStr = [NSString stringWithFormat:@"%qu bytes", size];
-        else 
-            if (size >= 1024 && size < pow(1024, 2)) 
-                formattedStr = [NSString stringWithFormat:@"%.1f KB", (size / 1024.)];
-            else 
-                if (size >= pow(1024, 2) && size < pow(1024, 3))
-                    formattedStr = [NSString stringWithFormat:@"%.2f MB", (size / pow(1024, 2))];
-                else 
-                    if (size >= pow(1024, 3)) 
-                        formattedStr = [NSString stringWithFormat:@"%.3f GB", (size / pow(1024, 3))];
-	
-	return formattedStr;
 }
 
 @end
@@ -448,6 +448,13 @@
 
 - (void)terminateTransfer {
     DLog(@"WDBubble terminateTransfer");
+    if (_isReceiver) {
+        for (AsyncSocket *sock in _socketsConnect) {
+            [sock disconnect];
+        }
+    } else {
+        [_socketReceive disconnect];
+    }
 }
 
 #pragma mark - NSNetServiceDelegate
@@ -614,9 +621,11 @@
         if ([_currentMessage.state isEqualToString:kWDMessageStateReceiving]) {
             DLog(@"WDBubble onSocketDidDisconnect file transfer receiver ended with state %@, %@ received", _currentMessage.state, [NSNumber numberWithInt:_streamBytesWrote]);
             
-            // DW: if writing is not yes finished, do it;
+            // DW: check if it's the user terminates the transfering
             if (_streamBytesWrote < _currentMessage.fileSize) {
-                [self writeDataToFile];
+                [_currentMessage release];
+                _currentMessage = nil;
+                return;
             }
             
             // DW: clean socket, "onDisconnect" is not reliable on file transfer
@@ -657,7 +666,11 @@
         
         // DW: a sending socket
         if ([_currentMessage.state isEqualToString:kWDMessageStateSending]) {
-            [self.delegate didSendMessage:_currentMessage];
+            // DW: check if it's the user terminates the transfering
+            if (_streamBytesRead >= _currentMessage.fileSize) {
+                            [self.delegate didSendMessage:_currentMessage];
+            }
+            
             [_currentMessage release];
             _currentMessage = nil;
         } else if ([_currentMessage.state isEqualToString:kWDMessageStateText]) {

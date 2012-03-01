@@ -132,7 +132,6 @@
 		C1F80FDD14BA84A6006F0779 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F80FDB14BA84A6006F0779 /* PasswordViewController.m */; };
 		C1F80FDE14BA84A6006F0779 /* PasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F80FDC14BA84A6006F0779 /* PasswordViewController.xib */; };
 		C1F950CB14FBE50700482ECF /* WDSound.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F950CA14FBE50700482ECF /* WDSound.m */; };
-		C1F950CF14FBE62A00482ECF /* kWDSoundFileReceived.aif in Resources */ = {isa = PBXBuildFile; fileRef = C1F950CE14FBE62A00482ECF /* kWDSoundFileReceived.aif */; };
 		C1F950D114FBE6FE00482ECF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1F950D014FBE6FE00482ECF /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
@@ -234,7 +233,6 @@
 		C125260914FD33F1009FC78C /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuickLook.framework; sourceTree = DEVELOPER_DIR; };
 		C125260B14FD33F5009FC78C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		C125260D14FD3414009FC78C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
-		C125260F14FD3476009FC78C /* kWDSoundFileSent.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = kWDSoundFileSent.aif; sourceTree = "<group>"; };
 		C133FAAE14EBF2CD004E406B /* BubblesOnMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BubblesOnMac.entitlements; sourceTree = "<group>"; };
 		C133FAB314EBFBF4004E406B /* UIImage+Normalize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Normalize.h"; path = "Bubbles/UIImage+Normalize.h"; sourceTree = SOURCE_ROOT; };
 		C133FAB414EBFBF4004E406B /* UIImage+Normalize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Normalize.m"; path = "Bubbles/UIImage+Normalize.m"; sourceTree = SOURCE_ROOT; };
@@ -292,6 +290,8 @@
 		C1CFCD2114B985D2008A1B1F /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = Bubbles/ViewController.m; sourceTree = SOURCE_ROOT; };
 		C1CFCD2C14B986CB008A1B1F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		C1CFCD2D14B986CB008A1B1F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
+		C1F0A50214FFB9C40048B02E /* kWDSoundFileReceived.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = kWDSoundFileReceived.aif; sourceTree = "<group>"; };
+		C1F0A50314FFB9C40048B02E /* kWDSoundFileSent.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = kWDSoundFileSent.aif; sourceTree = "<group>"; };
 		C1F4B9AB14E8E39900E878CD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		C1F80FC314BA7A1B006F0779 /* PeersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeersViewController.h; path = Bubbles/PeersViewController.h; sourceTree = SOURCE_ROOT; };
 		C1F80FC414BA7A1B006F0779 /* PeersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeersViewController.m; path = Bubbles/PeersViewController.m; sourceTree = SOURCE_ROOT; };
@@ -301,7 +301,6 @@
 		C1F80FDC14BA84A6006F0779 /* PasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PasswordViewController.xib; path = Bubbles/PasswordViewController.xib; sourceTree = SOURCE_ROOT; };
 		C1F950C914FBE50700482ECF /* WDSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WDSound.h; path = Bubbles/WDSound.h; sourceTree = "<group>"; };
 		C1F950CA14FBE50700482ECF /* WDSound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WDSound.m; path = Bubbles/WDSound.m; sourceTree = "<group>"; };
-		C1F950CE14FBE62A00482ECF /* kWDSoundFileReceived.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = kWDSoundFileReceived.aif; sourceTree = "<group>"; };
 		C1F950D014FBE6FE00482ECF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -646,8 +645,8 @@
 		C1F950CD14FBE62A00482ECF /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				C1F950CE14FBE62A00482ECF /* kWDSoundFileReceived.aif */,
-				C125260F14FD3476009FC78C /* kWDSoundFileSent.aif */,
+				C1F0A50214FFB9C40048B02E /* kWDSoundFileReceived.aif */,
+				C1F0A50314FFB9C40048B02E /* kWDSoundFileSent.aif */,
 			);
 			path = Sounds;
 			sourceTree = SOURCE_ROOT;
@@ -748,7 +747,6 @@
 				C15859C514FA31CD0097FD41 /* Default-Portrait~ipad.png in Resources */,
 				C15859C814FA33250097FD41 /* Default-Landscape~ipad.png in Resources */,
 				188E022414FB2BF500B1B319 /* BubblesHelp in Resources */,
-				C1F950CF14FBE62A00482ECF /* kWDSoundFileReceived.aif in Resources */,
 				C19DB61E14FDB6CF00C61A1E /* Icon-72.png in Resources */,
 				C19DB61F14FDB6CF00C61A1E /* Icon-Small-50.png in Resources */,
 				C19DB62014FDB6CF00C61A1E /* Icon-Small.png in Resources */,

@@ -24,7 +24,6 @@
 - (NSURL *)URLByMovingToParentFolder;
 - (NSURL *)URLWithRemoteChangedToLocal;
 - (NSURL *)URLWithoutNameConflict;
-- (NSString *)escapedStringFromURL;
 
 @end
 

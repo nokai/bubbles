@@ -11,10 +11,11 @@
 #import <AVFoundation/AVFoundation.h>
 
 #define kWDSoundFileSent        @"kWDSoundFileSent"
-#define kWDSoundFileReceived    @"kWDSoundFileReceived"
+#define kWDSoundFileReceived    kWDSoundFileSent
 
 @interface WDSound : NSObject {
-    NSMutableDictionary *_soundObjects;
+    SystemSoundID _soundID;
+    CFURLRef _soundFileURLRef;
 }
 
 - (void)playSoundForKey:(NSString *)key;
