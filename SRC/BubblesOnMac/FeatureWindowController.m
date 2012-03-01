@@ -60,10 +60,12 @@
     CGPoint originPoint = scrollViewFrame.origin;
     CGSize size = scrollViewFrame.size;
     
-    _leftButton.frame = NSMakeRect(originPoint.x + 32, size.height / 2, 32, 32);
+    _leftButton.frame = NSMakeRect(originPoint.x + 2, size.height / 2, 32, 32);
     _rightButton.frame = NSMakeRect(originPoint.x + size.width - 32 , size.height / 2 ,32, 32);
     _pageControl.frame = NSMakeRect(originPoint.x + size.width / 2 - 45 , size.height - 48,169, 96);
     
+    [[_leftButton cell] setHighlightsBy:NSContentsCellMask];
+    [[_rightButton cell] setHighlightsBy:NSContentsCellMask];
     [_scrollView addSubview:_pageControl];
     [_scrollView addSubview:_rightButton];
     [_scrollView addSubview:_leftButton];
