@@ -896,6 +896,16 @@
         [t release];
     } else if ([buttonTitle isEqualToString:kActionSheetButtonTransferTerminate]) {
         [self.bubble terminateTransfer];
+        
+        // DW: delete any unstable state files
+        NSArray *arrayOriginalMessages = [NSArray arrayWithArray:_messages];
+        NSArray *arrayOriginalDocuments = [NSArray arrayWithArray:_documents];
+        for (WDMessage *m in arrayOriginalMessages) {
+            if (!(([m.state isEqualToString:kWDMessageStateFile])
+                  ||([m.state isEqualToString:kWDMessageStateText]))) {
+                [self deleteDocumentAndMessageInURL:m.fileURL];
+            }
+        }
     }
     
     [message release];
@@ -957,16 +967,16 @@
     [_documents sortUsingComparator:^(NSURL *obj1, NSURL * obj2) {
         // DW: give up sort by creation date since it's not recording what we do with it
         /*
-        NSDictionary *dict1 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj1.path error:nil];
-        NSDictionary *dict2 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj2.path error:nil];
-        NSDate *creationDate1 = [dict1 objectForKey:NSFileCreationDate];
-        NSDate *creationDate2 = [dict2 objectForKey:NSFileCreationDate];
-        if ([creationDate1 compare:creationDate2] == NSOrderedAscending)
-            return NSOrderedDescending;
-        else if ([creationDate1 compare:creationDate2] == NSOrderedDescending)
-            return NSOrderedAscending;
-        else
-            return NSOrderedSame;
+         NSDictionary *dict1 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj1.path error:nil];
+         NSDictionary *dict2 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj2.path error:nil];
+         NSDate *creationDate1 = [dict1 objectForKey:NSFileCreationDate];
+         NSDate *creationDate2 = [dict2 objectForKey:NSFileCreationDate];
+         if ([creationDate1 compare:creationDate2] == NSOrderedAscending)
+         return NSOrderedDescending;
+         else if ([creationDate1 compare:creationDate2] == NSOrderedDescending)
+         return NSOrderedAscending;
+         else
+         return NSOrderedSame;
          */
         return [obj1.path.lowercaseString compare:obj2.path.lowercaseString];
     }];
