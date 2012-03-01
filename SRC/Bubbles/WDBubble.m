@@ -54,6 +54,7 @@
 // of couse methods like NSURL::URLByDeletingLastPathComponent are exceptions, we treat them differently
 
 @implementation NSURL (Bubbles)
+
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATO
 
 + (NSURL *)iOSDocumentsDirectoryURL {
@@ -62,6 +63,10 @@
 
 + (NSString *)iOSDocumentsDirectoryPath {
     return [[NSURL iOSDocumentsDirectoryURL] path];
+}
+
++ (NSURL *)iOSInboxDirectoryURL {
+    return [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Inbox", [NSURL iOSDocumentsDirectoryURL].path]];
 }
 
 #elif TARGET_OS_MAC
@@ -176,6 +181,13 @@
 }
 
 // @end
+
++ (NSURL *)URLByMovingToParentFolder:(NSURL *)oldURL {
+    NSURL *newURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@", 
+                                            [[oldURL URLByDeletingLastPathComponent] URLByDeletingLastPathComponent].path, 
+                                            oldURL.lastPathComponent]];
+    return newURL;
+}
 
 + (NSString *)formattedFileSize:(unsigned long long)size {
 	NSString *formattedStr = nil;

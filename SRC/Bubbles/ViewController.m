@@ -341,12 +341,12 @@
     // and if it's in background and invoke to foreground, nothing will happen anyway.
     // This feature is now so well supported.
     /*
-    if (_launchFile) {
-        DLog(@"VC viewDidLoad %@", _launchFile);
-        UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:_launchFile] retain];
-        interactionController.delegate = self;
-        DLog(@"VC viewDidLoad preview %d", [interactionController presentPreviewAnimated:YES]);
-    }
+     if (_launchFile) {
+     DLog(@"VC viewDidLoad %@", _launchFile);
+     UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:_launchFile] retain];
+     interactionController.delegate = self;
+     DLog(@"VC viewDidLoad preview %d", [interactionController presentPreviewAnimated:YES]);
+     }
      */
 }
 
@@ -925,11 +925,30 @@
                                                                                      options:NSDirectoryEnumerationSkipsHiddenFiles 
                                                                                        error:nil]];
     // DW: we need to skip folders here
-    for (NSURL *url in _documents) {
-        
+    NSArray *originalDocuments = [NSArray arrayWithArray:_documents];
+    for (NSURL *url in originalDocuments) {
+        BOOL isDirectory = NO;
+        if ([[NSFileManager defaultManager] fileExistsAtPath:url.path isDirectory:&isDirectory]) {
+            if (isDirectory) {
+                [_documents removeObject:url];
+            }
+        }
     }
     
     [_documents sortUsingComparator:^(NSURL *obj1, NSURL * obj2) {
+        // DW: give up sort by creation date since it's not recording what we do with it
+        /*
+        NSDictionary *dict1 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj1.path error:nil];
+        NSDictionary *dict2 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj2.path error:nil];
+        NSDate *creationDate1 = [dict1 objectForKey:NSFileCreationDate];
+        NSDate *creationDate2 = [dict2 objectForKey:NSFileCreationDate];
+        if ([creationDate1 compare:creationDate2] == NSOrderedAscending)
+            return NSOrderedDescending;
+        else if ([creationDate1 compare:creationDate2] == NSOrderedDescending)
+            return NSOrderedAscending;
+        else
+            return NSOrderedSame;
+         */
         return [obj1.path.lowercaseString compare:obj2.path.lowercaseString];
     }];
     

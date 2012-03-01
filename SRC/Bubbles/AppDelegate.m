@@ -23,9 +23,7 @@
     if (launchOptions) {
         // DW: move files in "Inbox" folder to "Documents"
         NSURL *fileURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
-        newURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@", 
-                                         [[fileURL URLByDeletingLastPathComponent] URLByDeletingLastPathComponent].path, 
-                                         fileURL.lastPathComponent]];
+        newURL = [NSURL URLByMovingToParentFolder:fileURL];
         DLog(@"AppDelegate didFinishLaunchingWithOptions Old: %@; new: %@.", fileURL, newURL);
         [[NSFileManager defaultManager] moveItemAtURL:fileURL toURL:newURL error:nil];
     }
@@ -90,6 +88,15 @@
     /*
      Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
      */
+    // DW: check if there is new file in Inbox
+    NSArray *inboxFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:[NSURL iOSInboxDirectoryURL]
+                                                        includingPropertiesForKeys:nil 
+                                                                           options:NSDirectoryEnumerationSkipsHiddenFiles 
+                                                                             error:nil];
+    for (NSURL *url in inboxFiles) {
+        [[NSFileManager defaultManager] moveItemAtURL:url toURL:[[NSURL URLByMovingToParentFolder:url] URLWithoutNameConflict] error:nil];
+    }
+    
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
     if (usePassword) {
         [self.viewController lock];

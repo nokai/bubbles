@@ -10,7 +10,7 @@
 #import "ViewController.h"
 
 @implementation PeersViewController
-@synthesize dismissButton, lockButton, bubble = _bubble;
+@synthesize dismissButton, lockButton, bubble = _bubble, viewController = _viewController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
