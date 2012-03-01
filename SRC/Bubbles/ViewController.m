@@ -246,7 +246,6 @@
     [_messages release];
     [_documents release];
     [_directoryWatcher release];
-    [_passwordViewController release];
     [_helpViewController release];
     
     [super dealloc];
@@ -326,10 +325,6 @@
     self.navigationController.navigationBar.hidden = YES;
     _bar.topItem.rightBarButtonItem = self.editButtonItem;
     //[self setEditing:NO animated:NO];
-    
-    // DW: password view
-    _passwordViewController = [[PasswordViewController alloc] initWithNibName:@"PasswordViewController" bundle:nil];
-    _passwordViewController.delegate = self;
     
     // DW: use password or not
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];

@@ -16,7 +16,6 @@
 #import "DirectoryWatcher.h"
 #import "HelpViewController.h"
 #import "PeersViewController.h"
-#import "PasswordViewController.h"
 #import "TextViewController.h"
 
 @interface ViewController : UIViewController <
@@ -24,7 +23,6 @@ UIAlertViewDelegate,
 UITextFieldDelegate, 
 UINavigationControllerDelegate, 
 UIImagePickerControllerDelegate, 
-PasswordViewControllerDelegate, 
 WDBubbleDelegate, 
 TextViewControllerDelegate, 
 UITableViewDelegate, 
@@ -54,9 +52,6 @@ UISplitViewControllerDelegate> {
     IBOutlet UIBarButtonItem *_lockButton;
     IBOutlet UINavigationBar *_bar;
     IBOutlet UIBarButtonItem *_clearButton;
-    
-    // DW: password
-    PasswordViewController *_passwordViewController;
     
     // DW: help
     HelpViewController *_helpViewController;

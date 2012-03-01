@@ -129,8 +129,6 @@
 		C1F4B9AC14E8E39900E878CD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1F4B9AB14E8E39900E878CD /* MobileCoreServices.framework */; };
 		C1F80FC614BA7A1B006F0779 /* PeersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F80FC414BA7A1B006F0779 /* PeersViewController.m */; };
 		C1F80FC714BA7A1B006F0779 /* PeersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F80FC514BA7A1B006F0779 /* PeersViewController.xib */; };
-		C1F80FDD14BA84A6006F0779 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F80FDB14BA84A6006F0779 /* PasswordViewController.m */; };
-		C1F80FDE14BA84A6006F0779 /* PasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F80FDC14BA84A6006F0779 /* PasswordViewController.xib */; };
 		C1F950CB14FBE50700482ECF /* WDSound.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F950CA14FBE50700482ECF /* WDSound.m */; };
 		C1F950D114FBE6FE00482ECF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1F950D014FBE6FE00482ECF /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
@@ -296,9 +294,6 @@
 		C1F80FC314BA7A1B006F0779 /* PeersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeersViewController.h; path = Bubbles/PeersViewController.h; sourceTree = SOURCE_ROOT; };
 		C1F80FC414BA7A1B006F0779 /* PeersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeersViewController.m; path = Bubbles/PeersViewController.m; sourceTree = SOURCE_ROOT; };
 		C1F80FC514BA7A1B006F0779 /* PeersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeersViewController.xib; path = Bubbles/PeersViewController.xib; sourceTree = SOURCE_ROOT; };
-		C1F80FDA14BA84A6006F0779 /* PasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PasswordViewController.h; path = Bubbles/PasswordViewController.h; sourceTree = SOURCE_ROOT; };
-		C1F80FDB14BA84A6006F0779 /* PasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PasswordViewController.m; path = Bubbles/PasswordViewController.m; sourceTree = SOURCE_ROOT; };
-		C1F80FDC14BA84A6006F0779 /* PasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PasswordViewController.xib; path = Bubbles/PasswordViewController.xib; sourceTree = SOURCE_ROOT; };
 		C1F950C914FBE50700482ECF /* WDSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WDSound.h; path = Bubbles/WDSound.h; sourceTree = "<group>"; };
 		C1F950CA14FBE50700482ECF /* WDSound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WDSound.m; path = Bubbles/WDSound.m; sourceTree = "<group>"; };
 		C1F950D014FBE6FE00482ECF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -619,9 +614,6 @@
 				C1F80FC314BA7A1B006F0779 /* PeersViewController.h */,
 				C1F80FC414BA7A1B006F0779 /* PeersViewController.m */,
 				C1F80FC514BA7A1B006F0779 /* PeersViewController.xib */,
-				C1F80FDA14BA84A6006F0779 /* PasswordViewController.h */,
-				C1F80FDB14BA84A6006F0779 /* PasswordViewController.m */,
-				C1F80FDC14BA84A6006F0779 /* PasswordViewController.xib */,
 				C1393F0714D90C83005AFEB6 /* TextViewController.h */,
 				C1393F0814D90C83005AFEB6 /* TextViewController.m */,
 				C1393F0914D90C83005AFEB6 /* TextViewController.xib */,
@@ -725,7 +717,6 @@
 				C1CFCD3014B986CB008A1B1F /* Default.png in Resources */,
 				C1CFCD3114B986CB008A1B1F /* Default@2x.png in Resources */,
 				C1F80FC714BA7A1B006F0779 /* PeersViewController.xib in Resources */,
-				C1F80FDE14BA84A6006F0779 /* PasswordViewController.xib in Resources */,
 				C1393F0B14D90C83005AFEB6 /* TextViewController.xib in Resources */,
 				C18B6F7D14DCC8E7009F502E /* Icon-Text.png in Resources */,
 				C18B6F7E14DCC8E7009F502E /* Icon-Text@2x.png in Resources */,
@@ -818,7 +809,6 @@
 				C1CFCD1C14B985AE008A1B1F /* main.m in Sources */,
 				C1CFCD2214B985D2008A1B1F /* ViewController.m in Sources */,
 				C1F80FC614BA7A1B006F0779 /* PeersViewController.m in Sources */,
-				C1F80FDD14BA84A6006F0779 /* PasswordViewController.m in Sources */,
 				C1393F0A14D90C83005AFEB6 /* TextViewController.m in Sources */,
 				C1393F2814D91BBF005AFEB6 /* UINavigationBar+Custom.m in Sources */,
 				C111265614DE2C7800884F7D /* DirectoryWatcher.m in Sources */,
