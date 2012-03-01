@@ -29,9 +29,7 @@
 }
 
 - (void)servicesUpdated:(NSNotification *)notification {
-    if (_networkPopOverController != nil) {
-        [_networkPopOverController reloadNetwork];
-    }
+  
     if (_bubble.servicesFound.count > 1) {
         for (NSNetService *s in _bubble.servicesFound) {
             if ([s.name isEqualToString:_bubble.service.name]) {
@@ -46,7 +44,9 @@
         }
         _selectedServiceName = nil;
     }
-    
+    if (_networkPopOverController != nil) {
+        [_networkPopOverController reloadNetwork];
+    }
 }
 
 - (void)initFirstResponder
@@ -179,6 +179,7 @@
     
     [_lockButton release];
     [_selectFileItem release];
+    [_selectFileOpenPanel release];
     
     [_bubble release];
     // [_sound release];
@@ -315,25 +316,34 @@
         return ;
     }
     
-    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    _selectFileOpenPanel = [NSOpenPanel openPanel];
     
-	[openPanel setTitle:@"Choose File"];
-	[openPanel setPrompt:@"Browse"];
-	[openPanel setNameFieldLabel:@"Choose a file:"];
-    
-    if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
-        _fileURL = [[openPanel URL] retain];//the path of your selected photo
-        NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
-        if (image != nil) {
-            [_dragFileController.imageView setImage:image];
-            [image release];   
-        }else {
-            NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
-            [_dragFileController.imageView setImage:quicklook];
-        }
-        
-        [_dragFileController.label setHidden:YES];
-    }
+    [_selectFileOpenPanel setTitle:@"Choose File"];
+	[_selectFileOpenPanel setPrompt:@"Browse"];
+	[_selectFileOpenPanel setNameFieldLabel:@"Choose a file:"];
+
+    void (^selectFileHandler)(NSInteger) = ^( NSInteger result )
+	{
+		NSURL *selectedFileURL = [_selectFileOpenPanel URL];
+		
+		if(selectedFileURL)
+		{
+            _fileURL = [selectedFileURL retain];//the path of your selected photo
+            NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
+            if (image != nil) {
+                [_dragFileController.imageView setImage:image];
+                [image release];   
+            }else {
+                NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
+                [_dragFileController.imageView setImage:quicklook];
+            }
+            
+            [_dragFileController.label setHidden:YES];
+		}
+	};
+	
+	[_selectFileOpenPanel beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow 
+							  completionHandler:selectFileHandler];
 }
 
 - (IBAction)openFeatureWindow:(id)sender
@@ -365,15 +375,10 @@
     [_sound playSoundForKey:kWDSoundFileReceived];
     message.time = [NSDate date];
     if ([message.state isEqualToString:kWDMessageStateText]) {
-        if (_isView == kTextViewController) {
             _textViewController.textField.string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
             [self storeMessage:message];
-        }
         
     } else if ([message.state isEqualToString:kWDMessageStateFile]) {
-        if (_isView != kDragFileController) {
-            return ;
-        }
         [self storeMessage:message];
         [_dragFileController.label setHidden:YES];
         

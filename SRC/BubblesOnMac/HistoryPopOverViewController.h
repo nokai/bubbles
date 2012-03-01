@@ -14,6 +14,9 @@
 #import "TransparentTableView.h"
 #import "NSTableView+ContextMenu.h"
 
+#define kPreviewColumn 1
+#define kDeleteColumn 2
+
 @interface HistoryPopOverViewController : NSViewController<NSPopoverDelegate,NSTableViewDataSource,NSTableViewDelegate,ImageAndTextCellDelegate,ContextMenuDelegate>
 {
     IBOutlet TransparentTableView *_fileHistoryTableView;

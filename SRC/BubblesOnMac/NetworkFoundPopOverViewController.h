@@ -10,6 +10,8 @@
 #import "WDBubble.h"
 #import "TransparentTableView.h"
 
+#define kClickCellColumn 1
+
 @protocol NetworkFoundDelegate <NSObject>
 
 - (void)didSelectServiceName:(NSString *)serviceName;

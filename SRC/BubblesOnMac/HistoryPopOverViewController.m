@@ -92,7 +92,7 @@
     [previewCell setTitle:@""];
    // [previewCell highlightsBy:NSContentsCellMask];
     previewCell.highlightsBy = NSContentsCellMask;
-    NSTableColumn *columnThree = [[_fileHistoryTableView tableColumns] objectAtIndex:1];
+    NSTableColumn *columnThree = [[_fileHistoryTableView tableColumns] objectAtIndex:kPreviewColumn];
     [columnThree setDataCell:previewCell];
     
     NSButtonCell *deleteCell = [[[NSButtonCell alloc]init]autorelease];
@@ -101,7 +101,7 @@
     [deleteCell setImageScaling:NSImageScaleProportionallyDown];
     [deleteCell setAction:@selector(deleteSelectedRow)];
     deleteCell.highlightsBy = NSContentsCellMask;
-    NSTableColumn *columnTwo = [[_fileHistoryTableView tableColumns] objectAtIndex:2];
+    NSTableColumn *columnTwo = [[_fileHistoryTableView tableColumns] objectAtIndex:kDeleteColumn];
     [columnTwo setDataCell:deleteCell];
     
     // Wu:Set the tableview can accept being dragged from
@@ -212,10 +212,10 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
 - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     WDMessage *message = [_fileHistoryArray objectAtIndex:row];
-    if ([message.state isEqualToString: kWDMessageStateText] && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:1]) {
+    if ([message.state isEqualToString: kWDMessageStateText] && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:kPreviewColumn]) {
         NSButtonCell *buttonCell = (NSButtonCell *)cell;
         [buttonCell setImagePosition:NSNoImage];
-    } else if ([message.state isEqualToString:kWDMessageStateFile] && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:1]) {
+    } else if ([message.state isEqualToString:kWDMessageStateFile] && tableColumn == [[_fileHistoryTableView tableColumns]objectAtIndex:kPreviewColumn]) {
         NSButtonCell *buttonCell = (NSButtonCell *)cell;
         [buttonCell setImagePosition:NSImageOverlaps];
     }

@@ -135,6 +135,9 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 
 - (void)dragImage:(NSImage *)anImage at:(NSPoint)viewLocation offset:(NSSize)initialOffset event:(NSEvent *)event pasteboard:(NSPasteboard *)pboard source:(id)sourceObj slideBack:(BOOL)slideFlag
 {
+    if ([self image] == nil) {
+        return ;
+    }
     // Wu: create a new image for our semi-transparent drag image
     NSImage* dragImage=[[NSImage alloc] initWithSize:[[self image] size]]; 
     
