@@ -32,6 +32,8 @@
 - (void)willReceiveMessage:(WDMessage *)message;
 - (void)didReceiveMessage:(WDMessage *)message;
 - (void)didSendMessage:(WDMessage *)message;
+- (void)didTerminateReceiveMessage:(WDMessage *)message;
+- (void)didTerminateSendMessage:(WDMessage *)message;
 @end
 
 @interface WDBubble : NSObject <AsyncSocketDelegate, NSNetServiceDelegate, NSNetServiceBrowserDelegate, NSStreamDelegate> {

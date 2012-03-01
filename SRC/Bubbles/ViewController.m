@@ -198,11 +198,7 @@
     //[_messagesView deselectRowAtIndexPath:[_messagesView indexPathForSelectedRow] animated:YES];
 }
 
-// DW: this deletes acutal documents and their referencing messages if they have
-- (void)deleteDocumentAndMessageInURL:(NSURL *)fileURL {
-    // DW: delete cached thumbnail
-    [_thumbnails removeObjectForKey:fileURL.path.lastPathComponent];
-    
+- (void)deleteMessageInURL:(NSURL *)fileURL {
     // DW: delete records in messages
     // iterating and removing with a new array
     NSArray *originalMessages = [NSArray arrayWithArray:_messages];
@@ -211,6 +207,14 @@
             [_messages removeObject:m];
         }
     }
+}
+
+// DW: this deletes acutal documents and their referencing messages if they have
+- (void)deleteDocumentAndMessageInURL:(NSURL *)fileURL {
+    // DW: delete cached thumbnail
+    [_thumbnails removeObjectForKey:fileURL.path.lastPathComponent];
+    
+    [self deleteMessageInURL:fileURL];
     
     // DW: files not in messages can also be deleted here
     [[NSFileManager defaultManager] removeItemAtPath:fileURL.path
@@ -247,6 +251,7 @@
     [_documents release];
     [_directoryWatcher release];
     [_helpViewController release];
+    [_currentNavigationItem release];
     
     [super dealloc];
 }
@@ -322,8 +327,13 @@
     }
     
     // DW: other UI
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    //[self setEditing:NO animated:NO];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        _currentNavigationItem = [_bar.topItem retain];
+        self.navigationController.navigationBar.hidden = YES;
+    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+        _currentNavigationItem = [self.navigationItem retain];
+    }
+    _currentNavigationItem.rightBarButtonItem = self.editButtonItem;
     
     // DW: use password or not
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
@@ -383,9 +393,9 @@
     
     [_messagesView setEditing:editing animated:YES];
     if (editing) {
-        [self.navigationItem setLeftBarButtonItem:_clearButton animated:YES];
+        [_currentNavigationItem setLeftBarButtonItem:_clearButton animated:YES];
     } else {
-        [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+        [_currentNavigationItem setLeftBarButtonItem:nil animated:YES];
     }
 }
 
@@ -453,11 +463,7 @@
                                            cancelButtonTitle:kActionSheetButtonCancel
                                       destructiveButtonTitle:nil
                                            otherButtonTitles:kActionSheetButtonHelpPDF, kActionSheetButtonHelpSplash, nil];
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        [as showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
-    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-        [as showInView:self.view];
-    }
+    [as showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
     [as release];
 }
 
@@ -514,6 +520,14 @@
 - (void)didSendMessage:(WDMessage *)message {
     message.state = kWDMessageStateFile;
     [_sound playSoundForKey:kWDSoundFileSent];
+}
+
+- (void)didTerminateReceiveMessage:(WDMessage *)message {
+    [self deleteDocumentAndMessageInURL:message.fileURL];
+}
+
+- (void)didTerminateSendMessage:(WDMessage *)message {
+    [self deleteMessageInURL:message.fileURL];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -686,13 +700,13 @@
     // DW: we can use here to hide bar buttons
     if (_segmentSwith.selectedSegmentIndex == kSegmentControlHistory) {
         BOOL canShowEditButton = (_messages.count > 0);
-        [self.navigationItem setRightBarButtonItem:canShowEditButton?self.editButtonItem:nil];
+        [_currentNavigationItem setRightBarButtonItem:canShowEditButton?self.editButtonItem:nil];
         if (!canShowEditButton) {
             [self setEditing:NO];
         }
     } else if (_segmentSwith.selectedSegmentIndex == kSegmentControlFiles) {
         BOOL canShowEditButton = (_documents.count > 0);
-        [self.navigationItem setRightBarButtonItem:(_documents.count > 0)?self.editButtonItem:nil];
+        [_currentNavigationItem setRightBarButtonItem:(_documents.count > 0)?self.editButtonItem:nil];
         if (!canShowEditButton) {
             [self setEditing:NO];
         }
@@ -838,6 +852,8 @@
             [[UIApplication sharedApplication].keyWindow addSubview:_helpViewController.view];
         }
         return;
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonCancel]) {
+        return;
     }
     
     // DW: construct a WDMessage
@@ -899,7 +915,6 @@
         
         // DW: delete any unstable state files
         NSArray *arrayOriginalMessages = [NSArray arrayWithArray:_messages];
-        NSArray *arrayOriginalDocuments = [NSArray arrayWithArray:_documents];
         for (WDMessage *m in arrayOriginalMessages) {
             if (!(([m.state isEqualToString:kWDMessageStateFile])
                   ||([m.state isEqualToString:kWDMessageStateText]))) {
@@ -998,14 +1013,14 @@
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController {
     barButtonItem.title = NSLocalizedString(@"Master", @"Master");
-    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
+    [_currentNavigationItem setLeftBarButtonItem:barButtonItem animated:YES];
     //self.masterPopoverController = popoverController;
     
 }
 
 - (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
     // Called when the view is shown again in the split view, invalidating the button and popover controller.
-    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+    [_currentNavigationItem setLeftBarButtonItem:nil animated:YES];
     //self.masterPopoverController = nil;
 }
 

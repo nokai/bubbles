@@ -30,22 +30,22 @@
     
     _bubble = [[WDBubble alloc] init];
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+        //self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
         
-        ViewController *detailViewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
-        UINavigationController *detailNavigationController = [[[UINavigationController alloc] initWithRootViewController:detailViewController] autorelease];
+        ViewController *detailViewController = self.viewController;//[[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
+        //UINavigationController *detailNavigationController = [[[UINavigationController alloc] initWithRootViewController:detailViewController] autorelease];
         detailViewController.bubble = _bubble;
         detailViewController.launchFile = newURL;
         _bubble.delegate = detailViewController;
         
         PeersViewController *masterViewController = [[[PeersViewController alloc] initWithNibName:@"PeersViewController_iPad" bundle:nil] autorelease];
-        UINavigationController *masterNavigationController = [[[UINavigationController alloc] initWithRootViewController:masterViewController] autorelease];
+        //UINavigationController *masterNavigationController = [[[UINavigationController alloc] initWithRootViewController:masterViewController] autorelease];
         masterViewController.bubble = detailViewController.bubble;
         masterViewController.viewController = detailViewController;
         
-        self.splitViewController = [[[UISplitViewController alloc] init] autorelease];
+        //self.splitViewController = [[[UISplitViewController alloc] init] autorelease];
         self.splitViewController.delegate = detailViewController;
-        self.splitViewController.viewControllers = [NSArray arrayWithObjects:masterNavigationController, detailNavigationController, nil];
+        //self.splitViewController.viewControllers = [NSArray arrayWithObjects:masterNavigationController, detailViewController, nil];
         
         self.window.rootViewController = self.splitViewController;
         [self.window makeKeyAndVisible];

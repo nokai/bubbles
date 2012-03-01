@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class PeersViewController;
 @class ViewController;
 @class WDBubble;
 
@@ -17,9 +18,11 @@
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
+@property (nonatomic, retain) IBOutlet PeersViewController *peersViewController;
+
 @property (nonatomic, retain) IBOutlet ViewController *viewController;
 
-@property (strong, nonatomic) UISplitViewController *splitViewController;
+@property (nonatomic, retain) IBOutlet UISplitViewController *splitViewController;
 
 @property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
 

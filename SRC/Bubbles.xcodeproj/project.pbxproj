@@ -115,6 +115,7 @@
 		C167CE1414E8F5CF00B419CD /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = C167CE1214E8F5CF00B419CD /* UIImage+RoundedCorner.m */; };
 		C18B6F7D14DCC8E7009F502E /* Icon-Text.png in Resources */ = {isa = PBXBuildFile; fileRef = C18B6F7B14DCC8E7009F502E /* Icon-Text.png */; };
 		C18B6F7E14DCC8E7009F502E /* Icon-Text@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C18B6F7C14DCC8E7009F502E /* Icon-Text@2x.png */; };
+		C18E4BDC14FFF81200D642A9 /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C18E4BDB14FFF81200D642A9 /* MainWindow_iPad.xib */; };
 		C192664314ECD7820090D8F7 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C192664114ECD7820090D8F7 /* HelpViewController.m */; };
 		C192664414ECD7820090D8F7 /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C192664214ECD7820090D8F7 /* HelpViewController.xib */; };
 		C192665D14ECEB450090D8F7 /* HelpViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C192665C14ECEB450090D8F7 /* HelpViewController_iPad.xib */; };
@@ -145,6 +146,8 @@
 		C1CFCD3014B986CB008A1B1F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C1CFCD2C14B986CB008A1B1F /* Default.png */; };
 		C1CFCD3114B986CB008A1B1F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1CFCD2D14B986CB008A1B1F /* Default@2x.png */; };
 		C1F0A54314FFC9C00048B02E /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A54214FFC9BF0048B02E /* MainWindow.xib */; };
+		C1F0A55114FFECFD0048B02E /* button_help.png in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A54F14FFECFD0048B02E /* button_help.png */; };
+		C1F0A55214FFECFD0048B02E /* button_help@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A55014FFECFD0048B02E /* button_help@2x.png */; };
 		C1F4B9AC14E8E39900E878CD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1F4B9AB14E8E39900E878CD /* MobileCoreServices.framework */; };
 		C1F80FC614BA7A1B006F0779 /* PeersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F80FC414BA7A1B006F0779 /* PeersViewController.m */; };
 		C1F80FC714BA7A1B006F0779 /* PeersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F80FC514BA7A1B006F0779 /* PeersViewController.xib */; };
@@ -280,6 +283,7 @@
 		C167CE1214E8F5CF00B419CD /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+RoundedCorner.m"; path = "Bubbles/UIImage+RoundedCorner.m"; sourceTree = SOURCE_ROOT; };
 		C18B6F7B14DCC8E7009F502E /* Icon-Text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Text.png"; path = "Resources/iPhone/Icon-Text.png"; sourceTree = SOURCE_ROOT; };
 		C18B6F7C14DCC8E7009F502E /* Icon-Text@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Text@2x.png"; path = "Resources/iPhone/Icon-Text@2x.png"; sourceTree = SOURCE_ROOT; };
+		C18E4BDB14FFF81200D642A9 /* MainWindow_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow_iPad.xib; path = Bubbles/MainWindow_iPad.xib; sourceTree = SOURCE_ROOT; };
 		C192664014ECD7820090D8F7 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpViewController.h; path = Bubbles/HelpViewController.h; sourceTree = SOURCE_ROOT; };
 		C192664114ECD7820090D8F7 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelpViewController.m; path = Bubbles/HelpViewController.m; sourceTree = SOURCE_ROOT; };
 		C192664214ECD7820090D8F7 /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpViewController.xib; path = Bubbles/HelpViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -322,6 +326,8 @@
 		C1F0A50214FFB9C40048B02E /* kWDSoundFileReceived.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = kWDSoundFileReceived.aif; sourceTree = "<group>"; };
 		C1F0A50314FFB9C40048B02E /* kWDSoundFileSent.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = kWDSoundFileSent.aif; sourceTree = "<group>"; };
 		C1F0A54214FFC9BF0048B02E /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow.xib; path = Bubbles/MainWindow.xib; sourceTree = SOURCE_ROOT; };
+		C1F0A54F14FFECFD0048B02E /* button_help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_help.png; path = Resources/iPhone/button_help.png; sourceTree = SOURCE_ROOT; };
+		C1F0A55014FFECFD0048B02E /* button_help@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_help@2x.png"; path = "Resources/iPhone/button_help@2x.png"; sourceTree = SOURCE_ROOT; };
 		C1F4B9AB14E8E39900E878CD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		C1F80FC314BA7A1B006F0779 /* PeersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeersViewController.h; path = Bubbles/PeersViewController.h; sourceTree = SOURCE_ROOT; };
 		C1F80FC414BA7A1B006F0779 /* PeersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeersViewController.m; path = Bubbles/PeersViewController.m; sourceTree = SOURCE_ROOT; };
@@ -463,6 +469,8 @@
 				C11A3A5A14F92C1600892631 /* lock_off@2x.png */,
 				C11A3A5B14F92C1600892631 /* lock_on@2x.png */,
 				C11A3A5C14F92C1600892631 /* peer@2x.png */,
+				C1F0A54F14FFECFD0048B02E /* button_help.png */,
+				C1F0A55014FFECFD0048B02E /* button_help@2x.png */,
 			);
 			name = Toobar;
 			sourceTree = "<group>";
@@ -672,6 +680,7 @@
 		C1E624D114BD940B0010F395 /* iPad */ = {
 			isa = PBXGroup;
 			children = (
+				C18E4BDB14FFF81200D642A9 /* MainWindow_iPad.xib */,
 				C123285B14E3CFBF006968FE /* ViewController_iPad.xib */,
 				C123285D14E3CFE6006968FE /* PeersViewController_iPad.xib */,
 				C192665C14ECEB450090D8F7 /* HelpViewController_iPad.xib */,
@@ -812,6 +821,9 @@
 				C1057AA514FE231000D02DA4 /* _phone_bubbles_0.png in Resources */,
 				C1057AA614FE231000D02DA4 /* _phone_bubbles_1.png in Resources */,
 				C1F0A54314FFC9C00048B02E /* MainWindow.xib in Resources */,
+				C1F0A55114FFECFD0048B02E /* button_help.png in Resources */,
+				C1F0A55214FFECFD0048B02E /* button_help@2x.png in Resources */,
+				C18E4BDC14FFF81200D642A9 /* MainWindow_iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

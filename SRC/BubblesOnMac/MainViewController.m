@@ -426,6 +426,13 @@
     message.state = kWDMessageStateFile;
 }
 
+- (void)didTerminateReceiveMessage:(WDMessage *)message {
+}
+
+- (void)didTerminateSendMessage:(WDMessage *)message {
+    
+}
+
 #pragma mark - PasswordMacViewControllerDelegate
 
 - (void)didCancel {

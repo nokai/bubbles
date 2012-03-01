@@ -623,6 +623,7 @@
             
             // DW: check if it's the user terminates the transfering
             if (_streamBytesWrote < _currentMessage.fileSize) {
+                [self.delegate didTerminateReceiveMessage:_currentMessage];
                 [_currentMessage release];
                 _currentMessage = nil;
                 return;
@@ -668,7 +669,9 @@
         if ([_currentMessage.state isEqualToString:kWDMessageStateSending]) {
             // DW: check if it's the user terminates the transfering
             if (_streamBytesRead >= _currentMessage.fileSize) {
-                            [self.delegate didSendMessage:_currentMessage];
+                [self.delegate didSendMessage:_currentMessage];
+            } else {
+                [self.delegate didTerminateSendMessage:_currentMessage];
             }
             
             [_currentMessage release];
