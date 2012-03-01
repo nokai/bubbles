@@ -137,7 +137,7 @@
     if ([_serviceFoundTableView selectedRow] >= 0 && [_serviceFoundTableView selectedRow] < [_bubble.servicesFound count]) {
         NSNetService *t = [_bubble.servicesFound objectAtIndex:[_serviceFoundTableView selectedRow]];
         if ([t.name isEqualToString:_bubble.service.name]) {
-            [_serviceFoundTableView deselectRow:[_serviceFoundTableView selectedRow]];
+            
         } else {
             self.selectedServiceName = t.name;
             DLog(@"self.selected is %@",self.selectedServiceName);
@@ -145,6 +145,7 @@
             [_serviceFoundTableView reloadData];
         }
     }
+    [_serviceFoundTableView deselectRow:[_serviceFoundTableView selectedRow]];
    
 }
 
