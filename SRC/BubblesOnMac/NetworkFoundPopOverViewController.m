@@ -119,7 +119,6 @@
         [[imageCell controlView] setNeedsDisplay:YES];
     } else if (tableColumn == [[_serviceFoundTableView tableColumns] objectAtIndex:kTextFieldCell]) {
         if ([t.name isEqualToString:_bubble.service.name]) {
-            DLog(@"caonima");
             NSTextFieldCell *textCell = (NSTextFieldCell *)cell;
             NSString *string = [NSString stringWithFormat:@"%@ (local)",t.name];
             [textCell setStringValue:string];
@@ -134,7 +133,6 @@
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
-    DLog(@"hahaha");
     // Configure the cell...
     if ([_serviceFoundTableView selectedRow] >= 0 && [_serviceFoundTableView selectedRow] < [_bubble.servicesFound count]) {
         NSNetService *t = [_bubble.servicesFound objectAtIndex:[_serviceFoundTableView selectedRow]];
@@ -142,6 +140,7 @@
             [_serviceFoundTableView deselectRow:[_serviceFoundTableView selectedRow]];
         } else {
             self.selectedServiceName = t.name;
+            DLog(@"self.selected is %@",self.selectedServiceName);
             [self.delegate didSelectServiceName:self.selectedServiceName];
             [_serviceFoundTableView reloadData];
         }
