@@ -996,7 +996,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = BubblesOnMac/BubblesOnMac.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Test for Sandbox";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Test for Sandbox";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1010,6 +1010,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Deliver;
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
@@ -1022,7 +1023,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = BubblesOnMac/BubblesOnMac.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Test for Sandbox";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Test for Sandbox";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1036,6 +1037,7 @@
 				INFOPLIST_FILE = "BubblesOnMac/BubblesOnMac-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Deliver;
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
