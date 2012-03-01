@@ -72,6 +72,8 @@
     _helpPages.scrollsToTop = NO;
     _helpPages.delegate = self;
     
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    
     for (int i = 0; i < kNumberOfPages; i++) {
         [self loadScrollViewWithPage:i];
     }
@@ -90,7 +92,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 #pragma mark - IBActions
@@ -126,6 +128,7 @@
     
     // DW: quit on last scroll
     if (page >= kNumberOfPages-1) {
+        [UIApplication sharedApplication].statusBarHidden = NO;
         [self.view removeFromSuperview];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsShouldShowHelp];
     }
