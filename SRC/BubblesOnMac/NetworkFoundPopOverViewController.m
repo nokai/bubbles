@@ -47,6 +47,20 @@
 
 - (void)awakeFromNib
 {
+    
+    _imageCell = [[NSImageCell alloc]init];
+    [_imageCell setImageScaling:NSImageScaleProportionallyDown];
+    [_imageCell setImageAlignment:NSImageAlignCenter];
+    [_imageCell setImageFrameStyle:NSImageFrameNone];
+    [_imageCell setImage:[NSImage imageNamed:@"NSBonjour"]];
+    NSTableColumn *columnZero = [[_serviceFoundTableView tableColumns] objectAtIndex:kImageCell];
+    [columnZero setDataCell:_imageCell];
+    
+    _textFileCell = [[NSTextFieldCell alloc]init];
+    NSTableColumn *columnOne = [[_serviceFoundTableView tableColumns] objectAtIndex:kTextFieldCell];
+    [columnOne setDataCell:_textFileCell];
+
+    
     NSButtonCell *clickCell = [[[NSButtonCell alloc]init]autorelease];
     [clickCell setBordered:NO];
     [clickCell setImage:[NSImage imageNamed:@"NSBonjour"]];
@@ -62,6 +76,8 @@
 {
     [_serviceFoundTableView release];
     [_serviceFoundPopOver release];
+    [_imageCell release];
+    [_textFileCell release];
     self.selectedServiceName = nil;
     [super dealloc];
 }
@@ -75,24 +91,44 @@
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    NSNetService *t = [_bubble.servicesFound objectAtIndex:rowIndex];
-    if ([t.name isEqualToString:_bubble.service.name]) {
-        return [t.name stringByAppendingString:@" (local)"];
-    } else {
-        return t.name;
-    }
+   //  NSNetService *t = [_bubble.servicesFound objectAtIndex:rowIndex];
+    if (aTableView == [[_serviceFoundTableView tableColumns] objectAtIndex:1]) {
+        return [_textFileCell stringValue];
+        
+    } else if (aTableView == [[_serviceFoundTableView tableColumns] objectAtIndex:0])
+    {
+        return [_imageCell image];
+    } 
+    return nil;
 }
 
 - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     NSNetService *t = [_bubble.servicesFound objectAtIndex:row];
-    DLog(@"selectedServiceName is %@",self.selectedServiceName);
     if (t.name == self.selectedServiceName && tableColumn == [[_serviceFoundTableView tableColumns] objectAtIndex:kClickCellColumn]) {
         NSButtonCell *buttonCell = (NSButtonCell *)cell;
         [buttonCell setImagePosition:NSImageOverlaps];
     } else if (tableColumn == [[_serviceFoundTableView tableColumns]objectAtIndex:kClickCellColumn] && (self.selectedServiceName == NULL || self.selectedServiceName != t.name)){
         NSButtonCell *buttonCell = (NSButtonCell *)cell;
         [buttonCell setImagePosition:NSNoImage];
+    } else if (tableColumn == [[_serviceFoundTableView tableColumns]objectAtIndex:kImageCell]) {
+        NSImageCell *imageCell = (NSImageCell *)cell;
+        [imageCell setImage:[NSImage imageNamed:[NSString stringWithFormat:@"%@_%d", 
+                                                 [WDBubble platformForNetService:t], 
+                                                 [WDBubble isLockedNetService:t]]]];
+        [[imageCell controlView] setNeedsDisplay:YES];
+    } else if (tableColumn == [[_serviceFoundTableView tableColumns] objectAtIndex:kTextFieldCell]) {
+        if ([t.name isEqualToString:_bubble.service.name]) {
+            DLog(@"caonima");
+            NSTextFieldCell *textCell = (NSTextFieldCell *)cell;
+            NSString *string = [NSString stringWithFormat:@"%@ (local)",t.name];
+            [textCell setStringValue:string];
+            [[textCell controlView] setNeedsDisplay:YES];
+        } else {
+            NSTextFieldCell *textCell = (NSTextFieldCell *)cell;
+            [textCell setStringValue:t.name];
+            [[textCell controlView] setNeedsDisplay:YES];
+        }
     }
 }
 
@@ -100,14 +136,17 @@
 {
     DLog(@"hahaha");
     // Configure the cell...
-    NSNetService *t = [_bubble.servicesFound objectAtIndex:[_serviceFoundTableView selectedRow]];
-    if ([t.name isEqualToString:_bubble.service.name]) {
-        [_serviceFoundTableView deselectRow:[_serviceFoundTableView selectedRow]];
-        return;
-    } 
-    self.selectedServiceName = t.name;
-    [self.delegate didSelectServiceName:self.selectedServiceName];
-    [_serviceFoundTableView reloadData];
+    if ([_serviceFoundTableView selectedRow] >= 0 && [_serviceFoundTableView selectedRow] < [_bubble.servicesFound count]) {
+        NSNetService *t = [_bubble.servicesFound objectAtIndex:[_serviceFoundTableView selectedRow]];
+        if ([t.name isEqualToString:_bubble.service.name]) {
+            [_serviceFoundTableView deselectRow:[_serviceFoundTableView selectedRow]];
+        } else {
+            self.selectedServiceName = t.name;
+            [self.delegate didSelectServiceName:self.selectedServiceName];
+            [_serviceFoundTableView reloadData];
+        }
+    }
+   
 }
 
 @end

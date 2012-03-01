@@ -251,7 +251,14 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
         }
         return string;
     } else if ([message.state isEqualToString:kWDMessageStateFile]){
-        return [message.fileURL lastPathComponent];
+        if ([[message.fileURL lastPathComponent] length] >= 20) {
+            NSString *string = [[message.fileURL lastPathComponent] substringWithRange:NSMakeRange(0, 8)];
+            string = [string stringByAppendingString:@"..."];
+            string = [string stringByAppendingString:[[message.fileURL lastPathComponent] substringWithRange:NSMakeRange(15, 19)]];
+            return string;
+        }  else {
+            return [message.fileURL lastPathComponent];
+        }
     } else if (([message.state isEqualToString:kWDMessageStateReadyToSend])
                ||([message.state isEqualToString:kWDMessageStateSending]))
     {

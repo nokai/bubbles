@@ -10,7 +10,9 @@
 #import "WDBubble.h"
 #import "TransparentTableView.h"
 
-#define kClickCellColumn 1
+#define kImageCell 0
+#define kTextFieldCell 1
+#define kClickCellColumn 2
 
 @protocol NetworkFoundDelegate <NSObject>
 
@@ -23,6 +25,8 @@
     IBOutlet TransparentTableView *_serviceFoundTableView;
     NSPopover *_serviceFoundPopOver;
     WDBubble *_bubble;
+    NSImageCell *_imageCell;
+    NSTextFieldCell *_textFileCell;
 }
 
 @property (nonatomic , assign) WDBubble *bubble;
