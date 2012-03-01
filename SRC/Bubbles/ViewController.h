@@ -50,7 +50,6 @@ UISplitViewControllerDelegate> {
     IBOutlet UISegmentedControl *_segmentSwith;
     IBOutlet UITableView *_messagesView;
     IBOutlet UIBarButtonItem *_lockButton;
-    IBOutlet UINavigationBar *_bar;
     IBOutlet UIBarButtonItem *_clearButton;
     
     // DW: help

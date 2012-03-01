@@ -322,8 +322,7 @@
     }
     
     // DW: other UI
-    self.navigationController.navigationBar.hidden = YES;
-    _bar.topItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     //[self setEditing:NO animated:NO];
     
     // DW: use password or not
@@ -384,9 +383,9 @@
     
     [_messagesView setEditing:editing animated:YES];
     if (editing) {
-        [_bar.topItem setLeftBarButtonItem:_clearButton animated:YES];
+        [self.navigationItem setLeftBarButtonItem:_clearButton animated:YES];
     } else {
-        [_bar.topItem setLeftBarButtonItem:nil animated:YES];
+        [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     }
 }
 
@@ -687,13 +686,13 @@
     // DW: we can use here to hide bar buttons
     if (_segmentSwith.selectedSegmentIndex == kSegmentControlHistory) {
         BOOL canShowEditButton = (_messages.count > 0);
-        [_bar.topItem setRightBarButtonItem:canShowEditButton?self.editButtonItem:nil];
+        [self.navigationItem setRightBarButtonItem:canShowEditButton?self.editButtonItem:nil];
         if (!canShowEditButton) {
             [self setEditing:NO];
         }
     } else if (_segmentSwith.selectedSegmentIndex == kSegmentControlFiles) {
         BOOL canShowEditButton = (_documents.count > 0);
-        [_bar.topItem setRightBarButtonItem:(_documents.count > 0)?self.editButtonItem:nil];
+        [self.navigationItem setRightBarButtonItem:(_documents.count > 0)?self.editButtonItem:nil];
         if (!canShowEditButton) {
             [self setEditing:NO];
         }
