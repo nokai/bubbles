@@ -101,8 +101,8 @@ CGContextRef UIGraphicsGetCurrentContext(void)
 	
 	
 	// get the caller's colors it they have been set or use the defaults
-	CGColorRef onColorCG = CGColorCreateGenericRGB(1, 0, 0, 1);
-	CGColorRef offColorCG = CGColorCreateGenericRGB(0, 0, 0, .5);
+	CGColorRef onColorCG = CGColorCreateGenericRGB(1, 1, 1, 1);
+	CGColorRef offColorCG = CGColorCreateGenericRGB(1, 1, 1, .5);
 	
 	// actually draw the dots
 	for (int i = 0 ; i < numberOfPages ; i++)

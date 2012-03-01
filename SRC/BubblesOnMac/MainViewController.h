@@ -39,6 +39,7 @@
     //IBOutlet NSTextField *_viewIndicator;
     IBOutlet NSButton *_sendButton;
     IBOutlet NSButton *_lockButton;
+    IBOutlet NSMenuItem *_addFileItem;
     IBOutlet NSToolbar *_toolBar;
     
     BOOL _isView;

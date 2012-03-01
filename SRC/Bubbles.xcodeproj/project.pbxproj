@@ -15,6 +15,12 @@
 		032A05C414E39F5B005C4F6E /* HistoryPopOverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 032A05C214E39F5B005C4F6E /* HistoryPopOverViewController.xib */; };
 		032A05C914E3A525005C4F6E /* NetworkFoundPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A05C714E3A525005C4F6E /* NetworkFoundPopOverViewController.m */; };
 		032A05CA14E3A525005C4F6E /* NetworkFoundPopOverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 032A05C814E3A525005C4F6E /* NetworkFoundPopOverViewController.xib */; };
+		033C49E314FFB45600723D77 /* _mac_bubbles_0.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9B14FE231000D02DA4 /* _mac_bubbles_0.png */; };
+		033C49E514FFB45800723D77 /* _mac_bubbles_1.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9C14FE231000D02DA4 /* _mac_bubbles_1.png */; };
+		033C49E614FFB45A00723D77 /* _pad_bubbles_0.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9D14FE231000D02DA4 /* _pad_bubbles_0.png */; };
+		033C49E714FFB45D00723D77 /* _pad_bubbles_1.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9E14FE231000D02DA4 /* _pad_bubbles_1.png */; };
+		033C49E814FFB45F00723D77 /* _phone_bubbles_0.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9F14FE231000D02DA4 /* _phone_bubbles_0.png */; };
+		033C49E914FFB46100723D77 /* _phone_bubbles_1.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057AA014FE231000D02DA4 /* _phone_bubbles_1.png */; };
 		0346C6B814FA5AE900167F63 /* text.png in Resources */ = {isa = PBXBuildFile; fileRef = 0346C6B714FA5AE900167F63 /* text.png */; };
 		0354C96014BDC3F700417697 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C95F14BDC3F700417697 /* MainViewController.m */; };
 		0354C9AB14BDE4FA00417697 /* PasswordMacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */; };
@@ -39,6 +45,12 @@
 		03E70ADF14FD229400BF0B59 /* AboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03E70ADE14FD229400BF0B59 /* AboutWindowController.xib */; };
 		03E8C3EA14EA39C2001F5091 /* NSTableView+ContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */; };
 		03EFE64B14E2EF04007FA2B6 /* NSView+NSView_Fade_.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */; };
+		03F6745B14FFA32100AE00CB /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F6745A14FFA32100AE00CB /* 1.png */; };
+		03F6746214FFA98D00AE00CB /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F6745D14FFA98D00AE00CB /* 2.png */; };
+		03F6746314FFA98D00AE00CB /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F6745E14FFA98D00AE00CB /* 3.png */; };
+		03F6746414FFA98D00AE00CB /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F6745F14FFA98D00AE00CB /* 4.png */; };
+		03F6746514FFA98D00AE00CB /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F6746014FFA98D00AE00CB /* 5.png */; };
+		03F6746614FFA98D00AE00CB /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F6746114FFA98D00AE00CB /* 6.png */; };
 		188E022414FB2BF500B1B319 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 188E022314FB2BF500B1B319 /* BubblesHelp */; };
 		188E022514FB2BF500B1B319 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 188E022314FB2BF500B1B319 /* BubblesHelp */; };
 		C1057A8B14FE0BB700D02DA4 /* help01.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A7D14FE0BB700D02DA4 /* help01.png */; };
@@ -186,6 +198,12 @@
 		03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTableView+ContextMenu.m"; sourceTree = "<group>"; };
 		03EFE64914E2EF04007FA2B6 /* NSView+NSView_Fade_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+NSView_Fade_.h"; sourceTree = "<group>"; };
 		03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+NSView_Fade_.m"; sourceTree = "<group>"; };
+		03F6745A14FFA32100AE00CB /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		03F6745D14FFA98D00AE00CB /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		03F6745E14FFA98D00AE00CB /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		03F6745F14FFA98D00AE00CB /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
+		03F6746014FFA98D00AE00CB /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
+		03F6746114FFA98D00AE00CB /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
 		188E022314FB2BF500B1B319 /* BubblesHelp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BubblesHelp; sourceTree = "<group>"; };
 		C1057A7D14FE0BB700D02DA4 /* help01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help01.png; path = Resources/iPhone/help01.png; sourceTree = SOURCE_ROOT; };
 		C1057A7E14FE0BB700D02DA4 /* help02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help02.png; path = Resources/iPhone/help02.png; sourceTree = SOURCE_ROOT; };
@@ -337,6 +355,12 @@
 		039C96D214E68BC500BBEEC5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				03F6745D14FFA98D00AE00CB /* 2.png */,
+				03F6745E14FFA98D00AE00CB /* 3.png */,
+				03F6745F14FFA98D00AE00CB /* 4.png */,
+				03F6746014FFA98D00AE00CB /* 5.png */,
+				03F6746114FFA98D00AE00CB /* 6.png */,
+				03F6745A14FFA32100AE00CB /* 1.png */,
 				188E022314FB2BF500B1B319 /* BubblesHelp */,
 				039C96D314E68BDD00BBEEC5 /* swap.png */,
 				0378FCEF14F601620044A43B /* add txt.png */,
@@ -801,6 +825,18 @@
 				188E022514FB2BF500B1B319 /* BubblesHelp in Resources */,
 				0346C6B814FA5AE900167F63 /* text.png in Resources */,
 				03E70ADF14FD229400BF0B59 /* AboutWindowController.xib in Resources */,
+				03F6745B14FFA32100AE00CB /* 1.png in Resources */,
+				03F6746214FFA98D00AE00CB /* 2.png in Resources */,
+				03F6746314FFA98D00AE00CB /* 3.png in Resources */,
+				03F6746414FFA98D00AE00CB /* 4.png in Resources */,
+				03F6746514FFA98D00AE00CB /* 5.png in Resources */,
+				03F6746614FFA98D00AE00CB /* 6.png in Resources */,
+				033C49E314FFB45600723D77 /* _mac_bubbles_0.png in Resources */,
+				033C49E514FFB45800723D77 /* _mac_bubbles_1.png in Resources */,
+				033C49E614FFB45A00723D77 /* _pad_bubbles_0.png in Resources */,
+				033C49E714FFB45D00723D77 /* _pad_bubbles_1.png in Resources */,
+				033C49E814FFB45F00723D77 /* _phone_bubbles_0.png in Resources */,
+				033C49E914FFB46100723D77 /* _phone_bubbles_1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
