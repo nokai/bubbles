@@ -114,7 +114,6 @@
             [self storeMessage:t];
         }
         //[_bubble broadcastMessage:t];
-        [t release];
     }   
 }
 
