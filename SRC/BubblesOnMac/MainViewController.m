@@ -110,8 +110,11 @@
 - (void)sendText {
     if (_isView == kTextViewController || [_textViewController.textField.string length] == 0) {
         WDMessage *t = [WDMessage messageWithText:_textViewController.textField.string];
-        [self storeMessage:t];
-        [_bubble broadcastMessage:t];
+        if ([self sendToSelectedServiceOfMessage:t]) {
+            [self storeMessage:t];
+        }
+        //[_bubble broadcastMessage:t];
+        [t release];
     }   
 }
 
@@ -484,7 +487,6 @@
 - (void)didSelectServiceName:(NSString *)serviceName
 {
     _selectedServiceName = [serviceName retain];
-    DLog(@"name is %@",_selectedServiceName);
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
