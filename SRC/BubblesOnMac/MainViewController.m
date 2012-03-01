@@ -45,6 +45,7 @@
         _selectedServiceName = nil;
     }
     if (_networkPopOverController != nil) {
+        _networkPopOverController.selectedServiceName = _selectedServiceName;
         [_networkPopOverController reloadNetwork];
     }
 }
@@ -218,6 +219,8 @@
     [_dragFileController.view setHidden:YES];
     
     _sendButton.stringValue = kButtonTitleSendText;
+    
+   // [_addFileItem setEnabled:NO];
 }
 
 #pragma mark - IBActions
@@ -272,13 +275,18 @@
     if (_isView == kTextViewController) {
         [_toolBar insertItemWithItemIdentifier:@"SelectItemIdentifier" atIndex:kTooBarIndexOfSelectButton];
         _isView = kDragFileController;
+        [_addFileItem setEnabled:YES];
         [_textViewController.view setHidden:YES withFade:YES];
         [_dragFileController.view setHidden:NO withFade:YES];
         _sendButton.stringValue = kButtonTitleSendFile;
+        
     } else {
         AppDelegate *appDel = (AppDelegate *)[NSApp delegate];
+        //Reset as first responder
         [appDel.window makeFirstResponder:_textViewController.textField];
         appDel.window.initialFirstResponder = _textViewController.textField;
+        
+        [_addFileItem setEnabled:NO];
         [_toolBar removeItemAtIndex:kTooBarIndexOfSelectButton];
         _isView = kTextViewController;
         [_textViewController.view setHidden:NO withFade:YES];
@@ -475,71 +483,18 @@
 
 - (void)didSelectServiceName:(NSString *)serviceName
 {
-    /*if (_selectedServiceName ) {
-     [_selectedServiceName release];
-     }*/
     _selectedServiceName = [serviceName retain];
     DLog(@"name is %@",_selectedServiceName);
 }
 
-// DW: we do not need these codes
-
-/*
- #pragma mark - NSToolBarDelegate
- 
- - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
- {
- DLog(@"validateToolbarItem");
- if ([[theItem itemIdentifier] isEqual: @"SelectItemIdentifier"]) {
- return YES;
- } else if ([[theItem itemIdentifier] isEqual:@"PasswordIdentifier"]) {
- return YES;
- } else if ([[theItem itemIdentifier] isEqual:@"HistoryIdentifier"]) {
- return YES;
- } else if ([[theItem itemIdentifier] isEqual:@"NetworkIdentifier"]) {
- return YES;
- }
- return NO;
- }
- 
- - (void) toolbarWillAddItem:(NSNotification *)notification {
- NSToolbarItem *addedItem = [[notification userInfo] objectForKey: @"item"];
- 
- if ([[addedItem itemIdentifier] isEqual: @"SelectItemIdentifier"]) {
- DLog(@"kjhfkjsdhkjsdhfkjsdhf!!!!");
- }
- }
- 
- - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar {
- return [NSArray arrayWithObjects:
- @"PasswordIdentifier", NSToolbarFlexibleSpaceItemIdentifier,
- @"HistoryIdentifier", @"NetworkIdentifier", nil];
- }
- 
- - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar {
- return [NSArray arrayWithObjects:
- @"PasswordIdentifier",
- NSToolbarFlexibleSpaceItemIdentifier,@"HistoryIdentifier", @"NetworkIdentifier", @"SelectItemIdentifier",nil];
- }
- */
-
-/*
- - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdent willBeInsertedIntoToolbar:(BOOL)willBeInserted {
- // Required delegate method:  Given an item identifier, this method returns an item 
- // The toolbar will use this method to obtain toolbar items that can be displayed in the customization sheet, or in the toolbar itself 
- 
- DLog(@"itemForItemIdentifier");
- NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdent] autorelease];
- if ([[toolbarItem itemIdentifier] isEqual:@"SelectItemIdentifier"]) {
- [toolbarItem setImage:[NSImage imageNamed:@"NSAddTemplate"]];
- [toolbarItem setLabel:@"Select"];
- [toolbarItem setPaletteLabel:@"Select"];
- [toolbarItem setTarget:self];
- [toolbarItem setAction:@selector(selectFile)];
- }
- 
- return toolbarItem;
- }
- */
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+    if (menuItem == _addFileItem && _isView == kDragFileController) {
+        return YES;
+    } else if (menuItem == _addFileItem && _isView == kTextViewController){
+        return NO;
+    }
+    return YES;
+}
 
 @end
