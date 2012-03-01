@@ -199,7 +199,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
                                        dropDestination.path, 
                                        [escapedString stringByReplacingOccurrencesOfString:@" " 
                                                                                 withString:@"%20"]]];
-        newURL = [newURL UnicodeURLWithoutNameConflict];
+        newURL = [newURL URLWithoutNameConflict];
     } else {
         newURL = [newURL URLWithoutNameConflict];
     }

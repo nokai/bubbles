@@ -23,7 +23,7 @@
     if (launchOptions) {
         // DW: move files in "Inbox" folder to "Documents"
         NSURL *fileURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
-        newURL = [NSURL URLByMovingToParentFolder:fileURL];
+        newURL = [fileURL URLByMovingToParentFolder];
         DLog(@"AppDelegate didFinishLaunchingWithOptions Old: %@; new: %@.", fileURL, newURL);
         [[NSFileManager defaultManager] moveItemAtURL:fileURL toURL:newURL error:nil];
     }
@@ -94,7 +94,7 @@
                                                                            options:NSDirectoryEnumerationSkipsHiddenFiles 
                                                                              error:nil];
     for (NSURL *url in inboxFiles) {
-        [[NSFileManager defaultManager] moveItemAtURL:url toURL:[[NSURL URLByMovingToParentFolder:url] URLWithoutNameConflict] error:nil];
+        [[NSFileManager defaultManager] moveItemAtURL:url toURL:[[url URLByMovingToParentFolder] URLWithoutNameConflict] error:nil];
     }
     
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];

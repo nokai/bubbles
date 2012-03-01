@@ -721,7 +721,7 @@
         cell.detailTextLabel.text = [t.sender stringByAppendingFormat:@" %@", [df stringFromDate:t.time]];
         [df release];
         if ([t.state isEqualToString: kWDMessageStateText]) {
-            DLog(@"VC cellForRowAtIndexPath t is %@", t);
+            //DLog(@"VC cellForRowAtIndexPath t is %@", t);
             cell.textLabel.text = [[[NSString alloc] initWithData:t.content encoding:NSUTF8StringEncoding] autorelease];
             cell.imageView.image = [UIImage imageNamed:@"Icon-Text"];
         } else {

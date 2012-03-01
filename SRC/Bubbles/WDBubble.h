@@ -19,14 +19,13 @@
 + (NSURL *)iOSInboxDirectoryURL;
 #elif TARGET_OS_MAC
 #endif
-
-+ (NSURL *)URLByMovingToParentFolder:(NSURL *)oldURL;
 + (NSString *)formattedFileSize:(unsigned long long)size;
 
+- (NSURL *)URLByMovingToParentFolder;
 - (NSURL *)URLWithRemoteChangedToLocal;
 - (NSURL *)URLWithoutNameConflict;
-- (NSURL *)UnicodeURLWithoutNameConflict;
 - (NSString *)escapedStringFromURL;
+
 @end
 
 @protocol WDBubbleDelegate

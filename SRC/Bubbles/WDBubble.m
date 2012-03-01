@@ -73,7 +73,7 @@
 #endif
 
 - (NSURL *)URLWithRemoteChangedToLocal {
-    NSString *currentFileName = [[self URLByDeletingPathExtension].lastPathComponent stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    NSString *currentFileName = [[self URLByDeletingPathExtension].lastPathComponent stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
     NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@.%@", 
                                             [NSURL iOSDocumentsDirectoryURL], 
@@ -99,12 +99,12 @@
 // DW: a good convert from remot URL to local one
 // or good convert from local to new local
 - (NSURL *)URLWithoutNameConflict {
-    NSString *originalFileName = [[self URLByDeletingPathExtension].lastPathComponent stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    NSString *originalFileName = [[self URLByDeletingPathExtension].lastPathComponent stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *currentFileName = originalFileName;
     NSInteger currentFileNamePostfix = 2;
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@.%@", 
-                                            [NSURL iOSDocumentsDirectoryURL], 
+    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@.%@", 
+                                            [NSURL iOSDocumentsDirectoryURL].absoluteString, 
                                             currentFileName, 
                                             [self pathExtension]]];
     while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
@@ -131,61 +131,10 @@
     return storeURL;
 }
 
-// Wu:Added on 2-27 
-// Wu:To solve the problem of NSURL with unicode character
-
-- (NSURL *)UnicodeURLWithoutNameConflict {
-    NSString *eacapedString = [[self URLByDeletingPathExtension] escapedStringFromURL];
-    NSString *originalFileName = [eacapedString stringByReplacingOccurrencesOfString:@" " 
-                                                                          withString:@"%20"];
-    NSString *currentFileName = originalFileName;
-    NSInteger currentFileNamePostfix = 2;
-    
-#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@.%@", 
-                                            [NSURL iOSDocumentsDirectoryURL], 
-                                            currentFileName, 
-                                            [self pathExtension]]];
-    while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
-        currentFileName = [NSString stringWithFormat:@"%@%%20%i", currentFileName, currentFileNamePostfix++];
-        storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@.%@", currentFileName, [self pathExtension]] 
-                          relativeToURL:[self URLByDeletingLastPathComponent]];
-    }
-    
-#elif TARGET_OS_MAC
-    NSURL *defaultURL = [self URLByDeletingLastPathComponent];
-    NSURL *storeURL = [NSURL URLWithString:
-                       [NSString stringWithFormat:@"%@%@.%@", 
-                        [defaultURL absoluteString], 
-                        currentFileName, 
-                        [[self pathExtension] lowercaseString]]];
-    while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
-        currentFileName = [NSString stringWithFormat:@"%@%%20%i", originalFileName, currentFileNamePostfix++];
-        storeURL = [NSURL URLWithString:
-                    [NSString stringWithFormat:@"%@%@.%@", 
-                     [defaultURL absoluteString], 
-                     currentFileName, 
-                     [[self pathExtension] lowercaseString]]];
-    }
-#endif
-    return storeURL;
-}
-
-- (NSString *)escapedStringFromURL
-{
-    // Wu:In case the url contains unicode string
-    NSString *lastComponents = [NSString stringWithString:[self lastPathComponent]];
-    NSString *unescapedString = [lastComponents stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *escapedString = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)unescapedString, NULL, NULL, kCFStringEncodingUTF8);
-    return [escapedString autorelease];
-}
-
-// @end
-
-+ (NSURL *)URLByMovingToParentFolder:(NSURL *)oldURL {
+- (NSURL *)URLByMovingToParentFolder {
     NSURL *newURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@", 
-                                            [[oldURL URLByDeletingLastPathComponent] URLByDeletingLastPathComponent].path, 
-                                            oldURL.lastPathComponent]];
+                                            [[self URLByDeletingLastPathComponent] URLByDeletingLastPathComponent].path, 
+                                            self.lastPathComponent]];
     return newURL;
 }
 

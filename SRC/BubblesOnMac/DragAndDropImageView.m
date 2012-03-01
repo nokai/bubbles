@@ -170,7 +170,7 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
                                        dropDestination.path, 
                                        [escapedString stringByReplacingOccurrencesOfString:@" " 
                                                                                                    withString:@"%20"]]];
-        newURL = [newURL UnicodeURLWithoutNameConflict];
+        newURL = [newURL URLWithoutNameConflict];
         
     } else {
         newURL = [newURL URLWithoutNameConflict];
