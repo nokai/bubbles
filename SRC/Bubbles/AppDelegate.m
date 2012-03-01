@@ -14,7 +14,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window, bubble = _bubble;
-@synthesize viewController = _viewController, splitViewController = _splitViewController;
+@synthesize viewController = _viewController, splitViewController = _splitViewController, navigationController = _navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
@@ -30,7 +30,6 @@
     
     _bubble = [[WDBubble alloc] init];
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
         self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
         
         ViewController *detailViewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
@@ -50,19 +49,19 @@
         
         self.window.rootViewController = self.splitViewController;
         [self.window makeKeyAndVisible];
-    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-        self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {        
         // Override point for customization after application launch.
-        self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
+        //self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
         self.viewController.bubble = _bubble;
         self.viewController.launchFile = newURL;
         _bubble.delegate = self.viewController;
         
-        self.window.rootViewController = self.viewController;
-        [self.window makeKeyAndVisible];
+        // DW: we use navigation controller now
+        self.window.rootViewController = self.navigationController;
     }
     
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

@@ -14,10 +14,10 @@
 			<string>IBProxyObject</string>
 			<string>IBUIBarButtonItem</string>
 			<string>IBUIToolbar</string>
-			<string>IBUISegmentedControl</string>
+			<string>IBUINavigationBar</string>
 			<string>IBUINavigationItem</string>
 			<string>IBUITableView</string>
-			<string>IBUINavigationBar</string>
+			<string>IBUISegmentedControl</string>
 			<string>IBUIView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -383,11 +383,6 @@
 						<reference key="parent" ref="709842563"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">69</int>
-						<reference key="object" ref="5393805"/>
-						<reference key="parent" ref="991771097"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">73</int>
 						<reference key="object" ref="116190000"/>
 						<reference key="parent" ref="0"/>
@@ -452,6 +447,11 @@
 						<int key="objectID">93</int>
 						<reference key="object" ref="257621439"/>
 						<reference key="parent" ref="673179120"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">69</int>
+						<reference key="object" ref="5393805"/>
+						<reference key="parent" ref="991771097"/>
 					</object>
 				</array>
 			</object>
