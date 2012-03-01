@@ -87,4 +87,8 @@
 - (NSUInteger)bytesTransfered;
 - (void)terminateTransfer;
 
+// DW: determines identical bubble
+- (BOOL)isIdenticalService:(NSNetService *)netService;
+- (BOOL)isDifferentService:(NSNetService *)netService;
+
 @end

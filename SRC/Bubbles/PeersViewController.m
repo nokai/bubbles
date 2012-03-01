@@ -123,13 +123,15 @@
     // Configure the cell...
     NSNetService *t = [self.bubble.servicesFound objectAtIndex:indexPath.row];
     
-    if ([t.name isEqualToString:self.bubble.service.name]) {
+    // DW: services with same name AND platform are seen as one
+    if ([self.bubble isIdenticalService:t]) {
         cell.textLabel.text = [t.name stringByAppendingString:@" (local)"];
     } else {
         cell.textLabel.text = t.name;
     }
     
-    if ([t.name isEqualToString:self.viewController.selectedServiceName]) {
+    if (([t.name isEqualToString:self.viewController.selectedServiceName])
+        &&([self.bubble isDifferentService:t])) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -186,7 +188,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Configure the cell...
     NSNetService *t = [self.bubble.servicesFound objectAtIndex:indexPath.row];
-    if ([t.name isEqualToString:self.bubble.service.name]) {
+    if ([self.bubble isIdenticalService:t]) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         return;
     } 

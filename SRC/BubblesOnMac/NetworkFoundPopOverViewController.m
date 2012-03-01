@@ -104,8 +104,9 @@
 
 - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
+    // DW: we changed bubble selected name a little bit
     NSNetService *t = [_bubble.servicesFound objectAtIndex:row];
-    if (t.name == self.selectedServiceName && tableColumn == [[_serviceFoundTableView tableColumns] objectAtIndex:kClickCellColumn]) {
+    if (t.name == self.selectedServiceName && [_bubble isDifferentService:t] && tableColumn == [[_serviceFoundTableView tableColumns] objectAtIndex:kClickCellColumn]) {
         NSButtonCell *buttonCell = (NSButtonCell *)cell;
         [buttonCell setImagePosition:NSImageOverlaps];
     } else if (tableColumn == [[_serviceFoundTableView tableColumns]objectAtIndex:kClickCellColumn] && (self.selectedServiceName == NULL || self.selectedServiceName != t.name)){
@@ -118,7 +119,7 @@
                                                  [WDBubble isLockedNetService:t]]]];
         [[imageCell controlView] setNeedsDisplay:YES];
     } else if (tableColumn == [[_serviceFoundTableView tableColumns] objectAtIndex:kTextFieldCell]) {
-        if ([t.name isEqualToString:_bubble.service.name]) {
+        if ([_bubble isIdenticalService:t]) {
             NSTextFieldCell *textCell = (NSTextFieldCell *)cell;
             NSString *string = [NSString stringWithFormat:@"%@ (local)",t.name];
             [textCell setStringValue:string];

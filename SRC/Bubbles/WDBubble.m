@@ -214,7 +214,7 @@
 
 - (void)connectToServiceNamed:(NSString *)name {
     for (NSNetService *s in self.servicesFound) {
-        if ([s.name isEqualToString:name]) {
+        if ([s.name isEqualToString:name]&&[self isDifferentService:s]) {
             if (s.addresses.count > 0) {
                 [self connectService:s];
             } else {
@@ -457,6 +457,14 @@
     }
 }
 
+- (BOOL)isIdenticalService:(NSNetService *)netService {
+    return [self.service.name isEqualToString:netService.name]&&[[WDBubble platformForNetService:self.service] isEqualToString:[WDBubble platformForNetService:netService]];
+}
+
+- (BOOL)isDifferentService:(NSNetService *)netService {
+    return ![self isIdenticalService:netService];
+}
+
 #pragma mark - NSNetServiceDelegate
 
 // Publish
@@ -619,7 +627,6 @@
         
         // DW: file receiving end
         if ([_currentMessage.state isEqualToString:kWDMessageStateReceiving]) {
-            DLog(@"WDBubble onSocketDidDisconnect file transfer receiver ended with state %@, %@ received", _currentMessage.state, [NSNumber numberWithInt:_streamBytesWrote]);
             
             // DW: check if it's the user terminates the transfering
             if (_streamBytesWrote < _currentMessage.fileSize) {

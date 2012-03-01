@@ -180,10 +180,15 @@
     
     DLog(@"kbh %f, %f", kbSize.width, kbSize.height);
     UIEdgeInsets contentInsets;
-    if (self.interfaceOrientation == UIInterfaceOrientationPortrait) {
-        contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
-    } else {
-        contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.width, 0.0);
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+        if (self.interfaceOrientation == UIInterfaceOrientationPortrait) {
+            contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+        } else {
+            contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.width, 0.0);
+        }
+    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        // DW: actually iPad is much clever than iPhone, we can do nothing here
+        contentInsets = UIEdgeInsetsZero;
     }
     
     _textView.contentInset = contentInsets;

@@ -1036,9 +1036,7 @@
         }
         
         for (NSNetService *s in self.bubble.servicesFound) {
-            if ([s.name isEqualToString:self.bubble.service.name]) {
-                continue;
-            } else {
+            if ([self.bubble isDifferentService:s]) {
                 _selectedServiceName = [s.name retain];
             }
         }

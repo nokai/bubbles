@@ -31,10 +31,13 @@
 - (void)servicesUpdated:(NSNotification *)notification {
   
     if (_bubble.servicesFound.count > 1) {
+        // DW: if we already have one service selected, we do not update the selection now
+        if (_selectedServiceName) {
+            return;
+        }
+        
         for (NSNetService *s in _bubble.servicesFound) {
-            if ([s.name isEqualToString:_bubble.service.name]) {
-                continue;
-            } else {
+            if ([_bubble isDifferentService:s]) {
                 _selectedServiceName = [s.name retain];
             }
         }
@@ -44,6 +47,7 @@
         }
         _selectedServiceName = nil;
     }
+    
     if (_networkPopOverController != nil) {
         _networkPopOverController.selectedServiceName = _selectedServiceName;
         [_networkPopOverController reloadNetwork];
