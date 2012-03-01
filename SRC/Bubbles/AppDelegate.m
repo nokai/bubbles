@@ -14,7 +14,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window, bubble = _bubble;
-@synthesize viewController = _viewController, splitViewController = _splitViewController, navigationController = _navigationController;
+@synthesize peersViewController = _peersViewController, viewController = _viewController, splitViewController = _splitViewController, navigationController = _navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
