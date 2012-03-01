@@ -52,16 +52,18 @@
                                                  name:kWDBubbleNotificationServiceUpdated
                                                object:nil];
     
-    // DW: if it's iPad, we do bubble here
-    // DW: use password or not
-    BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
-    if (usePassword) {
-        [self.viewController lock];
-    } else {
-        [self.bubble publishServiceWithPassword:@""];
-        [self.bubble browseServices];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        // DW: if it's iPad, we do bubble here
+        // DW: use password or not
+        BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
+        if (usePassword) {
+            [self.viewController lock];
+        } else {
+            [self.bubble publishServiceWithPassword:@""];
+            [self.bubble browseServices];
+        }
+        [self.viewController refreshLockStatus];
     }
-    [self.viewController refreshLockStatus];
 }
 
 - (void)viewDidUnload
