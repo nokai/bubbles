@@ -49,7 +49,7 @@
 {
     NSButtonCell *clickCell = [[[NSButtonCell alloc]init]autorelease];
     [clickCell setBordered:NO];
-    [clickCell setImage:[NSImage imageNamed:@"NSSmartBadgeTemplate"]];
+    [clickCell setImage:[NSImage imageNamed:@"NSBonjour"]];
     [clickCell setImageScaling:NSImageScaleProportionallyDown];
     [clickCell setAction:nil];
     [clickCell setTitle:@""];

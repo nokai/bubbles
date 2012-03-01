@@ -72,7 +72,7 @@
 											<string key="NSFrameSize">{380, 190}</string>
 											<reference key="NSSuperview" ref="852988197"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
+											<reference key="NSNextKeyView" ref="363137093"/>
 											<string key="NSReuseIdentifierKey">_NS:404</string>
 										</object>
 									</object>
@@ -124,7 +124,7 @@
 							<string key="NSFrame">{{-1, -1}, {382, 191}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="363137093"/>
+							<reference key="NSNextKeyView" ref="852988197"/>
 							<string key="NSReuseIdentifierKey">_NS:400</string>
 							<int key="NSsFlags">133698</int>
 							<reference key="NSVScroller" ref="363137093"/>
@@ -153,7 +153,6 @@
 						<string key="NSFrame">{{1861, 65}, {49, 32}}</string>
 						<reference key="NSSuperview" ref="951743410"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:687</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="185755897">
@@ -299,11 +298,11 @@
 							<int key="NSButtonFlags2">129</int>
 							<object class="NSCustomResource" key="NSNormalImage">
 								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">NSIChatTheaterTemplate</string>
+								<string key="NSResourceName">NSBonjour</string>
 							</object>
 							<object class="NSCustomResource" key="NSAlternateImage">
 								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">NSActionTemplate</string>
+								<string key="NSResourceName">NSAdvanced</string>
 							</object>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -397,7 +396,6 @@
 				<string key="NSFrameSize">{32, 32}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:687</string>
 				<bool key="NSEnabled">YES</bool>
 				<object class="NSButtonCell" key="NSCell" id="721645652">
@@ -425,7 +423,6 @@
 				<string key="NSFrameSize">{163, 96}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:1192</string>
 				<string key="NSClassName">NSPageControl</string>
 			</object>
@@ -882,17 +879,17 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>NSActionTemplate</string>
+				<string>NSAdvanced</string>
+				<string>NSBonjour</string>
 				<string>NSGoRightTemplate</string>
-				<string>NSIChatTheaterTemplate</string>
 				<string>NSSmartBadgeTemplate</string>
 				<string>_mac_bubbles_0</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{15, 15}</string>
+				<string>{32, 32}</string>
+				<string>{32, 32}</string>
 				<string>{9, 9}</string>
-				<string>{15, 13}</string>
 				<string>{15, 15}</string>
 				<string>{50, 50}</string>
 			</object>
