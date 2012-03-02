@@ -18,6 +18,17 @@
 
 #pragma mark - Private Methods
 
+
+- (void)firstUse
+{
+    NSInteger firstUser = [[NSUserDefaults standardUserDefaults] integerForKey:kFirstUseKey];
+    if (firstUser == 0) {
+        _featureController = [[FeatureWindowController alloc]init];
+        [_featureController showWindow:self];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:++firstUser forKey:kFirstUseKey];
+}
 // Wu: NO for can not send, YES for will send
 - (BOOL)sendToSelectedServiceOfMessage:(WDMessage *)message {
     if (!_selectedServiceName || [_selectedServiceName isEqualToString:@""]) {
@@ -237,15 +248,51 @@
     
     _sendButton.stringValue = kButtonTitleSendText;
     
+    [self firstUse];
+    
+    //_menuItemCheck = FALSE;
+    
    // [_addFileItem setEnabled:NO];
 }
 
 #pragma mark - IBActions
 
-- (IBAction)togglePassword:(id)sender
+- (IBAction)showPassworFromShortCut:(id)sender
 {
-    //NSButton *button = (NSButton *)sender;
-    DLog(@"wokao");
+    _lockButton.state = !_lockButton.state;
+    if (  _lockButton.state) {
+        // DW: user turned password on.
+        if (_passwordController == nil) {
+            _passwordController = [[PasswordMacViewController alloc]init];
+            _passwordController.delegate = self;
+        }
+        
+        // Wu: show as a sheet window to force users to set usable password
+        [NSApp beginSheet:[_passwordController window] modalForWindow:[NSApplication sharedApplication].keyWindow  modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+    } else {
+        NSArray* toolbarVisibleItems = [_toolBar visibleItems];
+        NSEnumerator* enumerator = [toolbarVisibleItems objectEnumerator];
+        NSToolbarItem* anItem = nil;
+        BOOL stillLooking = YES;
+        while ( stillLooking && ( anItem = [enumerator nextObject] ) )
+        {
+            if ( [[anItem itemIdentifier] isEqualToString:@"PasswordIdentifier"] )
+            {
+                [anItem setImage:[NSImage imageNamed:@"NSLockUnlockedTemplate"]];
+                
+                stillLooking = NO;
+            }
+        }
+        
+        _lockButton.state = NSOffState;
+        [_bubble stopService];
+        [_bubble publishServiceWithPassword:@""];
+        [_bubble browseServices];
+    }
+}
+
+- (IBAction)showPassword:(id)sender
+{
     if (_lockButton.state == NSOnState) {
         // DW: user turned password on.
         if (_passwordController == nil) {
@@ -281,6 +328,7 @@
 
 - (IBAction)showPreferencePanel:(id)sender
 {
+    DLog(@"kjshfkjdh");
     if (_preferenceController == nil) {
         _preferenceController = [[PreferenceViewContoller alloc]init];
     }
@@ -371,7 +419,7 @@
 							  completionHandler:selectFileHandler];
 }
 
-- (IBAction)openFeatureWindow:(id)sender
+- (IBAction)showFeature:(id)sender
 {
     if (_featureController == nil) {
         _featureController = [[FeatureWindowController alloc]init];
@@ -379,12 +427,14 @@
     [_featureController showWindow:self];
 }
 
-- (IBAction)openABoutWindow:(id)sender
+- (IBAction)showAbout:(id)sender
 {
-    if (_aboutController == nil)
+    if (_aboutController == nil) {
         _aboutController = [[AboutWindowController alloc]init];
+    }
     [_aboutController showWindow:self];
 }
+
 
 #pragma mark - WDBubbleDelegate
 
