@@ -290,11 +290,10 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsShouldShowHelp]) {
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
             _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil];
-            [self.view addSubview:_helpViewController.view];
         } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil];
-            [[UIApplication sharedApplication].keyWindow addSubview:_helpViewController.view];
         }
+        [[UIApplication sharedApplication].keyWindow addSubview:_helpViewController.view];
     }
     
     // DW: sound
