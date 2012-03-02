@@ -318,6 +318,27 @@
     }
 }
 
+// DW: for a selected service info with name and type
++ (NSString *)bubbleNameWithServiceName:(NSString *)serviceName andType:(NSString *)serviceType {
+    return [NSString stringWithFormat:@"%@ %@", serviceType, serviceName];
+}
+
+
++ (NSString *)serviceNameInBubbleName:(NSString *)bubbleName {
+    NSRange rangeOfSubstring = [bubbleName rangeOfString:[WDBubble serviceTypeInBubbleName:bubbleName]];
+
+    if(rangeOfSubstring.location == NSNotFound) {
+        // DW: a bubble name without type, not a good one, return @""
+        return @"";
+    }
+    
+    return [bubbleName substringFromIndex:rangeOfSubstring.location+rangeOfSubstring.length];
+}
+
++ (NSString *)serviceTypeInBubbleName:(NSString *)bubbleName {
+    return [[bubbleName componentsSeparatedByString:@" "] objectAtIndex:0];
+}
+
 - (id)init {
     if (self = [super init]) {
         DLog(@"WDBubble initSocket");
