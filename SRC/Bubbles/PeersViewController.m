@@ -132,8 +132,9 @@
         cell.textLabel.text = t.name;
     }
     
-    if (([t.name isEqualToString:self.viewController.selectedServiceName])
-        &&([self.bubble isDifferentService:t])) {
+    if ([t.name isEqualToString:[WDBubble serviceNameInBubbleName:self.viewController.selectedServiceName]]
+        &&[t.type isEqualToString:[WDBubble serviceTypeInBubbleName:self.viewController.selectedServiceName]]) {
+        //&&([self.bubble isDifferentService:t])) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -194,7 +195,8 @@
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         return;
     } 
-    self.viewController.selectedServiceName = t.name;
+    //self.viewController.selectedServiceName = t.name;
+    self.viewController.selectedServiceName = [WDBubble bubbleNameWithServiceName:t.name andType:t.type];
     [tableView reloadData];
 }
 

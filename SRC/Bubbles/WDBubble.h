@@ -75,6 +75,11 @@
 + (NSString *)platformForNetService:(NSNetService *)netService;
 + (BOOL)isLockedNetService:(NSNetService *)netService;
 
+// DW: for a selected service info with name and type
++ (NSString *)bubbleNameWithServiceName:(NSString *)serviceName andType:(NSString *)serviceType;
++ (NSString *)serviceNameInBubbleName:(NSString *)bubbleName;
++ (NSString *)serviceTypeInBubbleName:(NSString *)bubbleName;
+
 - (void)publishServiceWithPassword:(NSString *)pwd;
 - (void)browseServices;
 - (void)stopService;
