@@ -265,8 +265,6 @@
                                        cancelButtonTitle:@"Cancel" 
                                        otherButtonTitles:@"OK", nil];
     av.alertViewStyle = UIAlertViewStyleSecureTextInput;
-    [av textFieldAtIndex:0].keyboardType = UIKeyboardTypeNumberPad;
-    [av textFieldAtIndex:0].delegate = self;
     [av show];
     [av release];
 }
@@ -1008,23 +1006,6 @@
     [popoverController release];
 }
 
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    /*  limit to only numeric characters  */
-    NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
-    for (int i = 0; i < [string length]; i++) {
-        unichar c = [string characterAtIndex:i];
-        if (![myCharSet characterIsMember:c]) {
-            return NO;
-        }
-    }
-    
-    /*  limit the users input to only 9 characters  */
-    NSUInteger newLength = [textField.text length] + [string length] - range.length;
-    return (newLength > 9) ? NO : YES;
-}
-
 #pragma mark - Split view
 
 - (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
@@ -1056,8 +1037,7 @@
         
         for (NSNetService *s in self.bubble.servicesFound) {
             if ([self.bubble isDifferentService:s]) {
-                //_selectedServiceName = [s.name retain];
-                _selectedServiceName = [WDBubble bubbleNameWithServiceName:s.name andType:s.type];
+                _selectedServiceName = [s.name retain];
             }
         }
     } else {
