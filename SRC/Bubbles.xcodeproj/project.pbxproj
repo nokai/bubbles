@@ -1066,8 +1066,8 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = BubblesOnMac/BubblesOnMac.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Hongming Zhu";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "3rd Party Mac Developer Application: Hongming Zhu";
+				CODE_SIGN_IDENTITY = "Mac Developer: Hongming Zhu (4RUZ3YUMFH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Mac Developer: Hongming Zhu (4RUZ3YUMFH)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
@@ -1080,8 +1080,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Deliver;
-				PROVISIONING_PROFILE = "84D1615A-1F5E-4D16-8B35-721A747EF7DB";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "84D1615A-1F5E-4D16-8B35-721A747EF7DB";
+				PROVISIONING_PROFILE = "0BAFE3F7-BDC5-4E73-86A1-54103569CA12";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0BAFE3F7-BDC5-4E73-86A1-54103569CA12";
 				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1093,8 +1093,8 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = BubblesOnMac/BubblesOnMac.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Hongming Zhu";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "3rd Party Mac Developer Application: Hongming Zhu";
+				CODE_SIGN_IDENTITY = "Mac Developer: Hongming Zhu (4RUZ3YUMFH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Mac Developer: Hongming Zhu (4RUZ3YUMFH)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1107,8 +1107,8 @@
 				INFOPLIST_FILE = "BubblesOnMac/BubblesOnMac-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Deliver;
-				PROVISIONING_PROFILE = "84D1615A-1F5E-4D16-8B35-721A747EF7DB";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "84D1615A-1F5E-4D16-8B35-721A747EF7DB";
+				PROVISIONING_PROFILE = "0BAFE3F7-BDC5-4E73-86A1-54103569CA12";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0BAFE3F7-BDC5-4E73-86A1-54103569CA12";
 				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};

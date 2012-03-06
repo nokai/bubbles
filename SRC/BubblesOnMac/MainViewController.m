@@ -154,7 +154,7 @@
         _sound = [[WDSound alloc] init];
         
         // DW: we specify user's home directory by NSHomeDirectory()
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"file://localhost%@/Documents/Deliver/", NSHomeDirectory()]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"file://localhost%@/Downloads", NSHomeDirectory()]];
         NSFileManager *fileManager= [NSFileManager defaultManager]; 
         if(![fileManager fileExistsAtPath:url.path isDirectory:nil])
             if(![fileManager createDirectoryAtPath:url.path withIntermediateDirectories:YES attributes:nil error:NULL])
@@ -394,6 +394,7 @@
 	[_selectFileOpenPanel setPrompt:@"Browse"];
 	[_selectFileOpenPanel setNameFieldLabel:@"Choose a file:"];
     [_selectFileOpenPanel setCanChooseDirectories:NO];
+    [_selectFileOpenPanel setCanChooseFiles:YES];
 
     void (^selectFileHandler)(NSInteger) = ^( NSInteger result )
 	{

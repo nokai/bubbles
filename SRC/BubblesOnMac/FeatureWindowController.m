@@ -72,7 +72,7 @@
     
     [[_leftButton cell] setHighlightsBy:NSContentsCellMask];
     [[_rightButton cell] setHighlightsBy:NSContentsCellMask];
-    [_scrollView addSubview:_pageControl];
+    [_scrollView  addSubview:_pageControl];
     [_scrollView addSubview:_rightButton];
     [_scrollView addSubview:_leftButton];
     [self setButtonStatus];

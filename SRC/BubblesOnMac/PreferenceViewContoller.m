@@ -103,4 +103,10 @@
 	return [NSArray arrayWithObjects:kGeneralIdentifier,nil];
 }
 
+- (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
+{
+    return YES;
+}
+
+
 @end
