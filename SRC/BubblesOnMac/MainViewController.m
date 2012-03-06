@@ -328,7 +328,6 @@
 
 - (IBAction)showPreferencePanel:(id)sender
 {
-    DLog(@"kjshfkjdh");
     if (_preferenceController == nil) {
         _preferenceController = [[PreferenceViewContoller alloc]init];
     }
@@ -389,15 +388,18 @@
         return ;
     }
     
-    _selectFileOpenPanel = [NSOpenPanel openPanel];
+    _selectFileOpenPanel = [[NSOpenPanel openPanel] retain];
     
     [_selectFileOpenPanel setTitle:@"Choose File"];
 	[_selectFileOpenPanel setPrompt:@"Browse"];
 	[_selectFileOpenPanel setNameFieldLabel:@"Choose a file:"];
+    [_selectFileOpenPanel setCanChooseDirectories:NO];
 
     void (^selectFileHandler)(NSInteger) = ^( NSInteger result )
 	{
 		NSURL *selectedFileURL = [_selectFileOpenPanel URL];
+        
+        DLog(@"selectedFileUrl is %@",selectedFileURL);
 		
 		if(selectedFileURL)
 		{
@@ -490,7 +492,6 @@
 #pragma mark - PasswordMacViewControllerDelegate
 
 - (void)didCancel {
-    
     NSArray* toolbarVisibleItems = [_toolBar visibleItems];
     NSEnumerator* enumerator = [toolbarVisibleItems objectEnumerator];
     NSToolbarItem* anItem = nil;
@@ -511,7 +512,6 @@
 }
 
 - (void)didInputPassword:(NSString *)pwd {
-    
     NSArray* toolbarVisibleItems = [_toolBar visibleItems];
     NSEnumerator* enumerator = [toolbarVisibleItems objectEnumerator];
     NSToolbarItem* anItem = nil;
@@ -529,6 +529,7 @@
     [_bubble stopService];
     [_bubble publishServiceWithPassword:pwd];
     [_bubble browseServices];
+    [_networkPopOverController reloadNetwork];
 }
 
 #pragma mark - DragAndDropImageViewDelegate
