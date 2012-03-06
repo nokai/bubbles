@@ -78,6 +78,7 @@
 
 - (void)awakeFromNib
 {
+    
     // Wu:Set the customize the cell for the  only one column
     _imageAndTextCell = [[ImageAndTextCell alloc] init];
     _imageAndTextCell.delegate = self;
@@ -90,7 +91,6 @@
     [previewCell setImageScaling:NSImageScaleProportionallyDown];
     [previewCell setAction:@selector(previewSelectedRow)];
     [previewCell setTitle:@""];
-   // [previewCell highlightsBy:NSContentsCellMask];
     previewCell.highlightsBy = NSContentsCellMask;
     NSTableColumn *columnThree = [[_fileHistoryTableView tableColumns] objectAtIndex:kPreviewColumn];
     [columnThree setDataCell:previewCell];
@@ -106,6 +106,7 @@
     
     // Wu:Set the tableview can accept being dragged from
     [_fileHistoryTableView registerForDraggedTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType,NSFilenamesPboardType,NSTIFFPboardType,nil]];
+    
 	// Wu:Tell NSTableView we want to drag and drop accross applications the default is YES means can be only interact with current application
 	[_fileHistoryTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }

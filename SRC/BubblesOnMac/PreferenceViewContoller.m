@@ -8,6 +8,7 @@
 
 #import "PreferenceViewContoller.h"
 
+
 #define kGeneralIdentifier @"GeneralIdentifier"
 
 @implementation PreferenceViewContoller
@@ -68,7 +69,7 @@
         
         void (^selectFileDirectoryHandler)(NSInteger) = ^( NSInteger result )
         {
-            if (result == 0) {
+            if (result == NSCancelButton) {
                 // Means Cancel 
                 [_savePathButton selectItemAtIndex:0]; 
             } else {
@@ -84,13 +85,14 @@
                     [[_savePathButton itemAtIndex:0] setImage:folderIcon];
                     [_savePathButton selectItemAtIndex:0];
                     [_savePathButton removeItemAtIndex:1];
+                    [_selectDirectoryOpenPanel orderOut:nil];
                 }
-
             }
+            [NSApp stopModal];
         };
         
-        [_selectDirectoryOpenPanel beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow 
-                                     completionHandler:selectFileDirectoryHandler];
+        [_selectDirectoryOpenPanel beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow
+                                    completionHandler:selectFileDirectoryHandler];
     }
 }
 
@@ -100,7 +102,5 @@
 {
 	return [NSArray arrayWithObjects:kGeneralIdentifier,nil];
 }
-
-
 
 @end

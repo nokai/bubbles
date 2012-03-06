@@ -41,7 +41,6 @@
 
 - (void)servicesUpdated:(NSNotification *)notification {
   
-    DLog(@"bubbles count is %d",_bubble.servicesFound.count);
     if (_bubble.servicesFound.count > 1) {
         // DW: if we already have one service selected, we do not update the selection now
         if (_selectedServiceName) {
@@ -394,10 +393,13 @@
     [_selectFileOpenPanel setTitle:@"Choose File"];
 	[_selectFileOpenPanel setPrompt:@"Browse"];
 	[_selectFileOpenPanel setNameFieldLabel:@"Choose a file:"];
+    [_selectFileOpenPanel setCanChooseDirectories:NO];
 
     void (^selectFileHandler)(NSInteger) = ^( NSInteger result )
 	{
 		NSURL *selectedFileURL = [_selectFileOpenPanel URL];
+        
+        DLog(@"selectedFileUrl is %@",selectedFileURL);
 		
 		if(selectedFileURL)
 		{
