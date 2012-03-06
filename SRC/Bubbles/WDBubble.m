@@ -750,8 +750,7 @@
             }
             break;
         } case NSStreamEventErrorOccurred: {
-            NSError *theError = [theStream streamError];
-            DLog(@"WDBubble steam %@ NSStreamEventErrorOccurred %@", theStream, theError);
+            DLog(@"WDBubble steam %@ NSStreamEventErrorOccurred %@", theStream, [theStream streamError]);
             [theStream close];
             [theStream release];
             break;

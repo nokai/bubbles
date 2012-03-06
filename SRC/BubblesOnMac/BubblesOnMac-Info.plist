@@ -15,7 +15,7 @@
 	<key>CFBundleIconFile</key>
 	<string>Icon-Mac.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.bmwchina.a4a.dev.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>com.tjac.delivermac</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
