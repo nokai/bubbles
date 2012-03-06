@@ -22,9 +22,9 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    //NSURL *url = [NSURL fileURLWithPath:@"/Library/Documentation/AirPort Acknowledgements.rtf"];
-    //_array = [[NSArray arrayWithObject:url] copy];
-    // Insert code here to initialize your application
+    NSNumber *firstUse = [NSNumber numberWithInt:0];
+    NSDictionary *registrationDefaults = [NSDictionary dictionaryWithObject:firstUse forKey:kFirstUseKey];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:registrationDefaults];
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {

@@ -10,6 +10,8 @@
 #import "WDBubble.h"
 #import <Quartz/Quartz.h>
 
+#define kFirstUseKey @"kFirstUseKey"
+
 @interface AppDelegate : NSObject <NSApplicationDelegate,QLPreviewPanelDataSource,QLPreviewPanelDelegate>
 {
     QLPreviewPanel *_panel;

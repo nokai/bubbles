@@ -24,9 +24,9 @@
 
 - (id)init
 {
-    self = [super initWithWindowNibName:@"FeatureWindowController"];
-    if (self) {
-        _currentPage = 0;
+    
+    if (![super initWithWindowNibName:@"FeatureWindowController"]) {
+        return nil;
     }
     return self;
 }
@@ -45,6 +45,12 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
+    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+}
+
+- (void)awakeFromNib
+{
+     _currentPage = 0;
     [_pageOne setImage:[NSImage imageNamed:@"1"]];
     [_pageTwo setImage:[NSImage imageNamed:@"2"]];
     [_pageThree setImage:[NSImage imageNamed:@"3"]];
@@ -70,8 +76,7 @@
     [_scrollView addSubview:_rightButton];
     [_scrollView addSubview:_leftButton];
     [self setButtonStatus];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+
 }
 
 - (void)dealloc
@@ -88,7 +93,6 @@
     [_pageControl setCurrentPage:++_currentPage];
     [DuxScrollViewAnimation animatedScrollToPoint:NSMakePoint(kViewWidth * _currentPage, 0) inScrollView:_scrollView];
     [self setButtonStatus];
-    //[[_scrollView documentView] scrollPoint:NSMakePoint(kViewWidth * _currentPage, 0)];
 }
 
 - (IBAction)goPreviousPage:(id)sender

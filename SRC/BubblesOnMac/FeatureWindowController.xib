@@ -43,7 +43,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSWindowTemplate" id="1005">
-				<int key="NSWindowStyleMask">15</int>
+				<int key="NSWindowStyleMask">7</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{589, 351}, {640, 515}}</string>
 				<int key="NSWTFlags">544735232</int>
@@ -73,14 +73,12 @@
 											<int key="NSvFlags">274</int>
 											<string key="NSFrame">{{-1, -0.5}, {641, 517}}</string>
 											<reference key="NSSuperview" ref="55774184"/>
-											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
+											<reference key="NSNextKeyView" ref="188108751"/>
 											<string key="NSReuseIdentifierKey">_NS:404</string>
 										</object>
 									</object>
 									<string key="NSFrame">{{1, 1}, {639, 515}}</string>
 									<reference key="NSSuperview" ref="812201376"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="772450114"/>
 									<string key="NSReuseIdentifierKey">_NS:402</string>
 									<reference key="NSDocView" ref="772450114"/>
@@ -100,7 +98,6 @@
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{-100, -100}, {15, 522}}</string>
 									<reference key="NSSuperview" ref="812201376"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="378093043"/>
 									<string key="NSReuseIdentifierKey">_NS:408</string>
 									<bool key="NSEnabled">YES</bool>
@@ -114,7 +111,6 @@
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{-100, -100}, {626, 15}}</string>
 									<reference key="NSSuperview" ref="812201376"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="55774184"/>
 									<string key="NSReuseIdentifierKey">_NS:412</string>
 									<bool key="NSEnabled">YES</bool>
@@ -126,8 +122,7 @@
 							</object>
 							<string key="NSFrame">{{0, -1}, {641, 517}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="188108751"/>
+							<reference key="NSNextKeyView" ref="55774184"/>
 							<string key="NSReuseIdentifierKey">_NS:400</string>
 							<int key="NSsFlags">133314</int>
 							<reference key="NSVScroller" ref="188108751"/>
@@ -137,7 +132,6 @@
 					</object>
 					<string key="NSFrameSize">{640, 515}</string>
 					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="812201376"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
@@ -167,7 +161,6 @@
 						</object>
 						<string key="NSFrame">{{3194, 0}, {641, 517}}</string>
 						<reference key="NSSuperview" ref="951743410"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:2141</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSImageCell" key="NSCell" id="806140092">
@@ -375,8 +368,6 @@
 				<int key="NSvFlags">256</int>
 				<string key="NSFrameSize">{30, 32}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:687</string>
 				<bool key="NSEnabled">YES</bool>
 				<object class="NSButtonCell" key="NSCell" id="721645652">
@@ -403,7 +394,6 @@
 				<int key="NSvFlags">256</int>
 				<string key="NSFrameSize">{169, 96}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:1192</string>
 				<string key="NSClassName">NSPageControl</string>
 			</object>
@@ -412,8 +402,6 @@
 				<int key="NSvFlags">256</int>
 				<string key="NSFrameSize">{30, 32}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:687</string>
 				<bool key="NSEnabled">YES</bool>
 				<object class="NSButtonCell" key="NSCell" id="837369073">
@@ -542,6 +530,14 @@
 						<reference key="destination" ref="751669530"/>
 					</object>
 					<int key="connectionID">138</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">window</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1005"/>
+					</object>
+					<int key="connectionID">154</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -851,124 +847,9 @@
 				<reference key="dict.values" ref="1002"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">153</int>
+			<int key="maxID">154</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-				<object class="IBPartialClassDescription">
-					<string key="className">FeatureWindowController</string>
-					<string key="superclassName">NSWindowController</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_customView</string>
-							<string>_leftButton</string>
-							<string>_pageControl</string>
-							<string>_pageFive</string>
-							<string>_pageFour</string>
-							<string>_pageOne</string>
-							<string>_pageSix</string>
-							<string>_pageThree</string>
-							<string>_pageTwo</string>
-							<string>_rightButton</string>
-							<string>_scrollView</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSView</string>
-							<string>NSButton</string>
-							<string>NSPageControl</string>
-							<string>NSImageView</string>
-							<string>NSImageView</string>
-							<string>NSImageView</string>
-							<string>NSImageView</string>
-							<string>NSImageView</string>
-							<string>NSImageView</string>
-							<string>NSButton</string>
-							<string>NSScrollView</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_customView</string>
-							<string>_leftButton</string>
-							<string>_pageControl</string>
-							<string>_pageFive</string>
-							<string>_pageFour</string>
-							<string>_pageOne</string>
-							<string>_pageSix</string>
-							<string>_pageThree</string>
-							<string>_pageTwo</string>
-							<string>_rightButton</string>
-							<string>_scrollView</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_customView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_leftButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_pageControl</string>
-								<string key="candidateClassName">NSPageControl</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_pageFive</string>
-								<string key="candidateClassName">NSImageView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_pageFour</string>
-								<string key="candidateClassName">NSImageView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_pageOne</string>
-								<string key="candidateClassName">NSImageView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_pageSix</string>
-								<string key="candidateClassName">NSImageView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_pageThree</string>
-								<string key="candidateClassName">NSImageView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_pageTwo</string>
-								<string key="candidateClassName">NSImageView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_rightButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_scrollView</string>
-								<string key="candidateClassName">NSScrollView</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/FeatureWindowController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSPageControl</string>
-					<string key="superclassName">NSControl</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NSPageControl.h</string>
-					</object>
-				</object>
-			</object>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">

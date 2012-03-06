@@ -13,8 +13,8 @@
 @implementation PreferenceViewContoller
 
 - (id)init {
-    if (self = [super initWithWindowNibName:@"PreferenceViewController"]) {
-        
+    if (![super initWithWindowNibName:@"PreferenceViewController"]) {
+        return nil;
     }
     return self;
 }

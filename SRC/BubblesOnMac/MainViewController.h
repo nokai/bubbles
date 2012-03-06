@@ -60,6 +60,8 @@
     
     // DW: sound
     WDSound *_sound;
+    
+    //BOOL _menuItemCheck;
 }
 
 // DW: for binding
@@ -69,11 +71,9 @@
 // DW: only public methods can drage IBActions now
 - (IBAction)send:(id)sender;
 - (IBAction)swapView:(id)sender;
-- (IBAction)togglePassword:(id)sender;
 - (IBAction)openHistoryPopOver:(id)sender;
 - (IBAction)selectFile:(id)sender;
 - (IBAction)openServiceFoundPopOver:(id)sender;
-- (IBAction)openFeatureWindow:(id)sender;
-- (IBAction)openABoutWindow:(id)sender;
+
 
 @end
