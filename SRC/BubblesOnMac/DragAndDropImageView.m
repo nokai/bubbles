@@ -72,15 +72,14 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     NSPasteboard *pasterboard = [sender draggingPasteboard];
     NSArray *allowedTypes = [NSArray arrayWithObjects:NSFilenamesPboardType,NSTIFFPboardType,nil];
     NSString *fileType = [pasterboard availableTypeFromArray:allowedTypes];
-    NSData *data = [pasterboard dataForType:fileType];
-    
-    NSURL *fileUrl = [NSURL URLFromPasteboard: [sender draggingPasteboard]];
-    
+    NSArray *urlArray = [pboard propertyListForType:NSFilenamesPboardType];
+    NSData *data = [pasterboard dataForType:fileType];    
     BOOL isFolder = FALSE;
+    NSURL *fileUrl = [NSURL URLFromPasteboard: [sender draggingPasteboard]];
     [[NSFileManager defaultManager] fileExistsAtPath:[fileUrl path] isDirectory: &isFolder];
     
-    if (data == nil || isFolder ) {
-        NSRunAlertPanel(@"Sorry", @"We do not support folders or application now", @"Ok", nil, nil);
+    if (data == nil || isFolder || ([urlArray count] > 1)) {
+        NSRunAlertPanel(@"Sorry", @"We do not support folders , application and multi files now. But we will improve this later !", @"Ok", nil, nil);
         return NO;
     } else {
         if ([fileType isEqualToString:NSPasteboardTypeTIFF]) {
