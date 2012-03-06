@@ -10,6 +10,13 @@
 	<true/>
 	<key>com.apple.security.assets.pictures.read-write</key>
 	<true/>
+<<<<<<< HEAD
+=======
+	<key>com.apple.security.files.downloads.read-write</key>
+	<true/>
+	<key>com.apple.security.files.user-selected.read-write</key>
+	<true/>
+>>>>>>> cc64ebb455fbac808d5138ea20d9b77681b5c8bf
 	<key>com.apple.security.network.client</key>
 	<true/>
 	<key>com.apple.security.network.server</key>
