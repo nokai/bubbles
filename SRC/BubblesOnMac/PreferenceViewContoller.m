@@ -62,7 +62,7 @@
 - (IBAction)choosePopUp:(NSPopUpButton *)sender
 {
     if ([sender indexOfItem:[sender selectedItem]] == 2) {
-        _selectDirectoryOpenPanel = [NSOpenPanel openPanel];
+        _selectDirectoryOpenPanel = [[NSOpenPanel openPanel] retain];
         [_selectDirectoryOpenPanel setCanChooseFiles:NO];
         [_selectDirectoryOpenPanel setCanChooseDirectories:YES];
         
@@ -88,6 +88,7 @@
 
             }
         };
+        
         [_selectDirectoryOpenPanel beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow 
                                      completionHandler:selectFileDirectoryHandler];
     }

@@ -41,6 +41,7 @@
 
 - (void)servicesUpdated:(NSNotification *)notification {
   
+    DLog(@"bubbles count is %d",_bubble.servicesFound.count);
     if (_bubble.servicesFound.count > 1) {
         // DW: if we already have one service selected, we do not update the selection now
         if (_selectedServiceName) {
@@ -328,7 +329,6 @@
 
 - (IBAction)showPreferencePanel:(id)sender
 {
-    DLog(@"kjshfkjdh");
     if (_preferenceController == nil) {
         _preferenceController = [[PreferenceViewContoller alloc]init];
     }
@@ -389,7 +389,7 @@
         return ;
     }
     
-    _selectFileOpenPanel = [NSOpenPanel openPanel];
+    _selectFileOpenPanel = [[NSOpenPanel openPanel] retain];
     
     [_selectFileOpenPanel setTitle:@"Choose File"];
 	[_selectFileOpenPanel setPrompt:@"Browse"];
@@ -490,7 +490,6 @@
 #pragma mark - PasswordMacViewControllerDelegate
 
 - (void)didCancel {
-    
     NSArray* toolbarVisibleItems = [_toolBar visibleItems];
     NSEnumerator* enumerator = [toolbarVisibleItems objectEnumerator];
     NSToolbarItem* anItem = nil;
@@ -511,7 +510,6 @@
 }
 
 - (void)didInputPassword:(NSString *)pwd {
-    
     NSArray* toolbarVisibleItems = [_toolBar visibleItems];
     NSEnumerator* enumerator = [toolbarVisibleItems objectEnumerator];
     NSToolbarItem* anItem = nil;
@@ -529,6 +527,7 @@
     [_bubble stopService];
     [_bubble publishServiceWithPassword:pwd];
     [_bubble browseServices];
+    [_networkPopOverController reloadNetwork];
 }
 
 #pragma mark - DragAndDropImageViewDelegate
