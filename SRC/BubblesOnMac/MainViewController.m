@@ -130,6 +130,7 @@
             return NSOrderedSame;
     }];
     [_historyPopOverController.filehistoryTableView reloadData];
+    [_historyPopOverController refreshButton];
 }
 
 - (void)sendFile {
@@ -141,15 +142,16 @@
     if ([self sendToSelectedServiceOfMessage:t]) {
         [self storeMessage:t];
     }
-    [t release];  
+    [t release];
 }
 
 - (void)sendText {
     if (_isView == kTextViewController || [_textViewController.textField.string length] == 0) {
-        WDMessage *t = [WDMessage messageWithText:_textViewController.textField.string];
+        WDMessage *t = [[WDMessage messageWithText:_textViewController.textField.string] retain];
         if ([self sendToSelectedServiceOfMessage:t]) {
             [self storeMessage:t];
         }
+        [t release];
     }   
 }
 
@@ -411,9 +413,11 @@
 	{
 		NSURL *selectedFileURL = [_selectFileOpenPanel URL];
         
-        DLog(@"selectedFileUrl is %@",selectedFileURL);
-		
-		if(selectedFileURL)
+        BOOL isFolderApp = FALSE;
+        
+        [[NSFileManager defaultManager] fileExistsAtPath:selectedFileURL.path isDirectory:&isFolderApp];
+        
+		if(selectedFileURL && !isFolderApp)
 		{
             _fileURL = [selectedFileURL retain];//the path of your selected photo
             NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
@@ -427,6 +431,10 @@
             
             [_dragFileController.label setHidden:YES];
 		}
+        else {
+             NSRunAlertPanel(@"Sorry", @"We do not support folders, application package or multiple files for now.\nWe will improve this in the new version, many thanks for your support.", @"OK", nil, nil);
+            return ;
+        }
 	};
 	
 	[_selectFileOpenPanel beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow 
@@ -494,10 +502,23 @@
 }
 
 - (void)didTerminateReceiveMessage:(WDMessage *)message {
+    if (_fileURL) {
+        [_fileURL release];
+        _fileURL = nil;
+    }
+    
+    [_dragFileController.imageView setImage:nil];
+    
+    [_historyPopOverController deleteMessageFromHistory:message];
 }
 
 - (void)didTerminateSendMessage:(WDMessage *)message {
-    
+    if (_fileURL) {
+        [_fileURL release];
+        _fileURL = nil;
+    }
+    [_dragFileController.imageView setImage:nil];
+    [_historyPopOverController deleteMessageFromHistory:message];
 }
 
 #pragma mark - PasswordMacViewControllerDelegate
@@ -547,7 +568,6 @@
 
 - (void)dragDidFinished:(NSURL *)url
 {
-    DLog(@"dragDidFinished");
     if (_fileURL) {
         [_fileURL release];
     }

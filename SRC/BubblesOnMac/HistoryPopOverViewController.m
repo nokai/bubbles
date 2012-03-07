@@ -113,6 +113,18 @@
 
 #pragma mark - Public Method
 
+- (void)refreshButton
+{
+    if ([_fileHistoryArray count] != 0) {
+        
+        [_removeButton setHidden:NO];
+    } else
+    {
+        [_removeButton setHidden:YES];
+    }
+
+}
+
 - (void)showHistoryPopOver:(NSView *)attachedView
 {
     // Wu: init the popOver
@@ -125,14 +137,20 @@
         _historyPopOver.delegate = self;
     }
     
-    if ([_fileHistoryArray count] != 0) {
-        [_removeButton setHidden:NO];
-    } else
-    {
-        [_removeButton setHidden:YES];
-    }
     // Wu:CGRectMaxXEdge means appear in the right of button
     [_historyPopOver showRelativeToRect:[attachedView bounds] ofView:attachedView preferredEdge:CGRectMinYEdge];
+    [self refreshButton];
+}
+
+- (void)deleteMessageFromHistory:(WDMessage *)aMessage
+{
+    for (WDMessage *m in _fileHistoryArray) {
+        if ([m.fileURL.path.lastPathComponent isEqualToString:aMessage.fileURL.path.lastPathComponent]) {
+            [_fileHistoryArray removeObject:m];
+        }
+    }
+    
+    [_fileHistoryTableView reloadData];
 }
 
 #pragma mark - IBAction

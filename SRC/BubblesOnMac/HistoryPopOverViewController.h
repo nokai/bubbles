@@ -37,5 +37,7 @@
 
 // Wu:attachedView is the the view which popover attach to like the effect in Safari
 - (void)showHistoryPopOver:(NSView *)attachedView;
+- (void)deleteMessageFromHistory:(WDMessage *)aMessage;
+- (void)refreshButton;
 
 @end
