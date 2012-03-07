@@ -291,6 +291,18 @@
     }
 }
 
+- (void)closeStream:(NSStream *)stream {
+    if (!stream) {
+        return;
+    }
+    
+    [stream close];
+    [stream removeFromRunLoop:[NSRunLoop currentRunLoop]
+                         forMode:NSDefaultRunLoopMode];
+    [stream release];
+    stream = nil;
+}
+
 #pragma mark - Publice Methods
 
 + (NSString *)platformForNetService:(NSNetService *)netService {
@@ -449,11 +461,13 @@
 - (void)terminateTransfer {
     DLog(@"WDBubble terminateTransfer");
     if (_isReceiver) {
+        //[self closeStream:_streamFileWriter];
+        [_socketReceive disconnect];
+    } else {
+        //[self closeStream:_streamFileReader];
         for (AsyncSocket *sock in _socketsConnect) {
             [sock disconnect];
         }
-    } else {
-        [_socketReceive disconnect];
     }
 }
 
@@ -630,7 +644,11 @@
             
             // DW: check if it's the user terminates the transfering
             if (_streamBytesWrote < _currentMessage.fileSize) {
+                DLog(@"WDBubble terminated receiver %@ received", [NSNumber numberWithInteger:_streamBytesWrote]);
+                _streamBytesWrote = 0;
+                [self closeStream:_streamFileWriter];
                 [self.delegate didTerminateReceiveMessage:_currentMessage];
+                
                 [_currentMessage release];
                 _currentMessage = nil;
                 return;
@@ -678,6 +696,9 @@
             if (_streamBytesRead >= _currentMessage.fileSize) {
                 [self.delegate didSendMessage:_currentMessage];
             } else {
+                DLog(@"WDBubble terminated sender %@ sent", [NSNumber numberWithInteger:_streamBytesRead]);
+                _streamBytesRead = 0;
+                [self closeStream:_streamFileReader];
                 [self.delegate didTerminateSendMessage:_currentMessage];
             }
             
@@ -728,31 +749,20 @@
     switch(streamEvent) {
         case NSStreamEventEndEncountered: {
             if (_streamFileReader) {
-                [theStream close];
-                [theStream removeFromRunLoop:[NSRunLoop currentRunLoop]
-                                     forMode:NSDefaultRunLoopMode];
-                [theStream release];
-                _streamFileReader = nil; // stream is ivar, so reinit it
-                
                 // DW: sender is complete
+                [self closeStream:_streamFileReader];
                 DLog(@"WDBubble NSStreamEventEndEncountered _streamFileReader");
             }
             
             if (_streamFileWriter) {
-                [theStream close];
-                [theStream removeFromRunLoop:[NSRunLoop currentRunLoop]
-                                     forMode:NSDefaultRunLoopMode];
-                [theStream release];
-                _streamFileWriter = nil; // oStream is instance variable
-                
                 // DW: receiver is complete
-                DLog(@"WDBubble NSStreamEventEndEncountered _streamFileWriter");
+                [self closeStream:_streamFileWriter];
+                DLog(@"WDBubble NSStreamEventEndEncountered _streamFileWriter %@", theStream);
             }
             break;
         } case NSStreamEventErrorOccurred: {
             DLog(@"WDBubble steam %@ NSStreamEventErrorOccurred %@", theStream, [theStream streamError]);
-            [theStream close];
-            [theStream release];
+            [self closeStream:theStream];
             break;
         } default: {
             

@@ -524,10 +524,12 @@
 
 - (void)didTerminateReceiveMessage:(WDMessage *)message {
     [self deleteDocumentAndMessageInURL:message.fileURL];
+    [_messagesView reloadData];
 }
 
 - (void)didTerminateSendMessage:(WDMessage *)message {
     [self deleteMessageInURL:message.fileURL];
+    [_messagesView reloadData];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -667,7 +669,7 @@
     } else  {
         // DW: states such as kWDMessageStateReadyToReceive, kWDMessageStateReadyToSend, kWDMessageStateSending
         // we can do a "Pause" feature here
-        NSLog(@"VC didSelectRowAtIndexPath %@", t.state);
+        DLog(@"VC didSelectRowAtIndexPath %@", t.state);
         as = [[UIActionSheet alloc] initWithTitle:nil
                                          delegate:self 
                                 cancelButtonTitle:kActionSheetButtonCancel
@@ -679,7 +681,7 @@
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             [as showFromRect:[tableView cellForRowAtIndexPath:indexPath].frame inView:_messagesView animated:YES];
         } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-            [as showInView:self.view];
+            [as showFromToolbar:self.navigationController.toolbar];
         }
         [as release];
     }
@@ -922,6 +924,7 @@
                 [self deleteDocumentAndMessageInURL:m.fileURL];
             }
         }
+        [_messagesView reloadData];
     }
     
     [message release];
