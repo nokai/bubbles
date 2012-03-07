@@ -188,11 +188,15 @@ writeRowsWithIndexes:(NSIndexSet *)pIndexSetOfRows
 {
 	// Wu:This is to allow us to drag files to save
 	// We don't do this if more than one row is selected
-	if ([pIndexSetOfRows count] > 1) {
-		return YES;
+	if ([pIndexSetOfRows count] > 1 ) {
+		return NO;
 	} 
 	NSInteger zIndex	= [pIndexSetOfRows firstIndex];
 	WDMessage *message	= [_fileHistoryArray objectAtIndex:zIndex];
+    
+    if ([message.state isEqualToString:kWDMessageStateText]) {
+        return YES;
+    }
     
     [pboard declareTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType, nil] owner:self];
     NSArray *propertyArray = [NSArray arrayWithObject:message.fileURL.pathExtension];
@@ -206,6 +210,10 @@ namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
 forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     NSInteger zIndex = [indexSet firstIndex];
     WDMessage *message = [_fileHistoryArray objectAtIndex:zIndex];
+    
+    if ([message.state isEqualToString:kWDMessageStateText]) {
+        return nil;
+    }
     NSURL *newURL = [[NSURL URLWithString:[message.fileURL.lastPathComponent stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] 
                             relativeToURL:dropDestination] URLWithoutNameConflict];
     [[NSFileManager defaultManager] copyItemAtURL:message.fileURL toURL:newURL error:nil];
