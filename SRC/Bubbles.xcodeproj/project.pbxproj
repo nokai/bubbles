@@ -59,6 +59,10 @@
 		03F6746614FFA98D00AE00CB /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F6746114FFA98D00AE00CB /* 6.png */; };
 		188E022414FB2BF500B1B319 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 188E022314FB2BF500B1B319 /* BubblesHelp */; };
 		188E022514FB2BF500B1B319 /* BubblesHelp in Resources */ = {isa = PBXBuildFile; fileRef = 188E022314FB2BF500B1B319 /* BubblesHelp */; };
+		95482DD4150616520091DF00 /* kWDSoundFileReceived.aif in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A50214FFB9C40048B02E /* kWDSoundFileReceived.aif */; };
+		95482DD5150616570091DF00 /* kWDSoundFileSent.aif in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A50314FFB9C40048B02E /* kWDSoundFileSent.aif */; };
+		95482DD6150616860091DF00 /* kWDSoundFileReceived.aif in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A50214FFB9C40048B02E /* kWDSoundFileReceived.aif */; };
+		95482DD71506168A0091DF00 /* kWDSoundFileSent.aif in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A50314FFB9C40048B02E /* kWDSoundFileSent.aif */; };
 		C1057A8B14FE0BB700D02DA4 /* help01.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A7D14FE0BB700D02DA4 /* help01.png */; };
 		C1057A8C14FE0BB700D02DA4 /* help02.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A7E14FE0BB700D02DA4 /* help02.png */; };
 		C1057A8D14FE0BB700D02DA4 /* help03.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A7F14FE0BB700D02DA4 /* help03.png */; };
@@ -767,6 +771,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95482DD71506168A0091DF00 /* kWDSoundFileSent.aif in Resources */,
+				95482DD6150616860091DF00 /* kWDSoundFileReceived.aif in Resources */,
 				C1CFCD1F14B985CC008A1B1F /* ViewController.xib in Resources */,
 				C1CFCD3014B986CB008A1B1F /* Default.png in Resources */,
 				C1CFCD3114B986CB008A1B1F /* Default@2x.png in Resources */,
@@ -831,6 +837,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95482DD5150616570091DF00 /* kWDSoundFileSent.aif in Resources */,
+				95482DD4150616520091DF00 /* kWDSoundFileReceived.aif in Resources */,
 				C1C9371D14BB1766005E0EAA /* InfoPlist.strings in Resources */,
 				C1C9372314BB1766005E0EAA /* Credits.rtf in Resources */,
 				C1C9372914BB1766005E0EAA /* MainMenu.xib in Resources */,
