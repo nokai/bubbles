@@ -466,6 +466,10 @@
     [_historyPopOverController.filehistoryTableView reloadData];
 }
 
+- (void)errorOccured:(NSError *)error {
+    DLog(@"MVC error occured %@", error);
+}
+
 - (void)willReceiveMessage:(WDMessage *)message {
     [self storeMessage:message];
 }
