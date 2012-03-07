@@ -43,17 +43,28 @@
   
     if (_bubble.servicesFound.count > 1) {
         // DW: if we already have one service selected, we do not update the selection now
-        if (_selectedServiceName && [_bubble.servicesFound containsObject:_selectedServiceName]) {
-            
-        }
-        else {
-            for (NSNetService *s in _bubble.servicesFound) {
-                if ([_bubble isDifferentService:s]) {
-                    _selectedServiceName = [s.name retain];
+        if (_selectedServiceName) {
+            for (NSNetService *s in self.bubble.servicesFound) {
+                if ([_selectedServiceName isEqualToString:s.name]) {
+                    if (_networkPopOverController != nil) {
+                        [_networkPopOverController reloadNetwork];
+                    }
+
+                    return;
                 }
             }
+            
+            // DW: selected service name is not found in current services, it's no longer useful, release it
+            [_selectedServiceName release];
+            _selectedServiceName = nil;
         }
-    } else {
+        
+        for (NSNetService *s in self.bubble.servicesFound) {
+            
+            if ([self.bubble isDifferentService:s]) {
+                _selectedServiceName = [s.name retain];
+            }
+        }    } else {
         if (_selectedServiceName) {
             [_selectedServiceName release];
         }
@@ -475,7 +486,6 @@
             [_dragFileController.imageView setImage:quicklook];
         }
     }
-    
 }
 
 - (void)didSendMessage:(WDMessage *)message {
