@@ -68,14 +68,18 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
         // Perform operation using the list of files
     }
     
-    //Wu:Set the files that can be accepted by NSImageView
+    // Wu:Set the files that can be accepted by NSImageView
     NSPasteboard *pasterboard = [sender draggingPasteboard];
     NSArray *allowedTypes = [NSArray arrayWithObjects:NSFilenamesPboardType,NSTIFFPboardType,nil];
     NSString *fileType = [pasterboard availableTypeFromArray:allowedTypes];
+    
+    // Wu:Check whether the data is nil or multi files are selected
     NSArray *urlArray = [pboard propertyListForType:NSFilenamesPboardType];
-    NSData *data = [pasterboard dataForType:fileType];    
-    BOOL isFolder = FALSE;
+    NSData *data = [pasterboard dataForType:fileType]; 
     NSURL *fileUrl = [NSURL URLFromPasteboard: [sender draggingPasteboard]];
+    
+    // Now we do not support the folder 
+    BOOL isFolder = FALSE;
     [[NSFileManager defaultManager] fileExistsAtPath:[fileUrl path] isDirectory: &isFolder];
     
     if (data == nil || isFolder || ([urlArray count] > 1)) {

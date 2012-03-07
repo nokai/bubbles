@@ -43,13 +43,14 @@
   
     if (_bubble.servicesFound.count > 1) {
         // DW: if we already have one service selected, we do not update the selection now
-        if (_selectedServiceName) {
-            return;
+        if (_selectedServiceName && [_bubble.servicesFound containsObject:_selectedServiceName]) {
+            
         }
-        
-        for (NSNetService *s in _bubble.servicesFound) {
-            if ([_bubble isDifferentService:s]) {
-                _selectedServiceName = [s.name retain];
+        else {
+            for (NSNetService *s in _bubble.servicesFound) {
+                if ([_bubble isDifferentService:s]) {
+                    _selectedServiceName = [s.name retain];
+                }
             }
         }
     } else {
@@ -129,7 +130,6 @@
     if ([self sendToSelectedServiceOfMessage:t]) {
         [self storeMessage:t];
     }
-    //[_bubble broadcastMessage:t];
     [t release];  
 }
 
@@ -139,7 +139,6 @@
         if ([self sendToSelectedServiceOfMessage:t]) {
             [self storeMessage:t];
         }
-        //[_bubble broadcastMessage:t];
     }   
 }
 
@@ -367,6 +366,7 @@
 
 - (IBAction)openServiceFoundPopOver:(id)sender
 {
+    [_networkPopOverController reloadNetwork];
     _networkPopOverController.selectedServiceName = _selectedServiceName;
     NSButton *button  = (NSButton *)[_networkItem view];
     [_networkPopOverController showServicesFoundPopOver:button];
@@ -530,7 +530,7 @@
     [_bubble stopService];
     [_bubble publishServiceWithPassword:pwd];
     [_bubble browseServices];
-    [_networkPopOverController reloadNetwork];
+    //[_networkPopOverController reloadNetwork];
 }
 
 #pragma mark - DragAndDropImageViewDelegate

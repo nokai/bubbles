@@ -188,25 +188,9 @@ namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
 forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     NSInteger zIndex = [indexSet firstIndex];
     WDMessage *message = [_fileHistoryArray objectAtIndex:zIndex];
-    
-    NSURL *newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
-                                          dropDestination.path, 
-                                          [message.fileURL.lastPathComponent stringByReplacingOccurrencesOfString:@" " 
-                                                                                                       withString:@"%20"]]];
-    
-    if (newURL == nil) {
-        NSString *escapedString = message.fileURL.path;
-        newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
-                                       dropDestination.path, 
-                                       [escapedString stringByReplacingOccurrencesOfString:@" " 
-                                                                                withString:@"%20"]]];
-        newURL = [newURL URLWithoutNameConflict];
-    } else {
-        newURL = [newURL URLWithoutNameConflict];
-    }
-
-    NSData *data = [NSData dataWithContentsOfURL:message.fileURL];
-    [[NSFileManager defaultManager] createFileAtPath:newURL.path contents:data attributes:nil];
+    NSURL *newURL = [[NSURL URLWithString:[message.fileURL.lastPathComponent stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] 
+                            relativeToURL:dropDestination] URLWithoutNameConflict];
+    [[NSFileManager defaultManager] copyItemAtURL:message.fileURL toURL:newURL error:nil];
     return [NSArray arrayWithObjects:newURL.lastPathComponent, nil];
 }
 

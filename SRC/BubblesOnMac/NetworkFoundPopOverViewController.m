@@ -13,7 +13,7 @@
 @synthesize delegate;
 @synthesize selectedServiceName;
 
-#pragma mark - Private Methods
+#pragma mark - Public Methods
 
 - (void)reloadNetwork
 {
