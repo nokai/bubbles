@@ -72,12 +72,14 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     NSPasteboard *pasterboard = [sender draggingPasteboard];
     NSArray *allowedTypes = [NSArray arrayWithObjects:NSFilenamesPboardType,NSTIFFPboardType,nil];
     NSString *fileType = [pasterboard availableTypeFromArray:allowedTypes];
-    NSData *data = [pasterboard dataForType:fileType];
-    
+    NSArray *urlArray = [pboard propertyListForType:NSFilenamesPboardType];
+    NSData *data = [pasterboard dataForType:fileType];    
+    BOOL isFolder = FALSE;
     NSURL *fileUrl = [NSURL URLFromPasteboard: [sender draggingPasteboard]];
+    [[NSFileManager defaultManager] fileExistsAtPath:[fileUrl path] isDirectory: &isFolder];
     
-    if (data == nil) {
-        NSRunAlertPanel(@"Paste Error", @"The operation failed", @"Ok", nil, nil);
+    if (data == nil || isFolder || ([urlArray count] > 1)) {
+        NSRunAlertPanel(@"Sorry", @"We do not support folders , application and multi files now. But we will improve this later !", @"Ok", nil, nil);
         return NO;
     } else {
         if ([fileType isEqualToString:NSPasteboardTypeTIFF]) {
@@ -100,7 +102,6 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
             DLog(@"Something error");
         }
     }
-    DLog(@"self.delegate is %@",self.delegate);
     [self.delegate dragDidFinished:fileUrl];
     [self setNeedsDisplay:YES];//Wu:Redraw at once
     return YES;
@@ -159,24 +160,10 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     if (draggedDataURL == nil) {
         return nil;
     }
-    
-    NSURL *newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
-                                          dropDestination.path, 
-                                          [draggedDataURL.lastPathComponent stringByReplacingOccurrencesOfString:@" " 
-                                                                                                      withString:@"%20"]]];
-    if (newURL == nil) {
-        NSString *escapedString = draggedDataURL.path;
-        newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
-                                       dropDestination.path, 
-                                       [escapedString stringByReplacingOccurrencesOfString:@" " 
-                                                                                withString:@"%20"]]];
-        newURL = [newURL URLWithoutNameConflict];
-        
-    } else {
-        newURL = [newURL URLWithoutNameConflict];
-    }
-    NSData *data = [NSData dataWithContentsOfURL:draggedDataURL];
-    [[NSFileManager defaultManager] createFileAtPath:newURL.path contents:data attributes:nil];
+
+    NSURL *newURL = [[NSURL URLWithString:[draggedDataURL.lastPathComponent stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] 
+                            relativeToURL:dropDestination] URLWithoutNameConflict];
+    [[NSFileManager defaultManager] copyItemAtURL:draggedDataURL toURL:newURL error:nil];
     
     return [NSArray arrayWithObjects:newURL.lastPathComponent, nil];
 }
@@ -195,23 +182,10 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     }
 }
 
-//like qq ,the chosen windows do not have to be active
+//Like qq ,the chosen windows do not have to be active
 - (BOOL)acceptsFirstMouse:(NSEvent *)event 
 {
     return YES;
 }
 
-/*- (void)pasteboard:(NSPasteboard *)sender item:(NSPasteboardItem *)item provideDataForType:(NSString *)type
- {
- if ( [type compare: NSPasteboardTypeTIFF] == NSOrderedSame ) {
- 
- //set data for TIFF type on the pasteboard as requested
- [sender setData:[[self image] TIFFRepresentation] forType:NSPasteboardTypeTIFF];
- 
- } else if ( [type compare: NSFilenamesPboardType] == NSOrderedSame ) {
- 
- //set data for Other type on the pasteboard as requested
- [sender setData:[self dataWithPDFInsideRect:[self bounds]] forType:NSPasteboardTypePDF];
- }
- }*/
 @end
