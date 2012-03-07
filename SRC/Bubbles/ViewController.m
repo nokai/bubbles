@@ -507,6 +507,16 @@
     //DLog(@"VC persent %f", [self.bubble percentTransfered]*100);
 }
 
+- (void)errorOccured:(NSError *)error {
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Deliver Failed" 
+                                                 message:@"Please check your network condition."
+                                                delegate:nil 
+                                       cancelButtonTitle:@"OK" 
+                                       otherButtonTitles:nil];
+    [av show];
+    [av release];
+}
+
 - (void)willReceiveMessage:(WDMessage *)message {
     [self storeMessage:message];
 }

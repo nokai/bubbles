@@ -583,6 +583,7 @@
 - (void)onSocket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err {
     if (err) {
         DLog(@"AsyncSocketDelegate willDisconnectWithError %@: %@", _currentMessage.state, err);
+        [self.delegate errorOccured:err];
     }
     [sock readDataWithTimeout:kWDBubbleTimeOut tag:0];
 }

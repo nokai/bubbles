@@ -29,6 +29,8 @@
 
 @protocol WDBubbleDelegate
 - (void)percentUpdated;
+- (void)errorOccured:(NSError *)error;
+
 - (void)willReceiveMessage:(WDMessage *)message;
 - (void)didReceiveMessage:(WDMessage *)message;
 - (void)didSendMessage:(WDMessage *)message;
