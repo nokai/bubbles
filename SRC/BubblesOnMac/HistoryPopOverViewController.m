@@ -38,7 +38,27 @@
 - (void)deleteSelectedRow
 {
     if (0 <= [_fileHistoryTableView selectedRow] && [_fileHistoryTableView selectedRow] < [_fileHistoryArray count]) {
-        [_fileHistoryArray removeObjectAtIndex:[_fileHistoryTableView selectedRow]];
+        WDMessage *message = [_fileHistoryArray objectAtIndex:[_fileHistoryTableView selectedRow]];
+        
+        DLog(@"message state is %d",message.state);
+        // Wu :Terminate 
+        if (!(([message.state isEqualToString:kWDMessageStateFile])
+              ||([message.state isEqualToString:kWDMessageStateText]))) {
+            [_bubbles terminateTransfer];
+            
+            for (WDMessage *m in _fileHistoryArray) {
+                if (!(([m.state isEqualToString:kWDMessageStateFile])
+                      ||([m.state isEqualToString:kWDMessageStateText]))) {
+                    [self deleteMessageFromHistory:m];
+                }
+            }
+        }
+        
+        // Wu:Delete
+        else {
+            [_fileHistoryArray removeObjectAtIndex:[_fileHistoryTableView selectedRow]];
+        }
+        
     }
     if ([_fileHistoryArray count] == 0) {
         [_removeButton setHidden:YES];
