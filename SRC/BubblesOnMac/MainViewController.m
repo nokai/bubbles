@@ -411,31 +411,33 @@
 
     void (^selectFileHandler)(NSInteger) = ^( NSInteger result )
 	{
-		NSURL *selectedFileURL = [_selectFileOpenPanel URL];
-        
-        BOOL isFolderApp = FALSE;
-        
-        [[NSFileManager defaultManager] fileExistsAtPath:selectedFileURL.path isDirectory:&isFolderApp];
-        
-		if(selectedFileURL && !isFolderApp)
-		{
-            _fileURL = [selectedFileURL retain];//the path of your selected photo
-            NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
-            if (image != nil) {
-                [_dragFileController.imageView setImage:image];
-                [image release];   
-            }else {
-                NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
-                [_dragFileController.imageView setImage:quicklook];
-            }
+        if (result != NSCancelButton) {
+            NSURL *selectedFileURL = [_selectFileOpenPanel URL];
             
-            [_dragFileController.label setHidden:YES];
-		}
-        else {
-             NSRunAlertPanel(@"Sorry", @"We do not support folders, application package or multiple files for now.\nWe will improve this in the new version, many thanks for your support.", @"OK", nil, nil);
-            return ;
+            BOOL isFolderApp = FALSE;
+            
+            [[NSFileManager defaultManager] fileExistsAtPath:selectedFileURL.path isDirectory:&isFolderApp];
+            
+            if(selectedFileURL && !isFolderApp)
+            {
+                _fileURL = [selectedFileURL retain];//the path of your selected photo
+                NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
+                if (image != nil) {
+                    [_dragFileController.imageView setImage:image];
+                    [image release];   
+                }else {
+                    NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
+                    [_dragFileController.imageView setImage:quicklook];
+                }
+                
+                [_dragFileController.label setHidden:YES];
+            }
+            else {
+                NSRunAlertPanel(@"Sorry", @"We do not support folders, application package or multiple files for now.\nWe will improve this in the new version, many thanks for your support.", @"OK", nil, nil);
+                return ;
+            }
         }
-	};
+    };
 	
 	[_selectFileOpenPanel beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow 
 							  completionHandler:selectFileHandler];
