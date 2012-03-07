@@ -1032,10 +1032,19 @@
         
         // DW: if we already have one service selected, we do not update the selection now
         if (_selectedServiceName) {
-            return;
+            for (NSNetService *s in self.bubble.servicesFound) {
+                if ([_selectedServiceName isEqualToString:s.name]) {
+                    return;
+                }
+            }
+            
+            // DW: selected service name is not found in current services, it's no longer useful, release it
+            [_selectedServiceName release];
+            _selectedServiceName = nil;
         }
         
         for (NSNetService *s in self.bubble.servicesFound) {
+            
             if ([self.bubble isDifferentService:s]) {
                 _selectedServiceName = [s.name retain];
             }

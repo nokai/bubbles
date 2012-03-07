@@ -1089,7 +1089,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Deliver;
 				PROVISIONING_PROFILE = "97FD90E7-374C-4357-A8EB-B6052EE7D9E2";
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1115,7 +1115,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Deliver;
 				PROVISIONING_PROFILE = "97FD90E7-374C-4357-A8EB-B6052EE7D9E2";
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
