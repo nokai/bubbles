@@ -514,6 +514,7 @@
     }
     
     [_dragFileController.imageView setImage:nil];
+    [_dragFileController.label setHidden:NO];
     
     [_historyPopOverController deleteMessageFromHistory:message];
 }
@@ -524,6 +525,8 @@
         _fileURL = nil;
     }
     [_dragFileController.imageView setImage:nil];
+    [_dragFileController.label setHidden:NO];
+    
     [_historyPopOverController deleteMessageFromHistory:message];
 }
 
