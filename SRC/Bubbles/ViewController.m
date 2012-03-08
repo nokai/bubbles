@@ -118,13 +118,13 @@
 - (BOOL)sendToSelectedServiceOfMessage:(WDMessage *)message {
     if (!_selectedServiceName || [_selectedServiceName isEqualToString:@""]) {
         // DW: there is actually no receiver, so we do not send
-        [self displayErrorMessage:@"Please select a device to deliver."];
+        [self displayErrorMessage:kWDBubbleErrorMessageNoDeviceSelected];
         return NO;
     }
     
     // DW: if bubble is busy sending, skip the current send
     if ([self.bubble isBusy]) {
-        [self displayErrorMessage:@"Sorry, there is a delivering ongoing, multiple delivering will be supported in the future."];
+        [self displayErrorMessage:kWDBubbleErrorMessageDoNotSupportMultiple];
         return NO;
     }
     
@@ -197,6 +197,8 @@
 }
 
 - (void)displayErrorMessage:(NSString *)message {
+    [_messagesView reloadData];
+    
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Deliver Failed" 
                                                  message:message
                                                 delegate:nil 
@@ -525,7 +527,7 @@
 }
 
 - (void)errorOccured:(NSError *)error {
-    [self displayErrorMessage:@"Please check your network condition."];
+    [self displayErrorMessage:kWDBubbleErrorMessageDisconnectWithError];
 }
 
 - (void)willReceiveMessage:(WDMessage *)message {
@@ -544,6 +546,7 @@
 }
 
 - (void)didTerminateReceiveMessage:(WDMessage *)message {
+    [self displayErrorMessage:kWDBubbleErrorMessageTerminatedBySender];
     [self deleteDocumentAndMessageInURL:message.fileURL];
     [_messagesView reloadData];
 }

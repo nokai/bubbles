@@ -32,4 +32,10 @@
 #define kWDBubbleNotificationShouldLock     @"kWDBubbleNotificationShouldLock"
 #define kWDBubbleNotificationDidEndLock     @"kWDBubbleNotificationDidEndLock"
 
+// DW: error messages
+#define kWDBubbleErrorMessageTerminatedBySender     @"Delivery is terminated by sender."
+#define kWDBubbleErrorMessageDisconnectWithError    @"Either delivery is terminated by receiver or the network condition is bad."
+#define kWDBubbleErrorMessageDoNotSupportMultiple   @"There is already a delivery ongoing, multiple deliveries will be supported in the future. Thank you."
+#define kWDBubbleErrorMessageNoDeviceSelected       @"Please select a device to deliver."
+
 #endif
