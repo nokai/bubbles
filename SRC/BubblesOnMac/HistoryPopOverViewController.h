@@ -16,6 +16,7 @@
 
 #define kPreviewColumn 1
 #define kDeleteColumn 2
+#define kRestoreLabelAndImage @"kRestoreLabelAndImage"
 
 @interface HistoryPopOverViewController : NSViewController<NSPopoverDelegate,NSTableViewDataSource,NSTableViewDelegate,ImageAndTextCellDelegate,ContextMenuDelegate>
 {
@@ -28,6 +29,8 @@
     IBOutlet NSButton *_removeButton;
     
     WDBubble *_bubbles;
+    
+    BOOL _isDuringTerminate;
 }
 
 @property (nonatomic ,retain) NSPopover *historyPopOver;

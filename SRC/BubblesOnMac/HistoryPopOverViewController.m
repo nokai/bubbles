@@ -40,14 +40,18 @@
     if (0 <= [_fileHistoryTableView selectedRow] && [_fileHistoryTableView selectedRow] < [_fileHistoryArray count]) {
         WDMessage *message = [_fileHistoryArray objectAtIndex:[_fileHistoryTableView selectedRow]];
         
+        DLog(@"message state is %@",message.state);
+        
         // Wu :Terminate 
         if (!(([message.state isEqualToString:kWDMessageStateFile])
               ||([message.state isEqualToString:kWDMessageStateText]))) {
             [_bubbles terminateTransfer];
             
-            for (WDMessage *m in _fileHistoryArray) {
-                if (!(([m.state isEqualToString:kWDMessageStateFile])
-                      ||([m.state isEqualToString:kWDMessageStateText]))) {
+            _isDuringTerminate = TRUE;
+            // Wu:Remove all unstable 
+            NSArray *originalArray = [NSArray arrayWithArray:_fileHistoryArray];
+            for (WDMessage *m in originalArray) {
+                if (![m.state isEqualToString:kWDMessageStateFile] && ![m.state isEqualToString:kWDMessageStateText]) {
                     [self deleteMessageFromHistory:m];
                 }
             }
@@ -59,6 +63,7 @@
         }
         
     }
+    
     if ([_fileHistoryArray count] == 0) {
         [_removeButton setHidden:YES];
         [_historyPopOver close];
@@ -81,6 +86,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _fileHistoryArray = [[NSMutableArray alloc]init];
+        
+        _isDuringTerminate = FALSE;
     }
     
     return self;
@@ -134,14 +141,14 @@
 
 - (void)refreshButton
 {
-    if ([_fileHistoryArray count] != 0) {
+    if ([_fileHistoryArray count] != 0 && _isDuringTerminate) {
         
         [_removeButton setHidden:NO];
     } else
     {
         [_removeButton setHidden:YES];
     }
-
+    
 }
 
 - (void)showHistoryPopOver:(NSView *)attachedView
@@ -163,12 +170,16 @@
 
 - (void)deleteMessageFromHistory:(WDMessage *)aMessage
 {
-    for (WDMessage *m in _fileHistoryArray) {
+    NSArray *originArray = [NSArray arrayWithArray:_fileHistoryArray];
+    for (WDMessage *m in originArray) {
         if ([m.fileURL.path.lastPathComponent isEqualToString:aMessage.fileURL.path.lastPathComponent]) {
             [_fileHistoryArray removeObject:m];
         }
     }
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRestoreLabelAndImage object:nil];
+    _isDuringTerminate = FALSE;
+    [self refreshButton];
     [_fileHistoryTableView reloadData];
 }
 
@@ -301,7 +312,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
                 [self.bubbles percentTransfered]*100, 
                 [NSURL formattedFileSize:[self.bubbles bytesTransfered]]];
     }
-       
+    
     return nil;
 }
 

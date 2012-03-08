@@ -18,6 +18,16 @@
 
 #pragma mark - Private Methods
 
+- (void)restoreImageAndLabel:(NSNotification *)notification
+{
+    [_dragFileController.imageView setImage:nil];
+    [_dragFileController.label setHidden:NO];
+}
+
+
+- (void)displayErrorMessage:(NSString *)message {
+    NSRunAlertPanel(@"Sorry", message, @"OK", nil, nil);
+}
 
 - (void)firstUse
 {
@@ -32,6 +42,12 @@
 // Wu: NO for can not send, YES for will send
 - (BOOL)sendToSelectedServiceOfMessage:(WDMessage *)message {
     if (!_selectedServiceName || [_selectedServiceName isEqualToString:@""]) {
+        [self displayErrorMessage:kWDBubbleErrorMessageNoDeviceSelected];
+        return NO;
+    }
+    
+    if ([_bubble isBusy]) {
+        [self displayErrorMessage:kWDBubbleErrorMessageDoNotSupportMultiple];
         return NO;
     }
     
@@ -40,7 +56,7 @@
 }
 
 - (void)servicesUpdated:(NSNotification *)notification {
-  
+    
     if (_bubble.servicesFound.count > 1) {
         // DW: if we already have one service selected, we do not update the selection now
         if (_selectedServiceName) {
@@ -49,7 +65,7 @@
                     if (_networkPopOverController != nil) {
                         [_networkPopOverController reloadNetwork];
                     }
-
+                    
                     return;
                 }
             }
@@ -65,11 +81,11 @@
                 _selectedServiceName = [s.name retain];
             }
         }    } else {
-        if (_selectedServiceName) {
-            [_selectedServiceName release];
+            if (_selectedServiceName) {
+                [_selectedServiceName release];
+            }
+            _selectedServiceName = nil;
         }
-        _selectedServiceName = nil;
-    }
     
     if (_networkPopOverController != nil) {
         _networkPopOverController.selectedServiceName = _selectedServiceName;
@@ -85,28 +101,6 @@
     appDel.window.initialFirstResponder = _textViewController.textField;
 }
 
-- (void)loadUserPreference
-{
-    /* if (_passwordController != nil) {
-     //[[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
-     return ;
-     }
-     
-     bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
-     
-     if (status) {
-     _passwordController = [[PasswordMacViewController alloc]init];
-     _passwordController.delegate = self;
-     
-     [NSApp beginSheet:[_passwordController window] modalForWindow:[NSApplication sharedApplication].mainWindow modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
-     
-     } else {
-     
-     }*/
-    [_bubble publishServiceWithPassword:@""];
-    [_bubble browseServices];
-}
-
 - (void)storeMessage:(WDMessage *)message
 {
     if ([message.state isEqualToString:kWDMessageStateFile]) {
@@ -120,7 +114,7 @@
     } else {
         [_historyPopOverController.fileHistoryArray addObject:message];
     }
-
+    
     [_historyPopOverController.fileHistoryArray sortUsingComparator:^NSComparisonResult(WDMessage *obj1, WDMessage * obj2) {
         if ([obj1.time compare:obj2.time] == NSOrderedAscending)
             return NSOrderedAscending;
@@ -191,8 +185,8 @@
         _isView = kTextViewController;
         
         //_sound = [[WDSound alloc]init];
-        
-        [self loadUserPreference];
+        [_bubble publishServiceWithPassword:@""];
+        [_bubble browseServices];
     }
     return self;
 }
@@ -204,6 +198,8 @@
     
     // Wu:Remove observe the notification
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kWDBubbleNotificationServiceUpdated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kRestoreLabelAndImage];
     
     // Wu:Remove two subviews
     [[_textViewController view] removeFromSuperview];
@@ -245,6 +241,8 @@
                                                  name:kWDBubbleNotificationServiceUpdated
                                                object:nil];  
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreImageAndLabel:) name:kRestoreLabelAndImage object:nil];
+    
     // Wu: Alloc the two view controller and first add textviewcontroller into superview
     _textViewController = [[TextViewController alloc]initWithNibName:@"TextViewController" bundle:nil];
     _dragFileController = [[DragFileViewController alloc]initWithNibName:@"DragFileViewController" bundle:nil];
@@ -264,7 +262,7 @@
     
     //_menuItemCheck = FALSE;
     
-   // [_addFileItem setEnabled:NO];
+    // [_addFileItem setEnabled:NO];
 }
 
 #pragma mark - IBActions
@@ -408,7 +406,7 @@
 	[_selectFileOpenPanel setNameFieldLabel:@"Choose a file:"];
     [_selectFileOpenPanel setCanChooseDirectories:NO];
     [_selectFileOpenPanel setCanChooseFiles:YES];
-
+    
     void (^selectFileHandler)(NSInteger) = ^( NSInteger result )
 	{
         if (result != NSCancelButton) {
@@ -440,7 +438,7 @@
     };
 	
 	[_selectFileOpenPanel beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow 
-							  completionHandler:selectFileHandler];
+                                 completionHandler:selectFileHandler];
 }
 
 - (IBAction)showFeature:(id)sender
@@ -467,7 +465,7 @@
 }
 
 - (void)errorOccured:(NSError *)error {
-    DLog(@"MVC error occured %@", error);
+    [self displayErrorMessage:kWDBubbleErrorMessageDisconnectWithError];
 }
 
 - (void)willReceiveMessage:(WDMessage *)message {
@@ -478,8 +476,8 @@
     [_sound playSoundForKey:kWDSoundFileReceived];
     message.time = [NSDate date];
     if ([message.state isEqualToString:kWDMessageStateText]) {
-            _textViewController.textField.string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
-            [self storeMessage:message];
+        _textViewController.textField.string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
+        [self storeMessage:message];
         
     } else if ([message.state isEqualToString:kWDMessageStateFile]) {
         [self storeMessage:message];
@@ -512,9 +510,7 @@
         [_fileURL release];
         _fileURL = nil;
     }
-    
-    [_dragFileController.imageView setImage:nil];
-    [_dragFileController.label setHidden:NO];
+    [self displayErrorMessage:kWDBubbleErrorMessageTerminatedBySender];
     
     [_historyPopOverController deleteMessageFromHistory:message];
 }
@@ -524,9 +520,6 @@
         [_fileURL release];
         _fileURL = nil;
     }
-    [_dragFileController.imageView setImage:nil];
-    [_dragFileController.label setHidden:NO];
-    
     [_historyPopOverController deleteMessageFromHistory:message];
 }
 

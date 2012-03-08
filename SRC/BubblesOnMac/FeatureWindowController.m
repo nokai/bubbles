@@ -50,7 +50,7 @@
 
 - (void)awakeFromNib
 {
-     _currentPage = 0;
+    _currentPage = 0;
     [_pageOne setImage:[NSImage imageNamed:@"1"]];
     [_pageTwo setImage:[NSImage imageNamed:@"2"]];
     [_pageThree setImage:[NSImage imageNamed:@"3"]];
@@ -76,13 +76,23 @@
     [_scrollView addSubview:_rightButton];
     [_scrollView addSubview:_leftButton];
     [self setButtonStatus];
-
+    
 }
 
 - (void)dealloc
 {
     [_customView removeFromSuperview];
     [_customView release];
+    
+    [_pageControl removeFromSuperview];
+    [_pageControl release];
+    
+    [_leftButton removeFromSuperview];
+    [_leftButton release];
+    
+    [_rightButton removeFromSuperview];
+    [_rightButton release];
+    
     [super dealloc];
 }
 
