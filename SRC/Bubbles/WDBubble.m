@@ -95,8 +95,8 @@
 - (NSURL *)URLWithRemoteChangedToLocal {
     NSString *currentFileName = [[self URLByDeletingPathExtension].lastPathComponent stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@.%@", 
-                                            [NSURL iOSDocumentsDirectoryURL], 
+    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@.%@", 
+                                            [[NSURL iOSDocumentsDirectoryURL] absoluteString], 
                                             currentFileName, 
                                             [[self pathExtension] lowercaseString]]];
 #elif TARGET_OS_MAC
@@ -108,7 +108,7 @@
     }
     
     NSURL *storeURL = [NSURL URLWithString:
-                       [NSString stringWithFormat:@"%@/%@.%@", 
+                       [NSString stringWithFormat:@"%@%@.%@", 
                         [defaultURL absoluteString], 
                         currentFileName, 
                         [[self pathExtension] lowercaseString]]];
@@ -543,6 +543,7 @@
         _currentMessage.state = kWDMessageStateReceiving;
         
         _currentMessage.fileURL = [[_currentMessage.fileURL URLWithRemoteChangedToLocal] URLWithoutNameConflict];
+        DLog(@"WDBubble _streamFileWriter will be assigned path %@", _currentMessage.fileURL.path);
         _streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:_currentMessage.fileURL.path  append:YES];
         [_streamFileWriter setDelegate:self];
         [_streamFileWriter scheduleInRunLoop:[NSRunLoop currentRunLoop]
@@ -573,7 +574,13 @@
             _streamDataBufferWriter = [[NSMutableData data] retain];
         }
         [_streamDataBufferWriter appendData:data];
-        [self writeDataToFile];
+        
+        // DW: no error in stream writer, write data to file
+        if (_streamDataBufferWriter) {
+            [self writeDataToFile];
+        } else {
+            [self terminateTransfer];
+        }
     } else {
         [_dataBuffer appendData:data];
     }
@@ -770,6 +777,7 @@
         } case NSStreamEventErrorOccurred: {
             DLog(@"WDBubble steam %@ NSStreamEventErrorOccurred %@", theStream, [theStream streamError]);
             [self closeStream:theStream];
+            [self.delegate errorOccured:[theStream streamError]];
             break;
         } default: {
             

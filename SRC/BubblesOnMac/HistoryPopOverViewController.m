@@ -40,7 +40,6 @@
     if (0 <= [_fileHistoryTableView selectedRow] && [_fileHistoryTableView selectedRow] < [_fileHistoryArray count]) {
         WDMessage *message = [_fileHistoryArray objectAtIndex:[_fileHistoryTableView selectedRow]];
         
-        DLog(@"message state is %d",message.state);
         // Wu :Terminate 
         if (!(([message.state isEqualToString:kWDMessageStateFile])
               ||([message.state isEqualToString:kWDMessageStateText]))) {

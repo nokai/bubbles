@@ -593,11 +593,11 @@
             [fileData writeToURL:storeURL atomically:YES];
             _fileURL = [storeURL retain];
         }
-        DLog(@"VC didFinishPickingMediaWithInfo URL is %@", _fileURL);
+        DLog(@"VC didFinishPickingMediaWithInfo URL is %@", _fileURL.path);
         [self sendFile];
     } else if ([mediaType isEqualToString:@"public.movie"]) {
         _fileURL = [[info valueForKey:UIImagePickerControllerMediaURL] retain];
-        DLog(@"VC didFinishPickingMediaWithInfo select %@", _fileURL);
+        DLog(@"VC didFinishPickingMediaWithInfo select %@", _fileURL.path);
         [self sendFile];
     } else {
         _fileURL = nil;
