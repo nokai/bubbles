@@ -118,6 +118,13 @@
 - (BOOL)sendToSelectedServiceOfMessage:(WDMessage *)message {
     if (!_selectedServiceName || [_selectedServiceName isEqualToString:@""]) {
         // DW: there is actually no receiver, so we do not send
+        [self displayErrorMessage:@"Please select a device to deliver."];
+        return NO;
+    }
+    
+    // DW: if bubble is busy sending, skip the current send
+    if ([self.bubble isBusy]) {
+        [self displayErrorMessage:@"Sorry, there is a delivering ongoing, multiple delivering will be supported in the future."];
         return NO;
     }
     
@@ -187,6 +194,16 @@
     picker.body = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
 	[self presentModalViewController:picker animated:YES];
 	[picker release];
+}
+
+- (void)displayErrorMessage:(NSString *)message {
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Deliver Failed" 
+                                                 message:message
+                                                delegate:nil 
+                                       cancelButtonTitle:@"OK" 
+                                       otherButtonTitles:nil];
+    [av show];
+    [av release];
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
@@ -508,13 +525,7 @@
 }
 
 - (void)errorOccured:(NSError *)error {
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Deliver Failed" 
-                                                 message:@"Please check your network condition."
-                                                delegate:nil 
-                                       cancelButtonTitle:@"OK" 
-                                       otherButtonTitles:nil];
-    [av show];
-    [av release];
+    [self displayErrorMessage:@"Please check your network condition."];
 }
 
 - (void)willReceiveMessage:(WDMessage *)message {
@@ -866,6 +877,8 @@
         [[UIApplication sharedApplication].keyWindow addSubview:_helpViewController.view];
         return;
     } else if ([buttonTitle isEqualToString:kActionSheetButtonCancel]) {
+        // DW: just refresh to avoid a selected cell
+        [_messagesView reloadData];
         return;
     }
     

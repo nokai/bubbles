@@ -80,6 +80,7 @@
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
     //[_bubble stopService];
+    [_bubble terminateTransfer];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

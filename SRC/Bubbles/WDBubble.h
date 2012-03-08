@@ -85,6 +85,7 @@
 - (void)sendMessage:(WDMessage *)message toServiceNamed:(NSString *)name;
 
 // DW: transfer control
+- (BOOL)isBusy;
 - (float)percentTransfered;
 - (NSUInteger)bytesTransfered;
 - (void)terminateTransfer;

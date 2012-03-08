@@ -298,7 +298,7 @@
     
     [stream close];
     [stream removeFromRunLoop:[NSRunLoop currentRunLoop]
-                         forMode:NSDefaultRunLoopMode];
+                      forMode:NSDefaultRunLoopMode];
     [stream release];
     stream = nil;
 }
@@ -439,6 +439,12 @@
     _service = nil;
     
     _netServiceType = nil;
+}
+
+- (BOOL)isBusy {
+    // DW: is busy sending and receiving
+    return ([_currentMessage.state isEqualToString:kWDMessageStateSending]
+            ||[_currentMessage.state isEqualToString:kWDMessageStateReceiving]);
 }
 
 - (float)percentTransfered {
