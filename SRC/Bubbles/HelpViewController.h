@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HelpViewController : UIViewController <UIScrollViewDelegate> {
+@interface HelpViewController : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate> {
     // To be used when scrolls originate from the UIPageControl
     BOOL pageControlUsed;
 }

@@ -9,7 +9,7 @@
 #import "HelpViewController.h"
 #import "WDHeader.h"
 
-#define kNumberOfPages  7
+#define kNumberOfPages  6
 
 @implementation HelpViewController
 @synthesize helpPages = _helpPages, helpPageControl = _helpPageControl;
@@ -25,12 +25,46 @@
                       [UIImage imageNamed:
                        [NSString stringWithFormat:@"help%i%i.png", 
                         [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad, page+1]]];
-    CGRect frame = _helpPages.frame;
-    frame.origin.x = frame.size.width * page;
-    frame.origin.y = 0;
-    t.frame = frame;
+    
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapFrom:)];
+	[t addGestureRecognizer:recognizer];
+    recognizer.delegate = self;
+	[recognizer release];
+    
     [_helpPages addSubview:t];
     [t release];
+}
+
+// DW: to support autorotate help pages
+- (void)resizeImages {
+    CGRect currentFrame;
+    
+    NSArray *subviews = [_helpPages subviews];
+    for (int i = 0; i < subviews.count; i++) {
+        // DW: get the currect frame, scale the image and set it's location (center)
+        UIImageView *t = [subviews objectAtIndex:i];
+        
+        // DW: get a good frame
+        CGRect frame = _helpPages.frame;
+        frame.origin.x = frame.size.width * i;
+        frame.origin.y = 0;
+        
+        // DW: if it's the current frame, store it for later use
+        if (i == _helpPageControl.currentPage) {
+            currentFrame = frame;
+        }
+        
+        // DW: record a good center
+        CGPoint center = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
+        
+        // DW: scale frame to image aspect, then set image
+        frame.size.width = t.frame.size.width*frame.size.height/t.frame.size.height;
+        t.frame = frame;
+        t.center = center;
+    }
+    
+    _helpPages.contentSize = CGSizeMake(_helpPages.frame.size.width * kNumberOfPages, _helpPages.frame.size.height);
+    [_helpPages scrollRectToVisible:currentFrame animated:YES];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -66,20 +100,41 @@
     
     // a page is the width of the scroll view
     _helpPages.pagingEnabled = YES;
-    _helpPages.contentSize = CGSizeMake(_helpPages.frame.size.width * kNumberOfPages, _helpPages.frame.size.height);
     _helpPages.showsHorizontalScrollIndicator = NO;
     _helpPages.showsVerticalScrollIndicator = NO;
     _helpPages.scrollsToTop = NO;
     _helpPages.delegate = self;
     
-    [UIApplication sharedApplication].statusBarHidden = YES;
+    // DW: add recognizer to _helpPages
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapFrom:)];
+	[_helpPages addGestureRecognizer:recognizer];
+    recognizer.delegate = self;
+	[recognizer release];
     
     for (int i = 0; i < kNumberOfPages; i++) {
         [self loadScrollViewWithPage:i];
     }
     
-    _helpPageControl.numberOfPages = kNumberOfPages-1;
+    _helpPageControl.numberOfPages = kNumberOfPages;
     _helpPageControl.currentPage = 0;
+    
+    // DW: register rotation event
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didRotate:)
+                                                 name:@"UIDeviceOrientationDidChangeNotification" 
+                                               object:nil];
+    
+    // DW: rotate view if needed
+    if (([UIDevice currentDevice].orientation == UIInterfaceOrientationLandscapeLeft)
+        ||([UIDevice currentDevice].orientation == UIInterfaceOrientationLandscapeRight)) {
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            self.view.frame = CGRectMake(0, 0, 1024, 748);
+        } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            self.view.frame = CGRectMake(0, 0, 480, 320);
+        }
+    }
+    
+    [self resizeImages];
 }
 
 - (void)viewDidUnload
@@ -91,9 +146,27 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    NSLog(@"HVC didRotateFromInterfaceOrientation");
+}
+
+- (void)didRotate:(NSNotification *)notification {
+    [self resizeImages];
+    return;
+    // DW: rotate view if needed
+    if ([UIDevice currentDevice].orientation == UIInterfaceOrientationLandscapeLeft) {
+        self.view.transform = CGAffineTransformMakeRotation(M_PI_2);
+    } else if ([UIDevice currentDevice].orientation == UIInterfaceOrientationLandscapeRight) {
+        self.view.transform = CGAffineTransformMakeRotation(M_PI_2*3);
+    } else if ([UIDevice currentDevice].orientation == UIInterfaceOrientationPortrait) {
+        self.view.transform = CGAffineTransformMakeRotation(0);
+    } else if ([UIDevice currentDevice].orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        self.view.transform = CGAffineTransformMakeRotation(M_PI);
+    }
+} 
 
 #pragma mark - IBActions
 
@@ -125,19 +198,6 @@
     CGFloat pageWidth = _helpPages.frame.size.width;
     int page = floor((_helpPages.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     _helpPageControl.currentPage = page;
-    
-    // DW: quit on last scroll
-    if (page >= kNumberOfPages-1) {
-        [UIApplication sharedApplication].statusBarHidden = NO;
-        [self.view removeFromSuperview];
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsShouldShowHelp];
-    }
-    // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
-    //[self loadScrollViewWithPage:page - 1];
-    //[self loadScrollViewWithPage:page];
-    //[self loadScrollViewWithPage:page + 1];
-    
-    // A possible optimization would be to unload the views+controllers which are no longer visible
 }
 
 // At the begin of scroll dragging, reset the boolean used when scrolls originate from the UIPageControl
@@ -148,6 +208,14 @@
 // At the end of scroll animation, reset the boolean used when scrolls originate from the UIPageControl
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     pageControlUsed = NO;
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (void)handleTapFrom:(UITapGestureRecognizer *)recognizer {
+    // DW: user taps to end the help
+    [self.view removeFromSuperview];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsShouldShowHelp];
 }
 
 @end
