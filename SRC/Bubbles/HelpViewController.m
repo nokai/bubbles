@@ -80,6 +80,19 @@
     
     _helpPageControl.numberOfPages = kNumberOfPages-1;
     _helpPageControl.currentPage = 0;
+    
+    // DW: register rotation event
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didRotate:)
+                                                 name:@"UIDeviceOrientationDidChangeNotification" 
+                                               object:nil];
+    
+    // DW: rotate view if needed
+    if ([UIDevice currentDevice].orientation == UIInterfaceOrientationLandscapeLeft) {
+        self.view.transform = CGAffineTransformMakeRotation(M_PI_2);
+    } else if ([UIDevice currentDevice].orientation == UIInterfaceOrientationLandscapeRight) {
+        self.view.transform = CGAffineTransformMakeRotation(M_PI_2*3);
+    }
 }
 
 - (void)viewDidUnload
@@ -91,9 +104,21 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    
+}
+
+- (void)didRotate:(NSNotification *)notification{  
+    // DW: rotate view if needed
+    if ([UIDevice currentDevice].orientation == UIInterfaceOrientationLandscapeLeft) {
+        self.view.transform = CGAffineTransformMakeRotation(M_PI_2);
+    } else if ([UIDevice currentDevice].orientation == UIInterfaceOrientationLandscapeRight) {
+        self.view.transform = CGAffineTransformMakeRotation(M_PI_2*3);
+    }
+} 
 
 #pragma mark - IBActions
 
