@@ -298,20 +298,20 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     WDMessage *message = (WDMessage *)data;
     if ([message.state isEqualToString: kWDMessageStateText]){
         NSString *string = [[[NSString alloc]initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
-        string = [string stringByReplacingOccurrencesOfString:@" " 
-                                                   withString:@"."];
         string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@"."];
-        if ([string length] >= 20) {
+        if ([string length] >= 25) {
+            NSString *temp = [string substringWithRange:NSMakeRange([string length] - 6 , 5)];
             string = [string substringWithRange:NSMakeRange(0,15)];
-            string = [string stringByAppendingString:@"......."];
+            string = [string stringByAppendingString:@"..."];
+            string = [string stringByAppendingString:temp];
         }
         return string;
     } else if ([message.state isEqualToString:kWDMessageStateFile]){
         if ([[message.fileURL lastPathComponent] length] >= 20) {
             NSInteger length = [[message.fileURL lastPathComponent] length];
             NSString *string = [[message.fileURL lastPathComponent] substringWithRange:NSMakeRange(0, 8)];
-            string = [string stringByAppendingString:@"..."];
-            string = [string stringByAppendingString:[[message.fileURL lastPathComponent] substringWithRange:NSMakeRange(length - 6, 3)]];
+            string = [string stringByAppendingString:@"......"];
+            string = [string stringByAppendingString:[[message.fileURL lastPathComponent] substringWithRange:NSMakeRange(length - 4, 3)]];
             return string;
         }  else {
             return [message.fileURL lastPathComponent];
