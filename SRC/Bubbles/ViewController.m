@@ -294,11 +294,13 @@
 
 - (void)lock {
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Lock" 
-                                                 message:@"Please input password:"
+                                                 message:@"Please input password (only numbers allowed):"
                                                 delegate:self 
                                        cancelButtonTitle:@"Cancel" 
                                        otherButtonTitles:@"OK", nil];
     av.alertViewStyle = UIAlertViewStyleSecureTextInput;
+    [av textFieldAtIndex:0].keyboardType = UIKeyboardTypeNumberPad;
+    [av textFieldAtIndex:0].delegate = self;
     [av show];
     [av release];
 }
@@ -655,6 +657,17 @@
     [self storeMessage:t];
     [t release];
 }
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *NUMBERS = @"0123456789";
+    if ([NUMBERS rangeOfString:string].location == NSNotFound) {
+        return NO;
+    }
+    return YES;
+}
+
 
 #pragma mark - UIAlertViewDelegate
 
