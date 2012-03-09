@@ -108,11 +108,13 @@
     }
     
     NSURL *storeURL = [NSURL URLWithString:
-                       [NSString stringWithFormat:@"%@%@.%@", 
+                       [NSString stringWithFormat:@"%@/%@.%@", 
                         [defaultURL absoluteString], 
                         currentFileName, 
                         [[self pathExtension] lowercaseString]]];
+    // DW: it is really overwhelming that the last "/" of a folder here exists in iOS, but not in Mac
 #endif
+    DLog(@"NSURL URLWithRemoteChangedToLocal %@", storeURL.path);
     return storeURL;
 }
 
@@ -148,6 +150,7 @@
                      [[self pathExtension] lowercaseString]]];
     }
 #endif
+    DLog(@"NSURL URLWithoutNameConflict %@", storeURL.path);
     return storeURL;
 }
 

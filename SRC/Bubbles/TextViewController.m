@@ -48,8 +48,7 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)dealloc {
-    [_popover release];
+- (void)dealloc { 
     [super dealloc];
 }
 

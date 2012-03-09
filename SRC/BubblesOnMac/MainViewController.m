@@ -160,7 +160,7 @@
         _sound = [[WDSound alloc] init];
         
         // DW: we specify user's home directory by NSHomeDirectory()
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"file://localhost%@/Downloads", NSHomeDirectory()]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"file://localhost%@/Downloads/", NSHomeDirectory()]];
         NSFileManager *fileManager= [NSFileManager defaultManager]; 
         if(![fileManager fileExistsAtPath:url.path isDirectory:nil])
             if(![fileManager createDirectoryAtPath:url.path withIntermediateDirectories:YES attributes:nil error:NULL])

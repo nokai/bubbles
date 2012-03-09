@@ -47,6 +47,7 @@ UISplitViewControllerDelegate> {
     NSMutableArray *_itemsToShow;
     NSMutableDictionary *_thumbnails; // DW: key is file url path
     UIPopoverController *_popover;
+    UIActionSheet *_actionSheet;
     UINavigationItem *_currentNavigationItem;   // DW: different in iPad and iPhone
     IBOutlet UINavigationBar *_bar;
     IBOutlet UISegmentedControl *_segmentSwith;

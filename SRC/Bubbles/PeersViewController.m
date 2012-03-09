@@ -51,7 +51,7 @@
                                              selector:@selector(servicesUpdated:) 
                                                  name:kWDBubbleNotificationServiceUpdated
                                                object:nil];
-    
+
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         // DW: if it's iPad, we do bubble here
         // DW: use password or not

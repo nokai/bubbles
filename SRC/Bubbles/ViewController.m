@@ -53,9 +53,9 @@
 - (void)refreshLockStatus {
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
     if (usePassword) {
-        _lockButton.image = [UIImage imageNamed:@"lock_on"];
+        _lockButton.image = [UIImage imageNamed:@"lock_on.png"];
     } else {
-        _lockButton.image = [UIImage imageNamed:@"lock_off"];
+        _lockButton.image = [UIImage imageNamed:@"lock_off.png"];
     }
 }
 
@@ -208,6 +208,21 @@
     [av release];
 }
 
+- (void)dismissOtherPopovers {
+    // DW: we do not show multiple popovers at one time
+    if (_popover) {
+        [_popover dismissPopoverAnimated:YES];
+        [_popover release];
+        _popover = nil;
+    }
+    
+    if (_actionSheet) {
+        [_actionSheet dismissWithClickedButtonIndex:_actionSheet.cancelButtonIndex animated:YES];
+        [_actionSheet release];
+        _actionSheet = nil;
+    }
+}
+
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
     if (error != nil) {
         
@@ -354,15 +369,17 @@
     }
     _currentNavigationItem.rightBarButtonItem = self.editButtonItem;
     
-    // DW: use password or not
-    BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
-    if (usePassword) {
-        [self lock];
-    } else {
-        [_bubble publishServiceWithPassword:@""];
-        [_bubble browseServices];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+        // DW: use password or not
+        BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
+        if (usePassword) {
+            [self lock];
+        } else {
+            [_bubble publishServiceWithPassword:@""];
+            [_bubble browseServices];
+        }
+        [self refreshLockStatus];
     }
-    [self refreshLockStatus];
     
     [_messagesView reloadData];
 }
@@ -415,6 +432,7 @@
         [_currentNavigationItem setLeftBarButtonItem:_clearButton animated:YES];
     } else {
         [_currentNavigationItem setLeftBarButtonItem:nil animated:YES];
+        [self dismissOtherPopovers];
     }
 }
 
@@ -432,6 +450,8 @@
     
     UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [self dismissOtherPopovers];
+        
         _popover = [[UIPopoverController alloc] initWithContentViewController:nv];
         vc.popover = _popover;
         UIBarButtonItem *b = (UIBarButtonItem *)sender;
@@ -453,6 +473,8 @@
         t.delegate = self;
         
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            [self dismissOtherPopovers];
+            
             _popover = [[UIPopoverController alloc] initWithContentViewController:t];
             UIBarButtonItem *b = (UIBarButtonItem *)sender;
             [_popover presentPopoverFromBarButtonItem:b permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
@@ -476,14 +498,14 @@
 }
 
 - (IBAction)showHelp:(id)sender {
+    [self dismissOtherPopovers];
     
-    UIActionSheet *as = [[UIActionSheet alloc] initWithTitle:nil
+    _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                     delegate:self 
                                            cancelButtonTitle:kActionSheetButtonCancel
                                       destructiveButtonTitle:nil
                                            otherButtonTitles:kActionSheetButtonHelpPDF, kActionSheetButtonHelpSplash, nil];
-    [as showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
-    [as release];
+    [_actionSheet showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
 }
 
 - (IBAction)toggleUsePassword:(id)sender {
@@ -510,13 +532,14 @@
 }
 
 - (IBAction)clearButton:(id)sender {
-    UIActionSheet *as = [[UIActionSheet alloc] initWithTitle:nil
+    [self dismissOtherPopovers];
+    
+    _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                     delegate:self 
                                            cancelButtonTitle:kActionSheetButtonCancel
                                       destructiveButtonTitle:kActionSheetButtonDeleteAll
                                            otherButtonTitles:nil];
-    [as showFromBarButtonItem:_clearButton animated:YES];
-    [as release];
+    [_actionSheet showFromBarButtonItem:_clearButton animated:YES];
 }
 
 #pragma mark - WDBubbleDelegate
@@ -659,7 +682,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     WDMessage *t = nil;
-    UIActionSheet *as = nil;
+    [self dismissOtherPopovers];
     
     // DW: construct a WDMessage
     if (_segmentSwith.selectedSegmentIndex == kSegmentControlHistory) {
@@ -671,20 +694,20 @@
     
     // DW: chose an action
     if ([t.state isEqualToString: kWDMessageStateText]) {
-        as = [[UIActionSheet alloc] initWithTitle:nil
+        _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                          delegate:self 
                                 cancelButtonTitle:kActionSheetButtonCancel
                            destructiveButtonTitle:nil
                                 otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonMessage, nil];
     } else if ([t.state isEqualToString:kWDMessageStateFile]) {
         if ([WDMessage isImageURL:t.fileURL]) {
-            as = [[UIActionSheet alloc] initWithTitle:nil
+            _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self 
                                     cancelButtonTitle:kActionSheetButtonCancel
                                destructiveButtonTitle:nil
                                     otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonPreview, kActionSheetButtonSave, nil];
         } else {
-            as = [[UIActionSheet alloc] initWithTitle:nil
+            _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self 
                                     cancelButtonTitle:kActionSheetButtonCancel
                                destructiveButtonTitle:nil
@@ -694,20 +717,19 @@
         // DW: states such as kWDMessageStateReadyToReceive, kWDMessageStateReadyToSend, kWDMessageStateSending
         // we can do a "Pause" feature here
         DLog(@"VC didSelectRowAtIndexPath %@", t.state);
-        as = [[UIActionSheet alloc] initWithTitle:nil
+        _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                          delegate:self 
                                 cancelButtonTitle:kActionSheetButtonCancel
                            destructiveButtonTitle:kActionSheetButtonTransferTerminate
                                 otherButtonTitles:nil];
     }
     
-    if (as) {
+    if (_actionSheet) {
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            [as showFromRect:[tableView cellForRowAtIndexPath:indexPath].frame inView:_messagesView animated:YES];
+            [_actionSheet showFromRect:[tableView cellForRowAtIndexPath:indexPath].frame inView:_messagesView animated:YES];
         } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-            [as showFromToolbar:self.navigationController.toolbar];
+            [_actionSheet showFromToolbar:self.navigationController.toolbar];
         }
-        [as release];
     }
     
     [t release];
@@ -882,6 +904,10 @@
     } else if ([buttonTitle isEqualToString:kActionSheetButtonCancel]) {
         // DW: just refresh to avoid a selected cell
         [_messagesView reloadData];
+        if (_actionSheet) {
+            [_actionSheet release];
+            _actionSheet = nil;
+        }
         return;
     }
     

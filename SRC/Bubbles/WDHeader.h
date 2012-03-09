@@ -34,8 +34,8 @@
 
 // DW: error messages
 #define kWDBubbleErrorMessageTerminatedBySender     @"Delivery is terminated by sender."
-#define kWDBubbleErrorMessageDisconnectWithError    @"Either delivery is terminated by receiver or the network condition is bad."
-#define kWDBubbleErrorMessageDoNotSupportMultiple   @"There is already a delivery ongoing, multiple deliveries will be supported in the future. Thank you."
+#define kWDBubbleErrorMessageDisconnectWithError    @"Either delivery is terminated by receiver or the network condition is bad.\n\nYou may fix this problem by restarting Deliver."
+#define kWDBubbleErrorMessageDoNotSupportMultiple   @"There is already a delivery ongoing, multiple deliveries will be supported in the future.\n\nYou may fix this problem by restarting Deliver."
 #define kWDBubbleErrorMessageNoDeviceSelected       @"Please select a device to deliver."
 
 #endif
