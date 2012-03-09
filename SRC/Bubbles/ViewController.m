@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "AppDelegate.h"
 #import "UIImage+Resize.h"
 #import "UIImage+Normalize.h"
 #import <MobileCoreServices/UTType.h>
@@ -208,6 +209,23 @@
     [av release];
 }
 
+- (void)displayHelpSplashScreen {
+    if (_helpViewController) {
+        [_helpViewController release];
+        _helpViewController = nil;
+    }
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+        _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil];
+        //[self.view addSubview:_helpViewController.view];
+        [self.navigationController.view addSubview:_helpViewController.view];
+    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil];
+        [self.splitViewController.view addSubview:_helpViewController.view];
+    }
+    
+}
+
 - (void)dismissOtherPopovers {
     // DW: we do not show multiple popovers at one time
     if (_popover) {
@@ -321,21 +339,15 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsShouldShowHelp]) {
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-            _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil];
-            [self.view addSubview:_helpViewController.view];
-        } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil];
-            [[UIApplication sharedApplication].keyWindow addSubview:_helpViewController.view];
-        }
-    }
+    // DW: help
+    NSDictionary *t = [NSDictionary dictionaryWithObject:@"YES" forKey:kUserDefaultsShouldShowHelp];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:t];
     
     // DW: sound
     _sound = [[WDSound alloc] init];
     
     // DW: user defauts
-    NSDictionary *t = [NSDictionary dictionaryWithObject:@"NO" forKey:kUserDefaultsUsePassword];
+    t = [NSDictionary dictionaryWithObject:@"NO" forKey:kUserDefaultsUsePassword];
     [[NSUserDefaults standardUserDefaults] registerDefaults:t];
     
     // DW: NC
@@ -409,6 +421,9 @@
      DLog(@"VC viewDidLoad preview %d", [interactionController presentPreviewAnimated:YES]);
      }
      */
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsShouldShowHelp]) {
+        [self displayHelpSplashScreen];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -901,18 +916,7 @@
         [interactionController presentPreviewAnimated:YES];
         return;
     } else if ([buttonTitle isEqualToString:kActionSheetButtonHelpSplash]) {
-        if (_helpViewController) {
-            [_helpViewController release];
-            _helpViewController = nil;
-        }
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-            _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil];
-            //[self.view addSubview:_helpViewController.view];
-        } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil];
-            
-        }
-        [[UIApplication sharedApplication].keyWindow addSubview:_helpViewController.view];
+        [self displayHelpSplashScreen];
         return;
     } else if ([buttonTitle isEqualToString:kActionSheetButtonCancel]) {
         // DW: just refresh to avoid a selected cell

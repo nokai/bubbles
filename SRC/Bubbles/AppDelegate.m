@@ -17,7 +17,6 @@
 @synthesize peersViewController = _peersViewController, viewController = _viewController, splitViewController = _splitViewController, navigationController = _navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
     // DW: we support opening files, check launchOptions here
     NSURL *newURL = nil;
     if (launchOptions) {
@@ -48,7 +47,6 @@
         //self.splitViewController.viewControllers = [NSArray arrayWithObjects:masterNavigationController, detailViewController, nil];
         
         self.window.rootViewController = self.splitViewController;
-        [self.window makeKeyAndVisible];
     } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {        
         // Override point for customization after application launch.
         //self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
