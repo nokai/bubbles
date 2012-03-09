@@ -47,7 +47,6 @@
               ||([message.state isEqualToString:kWDMessageStateText]))) {
             [_bubbles terminateTransfer];
             
-            _isDuringTerminate = TRUE;
             // Wu:Remove all unstable 
             NSArray *originalArray = [NSArray arrayWithArray:_fileHistoryArray];
             for (WDMessage *m in originalArray) {
@@ -86,8 +85,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _fileHistoryArray = [[NSMutableArray alloc]init];
-        
-        _isDuringTerminate = FALSE;
     }
     
     return self;
@@ -141,7 +138,7 @@
 
 - (void)refreshButton
 {
-    if ([_fileHistoryArray count] != 0 && _isDuringTerminate) {
+    if ([_fileHistoryArray count] != 0) {
         
         [_removeButton setHidden:NO];
     } else
@@ -178,7 +175,6 @@
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kRestoreLabelAndImage object:nil];
-    _isDuringTerminate = FALSE;
     [self refreshButton];
     [_fileHistoryTableView reloadData];
 }
@@ -190,9 +186,28 @@
     if ([_fileHistoryArray count] == 0) {
         return ;
     } else {
-        [_fileHistoryArray removeAllObjects];
-        [_fileHistoryTableView noteNumberOfRowsChanged];
-        [_fileHistoryTableView reloadData];
+        BOOL willTerminate = FALSE;
+        
+        // Wu:Remove all unstable at first
+        NSArray *originalArray = [NSArray arrayWithArray:_fileHistoryArray];
+        for (WDMessage *m in originalArray) {
+            if (![m.state isEqualToString:kWDMessageStateFile] && ![m.state isEqualToString:kWDMessageStateText]) {
+                DLog(@"gosh");
+                willTerminate = TRUE;
+                [self deleteMessageFromHistory:m];
+            }
+        }
+        
+        if (willTerminate) {
+            [_bubbles terminateTransfer];
+        }
+        
+        // Wu:Remove other files;
+        if ([_fileHistoryArray count] != 0) {
+            [_fileHistoryArray removeAllObjects];
+            [_fileHistoryTableView noteNumberOfRowsChanged];
+            [_fileHistoryTableView reloadData];
+        }
     }
     
     // Wu:Force it to close
@@ -283,20 +298,20 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     WDMessage *message = (WDMessage *)data;
     if ([message.state isEqualToString: kWDMessageStateText]){
         NSString *string = [[[NSString alloc]initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
-        string = [string stringByReplacingOccurrencesOfString:@" " 
-                                                   withString:@"."];
         string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@"."];
-        if ([string length] >= 20) {
+        if ([string length] >= 25) {
+            NSString *temp = [string substringWithRange:NSMakeRange([string length] - 6 , 5)];
             string = [string substringWithRange:NSMakeRange(0,15)];
-            string = [string stringByAppendingString:@"......."];
+            string = [string stringByAppendingString:@"..."];
+            string = [string stringByAppendingString:temp];
         }
         return string;
     } else if ([message.state isEqualToString:kWDMessageStateFile]){
         if ([[message.fileURL lastPathComponent] length] >= 20) {
             NSInteger length = [[message.fileURL lastPathComponent] length];
             NSString *string = [[message.fileURL lastPathComponent] substringWithRange:NSMakeRange(0, 8)];
-            string = [string stringByAppendingString:@"..."];
-            string = [string stringByAppendingString:[[message.fileURL lastPathComponent] substringWithRange:NSMakeRange(length - 6, 3)]];
+            string = [string stringByAppendingString:@"......"];
+            string = [string stringByAppendingString:[[message.fileURL lastPathComponent] substringWithRange:NSMakeRange(length - 4, 3)]];
             return string;
         }  else {
             return [message.fileURL lastPathComponent];
