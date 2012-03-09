@@ -29,8 +29,6 @@
     IBOutlet NSButton *_removeButton;
     
     WDBubble *_bubbles;
-    
-    BOOL _isDuringTerminate;
 }
 
 @property (nonatomic ,retain) NSPopover *historyPopOver;

@@ -47,7 +47,6 @@
               ||([message.state isEqualToString:kWDMessageStateText]))) {
             [_bubbles terminateTransfer];
             
-            _isDuringTerminate = TRUE;
             // Wu:Remove all unstable 
             NSArray *originalArray = [NSArray arrayWithArray:_fileHistoryArray];
             for (WDMessage *m in originalArray) {
@@ -86,8 +85,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _fileHistoryArray = [[NSMutableArray alloc]init];
-        
-        _isDuringTerminate = FALSE;
     }
     
     return self;
@@ -141,7 +138,7 @@
 
 - (void)refreshButton
 {
-    if ([_fileHistoryArray count] != 0 && _isDuringTerminate) {
+    if ([_fileHistoryArray count] != 0) {
         
         [_removeButton setHidden:NO];
     } else
@@ -178,7 +175,6 @@
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kRestoreLabelAndImage object:nil];
-    _isDuringTerminate = FALSE;
     [self refreshButton];
     [_fileHistoryTableView reloadData];
 }
@@ -190,9 +186,28 @@
     if ([_fileHistoryArray count] == 0) {
         return ;
     } else {
-        [_fileHistoryArray removeAllObjects];
-        [_fileHistoryTableView noteNumberOfRowsChanged];
-        [_fileHistoryTableView reloadData];
+        BOOL willTerminate = FALSE;
+        
+        // Wu:Remove all unstable at first
+        NSArray *originalArray = [NSArray arrayWithArray:_fileHistoryArray];
+        for (WDMessage *m in originalArray) {
+            if (![m.state isEqualToString:kWDMessageStateFile] && ![m.state isEqualToString:kWDMessageStateText]) {
+                DLog(@"gosh");
+                willTerminate = TRUE;
+                [self deleteMessageFromHistory:m];
+            }
+        }
+        
+        if (willTerminate) {
+            [_bubbles terminateTransfer];
+        }
+        
+        // Wu:Remove other files;
+        if ([_fileHistoryArray count] != 0) {
+            [_fileHistoryArray removeAllObjects];
+            [_fileHistoryTableView noteNumberOfRowsChanged];
+            [_fileHistoryTableView reloadData];
+        }
     }
     
     // Wu:Force it to close
