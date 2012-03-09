@@ -16,7 +16,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        DLog(@"TextViewController");
+    
     }
     return self;
 }
