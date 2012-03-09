@@ -69,10 +69,10 @@
 											<string>WebURLsWithTitlesPboardType</string>
 											<string>public.url</string>
 										</set>
-										<string key="NSFrameSize">{396, 12}</string>
+										<string key="NSFrameSize">{381, 12}</string>
 										<reference key="NSSuperview" ref="899786706"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="896482774"/>
+										<reference key="NSNextKeyView" ref="1037716809"/>
 										<string key="NSReuseIdentifierKey">_NS:1480</string>
 										<object class="NSTextContainer" key="NSTextContainer" id="965603486">
 											<object class="NSLayoutManager" key="NSLayoutManager">
@@ -89,7 +89,7 @@
 												<nil key="NSDelegate"/>
 											</object>
 											<reference key="NSTextView" ref="312380960"/>
-											<double key="NSWidth">396</double>
+											<double key="NSWidth">381</double>
 											<int key="NSTCFlags">1</int>
 										</object>
 										<object class="NSTextViewSharedData" key="NSSharedData">
@@ -142,7 +142,7 @@
 										<nil key="NSDelegate"/>
 									</object>
 								</array>
-								<string key="NSFrameSize">{380, 189}</string>
+								<string key="NSFrameSize">{365, 189}</string>
 								<reference key="NSSuperview" ref="421809714"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="312380960"/>
@@ -182,11 +182,10 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							</object>
 							<object class="NSScroller" id="896482774">
 								<reference key="NSNextResponder" ref="421809714"/>
-								<int key="NSvFlags">-2147483392</int>
-								<string key="NSFrame">{{-100, -100}, {15, 189}}</string>
+								<int key="NSvFlags">256</int>
+								<string key="NSFrame">{{365, 0}, {15, 189}}</string>
 								<reference key="NSSuperview" ref="421809714"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:1494</string>
 								<reference key="NSTarget" ref="421809714"/>
 								<string key="NSAction">_doScroller:</string>
@@ -211,9 +210,9 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<string key="NSFrameSize">{380, 189}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1037716809"/>
+						<reference key="NSNextKeyView" ref="899786706"/>
 						<string key="NSReuseIdentifierKey">_NS:940</string>
-						<int key="NSsFlags">149632</int>
+						<int key="NSsFlags">149648</int>
 						<reference key="NSVScroller" ref="896482774"/>
 						<reference key="NSHScroller" ref="1037716809"/>
 						<reference key="NSContentView" ref="899786706"/>
@@ -226,7 +225,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSScrollView" id="412201200">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">256</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSClipView" id="203337125">
@@ -332,7 +331,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					</object>
 				</array>
 				<string key="NSFrameSize">{240, 135}</string>
-				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="203337125"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<int key="NSsFlags">133138</int>
@@ -341,7 +339,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<reference key="NSContentView" ref="203337125"/>
 			</object>
 			<object class="NSScrollView" id="913071476">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">256</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSClipView" id="370733231">
@@ -447,7 +445,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					</object>
 				</array>
 				<string key="NSFrameSize">{240, 135}</string>
-				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="370733231"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<int key="NSsFlags">133138</int>
