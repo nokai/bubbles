@@ -69,15 +69,12 @@
 		C1057A8E14FE0BB700D02DA4 /* help04.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8014FE0BB700D02DA4 /* help04.png */; };
 		C1057A8F14FE0BB700D02DA4 /* help05.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8114FE0BB700D02DA4 /* help05.png */; };
 		C1057A9014FE0BB700D02DA4 /* help06.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8214FE0BB700D02DA4 /* help06.png */; };
-		C1057A9114FE0BB700D02DA4 /* help07.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8314FE0BB700D02DA4 /* help07.png */; };
 		C1057A9214FE0BB700D02DA4 /* help11.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8414FE0BB700D02DA4 /* help11.png */; };
 		C1057A9314FE0BB700D02DA4 /* help12.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8514FE0BB700D02DA4 /* help12.png */; };
 		C1057A9414FE0BB700D02DA4 /* help13.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8614FE0BB700D02DA4 /* help13.png */; };
 		C1057A9514FE0BB700D02DA4 /* help14.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8714FE0BB700D02DA4 /* help14.png */; };
 		C1057A9614FE0BB700D02DA4 /* help15.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8814FE0BB700D02DA4 /* help15.png */; };
 		C1057A9714FE0BB700D02DA4 /* help16.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8914FE0BB700D02DA4 /* help16.png */; };
-		C1057A9814FE0BB700D02DA4 /* help17.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A8A14FE0BB700D02DA4 /* help17.png */; };
-		C1057A9A14FE148B00D02DA4 /* manual.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9914FE148B00D02DA4 /* manual.pdf */; };
 		C1057AA114FE231000D02DA4 /* _mac_bubbles_0.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9B14FE231000D02DA4 /* _mac_bubbles_0.png */; };
 		C1057AA214FE231000D02DA4 /* _mac_bubbles_1.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9C14FE231000D02DA4 /* _mac_bubbles_1.png */; };
 		C1057AA314FE231000D02DA4 /* _pad_bubbles_0.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9D14FE231000D02DA4 /* _pad_bubbles_0.png */; };
@@ -149,6 +146,7 @@
 		C1CFCD2214B985D2008A1B1F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CFCD2114B985D2008A1B1F /* ViewController.m */; };
 		C1CFCD3014B986CB008A1B1F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C1CFCD2C14B986CB008A1B1F /* Default.png */; };
 		C1CFCD3114B986CB008A1B1F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1CFCD2D14B986CB008A1B1F /* Default@2x.png */; };
+		C1E03DC1150F72F000571248 /* Manual.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C1E03DC0150F72F000571248 /* Manual.pdf */; };
 		C1F0A54314FFC9C00048B02E /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A54214FFC9BF0048B02E /* MainWindow.xib */; };
 		C1F0A55114FFECFD0048B02E /* button_help.png in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A54F14FFECFD0048B02E /* button_help.png */; };
 		C1F0A55214FFECFD0048B02E /* button_help@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A55014FFECFD0048B02E /* button_help@2x.png */; };
@@ -229,15 +227,12 @@
 		C1057A8014FE0BB700D02DA4 /* help04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help04.png; path = Resources/iPhone/help04.png; sourceTree = SOURCE_ROOT; };
 		C1057A8114FE0BB700D02DA4 /* help05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help05.png; path = Resources/iPhone/help05.png; sourceTree = SOURCE_ROOT; };
 		C1057A8214FE0BB700D02DA4 /* help06.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help06.png; path = Resources/iPhone/help06.png; sourceTree = SOURCE_ROOT; };
-		C1057A8314FE0BB700D02DA4 /* help07.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help07.png; path = Resources/iPhone/help07.png; sourceTree = SOURCE_ROOT; };
 		C1057A8414FE0BB700D02DA4 /* help11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help11.png; path = Resources/iPhone/help11.png; sourceTree = SOURCE_ROOT; };
 		C1057A8514FE0BB700D02DA4 /* help12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help12.png; path = Resources/iPhone/help12.png; sourceTree = SOURCE_ROOT; };
 		C1057A8614FE0BB700D02DA4 /* help13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help13.png; path = Resources/iPhone/help13.png; sourceTree = SOURCE_ROOT; };
 		C1057A8714FE0BB700D02DA4 /* help14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help14.png; path = Resources/iPhone/help14.png; sourceTree = SOURCE_ROOT; };
 		C1057A8814FE0BB700D02DA4 /* help15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help15.png; path = Resources/iPhone/help15.png; sourceTree = SOURCE_ROOT; };
 		C1057A8914FE0BB700D02DA4 /* help16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help16.png; path = Resources/iPhone/help16.png; sourceTree = SOURCE_ROOT; };
-		C1057A8A14FE0BB700D02DA4 /* help17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help17.png; path = Resources/iPhone/help17.png; sourceTree = SOURCE_ROOT; };
-		C1057A9914FE148B00D02DA4 /* manual.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = manual.pdf; path = Resources/manual.pdf; sourceTree = SOURCE_ROOT; };
 		C1057A9B14FE231000D02DA4 /* _mac_bubbles_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _mac_bubbles_0.png; path = Resources/iPhone/_mac_bubbles_0.png; sourceTree = SOURCE_ROOT; };
 		C1057A9C14FE231000D02DA4 /* _mac_bubbles_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _mac_bubbles_1.png; path = Resources/iPhone/_mac_bubbles_1.png; sourceTree = SOURCE_ROOT; };
 		C1057A9D14FE231000D02DA4 /* _pad_bubbles_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = _pad_bubbles_0.png; path = Resources/iPhone/_pad_bubbles_0.png; sourceTree = SOURCE_ROOT; };
@@ -327,6 +322,7 @@
 		C1CFCD2114B985D2008A1B1F /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = Bubbles/ViewController.m; sourceTree = SOURCE_ROOT; };
 		C1CFCD2C14B986CB008A1B1F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		C1CFCD2D14B986CB008A1B1F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
+		C1E03DC0150F72F000571248 /* Manual.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Manual.pdf; path = Resources/Manual.pdf; sourceTree = SOURCE_ROOT; };
 		C1F0A50214FFB9C40048B02E /* kWDSoundFileReceived.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = kWDSoundFileReceived.aif; sourceTree = "<group>"; };
 		C1F0A50314FFB9C40048B02E /* kWDSoundFileSent.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = kWDSoundFileSent.aif; sourceTree = "<group>"; };
 		C1F0A54214FFC9BF0048B02E /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow.xib; path = Bubbles/MainWindow.xib; sourceTree = SOURCE_ROOT; };
@@ -576,7 +572,7 @@
 				C192663F14ECD74B0090D8F7 /* Help */,
 				C18B6F7B14DCC8E7009F502E /* Icon-Text.png */,
 				C18B6F7C14DCC8E7009F502E /* Icon-Text@2x.png */,
-				C1057A9914FE148B00D02DA4 /* manual.pdf */,
+				C1E03DC0150F72F000571248 /* Manual.pdf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -603,14 +599,12 @@
 				C1057A8014FE0BB700D02DA4 /* help04.png */,
 				C1057A8114FE0BB700D02DA4 /* help05.png */,
 				C1057A8214FE0BB700D02DA4 /* help06.png */,
-				C1057A8314FE0BB700D02DA4 /* help07.png */,
 				C1057A8414FE0BB700D02DA4 /* help11.png */,
 				C1057A8514FE0BB700D02DA4 /* help12.png */,
 				C1057A8614FE0BB700D02DA4 /* help13.png */,
 				C1057A8714FE0BB700D02DA4 /* help14.png */,
 				C1057A8814FE0BB700D02DA4 /* help15.png */,
 				C1057A8914FE0BB700D02DA4 /* help16.png */,
-				C1057A8A14FE0BB700D02DA4 /* help17.png */,
 			);
 			name = Help;
 			sourceTree = "<group>";
@@ -811,15 +805,12 @@
 				C1057A8E14FE0BB700D02DA4 /* help04.png in Resources */,
 				C1057A8F14FE0BB700D02DA4 /* help05.png in Resources */,
 				C1057A9014FE0BB700D02DA4 /* help06.png in Resources */,
-				C1057A9114FE0BB700D02DA4 /* help07.png in Resources */,
 				C1057A9214FE0BB700D02DA4 /* help11.png in Resources */,
 				C1057A9314FE0BB700D02DA4 /* help12.png in Resources */,
 				C1057A9414FE0BB700D02DA4 /* help13.png in Resources */,
 				C1057A9514FE0BB700D02DA4 /* help14.png in Resources */,
 				C1057A9614FE0BB700D02DA4 /* help15.png in Resources */,
 				C1057A9714FE0BB700D02DA4 /* help16.png in Resources */,
-				C1057A9814FE0BB700D02DA4 /* help17.png in Resources */,
-				C1057A9A14FE148B00D02DA4 /* manual.pdf in Resources */,
 				C1057AA114FE231000D02DA4 /* _mac_bubbles_0.png in Resources */,
 				C1057AA214FE231000D02DA4 /* _mac_bubbles_1.png in Resources */,
 				C1057AA314FE231000D02DA4 /* _pad_bubbles_0.png in Resources */,
@@ -830,6 +821,7 @@
 				C1F0A55114FFECFD0048B02E /* button_help.png in Resources */,
 				C1F0A55214FFECFD0048B02E /* button_help@2x.png in Resources */,
 				C18E4BDC14FFF81200D642A9 /* MainWindow_iPad.xib in Resources */,
+				C1E03DC1150F72F000571248 /* Manual.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

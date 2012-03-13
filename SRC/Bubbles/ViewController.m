@@ -910,7 +910,7 @@
         [self setEditing:NO animated:YES];
         return;
     } else if ([buttonTitle isEqualToString:kActionSheetButtonHelpPDF]) {
-        NSURL *manualURL = [[NSBundle mainBundle] URLForResource:@"manual" withExtension:@"pdf"];
+        NSURL *manualURL = [[NSBundle mainBundle] URLForResource:@"Manual" withExtension:@"pdf"];
         UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:manualURL] retain];
         interactionController.delegate = self;
         [interactionController presentPreviewAnimated:YES];
