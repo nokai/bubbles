@@ -129,7 +129,7 @@
         ||([UIDevice currentDevice].orientation == UIInterfaceOrientationLandscapeRight)) {
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             self.view.frame = CGRectMake(0, 0, 1024, 748);
-        } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
             self.view.frame = CGRectMake(0, 0, 480, 320);
         }
     }
