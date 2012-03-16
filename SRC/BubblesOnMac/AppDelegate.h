@@ -10,7 +10,7 @@
 #import "WDBubble.h"
 #import <Quartz/Quartz.h>
 
-#define kFirstUseKey @"kFirstUseKey"
+#define kFirstUseKey @"kUpdateFirstUseKey"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate,QLPreviewPanelDataSource,QLPreviewPanelDelegate>
 {

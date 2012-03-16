@@ -12,7 +12,7 @@
 //#define TEMP_USE_OLD_WDBUBBLE
 
 // DW: user defaults
-#define kUserDefaultMacSavingPath       @"kUserDefaultMacSavingPath"
+#define kUserDefaultMacSavingPath       @"kNewUserDefaultMacSavingPath"
 #define kUserDefaultsUsePassword        @"kUserDefaultsUsePassword"
 #define kUserDefaultsShouldShowHelp     @"kUserDefaultsShouldShowHelp"
 
