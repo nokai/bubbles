@@ -738,7 +738,7 @@
 		C121945614B591D700159A9F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "BMW Group ConnectedDrive Lab China";
 			};
 			buildConfigurationList = C121945914B591D700159A9F /* Build configuration list for PBXProject "Bubbles" */;
@@ -1067,7 +1067,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = BubblesOnMac/BubblesOnMac.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Hongming Zhu";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "3rd Party Mac Developer Application: Hongming Zhu";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
@@ -1081,7 +1081,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Deliver;
 				PROVISIONING_PROFILE = "97FD90E7-374C-4357-A8EB-B6052EE7D9E2";
-				SDKROOT = macosx;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "97FD90E7-374C-4357-A8EB-B6052EE7D9E2";
+				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1093,7 +1094,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = BubblesOnMac/BubblesOnMac.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Hongming Zhu";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "3rd Party Mac Developer Application: Hongming Zhu";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1107,7 +1108,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Deliver;
 				PROVISIONING_PROFILE = "97FD90E7-374C-4357-A8EB-B6052EE7D9E2";
-				SDKROOT = macosx;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "97FD90E7-374C-4357-A8EB-B6052EE7D9E2";
+				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

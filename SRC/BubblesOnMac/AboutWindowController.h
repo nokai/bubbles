@@ -10,4 +10,8 @@
 
 @interface AboutWindowController : NSWindowController
 
+@property (nonatomic, retain) IBOutlet NSTextField *infoProductName;
+@property (nonatomic, retain) IBOutlet NSTextField *infoVersion;
+@property (nonatomic, retain) IBOutlet NSTextField *infoCopyright;
+
 @end
