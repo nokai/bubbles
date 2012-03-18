@@ -174,7 +174,7 @@
         DLog(@"VC displayMailComposerSheetWithMessage UTI %@", [res MIMEType]);
         [picker addAttachmentData:myData 
                          mimeType:[ViewController mimeTypeForFileAtPath:message.fileURL.path]
-                         fileName:[message.fileURL URLByDeletingPathExtension].lastPathComponent];
+                         fileName:message.fileURL.lastPathComponent];
 	}
     
 	[self presentModalViewController:picker animated:YES];

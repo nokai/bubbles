@@ -109,6 +109,10 @@
 		C1393F0A14D90C83005AFEB6 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1393F0814D90C83005AFEB6 /* TextViewController.m */; };
 		C1393F0B14D90C83005AFEB6 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1393F0914D90C83005AFEB6 /* TextViewController.xib */; };
 		C1393F2814D91BBF005AFEB6 /* UINavigationBar+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */; };
+		C15151A11515DA49009CE9A0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C15151A31515DA49009CE9A0 /* Localizable.strings */; };
+		C15151A51515DA7F009CE9A0 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = C15151A71515DA7F009CE9A0 /* MainWindow.xib */; };
+		C15151B11515DBC0009CE9A0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C15151B31515DBC0009CE9A0 /* InfoPlist.strings */; };
+		C15151BE1515DCB8009CE9A0 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C15151C01515DCB8009CE9A0 /* ViewController.xib */; };
 		C15859C514FA31CD0097FD41 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C15859C414FA31CD0097FD41 /* Default-Portrait~ipad.png */; };
 		C15859C814FA33250097FD41 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C15859C714FA33250097FD41 /* Default-Landscape~ipad.png */; };
 		C167CE0D14E8F3A700B419CD /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = C167CE0C14E8F3A700B419CD /* UIImage+Resize.m */; };
@@ -142,12 +146,10 @@
 		C1CFCD1614B98552008A1B1F /* WDBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CFCD1114B98552008A1B1F /* WDBubble.m */; };
 		C1CFCD1714B98552008A1B1F /* WDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CFCD1314B98552008A1B1F /* WDMessage.m */; };
 		C1CFCD1C14B985AE008A1B1F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CFCD1A14B985AE008A1B1F /* main.m */; };
-		C1CFCD1F14B985CC008A1B1F /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CFCD1D14B985CC008A1B1F /* ViewController.xib */; };
 		C1CFCD2214B985D2008A1B1F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CFCD2114B985D2008A1B1F /* ViewController.m */; };
 		C1CFCD3014B986CB008A1B1F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C1CFCD2C14B986CB008A1B1F /* Default.png */; };
 		C1CFCD3114B986CB008A1B1F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1CFCD2D14B986CB008A1B1F /* Default@2x.png */; };
 		C1E03DC1150F72F000571248 /* Manual.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C1E03DC0150F72F000571248 /* Manual.pdf */; };
-		C1F0A54314FFC9C00048B02E /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A54214FFC9BF0048B02E /* MainWindow.xib */; };
 		C1F0A55114FFECFD0048B02E /* button_help.png in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A54F14FFECFD0048B02E /* button_help.png */; };
 		C1F0A55214FFECFD0048B02E /* button_help@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A55014FFECFD0048B02E /* button_help@2x.png */; };
 		C1F4B9AC14E8E39900E878CD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1F4B9AB14E8E39900E878CD /* MobileCoreServices.framework */; };
@@ -272,6 +274,14 @@
 		C1393F0914D90C83005AFEB6 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TextViewController.xib; path = Bubbles/TextViewController.xib; sourceTree = SOURCE_ROOT; };
 		C1393F2614D91BBF005AFEB6 /* UINavigationBar+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+Custom.h"; path = "Bubbles/UINavigationBar+Custom.h"; sourceTree = SOURCE_ROOT; };
 		C1393F2714D91BBF005AFEB6 /* UINavigationBar+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+Custom.m"; path = "Bubbles/UINavigationBar+Custom.m"; sourceTree = SOURCE_ROOT; };
+		C15151A21515DA49009CE9A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C15151A41515DA55009CE9A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C15151A61515DA7F009CE9A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		C15151A81515DA84009CE9A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/MainWindow.xib"; sourceTree = "<group>"; };
+		C15151B21515DBC0009CE9A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C15151B41515DBC6009CE9A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		C15151BF1515DCB8009CE9A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		C15151C11515DCBC009CE9A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/ViewController.xib"; sourceTree = "<group>"; };
 		C15859C414FA31CD0097FD41 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = SOURCE_ROOT; };
 		C15859C714FA33250097FD41 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = SOURCE_ROOT; };
 		C167CE0B14E8F3A700B419CD /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "Bubbles/UIImage+Resize.h"; sourceTree = SOURCE_ROOT; };
@@ -317,7 +327,6 @@
 		C1CFCD1814B985AE008A1B1F /* Bubbles-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Bubbles-Info.plist"; path = "Bubbles/Bubbles-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C1CFCD1914B985AE008A1B1F /* Bubbles-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Bubbles-Prefix.pch"; path = "Bubbles/Bubbles-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		C1CFCD1A14B985AE008A1B1F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Bubbles/main.m; sourceTree = SOURCE_ROOT; };
-		C1CFCD1E14B985CC008A1B1F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Bubbles/en.lproj/ViewController.xib; sourceTree = SOURCE_ROOT; };
 		C1CFCD2014B985D2008A1B1F /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = Bubbles/ViewController.h; sourceTree = SOURCE_ROOT; };
 		C1CFCD2114B985D2008A1B1F /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = Bubbles/ViewController.m; sourceTree = SOURCE_ROOT; };
 		C1CFCD2C14B986CB008A1B1F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
@@ -325,7 +334,6 @@
 		C1E03DC0150F72F000571248 /* Manual.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Manual.pdf; path = Resources/Manual.pdf; sourceTree = SOURCE_ROOT; };
 		C1F0A50214FFB9C40048B02E /* kWDSoundFileReceived.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = kWDSoundFileReceived.aif; sourceTree = "<group>"; };
 		C1F0A50314FFB9C40048B02E /* kWDSoundFileSent.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = kWDSoundFileSent.aif; sourceTree = "<group>"; };
-		C1F0A54214FFC9BF0048B02E /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow.xib; path = Bubbles/MainWindow.xib; sourceTree = SOURCE_ROOT; };
 		C1F0A54F14FFECFD0048B02E /* button_help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_help.png; path = Resources/iPhone/button_help.png; sourceTree = SOURCE_ROOT; };
 		C1F0A55014FFECFD0048B02E /* button_help@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_help@2x.png"; path = "Resources/iPhone/button_help@2x.png"; sourceTree = SOURCE_ROOT; };
 		C1F4B9AB14E8E39900E878CD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -545,7 +553,7 @@
 			children = (
 				C1CFCD0C14B98552008A1B1F /* AppDelegate.h */,
 				C1CFCD0D14B98552008A1B1F /* AppDelegate.m */,
-				C1F0A54214FFC9BF0048B02E /* MainWindow.xib */,
+				C15151A71515DA7F009CE9A0 /* MainWindow.xib */,
 				C167CE0F14E8F5CF00B419CD /* UIImage+Alpha.h */,
 				C167CE1014E8F5CF00B419CD /* UIImage+Alpha.m */,
 				C167CE1114E8F5CF00B419CD /* UIImage+RoundedCorner.h */,
@@ -560,6 +568,7 @@
 				C1CFCD1914B985AE008A1B1F /* Bubbles-Prefix.pch */,
 				C1CFCD1A14B985AE008A1B1F /* main.m */,
 				C192666B14ECF7690090D8F7 /* Settings.bundle */,
+				C15151B31515DBC0009CE9A0 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -573,6 +582,7 @@
 				C18B6F7B14DCC8E7009F502E /* Icon-Text.png */,
 				C18B6F7C14DCC8E7009F502E /* Icon-Text@2x.png */,
 				C1E03DC0150F72F000571248 /* Manual.pdf */,
+				C15151A31515DA49009CE9A0 /* Localizable.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -661,7 +671,7 @@
 			children = (
 				C1CFCD2014B985D2008A1B1F /* ViewController.h */,
 				C1CFCD2114B985D2008A1B1F /* ViewController.m */,
-				C1CFCD1D14B985CC008A1B1F /* ViewController.xib */,
+				C15151C01515DCB8009CE9A0 /* ViewController.xib */,
 				C1F80FC314BA7A1B006F0779 /* PeersViewController.h */,
 				C1F80FC414BA7A1B006F0779 /* PeersViewController.m */,
 				C1F80FC514BA7A1B006F0779 /* PeersViewController.xib */,
@@ -767,7 +777,6 @@
 			files = (
 				95482DD71506168A0091DF00 /* kWDSoundFileSent.aif in Resources */,
 				95482DD6150616860091DF00 /* kWDSoundFileReceived.aif in Resources */,
-				C1CFCD1F14B985CC008A1B1F /* ViewController.xib in Resources */,
 				C1CFCD3014B986CB008A1B1F /* Default.png in Resources */,
 				C1CFCD3114B986CB008A1B1F /* Default@2x.png in Resources */,
 				C1F80FC714BA7A1B006F0779 /* PeersViewController.xib in Resources */,
@@ -817,11 +826,14 @@
 				C1057AA414FE231000D02DA4 /* _pad_bubbles_1.png in Resources */,
 				C1057AA514FE231000D02DA4 /* _phone_bubbles_0.png in Resources */,
 				C1057AA614FE231000D02DA4 /* _phone_bubbles_1.png in Resources */,
-				C1F0A54314FFC9C00048B02E /* MainWindow.xib in Resources */,
+				C15151A51515DA7F009CE9A0 /* MainWindow.xib in Resources */,
 				C1F0A55114FFECFD0048B02E /* button_help.png in Resources */,
 				C1F0A55214FFECFD0048B02E /* button_help@2x.png in Resources */,
 				C18E4BDC14FFF81200D642A9 /* MainWindow_iPad.xib in Resources */,
 				C1E03DC1150F72F000571248 /* Manual.pdf in Resources */,
+				C15151A11515DA49009CE9A0 /* Localizable.strings in Resources */,
+				C15151B11515DBC0009CE9A0 /* InfoPlist.strings in Resources */,
+				C15151BE1515DCB8009CE9A0 /* ViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -939,6 +951,46 @@
 			name = PreferenceViewController.xib;
 			sourceTree = "<group>";
 		};
+		C15151A31515DA49009CE9A0 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C15151A21515DA49009CE9A0 /* en */,
+				C15151A41515DA55009CE9A0 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			path = Resources/iPhone;
+			sourceTree = SOURCE_ROOT;
+		};
+		C15151A71515DA7F009CE9A0 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C15151A61515DA7F009CE9A0 /* en */,
+				C15151A81515DA84009CE9A0 /* zh-Hans */,
+			);
+			name = MainWindow.xib;
+			path = Bubbles;
+			sourceTree = SOURCE_ROOT;
+		};
+		C15151B31515DBC0009CE9A0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C15151B21515DBC0009CE9A0 /* en */,
+				C15151B41515DBC6009CE9A0 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			path = Bubbles;
+			sourceTree = SOURCE_ROOT;
+		};
+		C15151C01515DCB8009CE9A0 /* ViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C15151BF1515DCB8009CE9A0 /* en */,
+				C15151C11515DCBC009CE9A0 /* zh-Hans */,
+			);
+			name = ViewController.xib;
+			path = Bubbles;
+			sourceTree = SOURCE_ROOT;
+		};
 		C1C9371B14BB1766005E0EAA /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -961,14 +1013,6 @@
 				C1C9372814BB1766005E0EAA /* en */,
 			);
 			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-		C1CFCD1D14B985CC008A1B1F /* ViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C1CFCD1E14B985CC008A1B1F /* en */,
-			);
-			name = ViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
