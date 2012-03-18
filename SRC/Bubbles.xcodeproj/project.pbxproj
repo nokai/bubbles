@@ -97,7 +97,6 @@
 		C121946614B591D700159A9F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121946514B591D700159A9F /* Foundation.framework */; };
 		C121946814B591D700159A9F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121946714B591D700159A9F /* CoreGraphics.framework */; };
 		C121949A14B5A9FC00159A9F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C121949914B5A9FB00159A9F /* CFNetwork.framework */; };
-		C123285C14E3CFBF006968FE /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C123285B14E3CFBF006968FE /* ViewController_iPad.xib */; };
 		C123285E14E3CFE6006968FE /* PeersViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C123285D14E3CFE6006968FE /* PeersViewController_iPad.xib */; };
 		C125260314FD33C8009FC78C /* WDSound.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F950CA14FBE50700482ECF /* WDSound.m */; };
 		C125260614FD33E5009FC78C /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C125260514FD33E5009FC78C /* Quartz.framework */; };
@@ -114,6 +113,7 @@
 		C15151B11515DBC0009CE9A0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C15151B31515DBC0009CE9A0 /* InfoPlist.strings */; };
 		C15151BE1515DCB8009CE9A0 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C15151C01515DCB8009CE9A0 /* ViewController.xib */; };
 		C15151C41515DF68009CE9A0 /* WDLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = C15151C31515DF68009CE9A0 /* WDLocalization.m */; };
+		C15151C51515E903009CE9A0 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C15151C71515E903009CE9A0 /* ViewController_iPad.xib */; };
 		C15859C514FA31CD0097FD41 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C15859C414FA31CD0097FD41 /* Default-Portrait~ipad.png */; };
 		C15859C814FA33250097FD41 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C15859C714FA33250097FD41 /* Default-Landscape~ipad.png */; };
 		C167CE0D14E8F3A700B419CD /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = C167CE0C14E8F3A700B419CD /* UIImage+Resize.m */; };
@@ -260,7 +260,6 @@
 		C121946514B591D700159A9F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C121946714B591D700159A9F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		C121949914B5A9FB00159A9F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		C123285B14E3CFBF006968FE /* ViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewController_iPad.xib; path = Bubbles/ViewController_iPad.xib; sourceTree = SOURCE_ROOT; };
 		C123285D14E3CFE6006968FE /* PeersViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeersViewController_iPad.xib; path = Bubbles/PeersViewController_iPad.xib; sourceTree = SOURCE_ROOT; };
 		C125260514FD33E5009FC78C /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Quartz.framework; sourceTree = DEVELOPER_DIR; };
 		C125260714FD33EB009FC78C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -285,6 +284,8 @@
 		C15151C11515DCBC009CE9A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/ViewController.xib"; sourceTree = "<group>"; };
 		C15151C21515DF68009CE9A0 /* WDLocalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WDLocalization.h; path = Bubbles/WDLocalization.h; sourceTree = "<group>"; };
 		C15151C31515DF68009CE9A0 /* WDLocalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WDLocalization.m; path = Bubbles/WDLocalization.m; sourceTree = "<group>"; };
+		C15151C61515E903009CE9A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+		C15151C81515E90B009CE9A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/ViewController_iPad.xib"; sourceTree = "<group>"; };
 		C15859C414FA31CD0097FD41 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = SOURCE_ROOT; };
 		C15859C714FA33250097FD41 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = SOURCE_ROOT; };
 		C167CE0B14E8F3A700B419CD /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "Bubbles/UIImage+Resize.h"; sourceTree = SOURCE_ROOT; };
@@ -694,7 +695,7 @@
 			isa = PBXGroup;
 			children = (
 				C18E4BDB14FFF81200D642A9 /* MainWindow_iPad.xib */,
-				C123285B14E3CFBF006968FE /* ViewController_iPad.xib */,
+				C15151C71515E903009CE9A0 /* ViewController_iPad.xib */,
 				C123285D14E3CFE6006968FE /* PeersViewController_iPad.xib */,
 				C192665C14ECEB450090D8F7 /* HelpViewController_iPad.xib */,
 			);
@@ -788,7 +789,7 @@
 				C1393F0B14D90C83005AFEB6 /* TextViewController.xib in Resources */,
 				C18B6F7D14DCC8E7009F502E /* Icon-Text.png in Resources */,
 				C18B6F7E14DCC8E7009F502E /* Icon-Text@2x.png in Resources */,
-				C123285C14E3CFBF006968FE /* ViewController_iPad.xib in Resources */,
+				C15151C51515E903009CE9A0 /* ViewController_iPad.xib in Resources */,
 				C123285E14E3CFE6006968FE /* PeersViewController_iPad.xib in Resources */,
 				C192664414ECD7820090D8F7 /* HelpViewController.xib in Resources */,
 				C192665D14ECEB450090D8F7 /* HelpViewController_iPad.xib in Resources */,
@@ -994,6 +995,16 @@
 				C15151C11515DCBC009CE9A0 /* zh-Hans */,
 			);
 			name = ViewController.xib;
+			path = Bubbles;
+			sourceTree = SOURCE_ROOT;
+		};
+		C15151C71515E903009CE9A0 /* ViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C15151C61515E903009CE9A0 /* en */,
+				C15151C81515E90B009CE9A0 /* zh-Hans */,
+			);
+			name = ViewController_iPad.xib;
 			path = Bubbles;
 			sourceTree = SOURCE_ROOT;
 		};

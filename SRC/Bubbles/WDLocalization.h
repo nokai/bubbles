@@ -30,6 +30,21 @@
 #define kMainViewVersion    [WDLocalization stringForKey:@"kMainViewVersion"]
 #define kMainViewLocal      [WDLocalization stringForKey:@"kMainViewLocal"]
 
+// DW: error messages
+#define kWDBubbleErrorMessageTitle                  [WDLocalization stringForKey:@"kWDBubbleErrorMessageTitle"]
+#define kWDBubbleErrorMessageTerminatedBySender     [WDLocalization stringForKey:@"kWDBubbleErrorMessageTerminatedBySender"]
+#define kWDBubbleErrorMessageDisconnectWithError    [WDLocalization stringForKey:@"kWDBubbleErrorMessageDisconnectWithError"]
+#define kWDBubbleErrorMessageDoNotSupportMultiple   [WDLocalization stringForKey:@"kWDBubbleErrorMessageDoNotSupportMultiple"]
+#define kWDBubbleErrorMessageNoDeviceSelected       [WDLocalization stringForKey:@"kWDBubbleErrorMessageNoDeviceSelected"]
+
+// DW: lock
+#define kLockTitle      [WDLocalization stringForKey:@"kLockTitle"]
+#define kLockContent    [WDLocalization stringForKey:@"kLockContent"]
+
+// DW: alert view
+#define kAlertViewOK        [WDLocalization stringForKey:@"kAlertViewOK"]
+#define kAlertViewCancel    [WDLocalization stringForKey:@"kAlertViewCancel"]
+
 @interface WDLocalization : NSObject
 
 + (NSString *)stringForKey:(NSString *)key;

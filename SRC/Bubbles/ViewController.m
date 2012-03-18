@@ -186,10 +186,10 @@
 - (void)displayErrorMessage:(NSString *)message {
     [_messagesView reloadData];
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Deliver Failed" 
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:kWDBubbleErrorMessageTitle
                                                  message:message
                                                 delegate:nil 
-                                       cancelButtonTitle:@"OK" 
+                                       cancelButtonTitle:kAlertViewOK
                                        otherButtonTitles:nil];
     [av show];
     [av release];
@@ -297,11 +297,11 @@
 #pragma mark - Public Methods
 
 - (void)lock {
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Lock" 
-                                                 message:@"Please input password (only numbers allowed):"
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:kLockTitle
+                                                 message:kLockContent
                                                 delegate:self 
-                                       cancelButtonTitle:@"Cancel" 
-                                       otherButtonTitles:@"OK", nil];
+                                       cancelButtonTitle:kAlertViewCancel
+                                       otherButtonTitles:kAlertViewOK, nil];
     av.alertViewStyle = UIAlertViewStyleSecureTextInput;
     [av textFieldAtIndex:0].keyboardType = UIKeyboardTypeNumberPad;
     [av textFieldAtIndex:0].delegate = self;
