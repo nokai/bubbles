@@ -113,6 +113,7 @@
 		C15151A51515DA7F009CE9A0 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = C15151A71515DA7F009CE9A0 /* MainWindow.xib */; };
 		C15151B11515DBC0009CE9A0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C15151B31515DBC0009CE9A0 /* InfoPlist.strings */; };
 		C15151BE1515DCB8009CE9A0 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C15151C01515DCB8009CE9A0 /* ViewController.xib */; };
+		C15151C41515DF68009CE9A0 /* WDLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = C15151C31515DF68009CE9A0 /* WDLocalization.m */; };
 		C15859C514FA31CD0097FD41 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C15859C414FA31CD0097FD41 /* Default-Portrait~ipad.png */; };
 		C15859C814FA33250097FD41 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C15859C714FA33250097FD41 /* Default-Landscape~ipad.png */; };
 		C167CE0D14E8F3A700B419CD /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = C167CE0C14E8F3A700B419CD /* UIImage+Resize.m */; };
@@ -282,6 +283,8 @@
 		C15151B41515DBC6009CE9A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		C15151BF1515DCB8009CE9A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		C15151C11515DCBC009CE9A0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/ViewController.xib"; sourceTree = "<group>"; };
+		C15151C21515DF68009CE9A0 /* WDLocalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WDLocalization.h; path = Bubbles/WDLocalization.h; sourceTree = "<group>"; };
+		C15151C31515DF68009CE9A0 /* WDLocalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WDLocalization.m; path = Bubbles/WDLocalization.m; sourceTree = "<group>"; };
 		C15859C414FA31CD0097FD41 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = SOURCE_ROOT; };
 		C15859C714FA33250097FD41 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = SOURCE_ROOT; };
 		C167CE0B14E8F3A700B419CD /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "Bubbles/UIImage+Resize.h"; sourceTree = SOURCE_ROOT; };
@@ -662,6 +665,8 @@
 				C1CFCD1314B98552008A1B1F /* WDMessage.m */,
 				C1F950C914FBE50700482ECF /* WDSound.h */,
 				C1F950CA14FBE50700482ECF /* WDSound.m */,
+				C15151C21515DF68009CE9A0 /* WDLocalization.h */,
+				C15151C31515DF68009CE9A0 /* WDLocalization.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -906,6 +911,7 @@
 				C133FAB514EBFBF4004E406B /* UIImage+Normalize.m in Sources */,
 				C192664314ECD7820090D8F7 /* HelpViewController.m in Sources */,
 				C1F950CB14FBE50700482ECF /* WDSound.m in Sources */,
+				C15151C41515DF68009CE9A0 /* WDLocalization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

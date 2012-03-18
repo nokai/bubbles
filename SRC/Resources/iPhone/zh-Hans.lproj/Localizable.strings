@@ -5,3 +5,15 @@
   Created by 王 得希 on 12-3-18.
   Copyright (c) 2012年 BMW Group ConnectedDrive Lab China. All rights reserved.
 */
+
+"kActionSheetButtonCopy" = "复制";
+"kActionSheetButtonEmail" = "用电子邮件发送";
+"kActionSheetButtonSend" = "再次传输";
+"kActionSheetButtonMessage" = "用信息发送";
+"kActionSheetButtonPreview" = "预览";
+"kActionSheetButtonSave" = "存储图像";
+"kActionSheetButtonHelpPDF" = "用户手册";
+"kActionSheetButtonHelpSplash" = "闪屏帮助";
+"kActionSheetButtonTransferTerminate" = "中止传输";
+"kActionSheetButtonCancel" = "取消";
+"kActionSheetButtonDeleteAll" = "全部删除";

@@ -10,23 +10,9 @@
 #import "AppDelegate.h"
 #import "UIImage+Resize.h"
 #import "UIImage+Normalize.h"
+#import "WDLocalization.h"
 #import <MobileCoreServices/UTType.h>
 #import <MobileCoreServices/UTCoreTypes.h>
-
-#define kActionSheetButtonCopy      @"Copy"
-#define kActionSheetButtonEmail     @"Email"
-#define kActionSheetButtonSend      @"Resend"
-#define kActionSheetButtonMessage   @"Message"
-#define kActionSheetButtonPreview   @"Preview"
-#define kActionSheetButtonSave      @"Save to Gallery"
-
-#define kActionSheetButtonCancel    @"Cancel"
-#define kActionSheetButtonDeleteAll @"Delete All"
-
-#define kActionSheetButtonHelpPDF       @"Help Document"
-#define kActionSheetButtonHelpSplash    @"Splash Screen"
-
-#define kActionSheetButtonTransferTerminate @"Terminate"
 
 #define kTableViewCellHeight        50
 
