@@ -78,7 +78,7 @@
 		formattedStr = @"Empty";
 	else 
 		if (size > 0 && size < 1024) 
-			formattedStr = [NSString stringWithFormat:@"%qu bytes", size];
+			formattedStr = [NSString stringWithFormat:@"%qu B", size];
         else 
             if (size >= 1024 && size < pow(1024, 2)) 
                 formattedStr = [NSString stringWithFormat:@"%.1f KB", (size / 1024.)];

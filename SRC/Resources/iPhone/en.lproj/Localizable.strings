@@ -17,3 +17,8 @@
 "kActionSheetButtonTransferTerminate" = "Terminate";
 "kActionSheetButtonCancel" = "Cancel";
 "kActionSheetButtonDeleteAll" = "Delete All";
+
+"kMainViewText" = "Text";
+"kMainViewPeers" = "Peers";
+"kMainViewVersion" = "Version";
+"kMainViewLocal" = " (local)";

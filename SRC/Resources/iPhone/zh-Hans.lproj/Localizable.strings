@@ -9,7 +9,7 @@
 "kActionSheetButtonCopy" = "复制";
 "kActionSheetButtonEmail" = "用电子邮件发送";
 "kActionSheetButtonSend" = "再次传输";
-"kActionSheetButtonMessage" = "用信息发送";
+"kActionSheetButtonMessage" = "用短息发送";
 "kActionSheetButtonPreview" = "预览";
 "kActionSheetButtonSave" = "存储图像";
 "kActionSheetButtonHelpPDF" = "用户手册";
@@ -17,3 +17,8 @@
 "kActionSheetButtonTransferTerminate" = "中止传输";
 "kActionSheetButtonCancel" = "取消";
 "kActionSheetButtonDeleteAll" = "全部删除";
+
+"kMainViewText" = "文字";
+"kMainViewPeers" = "设备";
+"kMainViewVersion" = "版本";
+"kMainViewLocal" = "（本地）";

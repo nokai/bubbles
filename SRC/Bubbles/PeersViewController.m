@@ -8,6 +8,7 @@
 
 #import "PeersViewController.h"
 #import "ViewController.h"
+#import "WDLocalization.h"
 
 @implementation PeersViewController
 @synthesize dismissButton, lockButton, bubble = _bubble, viewController = _viewController;
@@ -37,7 +38,7 @@
     
     // DW: custom bar bg
     // this will appear as the title in the navigation bar
-    self.title = @"Peers";
+    self.title = kMainViewPeers;
     
     self.viewController.lockButton = self.lockButton;
     
@@ -127,7 +128,7 @@
     
     // DW: services with same name AND platform are seen as one
     if ([self.bubble isIdenticalService:t]) {
-        cell.textLabel.text = [t.name stringByAppendingString:@" (local)"];
+        cell.textLabel.text = [t.name stringByAppendingString:kMainViewLocal];
     } else {
         cell.textLabel.text = t.name;
     }

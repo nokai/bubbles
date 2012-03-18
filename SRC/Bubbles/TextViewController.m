@@ -7,6 +7,7 @@
 //
 
 #import "TextViewController.h"
+#import "WDLocalization.h"
 
 @implementation TextViewController
 @synthesize undoManager = _undoManager, popover = _popover, delegate;
@@ -60,7 +61,7 @@
     // Do any additional setup after loading the view from its nib.
     // DW: custom bar bg
     // this will appear as the title in the navigation bar
-    self.title = @"Text";
+    self.title = kMainViewText;
     self.navigationItem.rightBarButtonItem = _done;
     self.navigationItem.leftBarButtonItem = _cancel;
     _done.enabled = NO;

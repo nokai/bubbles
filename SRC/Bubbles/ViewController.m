@@ -503,7 +503,8 @@
 - (IBAction)showHelp:(id)sender {
     [self dismissOtherPopovers];
     
-    _actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Version %@ (%@)", 
+    _actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"%@ %@ (%@)", 
+                                                         kMainViewVersion, 
                                                          [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], 
                                                          [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]]
                                                delegate:self 
