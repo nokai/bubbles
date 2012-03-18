@@ -517,11 +517,13 @@
 - (IBAction)showHelp:(id)sender {
     [self dismissOtherPopovers];
     
-    _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                    delegate:self 
-                                           cancelButtonTitle:kActionSheetButtonCancel
-                                      destructiveButtonTitle:nil
-                                           otherButtonTitles:kActionSheetButtonHelpPDF, kActionSheetButtonHelpSplash, nil];
+    _actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Version %@ (%@)", 
+                                                         [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], 
+                                                         [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]]
+                                               delegate:self 
+                                      cancelButtonTitle:kActionSheetButtonCancel
+                                 destructiveButtonTitle:nil
+                                      otherButtonTitles:kActionSheetButtonHelpPDF, kActionSheetButtonHelpSplash, nil];
     [_actionSheet showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
 }
 
@@ -552,10 +554,10 @@
     [self dismissOtherPopovers];
     
     _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                    delegate:self 
-                                           cancelButtonTitle:kActionSheetButtonCancel
-                                      destructiveButtonTitle:kActionSheetButtonDeleteAll
-                                           otherButtonTitles:nil];
+                                               delegate:self 
+                                      cancelButtonTitle:kActionSheetButtonCancel
+                                 destructiveButtonTitle:kActionSheetButtonDeleteAll
+                                      otherButtonTitles:nil];
     [_actionSheet showFromBarButtonItem:_clearButton animated:YES];
 }
 
@@ -723,33 +725,33 @@
     // DW: chose an action
     if ([t.state isEqualToString: kWDMessageStateText]) {
         _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                         delegate:self 
-                                cancelButtonTitle:kActionSheetButtonCancel
-                           destructiveButtonTitle:nil
-                                otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonMessage, nil];
+                                                   delegate:self 
+                                          cancelButtonTitle:kActionSheetButtonCancel
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonMessage, nil];
     } else if ([t.state isEqualToString:kWDMessageStateFile]) {
         if ([WDMessage isImageURL:t.fileURL]) {
             _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                             delegate:self 
-                                    cancelButtonTitle:kActionSheetButtonCancel
-                               destructiveButtonTitle:nil
-                                    otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonPreview, kActionSheetButtonSave, nil];
+                                                       delegate:self 
+                                              cancelButtonTitle:kActionSheetButtonCancel
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonPreview, kActionSheetButtonSave, nil];
         } else {
             _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                             delegate:self 
-                                    cancelButtonTitle:kActionSheetButtonCancel
-                               destructiveButtonTitle:nil
-                                    otherButtonTitles:kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonPreview, nil];
+                                                       delegate:self 
+                                              cancelButtonTitle:kActionSheetButtonCancel
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonPreview, nil];
         }
     } else  {
         // DW: states such as kWDMessageStateReadyToReceive, kWDMessageStateReadyToSend, kWDMessageStateSending
         // we can do a "Pause" feature here
         DLog(@"VC didSelectRowAtIndexPath %@", t.state);
         _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                         delegate:self 
-                                cancelButtonTitle:kActionSheetButtonCancel
-                           destructiveButtonTitle:kActionSheetButtonTransferTerminate
-                                otherButtonTitles:nil];
+                                                   delegate:self 
+                                          cancelButtonTitle:kActionSheetButtonCancel
+                                     destructiveButtonTitle:kActionSheetButtonTransferTerminate
+                                          otherButtonTitles:nil];
     }
     
     if (_actionSheet) {
