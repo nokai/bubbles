@@ -16,6 +16,8 @@
 #define kActionSheetButtonPreview   [WDLocalization stringForKey:@"kActionSheetButtonPreview"]
 #define kActionSheetButtonSave      [WDLocalization stringForKey:@"kActionSheetButtonSave"]
 // DW: help actions
+#define kActionSheetButtonHelpEmail     [WDLocalization stringForKey:@"kActionSheetButtonHelpEmail"]
+#define kActionSheetButtonHelpRate      [WDLocalization stringForKey:@"kActionSheetButtonHelpRate"]
 #define kActionSheetButtonHelpPDF       [WDLocalization stringForKey:@"kActionSheetButtonHelpPDF"]
 #define kActionSheetButtonHelpSplash    [WDLocalization stringForKey:@"kActionSheetButtonHelpSplash"]
 // DW: transfer actions
@@ -44,6 +46,10 @@
 // DW: alert view
 #define kAlertViewOK        [WDLocalization stringForKey:@"kAlertViewOK"]
 #define kAlertViewCancel    [WDLocalization stringForKey:@"kAlertViewCancel"]
+
+// DW: to developer email
+#define kEmailToDeveloperSubject    [WDLocalization stringForKey:@"kEmailToDeveloperSubject"]
+#define kEmailToDeveloperBody       [WDLocalization stringForKey:@"kEmailToDeveloperBody"]
 
 @interface WDLocalization : NSObject
 
