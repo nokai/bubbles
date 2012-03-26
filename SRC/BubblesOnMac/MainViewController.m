@@ -26,7 +26,7 @@
 
 
 - (void)displayErrorMessage:(NSString *)message {
-    NSRunAlertPanel(@"Sorry", message, @"OK", nil, nil);
+    NSRunAlertPanel(NSLocalizedString(@"SORRY", @"Sorry"), NSLocalizedString(message, @"Error type"), NSLocalizedString(@"OK", @"Ok"), nil, nil);
 }
 
 - (void)firstUse

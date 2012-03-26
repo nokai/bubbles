@@ -7,7 +7,7 @@
 //
 
 #import "TextViewController.h"
-#import "WDLocalization.h"
+//#import "WDLocalization.h"
 
 @implementation TextViewController
 @synthesize undoManager = _undoManager, popover = _popover, delegate;

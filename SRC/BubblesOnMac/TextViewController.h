@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "WUTextView.h"
+#import "WDLocalization.h"
 
 @interface TextViewController : NSViewController {
     WUTextView *_textField;

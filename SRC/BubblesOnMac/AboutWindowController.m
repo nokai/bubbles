@@ -9,6 +9,9 @@
 #import "AboutWindowController.h"
 
 @implementation AboutWindowController
+@synthesize infoVersion;
+@synthesize infoCopyright;
+@synthesize infoProductName;
 
 - (id)init
 {

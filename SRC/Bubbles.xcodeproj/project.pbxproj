@@ -10,11 +10,12 @@
 		03008FFF14D81C2800C93A14 /* NSImage+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */; };
 		0311924414DE4CE700E0DFEB /* ImageAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0311924314DE4CE700E0DFEB /* ImageAndTextCell.m */; };
 		0322FC9314F9226000647B89 /* FeatureWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0322FC9214F9226000647B89 /* FeatureWindowController.m */; };
-		0322FC9614F9228100647B89 /* FeatureWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0322FC9514F9228100647B89 /* FeatureWindowController.xib */; };
 		032A05C314E39F5B005C4F6E /* HistoryPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A05C114E39F5B005C4F6E /* HistoryPopOverViewController.m */; };
-		032A05C414E39F5B005C4F6E /* HistoryPopOverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 032A05C214E39F5B005C4F6E /* HistoryPopOverViewController.xib */; };
 		032A05C914E3A525005C4F6E /* NetworkFoundPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A05C714E3A525005C4F6E /* NetworkFoundPopOverViewController.m */; };
-		032A05CA14E3A525005C4F6E /* NetworkFoundPopOverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 032A05C814E3A525005C4F6E /* NetworkFoundPopOverViewController.xib */; };
+		032E7C0A1520C36000D9CCA6 /* HistoryPopOverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 032E7C0C1520C36000D9CCA6 /* HistoryPopOverViewController.xib */; };
+		032E7C0E1520C38100D9CCA6 /* DragFileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 032E7C101520C38100D9CCA6 /* DragFileViewController.xib */; };
+		032E7C121520C3B300D9CCA6 /* AboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 032E7C141520C3B300D9CCA6 /* AboutWindowController.xib */; };
+		032E7C161520C3DB00D9CCA6 /* FeatureWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 032E7C181520C3DB00D9CCA6 /* FeatureWindowController.xib */; };
 		033C49E314FFB45600723D77 /* _mac_bubbles_0.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9B14FE231000D02DA4 /* _mac_bubbles_0.png */; };
 		033C49E514FFB45800723D77 /* _mac_bubbles_1.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9C14FE231000D02DA4 /* _mac_bubbles_1.png */; };
 		033C49E614FFB45A00723D77 /* _pad_bubbles_0.png in Resources */ = {isa = PBXBuildFile; fileRef = C1057A9D14FE231000D02DA4 /* _pad_bubbles_0.png */; };
@@ -31,6 +32,8 @@
 		0354C96014BDC3F700417697 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C95F14BDC3F700417697 /* MainViewController.m */; };
 		0354C9AB14BDE4FA00417697 /* PasswordMacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */; };
 		0354C9AD14BDE51800417697 /* PasswordWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0354C9AC14BDE51800417697 /* PasswordWindowView.xib */; };
+		037346071520B5FA0018E63F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 037346091520B5FA0018E63F /* Localizable.strings */; };
+		0373460B1520B64B0018E63F /* NetworkFoundPopOverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0373460D1520B64B0018E63F /* NetworkFoundPopOverViewController.xib */; };
 		0378FCF314F601620044A43B /* add txt.png in Resources */ = {isa = PBXBuildFile; fileRef = 0378FCEF14F601620044A43B /* add txt.png */; };
 		0378FCF414F601620044A43B /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = 0378FCF014F601620044A43B /* history.png */; };
 		0378FCF514F601620044A43B /* peers.png in Resources */ = {isa = PBXBuildFile; fileRef = 0378FCF114F601620044A43B /* peers.png */; };
@@ -40,7 +43,6 @@
 		039C96D414E68BDD00BBEEC5 /* swap.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C96D314E68BDD00BBEEC5 /* swap.png */; };
 		03A80DE014E97BB3006C77D8 /* TransparentTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A80DDF14E97BB3006C77D8 /* TransparentTableView.m */; };
 		03A8878C14E2A272008CA643 /* DragFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A8878A14E2A272008CA643 /* DragFileViewController.m */; };
-		03A8878D14E2A272008CA643 /* DragFileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03A8878B14E2A272008CA643 /* DragFileViewController.xib */; };
 		03A8879914E2B108008CA643 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A8879714E2B108008CA643 /* TextViewController.m */; };
 		03A8879A14E2B108008CA643 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03A8879814E2B108008CA643 /* TextViewController.xib */; };
 		03A8F4D114FA556F0065F057 /* DuxScrollViewAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A8F4D014FA556F0065F057 /* DuxScrollViewAnimation.m */; };
@@ -48,7 +50,6 @@
 		03BF64B314C32D8200CD52AB /* DragAndDropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BF64B214C32D8200CD52AB /* DragAndDropImageView.m */; };
 		03D710A514EBB52E00162DFB /* WUTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D710A414EBB52E00162DFB /* WUTextView.m */; };
 		03E70ADC14FD228000BF0B59 /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E70ADB14FD228000BF0B59 /* AboutWindowController.m */; };
-		03E70ADF14FD229400BF0B59 /* AboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03E70ADE14FD229400BF0B59 /* AboutWindowController.xib */; };
 		03E8C3EA14EA39C2001F5091 /* NSTableView+ContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */; };
 		03EFE64B14E2EF04007FA2B6 /* NSView+NSView_Fade_.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EFE64A14E2EF04007FA2B6 /* NSView+NSView_Fade_.m */; };
 		03F6745B14FFA32100AE00CB /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F6745A14FFA32100AE00CB /* 1.png */; };
@@ -167,13 +168,19 @@
 		0311924314DE4CE700E0DFEB /* ImageAndTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageAndTextCell.m; sourceTree = "<group>"; };
 		0322FC9114F9226000647B89 /* FeatureWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureWindowController.h; sourceTree = "<group>"; };
 		0322FC9214F9226000647B89 /* FeatureWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureWindowController.m; sourceTree = "<group>"; };
-		0322FC9514F9228100647B89 /* FeatureWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeatureWindowController.xib; sourceTree = "<group>"; };
 		032A05C014E39F5B005C4F6E /* HistoryPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryPopOverViewController.h; sourceTree = "<group>"; };
 		032A05C114E39F5B005C4F6E /* HistoryPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryPopOverViewController.m; sourceTree = "<group>"; };
-		032A05C214E39F5B005C4F6E /* HistoryPopOverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryPopOverViewController.xib; sourceTree = "<group>"; };
 		032A05C614E3A525005C4F6E /* NetworkFoundPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkFoundPopOverViewController.h; sourceTree = "<group>"; };
 		032A05C714E3A525005C4F6E /* NetworkFoundPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkFoundPopOverViewController.m; sourceTree = "<group>"; };
-		032A05C814E3A525005C4F6E /* NetworkFoundPopOverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NetworkFoundPopOverViewController.xib; sourceTree = "<group>"; };
+		032E7C0B1520C36000D9CCA6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/HistoryPopOverViewController.xib; sourceTree = "<group>"; };
+		032E7C0D1520C36E00D9CCA6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/HistoryPopOverViewController.xib"; sourceTree = "<group>"; };
+		032E7C0F1520C38100D9CCA6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DragFileViewController.xib; sourceTree = "<group>"; };
+		032E7C111520C38600D9CCA6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/DragFileViewController.xib"; sourceTree = "<group>"; };
+		032E7C131520C3B300D9CCA6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AboutWindowController.xib; sourceTree = "<group>"; };
+		032E7C151520C3B800D9CCA6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/AboutWindowController.xib"; sourceTree = "<group>"; };
+		032E7C171520C3DB00D9CCA6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FeatureWindowController.xib; sourceTree = "<group>"; };
+		032E7C191520C3E000D9CCA6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/FeatureWindowController.xib"; sourceTree = "<group>"; };
+		032E7C1A1520C40500D9CCA6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/PreferenceViewController.xib"; sourceTree = "<group>"; };
 		033C49EF14FFC95D00723D77 /* left_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left_normal.png; sourceTree = "<group>"; };
 		033C49F014FFC95D00723D77 /* left_hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left_hover.png; sourceTree = "<group>"; };
 		033C49F114FFC95D00723D77 /* left_click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left_click.png; sourceTree = "<group>"; };
@@ -186,6 +193,10 @@
 		0354C9A914BDE4FA00417697 /* PasswordMacViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordMacViewController.h; sourceTree = "<group>"; };
 		0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordMacViewController.m; sourceTree = "<group>"; };
 		0354C9AC14BDE51800417697 /* PasswordWindowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordWindowView.xib; sourceTree = "<group>"; };
+		037346081520B5FA0018E63F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0373460A1520B5FF0018E63F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		0373460C1520B64B0018E63F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NetworkFoundPopOverViewController.xib; sourceTree = "<group>"; };
+		0373460E1520B6500018E63F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/NetworkFoundPopOverViewController.xib"; sourceTree = "<group>"; };
 		0378FCEF14F601620044A43B /* add txt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add txt.png"; sourceTree = "<group>"; };
 		0378FCF014F601620044A43B /* history.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = history.png; sourceTree = "<group>"; };
 		0378FCF114F601620044A43B /* peers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = peers.png; sourceTree = "<group>"; };
@@ -198,7 +209,6 @@
 		03A80DDF14E97BB3006C77D8 /* TransparentTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransparentTableView.m; sourceTree = "<group>"; };
 		03A8878914E2A272008CA643 /* DragFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragFileViewController.h; sourceTree = "<group>"; };
 		03A8878A14E2A272008CA643 /* DragFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragFileViewController.m; sourceTree = "<group>"; };
-		03A8878B14E2A272008CA643 /* DragFileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DragFileViewController.xib; sourceTree = "<group>"; };
 		03A8879614E2B108008CA643 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
 		03A8879714E2B108008CA643 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
 		03A8879814E2B108008CA643 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextViewController.xib; sourceTree = "<group>"; };
@@ -212,7 +222,6 @@
 		03D710A414EBB52E00162DFB /* WUTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUTextView.m; sourceTree = "<group>"; };
 		03E70ADA14FD228000BF0B59 /* AboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutWindowController.h; sourceTree = "<group>"; };
 		03E70ADB14FD228000BF0B59 /* AboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutWindowController.m; sourceTree = "<group>"; };
-		03E70ADE14FD229400BF0B59 /* AboutWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWindowController.xib; sourceTree = "<group>"; };
 		03E8C3E814EA39C2001F5091 /* NSTableView+ContextMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTableView+ContextMenu.h"; sourceTree = "<group>"; };
 		03E8C3E914EA39C2001F5091 /* NSTableView+ContextMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTableView+ContextMenu.m"; sourceTree = "<group>"; };
 		03EFE64914E2EF04007FA2B6 /* NSView+NSView_Fade_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+NSView_Fade_.h"; sourceTree = "<group>"; };
@@ -379,6 +388,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		037346061520B5E80018E63F /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				037346091520B5FA0018E63F /* Localizable.strings */,
+			);
+			name = Localization;
+			sourceTree = "<group>";
+		};
 		039C96D214E68BC500BBEEC5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,9 +458,9 @@
 				03861E6F14EC1E8000D9DBD4 /* PreferenceViewController.xib */,
 				0322FC9114F9226000647B89 /* FeatureWindowController.h */,
 				0322FC9214F9226000647B89 /* FeatureWindowController.m */,
-				0322FC9514F9228100647B89 /* FeatureWindowController.xib */,
+				032E7C181520C3DB00D9CCA6 /* FeatureWindowController.xib */,
 				03E70ADA14FD228000BF0B59 /* AboutWindowController.h */,
-				03E70ADE14FD229400BF0B59 /* AboutWindowController.xib */,
+				032E7C141520C3B300D9CCA6 /* AboutWindowController.xib */,
 				03E70ADB14FD228000BF0B59 /* AboutWindowController.m */,
 			);
 			name = Window;
@@ -454,13 +471,13 @@
 			children = (
 				032A05C614E3A525005C4F6E /* NetworkFoundPopOverViewController.h */,
 				032A05C714E3A525005C4F6E /* NetworkFoundPopOverViewController.m */,
-				032A05C814E3A525005C4F6E /* NetworkFoundPopOverViewController.xib */,
+				0373460D1520B64B0018E63F /* NetworkFoundPopOverViewController.xib */,
 				032A05C014E39F5B005C4F6E /* HistoryPopOverViewController.h */,
 				032A05C114E39F5B005C4F6E /* HistoryPopOverViewController.m */,
-				032A05C214E39F5B005C4F6E /* HistoryPopOverViewController.xib */,
+				032E7C0C1520C36000D9CCA6 /* HistoryPopOverViewController.xib */,
 				03A8878914E2A272008CA643 /* DragFileViewController.h */,
 				03A8878A14E2A272008CA643 /* DragFileViewController.m */,
-				03A8878B14E2A272008CA643 /* DragFileViewController.xib */,
+				032E7C101520C38100D9CCA6 /* DragFileViewController.xib */,
 				03A8879614E2B108008CA643 /* TextViewController.h */,
 				03A8879714E2B108008CA643 /* TextViewController.m */,
 				03A8879814E2B108008CA643 /* TextViewController.xib */,
@@ -626,6 +643,7 @@
 		C1C9371814BB1766005E0EAA /* BubblesOnMac */ = {
 			isa = PBXGroup;
 			children = (
+				037346061520B5E80018E63F /* Localization */,
 				039C96D214E68BC500BBEEC5 /* Resources */,
 				03A8878814E2A22B008CA643 /* View */,
 				03A8878714E2A218008CA643 /* Window */,
@@ -754,7 +772,7 @@
 		C121945614B591D700159A9F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "BMW Group ConnectedDrive Lab China";
 			};
 			buildConfigurationList = C121945914B591D700159A9F /* Build configuration list for PBXProject "Bubbles" */;
@@ -855,19 +873,19 @@
 				C1C9372E14BB17C3005E0EAA /* Icon-Mac.icns in Resources */,
 				0354C9AD14BDE51800417697 /* PasswordWindowView.xib in Resources */,
 				03861E6D14EC1E8000D9DBD4 /* PreferenceViewController.xib in Resources */,
-				03A8878D14E2A272008CA643 /* DragFileViewController.xib in Resources */,
+				032E7C0E1520C38100D9CCA6 /* DragFileViewController.xib in Resources */,
 				03A8879A14E2B108008CA643 /* TextViewController.xib in Resources */,
-				032A05C414E39F5B005C4F6E /* HistoryPopOverViewController.xib in Resources */,
-				032A05CA14E3A525005C4F6E /* NetworkFoundPopOverViewController.xib in Resources */,
+				032E7C0A1520C36000D9CCA6 /* HistoryPopOverViewController.xib in Resources */,
+				0373460B1520B64B0018E63F /* NetworkFoundPopOverViewController.xib in Resources */,
 				039C96D414E68BDD00BBEEC5 /* swap.png in Resources */,
 				0378FCF314F601620044A43B /* add txt.png in Resources */,
 				0378FCF414F601620044A43B /* history.png in Resources */,
 				0378FCF514F601620044A43B /* peers.png in Resources */,
 				0378FCF614F601620044A43B /* send.png in Resources */,
-				0322FC9614F9228100647B89 /* FeatureWindowController.xib in Resources */,
+				032E7C161520C3DB00D9CCA6 /* FeatureWindowController.xib in Resources */,
 				188E022514FB2BF500B1B319 /* BubblesHelp in Resources */,
 				0346C6B814FA5AE900167F63 /* text.png in Resources */,
-				03E70ADF14FD229400BF0B59 /* AboutWindowController.xib in Resources */,
+				032E7C121520C3B300D9CCA6 /* AboutWindowController.xib in Resources */,
 				03F6745B14FFA32100AE00CB /* 1.png in Resources */,
 				03F6746214FFA98D00AE00CB /* 2.png in Resources */,
 				03F6746314FFA98D00AE00CB /* 3.png in Resources */,
@@ -886,6 +904,7 @@
 				033C49F814FFC95D00723D77 /* right_click.png in Resources */,
 				033C49F914FFC95D00723D77 /* right_normal.png in Resources */,
 				033C49FA14FFC95D00723D77 /* right_hover.png in Resources */,
+				037346071520B5FA0018E63F /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -950,10 +969,66 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		032E7C0C1520C36000D9CCA6 /* HistoryPopOverViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				032E7C0B1520C36000D9CCA6 /* en */,
+				032E7C0D1520C36E00D9CCA6 /* zh-Hans */,
+			);
+			name = HistoryPopOverViewController.xib;
+			sourceTree = "<group>";
+		};
+		032E7C101520C38100D9CCA6 /* DragFileViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				032E7C0F1520C38100D9CCA6 /* en */,
+				032E7C111520C38600D9CCA6 /* zh-Hans */,
+			);
+			name = DragFileViewController.xib;
+			sourceTree = "<group>";
+		};
+		032E7C141520C3B300D9CCA6 /* AboutWindowController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				032E7C131520C3B300D9CCA6 /* en */,
+				032E7C151520C3B800D9CCA6 /* zh-Hans */,
+			);
+			name = AboutWindowController.xib;
+			sourceTree = "<group>";
+		};
+		032E7C181520C3DB00D9CCA6 /* FeatureWindowController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				032E7C171520C3DB00D9CCA6 /* en */,
+				032E7C191520C3E000D9CCA6 /* zh-Hans */,
+			);
+			name = FeatureWindowController.xib;
+			sourceTree = "<group>";
+		};
+		037346091520B5FA0018E63F /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				037346081520B5FA0018E63F /* en */,
+				0373460A1520B5FF0018E63F /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		0373460D1520B64B0018E63F /* NetworkFoundPopOverViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0373460C1520B64B0018E63F /* en */,
+				0373460E1520B6500018E63F /* zh-Hans */,
+			);
+			name = NetworkFoundPopOverViewController.xib;
+			sourceTree = "<group>";
+		};
 		03861E6F14EC1E8000D9DBD4 /* PreferenceViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				03861E6E14EC1E8000D9DBD4 /* en */,
+				032E7C1A1520C40500D9CCA6 /* zh-Hans */,
 			);
 			name = PreferenceViewController.xib;
 			sourceTree = "<group>";
@@ -1052,7 +1127,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -1072,7 +1147,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -1123,7 +1198,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = BubblesOnMac/BubblesOnMac.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Hongming Zhu";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "3rd Party Mac Developer Application: Hongming Zhu";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1137,9 +1212,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Deliver;
-				PROVISIONING_PROFILE = "97FD90E7-374C-4357-A8EB-B6052EE7D9E2";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "97FD90E7-374C-4357-A8EB-B6052EE7D9E2";
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1150,7 +1224,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = BubblesOnMac/BubblesOnMac.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Hongming Zhu";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "3rd Party Mac Developer Application: Hongming Zhu";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1164,9 +1238,8 @@
 				INFOPLIST_FILE = "BubblesOnMac/BubblesOnMac-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Deliver;
-				PROVISIONING_PROFILE = "97FD90E7-374C-4357-A8EB-B6052EE7D9E2";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "97FD90E7-374C-4357-A8EB-B6052EE7D9E2";
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
