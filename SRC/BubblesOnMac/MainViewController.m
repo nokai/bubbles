@@ -471,7 +471,15 @@
     [_aboutController showWindow:self];
 }
 
+- (IBAction)rateApp:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://itunes.apple.com/us/app/deliver/id506655546?mt=12"]];
+}
 
+- (IBAction)checkBubblesTheDeliver:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://itunes.apple.com/us/app/bubbles-the-deliver/id506646552?mt=8"]];
+}
 #pragma mark - WDBubbleDelegate
 
 - (void)percentUpdated {
