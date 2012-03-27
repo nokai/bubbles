@@ -7,6 +7,8 @@
 //
 
 #import "NetworkFoundPopOverViewController.h"
+#import "WDBubble.h"
+#import "TransparentTableView.h"
 
 @implementation NetworkFoundPopOverViewController
 @synthesize bubble = _bubble;

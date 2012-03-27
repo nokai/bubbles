@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "NSImage+QuickLook.h"
-#import "AppDelegate.h"
 
 @protocol DragAndDropImageViewDelegate <NSObject>
 
@@ -23,5 +22,4 @@
 
 @property(nonatomic ,assign) id<DragAndDropImageViewDelegate>delegate;
 - (id)initWithCoder:(NSCoder *)coder;
-
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "TextViewController.h"
-
+#import "WUTextView.h"
 
 @implementation TextViewController
 @synthesize textField = _textField;

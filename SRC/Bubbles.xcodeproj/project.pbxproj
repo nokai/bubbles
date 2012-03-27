@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		03008FFF14D81C2800C93A14 /* NSImage+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */; };
 		0311924414DE4CE700E0DFEB /* ImageAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0311924314DE4CE700E0DFEB /* ImageAndTextCell.m */; };
+		0320226E1521E93F009E1815 /* WDLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = C15151C31515DF68009CE9A0 /* WDLocalization.m */; };
 		0322FC9314F9226000647B89 /* FeatureWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0322FC9214F9226000647B89 /* FeatureWindowController.m */; };
 		032A05C314E39F5B005C4F6E /* HistoryPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A05C114E39F5B005C4F6E /* HistoryPopOverViewController.m */; };
 		032A05C914E3A525005C4F6E /* NetworkFoundPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A05C714E3A525005C4F6E /* NetworkFoundPopOverViewController.m */; };
@@ -166,6 +167,7 @@
 		03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+QuickLook.m"; sourceTree = "<group>"; };
 		0311924214DE4CE700E0DFEB /* ImageAndTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageAndTextCell.h; sourceTree = "<group>"; };
 		0311924314DE4CE700E0DFEB /* ImageAndTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageAndTextCell.m; sourceTree = "<group>"; };
+		0320227015220767009E1815 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.xib"; sourceTree = "<group>"; };
 		0322FC9114F9226000647B89 /* FeatureWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureWindowController.h; sourceTree = "<group>"; };
 		0322FC9214F9226000647B89 /* FeatureWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureWindowController.m; sourceTree = "<group>"; };
 		032A05C014E39F5B005C4F6E /* HistoryPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryPopOverViewController.h; sourceTree = "<group>"; };
@@ -460,8 +462,8 @@
 				0322FC9214F9226000647B89 /* FeatureWindowController.m */,
 				032E7C181520C3DB00D9CCA6 /* FeatureWindowController.xib */,
 				03E70ADA14FD228000BF0B59 /* AboutWindowController.h */,
-				032E7C141520C3B300D9CCA6 /* AboutWindowController.xib */,
 				03E70ADB14FD228000BF0B59 /* AboutWindowController.m */,
+				032E7C141520C3B300D9CCA6 /* AboutWindowController.xib */,
 			);
 			name = Window;
 			sourceTree = "<group>";
@@ -963,6 +965,7 @@
 				03BF24DE14F930A6002809A3 /* NSPageControl.m in Sources */,
 				03A8F4D114FA556F0065F057 /* DuxScrollViewAnimation.m in Sources */,
 				03E70ADC14FD228000BF0B59 /* AboutWindowController.m in Sources */,
+				0320226E1521E93F009E1815 /* WDLocalization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1103,6 +1106,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C1C9372814BB1766005E0EAA /* en */,
+				0320227015220767009E1815 /* zh-Hans */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";

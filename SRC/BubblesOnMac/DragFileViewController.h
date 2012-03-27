@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "DragAndDropImageView.h"
+@class DragAndDropImageView;
 
 @interface DragFileViewController : NSViewController
 {

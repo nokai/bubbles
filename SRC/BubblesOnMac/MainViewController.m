@@ -7,6 +7,20 @@
 //
 
 #import "MainViewController.h"
+#import "WDLocalization.h"
+#import "WDSound.h"
+#import "AboutWindowController.h"
+#import "PasswordMacViewController.h"
+#import "DragFileViewController.h"
+#import "PreferenceViewContoller.h"
+#import "NSImage+QuickLook.h"
+#import "ImageAndTextCell.h"
+#import "TextViewController.h"
+#import "NSView+NSView_Fade_.h"
+#import "HistoryPopOverViewController.h"
+#import "NetworkFoundPopOverViewController.h"
+#import "FeatureWindowController.h"
+#import "WUTextView.h"
 
 #define kButtonTitleSendText    @"Text"
 #define kButtonTitleSendFile    @"File"
@@ -401,9 +415,9 @@
     
     _selectFileOpenPanel = [[NSOpenPanel openPanel] retain];
     
-    [_selectFileOpenPanel setTitle:@"Choose File"];
-	[_selectFileOpenPanel setPrompt:@"Browse"];
-	[_selectFileOpenPanel setNameFieldLabel:@"Choose a file:"];
+    [_selectFileOpenPanel setTitle:NSLocalizedString(@"CHOOSE_FILE", @"Choose files")];
+	[_selectFileOpenPanel setPrompt:NSLocalizedString(@"BROWSE", @"Browse")];
+	[_selectFileOpenPanel setNameFieldLabel:NSLocalizedString(@"CHOOSE_A_FILE", @"Choose a file")];
     [_selectFileOpenPanel setCanChooseDirectories:NO];
     [_selectFileOpenPanel setCanChooseFiles:YES];
     

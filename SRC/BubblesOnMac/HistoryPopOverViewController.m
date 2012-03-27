@@ -7,7 +7,11 @@
 //
 
 #import "HistoryPopOverViewController.h"
-
+#import "WDMessage.h"
+#import "NSImage+QuickLook.h"
+#import "AppDelegate.h"
+#import "TransparentTableView.h"
+#import "WDBubble.h"
 
 @implementation HistoryPopOverViewController
 @synthesize historyPopOver = _historyPopOver;
@@ -360,20 +364,20 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     NSInteger selectedRow = [rows firstIndex];
     WDMessage *message = [_fileHistoryArray objectAtIndex:selectedRow];
     if ([message.state isEqualToString: kWDMessageStateText]) {
-        NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteSelectedRow) keyEquivalent:@""];
+        NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:NSLocalizedString(@"DELETE", @"Delete") action:@selector(deleteSelectedRow) keyEquivalent:@""];
         [menu addItem:deleteItem];
         [deleteItem release];
     } else {
         
-        NSMenuItem *previewItem = [[NSMenuItem alloc]initWithTitle:@"Show in Finder" action:@selector(previewSelectedRow) keyEquivalent:@""];
+        NSMenuItem *previewItem = [[NSMenuItem alloc]initWithTitle:NSLocalizedString(@"SHOW_IN_FINDER", @"Show in Finder") action:@selector(previewSelectedRow) keyEquivalent:@""];
         [menu addItem:previewItem];
         [previewItem release];
         
-        NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteSelectedRow) keyEquivalent:@""];
+        NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:NSLocalizedString(@"DELETE", @"Delete") action:@selector(deleteSelectedRow) keyEquivalent:@""];
         [menu addItem:deleteItem];
         [deleteItem release];
         
-        NSMenuItem *quicklookItem = [[NSMenuItem alloc]initWithTitle:@"Quicklook" action:@selector(showItPreview) keyEquivalent:@""];
+        NSMenuItem *quicklookItem = [[NSMenuItem alloc]initWithTitle:NSLocalizedString(@"QUICKLOOK", @"Quicklook") action:@selector(showItPreview) keyEquivalent:@""];
         [menu addItem:quicklookItem];
         [quicklookItem release];
     }

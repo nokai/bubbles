@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "WDBubble.h"
-#import "TransparentTableView.h"
+@class WDBubble;
+@class TransparentTableView;
 
 #define kImageCell 0
 #define kTextFieldCell 1
