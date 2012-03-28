@@ -44,7 +44,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{50, 500}, {344, 239}}</string>
 				<int key="NSWTFlags">539492352</int>
-				<string key="NSWindowTitle">About Deliver</string>
+				<string key="NSWindowTitle">About Bubbles the Deliver</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
@@ -123,6 +123,7 @@
 							<string key="NSFrame">{{17, 20}, {310, 17}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:3944</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="615279136">
@@ -178,7 +179,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="302744375"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>

@@ -105,6 +105,7 @@
         _networkPopOverController.selectedServiceName = _selectedServiceName;
         [_networkPopOverController reloadNetwork];
     }
+    
 }
 
 - (void)initFirstResponder
