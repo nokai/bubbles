@@ -5,21 +5,23 @@
 //  Created by 吴 wuziqi on 12-1-11.
 //  Copyright (c) 2012年 BMW Group ConnectedDrive Lab China. All rights reserved.
 //
-
 #import <Foundation/Foundation.h>
-#import "WDBubble.h"
-#import "WDSound.h"
-#import "AboutWindowController.h"
+#import "DragAndDropImageView.h"
 #import "PasswordMacViewController.h"
-#import "DragFileViewController.h"
-#import "PreferenceViewContoller.h"
-#import "NSImage+QuickLook.h"
-#import "ImageAndTextCell.h"
-#import "TextViewController.h"
-#import "NSView+NSView_Fade_.h"
-#import "HistoryPopOverViewController.h"
 #import "NetworkFoundPopOverViewController.h"
-#import "FeatureWindowController.h"
+#import "WDBubble.h"
+
+@class WDBubble;
+@class WDSound;
+@class AboutWindowController;
+@class PasswordMacViewController;
+@class DragFileViewController;
+@class PreferenceViewContoller;
+@class TextViewController;
+@class HistoryPopOverViewController;
+@class NetworkFoundPopOverViewController;
+@class FeatureWindowController;
+@class WDLocalization;
 
 #define kTextViewController 0
 #define kDragFileController 1

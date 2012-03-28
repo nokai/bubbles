@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "WDBubble.h"
 #import <Quartz/Quartz.h>
 
 #define kFirstUseKey @"kUpdateFirstUseKey"

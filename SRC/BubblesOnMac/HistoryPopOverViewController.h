@@ -7,11 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "WDMessage.h"
+@class WDBubble;
+@class TransparentTableView;
+@class WDMessage;
+@class ImageAndTextCell;
 #import "ImageAndTextCell.h"
-#import "NSImage+QuickLook.h"
-#import "AppDelegate.h"
-#import "TransparentTableView.h"
 #import "NSTableView+ContextMenu.h"
 
 #define kPreviewColumn 1

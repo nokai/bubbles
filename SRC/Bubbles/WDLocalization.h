@@ -6,6 +6,9 @@
 //  Copyright (c) 2012年 BMW Group ConnectedDrive Lab China. All rights reserved.
 //
 
+#ifndef Bubbles_WDLocalization_h
+#define Bubbles_WDLocalizationr_h
+
 #import <Foundation/Foundation.h>
 
 // DW: normal actions
@@ -56,3 +59,5 @@
 + (NSString *)stringForKey:(NSString *)key;
 
 @end
+
+#endif
