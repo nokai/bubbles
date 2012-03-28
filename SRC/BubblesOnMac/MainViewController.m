@@ -32,12 +32,25 @@
 
 #pragma mark - Private Methods
 
+- (void)showHistoryPopOver
+{
+    NSButton *button  = (NSButton *)[_historyItem view];
+    [_historyPopOverController showHistoryPopOver:button];
+}
+
+- (void)showNetworkPopOver
+{
+    [_networkPopOverController reloadNetwork];
+    _networkPopOverController.selectedServiceName = _selectedServiceName;
+    NSButton *button  = (NSButton *)[_networkItem view];
+    [_networkPopOverController showServicesFoundPopOver:button];
+}
+
 - (void)restoreImageAndLabel:(NSNotification *)notification
 {
     [_dragFileController.imageView setImage:nil];
     [_dragFileController.label setHidden:NO];
 }
-
 
 - (void)displayErrorMessage:(NSString *)message {
     NSRunAlertPanel(NSLocalizedString(@"SORRY", @"Sorry"), NSLocalizedString(message, @"Error type"), NSLocalizedString(@"OK", @"Ok"), nil, nil);
@@ -106,6 +119,7 @@
         [_networkPopOverController reloadNetwork];
     }
     
+    [self showNetworkPopOver];
 }
 
 - (void)initFirstResponder
@@ -386,16 +400,12 @@
 
 - (IBAction)openHistoryPopOver:(id)sender
 {
-    NSButton *button  = (NSButton *)[_historyItem view];
-    [_historyPopOverController showHistoryPopOver:button];
+    [self showHistoryPopOver];
 }
 
 - (IBAction)openServiceFoundPopOver:(id)sender
 {
-    [_networkPopOverController reloadNetwork];
-    _networkPopOverController.selectedServiceName = _selectedServiceName;
-    NSButton *button  = (NSButton *)[_networkItem view];
-    [_networkPopOverController showServicesFoundPopOver:button];
+    [self showNetworkPopOver];
 }
 
 - (IBAction)send:(id)sender {
@@ -521,6 +531,7 @@
             [_dragFileController.imageView setImage:quicklook];
         }
     }
+    [self showHistoryPopOver];
 }
 
 - (void)didSendMessage:(WDMessage *)message {
