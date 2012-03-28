@@ -151,6 +151,7 @@
 		C1CFCD2214B985D2008A1B1F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CFCD2114B985D2008A1B1F /* ViewController.m */; };
 		C1CFCD3014B986CB008A1B1F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C1CFCD2C14B986CB008A1B1F /* Default.png */; };
 		C1CFCD3114B986CB008A1B1F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1CFCD2D14B986CB008A1B1F /* Default@2x.png */; };
+		C1DEF40E1521E46100C2614E /* WDLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = C15151C31515DF68009CE9A0 /* WDLocalization.m */; };
 		C1E03DC1150F72F000571248 /* Manual.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C1E03DC0150F72F000571248 /* Manual.pdf */; };
 		C1F0A55114FFECFD0048B02E /* button_help.png in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A54F14FFECFD0048B02E /* button_help.png */; };
 		C1F0A55214FFECFD0048B02E /* button_help@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1F0A55014FFECFD0048B02E /* button_help@2x.png */; };
@@ -939,6 +940,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1DEF40E1521E46100C2614E /* WDLocalization.m in Sources */,
 				C125260314FD33C8009FC78C /* WDSound.m in Sources */,
 				C1C9373514BB204D005E0EAA /* AsyncSocket.m in Sources */,
 				C1C9373714BB204D005E0EAA /* WDBubble.m in Sources */,
@@ -1213,7 +1215,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Deliver;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "97FD90E7-374C-4357-A8EB-B6052EE7D9E2";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1239,7 +1241,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = Deliver;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "97FD90E7-374C-4357-A8EB-B6052EE7D9E2";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
