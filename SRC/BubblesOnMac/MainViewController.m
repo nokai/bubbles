@@ -53,7 +53,7 @@
 }
 
 - (void)displayErrorMessage:(NSString *)message {
-    NSRunAlertPanel(NSLocalizedString(@"SORRY", @"Sorry"), NSLocalizedString(message, @"Error type"), NSLocalizedString(@"OK", @"Ok"), nil, nil);
+    NSRunAlertPanel(NSLocalizedString(@"SORRY", @"Sorry"), NSLocalizedString(message, message), NSLocalizedString(@"OK", @"Ok"), nil, nil);
 }
 
 - (void)firstUse

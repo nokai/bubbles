@@ -21,3 +21,10 @@
 "QUICKLOOK" = "Quicklook";
 "VERSION" = "Version";
 "Copyright © 2012 Team Ace. All rights reserved." = "Copyright © 2012 Team Ace. All rights reserved.";
+"LOCAL" = " (local)";
+
+"kWDBubbleErrorMessageTitle" = "Deliver Failed";
+"kWDBubbleErrorMessageTerminatedBySender" = "Delivery is terminated by sender.";
+"kWDBubbleErrorMessageDisconnectWithError" = "Either delivery is terminated by receiver or the network condition is bad.\n\nYou may fix this problem by restarting Deliver.";
+"kWDBubbleErrorMessageDoNotSupportMultiple" = "There is already a delivery ongoing, multiple deliveries will be supported in the future.\n\nYou may fix this problem by restarting Deliver.";
+"kWDBubbleErrorMessageNoDeviceSelected" = "Please select a device to deliver.";

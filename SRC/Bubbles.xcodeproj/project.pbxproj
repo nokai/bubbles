@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		03008FFF14D81C2800C93A14 /* NSImage+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */; };
 		0311924414DE4CE700E0DFEB /* ImageAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0311924314DE4CE700E0DFEB /* ImageAndTextCell.m */; };
+		0318B87815247C1D0089D66C /* PasswordWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0318B87A15247C1D0089D66C /* PasswordWindowView.xib */; };
 		0322FC9314F9226000647B89 /* FeatureWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0322FC9214F9226000647B89 /* FeatureWindowController.m */; };
 		032A05C314E39F5B005C4F6E /* HistoryPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A05C114E39F5B005C4F6E /* HistoryPopOverViewController.m */; };
 		032A05C914E3A525005C4F6E /* NetworkFoundPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A05C714E3A525005C4F6E /* NetworkFoundPopOverViewController.m */; };
@@ -31,7 +32,6 @@
 		0346C6B814FA5AE900167F63 /* text.png in Resources */ = {isa = PBXBuildFile; fileRef = 0346C6B714FA5AE900167F63 /* text.png */; };
 		0354C96014BDC3F700417697 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C95F14BDC3F700417697 /* MainViewController.m */; };
 		0354C9AB14BDE4FA00417697 /* PasswordMacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */; };
-		0354C9AD14BDE51800417697 /* PasswordWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0354C9AC14BDE51800417697 /* PasswordWindowView.xib */; };
 		037346071520B5FA0018E63F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 037346091520B5FA0018E63F /* Localizable.strings */; };
 		0373460B1520B64B0018E63F /* NetworkFoundPopOverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0373460D1520B64B0018E63F /* NetworkFoundPopOverViewController.xib */; };
 		0378FCF314F601620044A43B /* add txt.png in Resources */ = {isa = PBXBuildFile; fileRef = 0378FCEF14F601620044A43B /* add txt.png */; };
@@ -167,6 +167,8 @@
 		03008FFE14D81C2800C93A14 /* NSImage+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+QuickLook.m"; sourceTree = "<group>"; };
 		0311924214DE4CE700E0DFEB /* ImageAndTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageAndTextCell.h; sourceTree = "<group>"; };
 		0311924314DE4CE700E0DFEB /* ImageAndTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageAndTextCell.m; sourceTree = "<group>"; };
+		0318B87915247C1D0089D66C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PasswordWindowView.xib; sourceTree = "<group>"; };
+		0318B87C15247C260089D66C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/PasswordWindowView.xib"; sourceTree = "<group>"; };
 		0320227015220767009E1815 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.xib"; sourceTree = "<group>"; };
 		0322FC9114F9226000647B89 /* FeatureWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureWindowController.h; sourceTree = "<group>"; };
 		0322FC9214F9226000647B89 /* FeatureWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureWindowController.m; sourceTree = "<group>"; };
@@ -194,7 +196,6 @@
 		0354C95F14BDC3F700417697 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		0354C9A914BDE4FA00417697 /* PasswordMacViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordMacViewController.h; sourceTree = "<group>"; };
 		0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordMacViewController.m; sourceTree = "<group>"; };
-		0354C9AC14BDE51800417697 /* PasswordWindowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordWindowView.xib; sourceTree = "<group>"; };
 		037346081520B5FA0018E63F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0373460A1520B5FF0018E63F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		0373460C1520B64B0018E63F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NetworkFoundPopOverViewController.xib; sourceTree = "<group>"; };
@@ -454,7 +455,7 @@
 			children = (
 				0354C9A914BDE4FA00417697 /* PasswordMacViewController.h */,
 				0354C9AA14BDE4FA00417697 /* PasswordMacViewController.m */,
-				0354C9AC14BDE51800417697 /* PasswordWindowView.xib */,
+				0318B87A15247C1D0089D66C /* PasswordWindowView.xib */,
 				037D71DF14C954530082FB64 /* PreferenceViewContoller.h */,
 				037D71E014C954530082FB64 /* PreferenceViewContoller.m */,
 				03861E6F14EC1E8000D9DBD4 /* PreferenceViewController.xib */,
@@ -873,7 +874,7 @@
 				C1C9372314BB1766005E0EAA /* Credits.rtf in Resources */,
 				C1C9372914BB1766005E0EAA /* MainMenu.xib in Resources */,
 				C1C9372E14BB17C3005E0EAA /* Icon-Mac.icns in Resources */,
-				0354C9AD14BDE51800417697 /* PasswordWindowView.xib in Resources */,
+				0318B87815247C1D0089D66C /* PasswordWindowView.xib in Resources */,
 				03861E6D14EC1E8000D9DBD4 /* PreferenceViewController.xib in Resources */,
 				032E7C0E1520C38100D9CCA6 /* DragFileViewController.xib in Resources */,
 				03A8879A14E2B108008CA643 /* TextViewController.xib in Resources */,
@@ -972,6 +973,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		0318B87A15247C1D0089D66C /* PasswordWindowView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0318B87915247C1D0089D66C /* en */,
+				0318B87C15247C260089D66C /* zh-Hans */,
+			);
+			name = PasswordWindowView.xib;
+			sourceTree = "<group>";
+		};
 		032E7C0C1520C36000D9CCA6 /* HistoryPopOverViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

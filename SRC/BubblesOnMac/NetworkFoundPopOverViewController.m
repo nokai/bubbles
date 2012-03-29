@@ -129,7 +129,7 @@
         
         if ([_bubble isIdenticalService:t]) {
             NSTextFieldCell *textCell = (NSTextFieldCell *)cell;
-            NSString *string = [NSString stringWithFormat:@"%@ (local)",t.name];
+            NSString *string = [NSString stringWithFormat:@"%@ %@",t.name , NSLocalizedString(@"LOCAL", @"local")];
             [textCell setStringValue:string];
             [[textCell controlView] setNeedsDisplay:YES];
         } else {

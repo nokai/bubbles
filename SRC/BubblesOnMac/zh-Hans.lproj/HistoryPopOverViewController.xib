@@ -258,7 +258,6 @@
 								<string key="NSFrame">{{0, 183}, {285, 15}}</string>
 								<reference key="NSSuperview" ref="645614796"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:1847</string>
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="645614796"/>
