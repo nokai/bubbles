@@ -14,6 +14,7 @@
 "kActionSheetButtonSave" = "Save to Gallery";
 "kActionSheetButtonHelpPDF" = "Manual";
 "kActionSheetButtonHelpSplash" = "Splash Screen";
+"kActionSheetButtonMacApp" = "View Deliver for Mac";
 "kActionSheetButtonTransferTerminate" = "Terminate";
 "kActionSheetButtonCancel" = "Cancel";
 "kActionSheetButtonDeleteAll" = "Delete All";

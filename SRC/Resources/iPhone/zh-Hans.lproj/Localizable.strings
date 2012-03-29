@@ -14,6 +14,7 @@
 "kActionSheetButtonSave" = "存储图像";
 "kActionSheetButtonHelpPDF" = "用户手册";
 "kActionSheetButtonHelpSplash" = "闪屏帮助";
+"kActionSheetButtonMacApp" = "查看Mac上的信使";
 "kActionSheetButtonTransferTerminate" = "中止传输";
 "kActionSheetButtonCancel" = "取消";
 "kActionSheetButtonDeleteAll" = "全部删除";

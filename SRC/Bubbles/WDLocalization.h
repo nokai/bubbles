@@ -18,6 +18,7 @@
 // DW: help actions
 #define kActionSheetButtonHelpPDF       [WDLocalization stringForKey:@"kActionSheetButtonHelpPDF"]
 #define kActionSheetButtonHelpSplash    [WDLocalization stringForKey:@"kActionSheetButtonHelpSplash"]
+#define kActionSheetButtonMacApp        [WDLocalization stringForKey:@"kActionSheetButtonMacApp"]
 // DW: transfer actions
 #define kActionSheetButtonTransferTerminate [WDLocalization stringForKey:@"kActionSheetButtonTransferTerminate"]
 // DW: edit actions

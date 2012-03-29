@@ -915,6 +915,9 @@
             _actionSheet = nil;
         }
         return;
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonMacApp]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.apple.com/us/app/deliver/id506655546?ls=1&mt=12"]];
+        return;
     }
     
     // DW: construct a WDMessage
