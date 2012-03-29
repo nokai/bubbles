@@ -12,6 +12,8 @@
 "kActionSheetButtonMessage" = "Message";
 "kActionSheetButtonPreview" = "Preview";
 "kActionSheetButtonSave" = "Save to Gallery";
+"kActionSheetButtonHelpEmail" = "Send Email Feedback";
+"kActionSheetButtonHelpRate" = "Rate in App Store";
 "kActionSheetButtonHelpPDF" = "Manual";
 "kActionSheetButtonHelpSplash" = "Splash Screen";
 "kActionSheetButtonMacApp" = "View Deliver for Mac";
@@ -35,3 +37,6 @@
 
 "kAlertViewOK" = "OK";
 "kAlertViewCancel" = "Cancel";
+
+"kEmailToDeveloperSubject" = "Feedback of Deliver for iOS";
+"kEmailToDeveloperBody" = "I have something to say about Deliver for iOS.\n\nSuggestions:\n1. \n2. \n 3. \n\nBugs:\n1. \n2. \n 3. ";

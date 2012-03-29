@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "WUTextView.h"
+@class WUTextView;
 
 @interface TextViewController : NSViewController {
     WUTextView *_textField;

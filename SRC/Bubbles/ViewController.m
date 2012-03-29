@@ -140,6 +140,19 @@
     }
 }
 
+- (void)displayMailComposerSheetToDeveloepr {
+    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+    if (!picker) {
+        return;
+    }
+    picker.mailComposeDelegate = self;
+    [picker setToRecipients:[NSArray arrayWithObject:@"teamace.leavesoft@gmail.com"]];
+    [picker setSubject:kEmailToDeveloperSubject];
+    [picker setMessageBody:kEmailToDeveloperBody isHTML:NO];
+    [self presentModalViewController:picker animated:YES];
+	[picker release];
+}
+
 - (void)displayMailComposerSheetWithMessage:(WDMessage *)message {
 	MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
     if (!picker) {
@@ -148,7 +161,6 @@
     
 	picker.mailComposeDelegate = self;
     
-	// Set up recipients
     if ([message.state isEqualToString: kWDMessageStateText]) {
         NSString *emailBody = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
         [picker setMessageBody:emailBody isHTML:YES];
@@ -510,7 +522,7 @@
                                                delegate:self 
                                       cancelButtonTitle:kActionSheetButtonCancel
                                  destructiveButtonTitle:nil
-                                      otherButtonTitles:kActionSheetButtonHelpPDF, kActionSheetButtonHelpSplash, nil];
+                                      otherButtonTitles:kActionSheetButtonHelpEmail, kActionSheetButtonHelpRate, kActionSheetButtonHelpPDF, kActionSheetButtonHelpSplash, nil];
     [_actionSheet showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
 }
 
@@ -897,6 +909,13 @@
         }
         [_messagesView reloadData];
         [self setEditing:NO animated:YES];
+        return;
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonHelpEmail]) {
+        [self displayMailComposerSheetToDeveloepr];
+        return;
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonHelpRate]) {
+        NSString *url = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", @"506646552"];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
         return;
     } else if ([buttonTitle isEqualToString:kActionSheetButtonHelpPDF]) {
         NSURL *manualURL = [[NSBundle mainBundle] URLForResource:@"Manual" withExtension:@"pdf"];

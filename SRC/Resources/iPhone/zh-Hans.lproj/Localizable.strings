@@ -12,6 +12,8 @@
 "kActionSheetButtonMessage" = "用短息发送";
 "kActionSheetButtonPreview" = "预览";
 "kActionSheetButtonSave" = "存储图像";
+"kActionSheetButtonHelpEmail" = "邮件反馈";
+"kActionSheetButtonHelpRate" = "去App Store评分";
 "kActionSheetButtonHelpPDF" = "用户手册";
 "kActionSheetButtonHelpSplash" = "闪屏帮助";
 "kActionSheetButtonMacApp" = "查看Mac上的信使";
@@ -35,3 +37,6 @@
 
 "kAlertViewOK" = "好";
 "kAlertViewCancel" = "取消";
+
+"kEmailToDeveloperSubject" = "反馈：Deliver for iOS";
+"kEmailToDeveloperBody" = "关于Deliver for iOS我有一些话要说。\n\n建议：\n一、\n二、\n三、\n\nBug：\n一、\n二、\n三、";

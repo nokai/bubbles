@@ -7,6 +7,8 @@
 //
 
 #import "DragAndDropImageView.h"
+#import "AppDelegate.h"
+#import "WDBubble.h"
 
 @implementation DragAndDropImageView
 
@@ -37,7 +39,6 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
-    DLog(@"entered");
     if (([sender draggingSourceOperationMask] & NSDragOperationCopy) == NSDragOperationCopy) {
         
         //Wu:Means we offer the type the destination accepts
@@ -49,7 +50,6 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
-    DLog(@"haha exited!!!!!!!!!!!");
 }
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
@@ -63,9 +63,6 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     NSPasteboard *pboard = [sender draggingPasteboard];
 	
     if ( [[pboard types] containsObject:NSFilenamesPboardType] ) {
-		//  NSArray *files = [pboard propertyListForType:NSFilenamesPboardType];
-        //DLog(@"%@", files);
-        // Perform operation using the list of files
     }
     
     // Wu:Set the files that can be accepted by NSImageView
@@ -83,7 +80,9 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     [[NSFileManager defaultManager] fileExistsAtPath:[fileUrl path] isDirectory: &isFolder];
     
     if (data == nil || isFolder || ([urlArray count] > 1)) {
-        NSRunAlertPanel(@"Sorry", @"We do not support folders, application package or multiple files for now.\nWe will improve this in the new version, many thanks for your support.", @"OK", nil, nil);
+        NSRunAlertPanel(NSLocalizedString(@"SORRY", @"Sorry"), 
+                        NSLocalizedString(@"NOT_MULTI", @"We do not support folders, application package or multiple files for now.\nWe will improve this in the new version, many thanks for your support."), 
+                        NSLocalizedString(@"OK", @"Ok"), nil, nil);
         return NO;
     } else {
         if ([fileType isEqualToString:NSPasteboardTypeTIFF]) {

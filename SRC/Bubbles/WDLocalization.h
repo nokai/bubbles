@@ -6,6 +6,9 @@
 //  Copyright (c) 2012年 BMW Group ConnectedDrive Lab China. All rights reserved.
 //
 
+#ifndef Bubbles_WDLocalization_h
+#define Bubbles_WDLocalizationr_h
+
 #import <Foundation/Foundation.h>
 
 // DW: normal actions
@@ -16,6 +19,8 @@
 #define kActionSheetButtonPreview   [WDLocalization stringForKey:@"kActionSheetButtonPreview"]
 #define kActionSheetButtonSave      [WDLocalization stringForKey:@"kActionSheetButtonSave"]
 // DW: help actions
+#define kActionSheetButtonHelpEmail     [WDLocalization stringForKey:@"kActionSheetButtonHelpEmail"]
+#define kActionSheetButtonHelpRate      [WDLocalization stringForKey:@"kActionSheetButtonHelpRate"]
 #define kActionSheetButtonHelpPDF       [WDLocalization stringForKey:@"kActionSheetButtonHelpPDF"]
 #define kActionSheetButtonHelpSplash    [WDLocalization stringForKey:@"kActionSheetButtonHelpSplash"]
 #define kActionSheetButtonMacApp        [WDLocalization stringForKey:@"kActionSheetButtonMacApp"]
@@ -46,8 +51,14 @@
 #define kAlertViewOK        [WDLocalization stringForKey:@"kAlertViewOK"]
 #define kAlertViewCancel    [WDLocalization stringForKey:@"kAlertViewCancel"]
 
+// DW: to developer email
+#define kEmailToDeveloperSubject    [WDLocalization stringForKey:@"kEmailToDeveloperSubject"]
+#define kEmailToDeveloperBody       [WDLocalization stringForKey:@"kEmailToDeveloperBody"]
+
 @interface WDLocalization : NSObject
 
 + (NSString *)stringForKey:(NSString *)key;
 
 @end
+
+#endif

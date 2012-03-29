@@ -7,6 +7,20 @@
 //
 
 #import "MainViewController.h"
+#import "WDLocalization.h"
+#import "WDSound.h"
+#import "AboutWindowController.h"
+#import "PasswordMacViewController.h"
+#import "DragFileViewController.h"
+#import "PreferenceViewContoller.h"
+#import "NSImage+QuickLook.h"
+#import "ImageAndTextCell.h"
+#import "TextViewController.h"
+#import "NSView+NSView_Fade_.h"
+#import "HistoryPopOverViewController.h"
+#import "NetworkFoundPopOverViewController.h"
+#import "FeatureWindowController.h"
+#import "WUTextView.h"
 
 #define kButtonTitleSendText    @"Text"
 #define kButtonTitleSendFile    @"File"
@@ -18,15 +32,28 @@
 
 #pragma mark - Private Methods
 
+- (void)showHistoryPopOver
+{
+    NSButton *button  = (NSButton *)[_historyItem view];
+    [_historyPopOverController showHistoryPopOver:button];
+}
+
+- (void)showNetworkPopOver
+{
+    [_networkPopOverController reloadNetwork];
+    _networkPopOverController.selectedServiceName = _selectedServiceName;
+    NSButton *button  = (NSButton *)[_networkItem view];
+    [_networkPopOverController showServicesFoundPopOver:button];
+}
+
 - (void)restoreImageAndLabel:(NSNotification *)notification
 {
     [_dragFileController.imageView setImage:nil];
     [_dragFileController.label setHidden:NO];
 }
 
-
 - (void)displayErrorMessage:(NSString *)message {
-    NSRunAlertPanel(@"Sorry", message, @"OK", nil, nil);
+    NSRunAlertPanel(NSLocalizedString(@"SORRY", @"Sorry"), NSLocalizedString(message, @"Error type"), NSLocalizedString(@"OK", @"Ok"), nil, nil);
 }
 
 - (void)firstUse
@@ -91,6 +118,8 @@
         _networkPopOverController.selectedServiceName = _selectedServiceName;
         [_networkPopOverController reloadNetwork];
     }
+    
+    [self showNetworkPopOver];
 }
 
 - (void)initFirstResponder
@@ -371,16 +400,12 @@
 
 - (IBAction)openHistoryPopOver:(id)sender
 {
-    NSButton *button  = (NSButton *)[_historyItem view];
-    [_historyPopOverController showHistoryPopOver:button];
+    [self showHistoryPopOver];
 }
 
 - (IBAction)openServiceFoundPopOver:(id)sender
 {
-    [_networkPopOverController reloadNetwork];
-    _networkPopOverController.selectedServiceName = _selectedServiceName;
-    NSButton *button  = (NSButton *)[_networkItem view];
-    [_networkPopOverController showServicesFoundPopOver:button];
+    [self showNetworkPopOver];
 }
 
 - (IBAction)send:(id)sender {
@@ -401,9 +426,9 @@
     
     _selectFileOpenPanel = [[NSOpenPanel openPanel] retain];
     
-    [_selectFileOpenPanel setTitle:@"Choose File"];
-	[_selectFileOpenPanel setPrompt:@"Browse"];
-	[_selectFileOpenPanel setNameFieldLabel:@"Choose a file:"];
+    [_selectFileOpenPanel setTitle:NSLocalizedString(@"CHOOSE_FILE", @"Choose files")];
+	[_selectFileOpenPanel setPrompt:NSLocalizedString(@"BROWSE", @"Browse")];
+	[_selectFileOpenPanel setNameFieldLabel:NSLocalizedString(@"CHOOSE_A_FILE", @"Choose a file")];
     [_selectFileOpenPanel setCanChooseDirectories:NO];
     [_selectFileOpenPanel setCanChooseFiles:YES];
     
@@ -457,7 +482,15 @@
     [_aboutController showWindow:self];
 }
 
+- (IBAction)rateApp:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://itunes.apple.com/us/app/deliver/id506655546?mt=12"]];
+}
 
+- (IBAction)checkBubblesTheDeliver:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://itunes.apple.com/us/app/bubbles-the-deliver/id506646552?mt=8"]];
+}
 #pragma mark - WDBubbleDelegate
 
 - (void)percentUpdated {
@@ -498,6 +531,7 @@
             [_dragFileController.imageView setImage:quicklook];
         }
     }
+    [self showHistoryPopOver];
 }
 
 - (void)didSendMessage:(WDMessage *)message {
