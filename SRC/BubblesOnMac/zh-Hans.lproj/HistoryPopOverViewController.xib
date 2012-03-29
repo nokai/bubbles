@@ -321,7 +321,7 @@
 								<object class="NSTextFieldCell" key="NSCell" id="399557901">
 									<int key="NSCellFlags">68288064</int>
 									<int key="NSCellFlags2">272630784</int>
-									<string key="NSContents">历史纪录</string>
+									<string key="NSContents">历史记录</string>
 									<reference key="NSSupport" ref="372141039"/>
 									<string key="NSCellIdentifier">_NS:3944</string>
 									<reference key="NSControlView" ref="1022468436"/>
