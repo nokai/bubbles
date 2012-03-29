@@ -22,6 +22,7 @@
 "VERSION" = "Version";
 "Copyright © 2012 Team Ace. All rights reserved." = "Copyright © 2012 Team Ace. All rights reserved.";
 "LOCAL" = " (local)";
+"BUBBLES_THE_DELIVER" = "Bubbles the Deliver";
 
 "kWDBubbleErrorMessageTitle" = "Deliver Failed";
 "kWDBubbleErrorMessageTerminatedBySender" = "Delivery is terminated by sender.";

@@ -44,7 +44,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{50, 500}, {344, 239}}</string>
 				<int key="NSWTFlags">539492352</int>
-				<string key="NSWindowTitle">关于 Bubbles the Deliver</string>
+				<string key="NSWindowTitle">关于 信使</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
