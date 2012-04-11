@@ -456,7 +456,9 @@
                 [_dragFileController.label setHidden:YES];
             }
             else {
-                NSRunAlertPanel(@"Sorry", @"We do not support folders, application package or multiple files for now.\nWe will improve this in the new version, many thanks for your support.", @"OK", nil, nil);
+                NSRunAlertPanel(NSLocalizedString(@"SORRY", @"Sorry"), 
+                                NSLocalizedString(@"NOT_MULTI", @"We do not support folders, application package or multiple files for now.\nWe will improve this in the new version, many thanks for your support."), 
+                                NSLocalizedString(@"OK", @"Ok"), nil, nil);
                 return ;
             }
         }
