@@ -547,13 +547,20 @@
         
         _currentMessage.fileURL = [[_currentMessage.fileURL URLWithRemoteChangedToLocal] URLWithoutNameConflict];
         DLog(@"WDBubble _streamFileWriter will be assigned path %@", _currentMessage.fileURL.path);
-        _streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:_currentMessage.fileURL.path  append:YES];
-        [_streamFileWriter setDelegate:self];
-        [_streamFileWriter scheduleInRunLoop:[NSRunLoop currentRunLoop]
+        // 20120507 DW: to make Deliver ready for the Mac App Store, we should use SavePanel to let the user specify
+        // the location he wants, not a URL by default
+        //_streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:_currentMessage.fileURL.path  append:YES];
+        NSURL *saveURL = [self.delegate fileSaveURL];
+        if(saveURL != NULL)
+        {
+            _streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:saveURL.path  append:YES];
+            [_streamFileWriter setDelegate:self];
+            [_streamFileWriter scheduleInRunLoop:[NSRunLoop currentRunLoop]
                                      forMode:NSDefaultRunLoopMode];
-        [_streamFileWriter open];
+            [_streamFileWriter open];
         
-        _streamBytesWrote = 0;
+            _streamBytesWrote = 0;
+        }
     } else {
         _dataBuffer = [[NSMutableData alloc] init];
     }

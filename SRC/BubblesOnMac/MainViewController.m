@@ -189,7 +189,9 @@
         _sound = [[WDSound alloc] init];
         
         // DW: we specify user's home directory by NSHomeDirectory()
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"file://localhost%@/Downloads/", NSHomeDirectory()]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"file://localhost%@/Documents/", NSHomeDirectory()]];
+        
+        //NSURL *url = [NSURL URLWithString:@"~/Library/Containers/com.tjac.delivermac/Data/Downloads/"];
         NSFileManager *fileManager= [NSFileManager defaultManager]; 
         if(![fileManager fileExistsAtPath:url.path isDirectory:nil])
             if(![fileManager createDirectoryAtPath:url.path withIntermediateDirectories:YES attributes:nil error:NULL])
@@ -557,6 +559,24 @@
         _fileURL = nil;
     }
     [_historyPopOverController deleteMessageFromHistory:message];
+}
+
+- (NSURL *)fileSaveURL {
+    NSSavePanel *savePanel = [NSSavePanel savePanel];
+    //[savePanel setTitle:NSLocalizedString(@"CHOOSE_LOCATION",@"Choose location to save file")];
+    [savePanel setPrompt:NSLocalizedString(@"SAVE_NEW_FILE",@"Save New File")];
+    //[savePanel setNameFieldLabel:NSLocalizedString(@"CHOOSE_LOCATION",@"Choose location to save file")];
+    
+    __block NSURL *selectedFileURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://localhost%@/Documents/", NSHomeDirectory()]];
+    
+    [savePanel beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow 
+                      completionHandler:^(NSInteger result) {
+                          //NSURL *selectedFileURL;
+                          if (result != NSCancelButton) {
+                              selectedFileURL = [savePanel URL];
+                          }
+                      }];
+    return selectedFileURL;
 }
 
 #pragma mark - PasswordMacViewControllerDelegate
