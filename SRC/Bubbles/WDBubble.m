@@ -550,15 +550,19 @@
         // 20120507 DW: to make Deliver ready for the Mac App Store, we should use SavePanel to let the user specify
         // the location he wants, not a URL by default
         //_streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:_currentMessage.fileURL.path  append:YES];
-        NSURL *saveURL = [self.delegate fileSaveURL];
+        NSURL *saveURL = _currentMessage.fileURL;
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+#elif TARGET_OS_MAC
+        [saveURL startAccessingSecurityScopedResource];
+#endif
         if(saveURL != NULL)
         {
             _streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:saveURL.path  append:YES];
             [_streamFileWriter setDelegate:self];
             [_streamFileWriter scheduleInRunLoop:[NSRunLoop currentRunLoop]
-                                     forMode:NSDefaultRunLoopMode];
+                                         forMode:NSDefaultRunLoopMode];
             [_streamFileWriter open];
-        
+            
             _streamBytesWrote = 0;
         }
     } else {

@@ -27,5 +27,3 @@
 "kWDBubbleErrorMessageDisconnectWithError" = "可能是网络情况不佳，也可能是接收端中止了传输。你可以尝试重启信使以解决此问题。";
 "kWDBubbleErrorMessageDoNotSupportMultiple" = "有一个传输正在进行中。信使将在后续版本支持多任务传输，感谢您的支持！";
 "kWDBubbleErrorMessageNoDeviceSelected" = "请选择一个接收端来启动传输任务。";
-"CHOOSE_LOCATION" = "存储为:";
-"SAVE_NEW_FILE" = "存储新文件";

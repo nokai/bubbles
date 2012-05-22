@@ -36,9 +36,6 @@
 - (void)didSendMessage:(WDMessage *)message;
 - (void)didTerminateReceiveMessage:(WDMessage *)message;
 - (void)didTerminateSendMessage:(WDMessage *)message;
-
-@optional
-- (NSURL *)fileSaveURL;
 @end
 
 @interface WDBubble : NSObject <AsyncSocketDelegate, NSNetServiceDelegate, NSNetServiceBrowserDelegate, NSStreamDelegate> {

@@ -32,6 +32,22 @@
 
 #pragma mark - Private Methods
 
+- (void)storeMessage:(WDMessage *)message withNewURL:(NSURL *)url
+{
+    if ([message.state isEqualToString:kWDMessageStateFile]) {
+        NSArray *originalMessages = [NSArray arrayWithArray:_historyPopOverController.fileHistoryArray];
+        for (WDMessage *m in originalMessages) {
+            if ([m.fileURL.path isEqualToString:message.fileURL.path])
+            {
+                NSLog(@"changed url");
+                m.state = kWDMessageStateFile;
+                m.fileURL = url;
+                NSLog(@"new url is %@",m.fileURL);
+            };
+        }
+    }
+}
+
 - (void)showHistoryPopOver
 {
     NSButton *button  = (NSButton *)[_historyItem view];
@@ -160,7 +176,6 @@
     if (_isView == kTextViewController || _fileURL == nil ) {
         return ;
     }
-    
     WDMessage *t = [[WDMessage messageWithFile:_fileURL andState:kWDMessageStateReadyToSend] retain];
     if ([self sendToSelectedServiceOfMessage:t]) {
         [self storeMessage:t];
@@ -522,9 +537,40 @@
         
         // DW: store this url for drag and drop
         if (_fileURL) {
-            [_fileURL release];
+            [_fileURL release],_fileURL = nil;
         }
-        _fileURL = [message.fileURL retain];
+        //_fileURL = [message.fileURL retain];
+        // DW: stopAccessingSecurityScopedResource to balance the use
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+#elif TARGET_OS_MAC
+        NSSavePanel *savePanel = [NSSavePanel savePanel];
+        [savePanel setNameFieldStringValue:[message.fileURL lastPathComponent]];
+        
+        void (^selectFileHandler)(NSInteger) = ^( NSInteger result )
+        {
+            NSError *error;
+            if (result != NSCancelButton) {
+                NSURL *selectedFileURL = [[savePanel URL] URLWithoutNameConflict];
+                _fileURL = selectedFileURL;
+                if ([[NSFileManager defaultManager]moveItemAtPath:[message.fileURL path]                                     
+                                                           toPath:[selectedFileURL path] error:&error]) {
+                    [self storeMessage:message withNewURL:selectedFileURL];
+                } else {
+                    DLog(@"error is %@",error);
+                }
+            }
+            else {
+                [[NSFileManager defaultManager] removeItemAtPath:[message.fileURL path] error:&error];
+                [_dragFileController.imageView setImage:nil];
+                [_dragFileController.label setHidden:NO];
+                [_historyPopOverController.fileHistoryArray removeLastObject];
+                [_historyPopOverController reloadTableView];
+            }
+        };
+        
+        [savePanel beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow 
+                                     completionHandler:selectFileHandler];
+#endif
         
         NSImage *image = [[NSImage alloc] initWithContentsOfURL:message.fileURL];
         if (image != nil) {
@@ -559,24 +605,6 @@
         _fileURL = nil;
     }
     [_historyPopOverController deleteMessageFromHistory:message];
-}
-
-- (NSURL *)fileSaveURL {
-    NSSavePanel *savePanel = [NSSavePanel savePanel];
-    //[savePanel setTitle:NSLocalizedString(@"CHOOSE_LOCATION",@"Choose location to save file")];
-    [savePanel setPrompt:NSLocalizedString(@"SAVE_NEW_FILE",@"Save New File")];
-    //[savePanel setNameFieldLabel:NSLocalizedString(@"CHOOSE_LOCATION",@"Choose location to save file")];
-    
-    __block NSURL *selectedFileURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://localhost%@/Documents/", NSHomeDirectory()]];
-    
-    [savePanel beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow 
-                      completionHandler:^(NSInteger result) {
-                          //NSURL *selectedFileURL;
-                          if (result != NSCancelButton) {
-                              selectedFileURL = [savePanel URL];
-                          }
-                      }];
-    return selectedFileURL;
 }
 
 #pragma mark - PasswordMacViewControllerDelegate

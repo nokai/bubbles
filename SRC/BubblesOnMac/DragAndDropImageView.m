@@ -127,6 +127,8 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     
     NSPoint dragPosition;
     NSRect imageLocation;
+    NSLog(@"caoniamde");
+    
     
     dragPosition = [self convertPoint:[event locationInWindow] fromView:nil];
     dragPosition.x -= 16;
@@ -145,13 +147,20 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     // Wu: create a new image for our semi-transparent drag image
     NSImage* dragImage=[[NSImage alloc] initWithSize:[[self image] size]]; 
     
+    int factor = (dragImage.size.width  > dragImage.size.height) ?
+    (dragImage.size.height / [self bounds].size.height) : (dragImage.size.width / [self bounds].size.height) ;
+    NSSize size = (dragImage.size.width > dragImage.size.height) ?
+    CGSizeMake(dragImage.size.width / factor, [self bounds].size.height) : CGSizeMake([self bounds].size.width,dragImage.size.height / factor);
+    
     // DW: this makes dragging visible
     [dragImage lockFocus];// draw inside of our dragImage
+    
     // Wu: draw our original image as 50% transparent
     [[self image] dissolveToPoint: NSZeroPoint fraction: .5];
-    [dragImage unlockFocus];// finished drawing
-    [dragImage setScalesWhenResized:NO];// we want the image to resize
-    //[dragImage setSize:[self bounds].size];// change to the size we are displaying
+    [dragImage unlockFocus];// finished drawin
+    [dragImage setScalesWhenResized:NO];
+    //NSSize size = CGSizeMake(dragImage.size.width / factor, [self bounds].size.height);
+    [dragImage setSize:size];// change to the size we are displaying
     
     [super dragImage:dragImage at:self.bounds.origin offset:NSZeroSize event:event pasteboard:pboard source:sourceObj slideBack:slideFlag];
     [dragImage release];
@@ -159,15 +168,19 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 
 // Wu: drag to save, dropDestination is destination, draggedDataURL is source
 - (NSArray *)namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination {
+    [dropDestination startAccessingSecurityScopedResource];
     NSURL *draggedDataURL = [self.delegate dataDraggedToSave];
+    [draggedDataURL startAccessingSecurityScopedResource];    
     if (draggedDataURL == nil) {
         return nil;
     }
-
-    NSURL *newURL = [[NSURL URLWithString:[draggedDataURL.lastPathComponent stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] 
-                            relativeToURL:dropDestination] URLWithoutNameConflict];
-    [[NSFileManager defaultManager] copyItemAtURL:draggedDataURL toURL:newURL error:nil];
+    NSURL *newURL = [[NSURL URLWithString:[draggedDataURL.lastPathComponent stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] relativeToURL:dropDestination] URLWithoutNameConflict];
     
+    NSLog(@"new is %@",[newURL absoluteString]);
+    
+    [[NSFileManager defaultManager] copyItemAtURL:draggedDataURL toURL:newURL error:nil];
+    [draggedDataURL stopAccessingSecurityScopedResource];
+    [dropDestination stopAccessingSecurityScopedResource];
     return [NSArray arrayWithObjects:newURL.lastPathComponent, nil];
 }
 

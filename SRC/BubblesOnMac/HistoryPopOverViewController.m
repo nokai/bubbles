@@ -149,7 +149,11 @@
     {
         [_removeButton setHidden:YES];
     }
-    
+}
+
+- (void)reloadTableView
+{
+    [_fileHistoryTableView reloadData];
 }
 
 - (void)showHistoryPopOver:(NSView *)attachedView
@@ -259,7 +263,7 @@ namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
 forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     NSInteger zIndex = [indexSet firstIndex];
     WDMessage *message = [_fileHistoryArray objectAtIndex:zIndex];
-    
+    NSLog(@"dropDes is %@",dropDestination);
     if ([message.state isEqualToString:kWDMessageStateText]) {
         return nil;
     }

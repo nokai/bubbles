@@ -40,5 +40,6 @@
 - (void)showHistoryPopOver:(NSView *)attachedView;
 - (void)deleteMessageFromHistory:(WDMessage *)aMessage;
 - (void)refreshButton;
+- (void)reloadTableView;
 
 @end
