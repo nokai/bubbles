@@ -7,6 +7,20 @@
 //
 
 #import "MainViewController.h"
+#import "WDLocalization.h"
+#import "WDSound.h"
+#import "AboutWindowController.h"
+#import "PasswordMacViewController.h"
+#import "DragFileViewController.h"
+#import "PreferenceViewContoller.h"
+#import "NSImage+QuickLook.h"
+#import "ImageAndTextCell.h"
+#import "TextViewController.h"
+#import "NSView+NSView_Fade_.h"
+#import "HistoryPopOverViewController.h"
+#import "NetworkFoundPopOverViewController.h"
+#import "FeatureWindowController.h"
+#import "WUTextView.h"
 
 #define kButtonTitleSendText    @"Text"
 #define kButtonTitleSendFile    @"File"
@@ -18,9 +32,65 @@
 
 #pragma mark - Private Methods
 
+- (void)storeMessage:(WDMessage *)message withNewURL:(NSURL *)url
+{
+    if ([message.state isEqualToString:kWDMessageStateFile]) {
+        NSArray *originalMessages = [NSArray arrayWithArray:_historyPopOverController.fileHistoryArray];
+        for (WDMessage *m in originalMessages) {
+            if ([m.fileURL.path isEqualToString:message.fileURL.path])
+            {
+                NSLog(@"changed url");
+                m.state = kWDMessageStateFile;
+                m.fileURL = url;
+                NSLog(@"new url is %@",m.fileURL);
+            };
+        }
+    }
+}
+
+- (void)showHistoryPopOver
+{
+    NSButton *button  = (NSButton *)[_historyItem view];
+    [_historyPopOverController showHistoryPopOver:button];
+}
+
+- (void)showNetworkPopOver
+{
+    [_networkPopOverController reloadNetwork];
+    _networkPopOverController.selectedServiceName = _selectedServiceName;
+    NSButton *button  = (NSButton *)[_networkItem view];
+    [_networkPopOverController showServicesFoundPopOver:button];
+}
+
+- (void)restoreImageAndLabel:(NSNotification *)notification
+{
+    [_dragFileController.imageView setImage:nil];
+    [_dragFileController.label setHidden:NO];
+}
+
+- (void)displayErrorMessage:(NSString *)message {
+    NSRunAlertPanel(NSLocalizedString(@"SORRY", @"Sorry"), NSLocalizedString(message, message), NSLocalizedString(@"OK", @"Ok"), nil, nil);
+}
+
+- (void)firstUse
+{
+    NSInteger firstUser = [[NSUserDefaults standardUserDefaults] integerForKey:kFirstUseKey];
+    if (firstUser == 0) {
+        _featureController = [[FeatureWindowController alloc]init];
+        [_featureController showWindow:self];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:++firstUser forKey:kFirstUseKey];
+}
 // Wu: NO for can not send, YES for will send
 - (BOOL)sendToSelectedServiceOfMessage:(WDMessage *)message {
     if (!_selectedServiceName || [_selectedServiceName isEqualToString:@""]) {
+        [self displayErrorMessage:kWDBubbleErrorMessageNoDeviceSelected];
+        return NO;
+    }
+    
+    if ([_bubble isBusy]) {
+        [self displayErrorMessage:kWDBubbleErrorMessageDoNotSupportMultiple];
         return NO;
     }
     
@@ -29,29 +99,43 @@
 }
 
 - (void)servicesUpdated:(NSNotification *)notification {
-  
+    
     if (_bubble.servicesFound.count > 1) {
         // DW: if we already have one service selected, we do not update the selection now
         if (_selectedServiceName) {
-            return;
+            for (NSNetService *s in self.bubble.servicesFound) {
+                if ([_selectedServiceName isEqualToString:s.name]) {
+                    if (_networkPopOverController != nil) {
+                        [_networkPopOverController reloadNetwork];
+                    }
+                    
+                    return;
+                }
+            }
+            
+            // DW: selected service name is not found in current services, it's no longer useful, release it
+            [_selectedServiceName release];
+            _selectedServiceName = nil;
         }
         
-        for (NSNetService *s in _bubble.servicesFound) {
-            if ([_bubble isDifferentService:s]) {
+        for (NSNetService *s in self.bubble.servicesFound) {
+            
+            if ([self.bubble isDifferentService:s]) {
                 _selectedServiceName = [s.name retain];
             }
+        }    } else {
+            if (_selectedServiceName) {
+                [_selectedServiceName release];
+            }
+            _selectedServiceName = nil;
         }
-    } else {
-        if (_selectedServiceName) {
-            [_selectedServiceName release];
-        }
-        _selectedServiceName = nil;
-    }
     
     if (_networkPopOverController != nil) {
         _networkPopOverController.selectedServiceName = _selectedServiceName;
         [_networkPopOverController reloadNetwork];
     }
+    
+    [self showNetworkPopOver];
 }
 
 - (void)initFirstResponder
@@ -60,28 +144,6 @@
     AppDelegate *appDel = (AppDelegate *)[NSApp delegate];
     [appDel.window makeFirstResponder:_textViewController.textField];
     appDel.window.initialFirstResponder = _textViewController.textField;
-}
-
-- (void)loadUserPreference
-{
-    /* if (_passwordController != nil) {
-     //[[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
-     return ;
-     }
-     
-     bool status = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
-     
-     if (status) {
-     _passwordController = [[PasswordMacViewController alloc]init];
-     _passwordController.delegate = self;
-     
-     [NSApp beginSheet:[_passwordController window] modalForWindow:[NSApplication sharedApplication].mainWindow modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
-     
-     } else {
-     
-     }*/
-    [_bubble publishServiceWithPassword:@""];
-    [_bubble browseServices];
 }
 
 - (void)storeMessage:(WDMessage *)message
@@ -97,7 +159,7 @@
     } else {
         [_historyPopOverController.fileHistoryArray addObject:message];
     }
-
+    
     [_historyPopOverController.fileHistoryArray sortUsingComparator:^NSComparisonResult(WDMessage *obj1, WDMessage * obj2) {
         if ([obj1.time compare:obj2.time] == NSOrderedAscending)
             return NSOrderedAscending;
@@ -107,28 +169,27 @@
             return NSOrderedSame;
     }];
     [_historyPopOverController.filehistoryTableView reloadData];
+    [_historyPopOverController refreshButton];
 }
 
 - (void)sendFile {
     if (_isView == kTextViewController || _fileURL == nil ) {
         return ;
     }
-    
     WDMessage *t = [[WDMessage messageWithFile:_fileURL andState:kWDMessageStateReadyToSend] retain];
     if ([self sendToSelectedServiceOfMessage:t]) {
         [self storeMessage:t];
     }
-    //[_bubble broadcastMessage:t];
-    [t release];  
+    [t release];
 }
 
 - (void)sendText {
     if (_isView == kTextViewController || [_textViewController.textField.string length] == 0) {
-        WDMessage *t = [WDMessage messageWithText:_textViewController.textField.string];
+        WDMessage *t = [[WDMessage messageWithText:_textViewController.textField.string] retain];
         if ([self sendToSelectedServiceOfMessage:t]) {
             [self storeMessage:t];
         }
-        //[_bubble broadcastMessage:t];
+        [t release];
     }   
 }
 
@@ -143,7 +204,9 @@
         _sound = [[WDSound alloc] init];
         
         // DW: we specify user's home directory by NSHomeDirectory()
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"file://localhost%@/Documents/Deliver/", NSHomeDirectory()]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"file://localhost%@/Documents/", NSHomeDirectory()]];
+        
+        //NSURL *url = [NSURL URLWithString:@"~/Library/Containers/com.tjac.delivermac/Data/Downloads/"];
         NSFileManager *fileManager= [NSFileManager defaultManager]; 
         if(![fileManager fileExistsAtPath:url.path isDirectory:nil])
             if(![fileManager createDirectoryAtPath:url.path withIntermediateDirectories:YES attributes:nil error:NULL])
@@ -168,8 +231,8 @@
         _isView = kTextViewController;
         
         //_sound = [[WDSound alloc]init];
-        
-        [self loadUserPreference];
+        [_bubble publishServiceWithPassword:@""];
+        [_bubble browseServices];
     }
     return self;
 }
@@ -181,6 +244,8 @@
     
     // Wu:Remove observe the notification
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"NSWindowDidBecomeKeyNotification"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kWDBubbleNotificationServiceUpdated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kRestoreLabelAndImage];
     
     // Wu:Remove two subviews
     [[_textViewController view] removeFromSuperview];
@@ -222,6 +287,8 @@
                                                  name:kWDBubbleNotificationServiceUpdated
                                                object:nil];  
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreImageAndLabel:) name:kRestoreLabelAndImage object:nil];
+    
     // Wu: Alloc the two view controller and first add textviewcontroller into superview
     _textViewController = [[TextViewController alloc]initWithNibName:@"TextViewController" bundle:nil];
     _dragFileController = [[DragFileViewController alloc]initWithNibName:@"DragFileViewController" bundle:nil];
@@ -237,15 +304,51 @@
     
     _sendButton.stringValue = kButtonTitleSendText;
     
-   // [_addFileItem setEnabled:NO];
+    [self firstUse];
+    
+    //_menuItemCheck = FALSE;
+    
+    // [_addFileItem setEnabled:NO];
 }
 
 #pragma mark - IBActions
 
-- (IBAction)togglePassword:(id)sender
+- (IBAction)showPassworFromShortCut:(id)sender
 {
-    //NSButton *button = (NSButton *)sender;
-    DLog(@"wokao");
+    _lockButton.state = !_lockButton.state;
+    if (  _lockButton.state) {
+        // DW: user turned password on.
+        if (_passwordController == nil) {
+            _passwordController = [[PasswordMacViewController alloc]init];
+            _passwordController.delegate = self;
+        }
+        
+        // Wu: show as a sheet window to force users to set usable password
+        [NSApp beginSheet:[_passwordController window] modalForWindow:[NSApplication sharedApplication].keyWindow  modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+    } else {
+        NSArray* toolbarVisibleItems = [_toolBar visibleItems];
+        NSEnumerator* enumerator = [toolbarVisibleItems objectEnumerator];
+        NSToolbarItem* anItem = nil;
+        BOOL stillLooking = YES;
+        while ( stillLooking && ( anItem = [enumerator nextObject] ) )
+        {
+            if ( [[anItem itemIdentifier] isEqualToString:@"PasswordIdentifier"] )
+            {
+                [anItem setImage:[NSImage imageNamed:@"NSLockUnlockedTemplate"]];
+                
+                stillLooking = NO;
+            }
+        }
+        
+        _lockButton.state = NSOffState;
+        [_bubble stopService];
+        [_bubble publishServiceWithPassword:@""];
+        [_bubble browseServices];
+    }
+}
+
+- (IBAction)showPassword:(id)sender
+{
     if (_lockButton.state == NSOnState) {
         // DW: user turned password on.
         if (_passwordController == nil) {
@@ -314,15 +417,12 @@
 
 - (IBAction)openHistoryPopOver:(id)sender
 {
-    NSButton *button  = (NSButton *)[_historyItem view];
-    [_historyPopOverController showHistoryPopOver:button];
+    [self showHistoryPopOver];
 }
 
 - (IBAction)openServiceFoundPopOver:(id)sender
 {
-    _networkPopOverController.selectedServiceName = _selectedServiceName;
-    NSButton *button  = (NSButton *)[_networkItem view];
-    [_networkPopOverController showServicesFoundPopOver:button];
+    [self showNetworkPopOver];
 }
 
 - (IBAction)send:(id)sender {
@@ -341,37 +441,51 @@
         return ;
     }
     
-    _selectFileOpenPanel = [NSOpenPanel openPanel];
+    _selectFileOpenPanel = [[NSOpenPanel openPanel] retain];
     
-    [_selectFileOpenPanel setTitle:@"Choose File"];
-	[_selectFileOpenPanel setPrompt:@"Browse"];
-	[_selectFileOpenPanel setNameFieldLabel:@"Choose a file:"];
-
+    [_selectFileOpenPanel setTitle:NSLocalizedString(@"CHOOSE_FILE", @"Choose files")];
+	[_selectFileOpenPanel setPrompt:NSLocalizedString(@"BROWSE", @"Browse")];
+	[_selectFileOpenPanel setNameFieldLabel:NSLocalizedString(@"CHOOSE_A_FILE", @"Choose a file")];
+    [_selectFileOpenPanel setCanChooseDirectories:NO];
+    [_selectFileOpenPanel setCanChooseFiles:YES];
+    
     void (^selectFileHandler)(NSInteger) = ^( NSInteger result )
 	{
-		NSURL *selectedFileURL = [_selectFileOpenPanel URL];
-		
-		if(selectedFileURL)
-		{
-            _fileURL = [selectedFileURL retain];//the path of your selected photo
-            NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
-            if (image != nil) {
-                [_dragFileController.imageView setImage:image];
-                [image release];   
-            }else {
-                NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
-                [_dragFileController.imageView setImage:quicklook];
-            }
+        if (result != NSCancelButton) {
+            NSURL *selectedFileURL = [_selectFileOpenPanel URL];
             
-            [_dragFileController.label setHidden:YES];
-		}
-	};
+            BOOL isFolderApp = FALSE;
+            
+            [[NSFileManager defaultManager] fileExistsAtPath:selectedFileURL.path isDirectory:&isFolderApp];
+            
+            if(selectedFileURL && !isFolderApp)
+            {
+                _fileURL = [selectedFileURL retain];//the path of your selected photo
+                NSImage *image = [[NSImage alloc] initWithContentsOfURL:_fileURL];
+                if (image != nil) {
+                    [_dragFileController.imageView setImage:image];
+                    [image release];   
+                }else {
+                    NSImage *quicklook = [NSImage imageWithPreviewOfFileAtPath:[_fileURL path] asIcon:YES];
+                    [_dragFileController.imageView setImage:quicklook];
+                }
+                
+                [_dragFileController.label setHidden:YES];
+            }
+            else {
+                NSRunAlertPanel(NSLocalizedString(@"SORRY", @"Sorry"), 
+                                NSLocalizedString(@"NOT_MULTI", @"We do not support folders, application package or multiple files for now.\nWe will improve this in the new version, many thanks for your support."), 
+                                NSLocalizedString(@"OK", @"Ok"), nil, nil);
+                return ;
+            }
+        }
+    };
 	
 	[_selectFileOpenPanel beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow 
-							  completionHandler:selectFileHandler];
+                                 completionHandler:selectFileHandler];
 }
 
-- (IBAction)openFeatureWindow:(id)sender
+- (IBAction)showFeature:(id)sender
 {
     if (_featureController == nil) {
         _featureController = [[FeatureWindowController alloc]init];
@@ -379,17 +493,31 @@
     [_featureController showWindow:self];
 }
 
-- (IBAction)openABoutWindow:(id)sender
+- (IBAction)showAbout:(id)sender
 {
-    if (_aboutController == nil)
+    if (_aboutController == nil) {
         _aboutController = [[AboutWindowController alloc]init];
+    }
     [_aboutController showWindow:self];
 }
 
+- (IBAction)rateApp:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://itunes.apple.com/us/app/deliver/id506655546?mt=12"]];
+}
+
+- (IBAction)checkBubblesTheDeliver:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://itunes.apple.com/us/app/bubbles-the-deliver/id506646552?mt=8"]];
+}
 #pragma mark - WDBubbleDelegate
 
 - (void)percentUpdated {
     [_historyPopOverController.filehistoryTableView reloadData];
+}
+
+- (void)errorOccured:(NSError *)error {
+    [self displayErrorMessage:kWDBubbleErrorMessageDisconnectWithError];
 }
 
 - (void)willReceiveMessage:(WDMessage *)message {
@@ -400,8 +528,8 @@
     [_sound playSoundForKey:kWDSoundFileReceived];
     message.time = [NSDate date];
     if ([message.state isEqualToString:kWDMessageStateText]) {
-            _textViewController.textField.string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
-            [self storeMessage:message];
+        _textViewController.textField.string = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
+        [self storeMessage:message];
         
     } else if ([message.state isEqualToString:kWDMessageStateFile]) {
         [self storeMessage:message];
@@ -409,9 +537,40 @@
         
         // DW: store this url for drag and drop
         if (_fileURL) {
-            [_fileURL release];
+            [_fileURL release],_fileURL = nil;
         }
-        _fileURL = [message.fileURL retain];
+        //_fileURL = [message.fileURL retain];
+        // DW: stopAccessingSecurityScopedResource to balance the use
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+#elif TARGET_OS_MAC
+        NSSavePanel *savePanel = [NSSavePanel savePanel];
+        [savePanel setNameFieldStringValue:[message.fileURL lastPathComponent]];
+        
+        void (^selectFileHandler)(NSInteger) = ^( NSInteger result )
+        {
+            NSError *error;
+            if (result != NSCancelButton) {
+                NSURL *selectedFileURL = [[savePanel URL] URLWithoutNameConflict];
+                _fileURL = selectedFileURL;
+                if ([[NSFileManager defaultManager]moveItemAtPath:[message.fileURL path]                                     
+                                                           toPath:[selectedFileURL path] error:&error]) {
+                    [self storeMessage:message withNewURL:selectedFileURL];
+                } else {
+                    DLog(@"error is %@",error);
+                }
+            }
+            else {
+                [[NSFileManager defaultManager] removeItemAtPath:[message.fileURL path] error:&error];
+                [_dragFileController.imageView setImage:nil];
+                [_dragFileController.label setHidden:NO];
+                [_historyPopOverController.fileHistoryArray removeLastObject];
+                [_historyPopOverController reloadTableView];
+            }
+        };
+        
+        [savePanel beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow 
+                                     completionHandler:selectFileHandler];
+#endif
         
         NSImage *image = [[NSImage alloc] initWithContentsOfURL:message.fileURL];
         if (image != nil) {
@@ -422,7 +581,7 @@
             [_dragFileController.imageView setImage:quicklook];
         }
     }
-    
+    [self showHistoryPopOver];
 }
 
 - (void)didSendMessage:(WDMessage *)message {
@@ -431,16 +590,26 @@
 }
 
 - (void)didTerminateReceiveMessage:(WDMessage *)message {
+    if (_fileURL) {
+        [_fileURL release];
+        _fileURL = nil;
+    }
+    [self displayErrorMessage:kWDBubbleErrorMessageTerminatedBySender];
+    
+    [_historyPopOverController deleteMessageFromHistory:message];
 }
 
 - (void)didTerminateSendMessage:(WDMessage *)message {
-    
+    if (_fileURL) {
+        [_fileURL release];
+        _fileURL = nil;
+    }
+    [_historyPopOverController deleteMessageFromHistory:message];
 }
 
 #pragma mark - PasswordMacViewControllerDelegate
 
 - (void)didCancel {
-    
     NSArray* toolbarVisibleItems = [_toolBar visibleItems];
     NSEnumerator* enumerator = [toolbarVisibleItems objectEnumerator];
     NSToolbarItem* anItem = nil;
@@ -461,7 +630,6 @@
 }
 
 - (void)didInputPassword:(NSString *)pwd {
-    
     NSArray* toolbarVisibleItems = [_toolBar visibleItems];
     NSEnumerator* enumerator = [toolbarVisibleItems objectEnumerator];
     NSToolbarItem* anItem = nil;
@@ -479,13 +647,13 @@
     [_bubble stopService];
     [_bubble publishServiceWithPassword:pwd];
     [_bubble browseServices];
+    //[_networkPopOverController reloadNetwork];
 }
 
 #pragma mark - DragAndDropImageViewDelegate
 
 - (void)dragDidFinished:(NSURL *)url
 {
-    DLog(@"dragDidFinished");
     if (_fileURL) {
         [_fileURL release];
     }

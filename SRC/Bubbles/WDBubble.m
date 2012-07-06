@@ -78,7 +78,7 @@
 		formattedStr = @"Empty";
 	else 
 		if (size > 0 && size < 1024) 
-			formattedStr = [NSString stringWithFormat:@"%qu bytes", size];
+			formattedStr = [NSString stringWithFormat:@"%qu B", size];
         else 
             if (size >= 1024 && size < pow(1024, 2)) 
                 formattedStr = [NSString stringWithFormat:@"%.1f KB", (size / 1024.)];
@@ -95,8 +95,8 @@
 - (NSURL *)URLWithRemoteChangedToLocal {
     NSString *currentFileName = [[self URLByDeletingPathExtension].lastPathComponent stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@.%@", 
-                                            [NSURL iOSDocumentsDirectoryURL], 
+    NSURL *storeURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@.%@", 
+                                            [[NSURL iOSDocumentsDirectoryURL] absoluteString], 
                                             currentFileName, 
                                             [[self pathExtension] lowercaseString]]];
 #elif TARGET_OS_MAC
@@ -112,7 +112,9 @@
                         [defaultURL absoluteString], 
                         currentFileName, 
                         [[self pathExtension] lowercaseString]]];
+    // DW: it is really overwhelming that the last "/" of a folder here exists in iOS, but not in Mac
 #endif
+    DLog(@"NSURL URLWithRemoteChangedToLocal %@", storeURL.path);
     return storeURL;
 }
 
@@ -148,6 +150,7 @@
                      [[self pathExtension] lowercaseString]]];
     }
 #endif
+    DLog(@"NSURL URLWithoutNameConflict %@", storeURL.path);
     return storeURL;
 }
 
@@ -291,6 +294,18 @@
     }
 }
 
+- (void)closeStream:(NSStream *)stream {
+    if (!stream) {
+        return;
+    }
+    
+    [stream close];
+    [stream removeFromRunLoop:[NSRunLoop currentRunLoop]
+                      forMode:NSDefaultRunLoopMode];
+    [stream release];
+    stream = nil;
+}
+
 #pragma mark - Publice Methods
 
 + (NSString *)platformForNetService:(NSNetService *)netService {
@@ -316,27 +331,6 @@
     } else {
         return NO;
     }
-}
-
-// DW: for a selected service info with name and type
-+ (NSString *)bubbleNameWithServiceName:(NSString *)serviceName andType:(NSString *)serviceType {
-    return [NSString stringWithFormat:@"%@ %@", serviceType, serviceName];
-}
-
-
-+ (NSString *)serviceNameInBubbleName:(NSString *)bubbleName {
-    NSRange rangeOfSubstring = [bubbleName rangeOfString:[WDBubble serviceTypeInBubbleName:bubbleName]];
-
-    if(rangeOfSubstring.location == NSNotFound) {
-        // DW: a bubble name without type, not a good one, return @""
-        return @"";
-    }
-    
-    return [bubbleName substringFromIndex:rangeOfSubstring.location+rangeOfSubstring.length];
-}
-
-+ (NSString *)serviceTypeInBubbleName:(NSString *)bubbleName {
-    return [[bubbleName componentsSeparatedByString:@" "] objectAtIndex:0];
 }
 
 - (id)init {
@@ -450,6 +444,12 @@
     _netServiceType = nil;
 }
 
+- (BOOL)isBusy {
+    // DW: is busy sending and receiving
+    return ([_currentMessage.state isEqualToString:kWDMessageStateSending]
+            ||[_currentMessage.state isEqualToString:kWDMessageStateReceiving]);
+}
+
 - (float)percentTransfered {
     float total = _currentMessage.fileSize;
     if (_isReceiver) {
@@ -470,11 +470,13 @@
 - (void)terminateTransfer {
     DLog(@"WDBubble terminateTransfer");
     if (_isReceiver) {
+        //[self closeStream:_streamFileWriter];
+        [_socketReceive disconnect];
+    } else {
+        //[self closeStream:_streamFileReader];
         for (AsyncSocket *sock in _socketsConnect) {
             [sock disconnect];
         }
-    } else {
-        [_socketReceive disconnect];
     }
 }
 
@@ -544,13 +546,25 @@
         _currentMessage.state = kWDMessageStateReceiving;
         
         _currentMessage.fileURL = [[_currentMessage.fileURL URLWithRemoteChangedToLocal] URLWithoutNameConflict];
-        _streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:_currentMessage.fileURL.path  append:YES];
-        [_streamFileWriter setDelegate:self];
-        [_streamFileWriter scheduleInRunLoop:[NSRunLoop currentRunLoop]
-                                     forMode:NSDefaultRunLoopMode];
-        [_streamFileWriter open];
-        
-        _streamBytesWrote = 0;
+        DLog(@"WDBubble _streamFileWriter will be assigned path %@", _currentMessage.fileURL.path);
+        // 20120507 DW: to make Deliver ready for the Mac App Store, we should use SavePanel to let the user specify
+        // the location he wants, not a URL by default
+        //_streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:_currentMessage.fileURL.path  append:YES];
+        NSURL *saveURL = _currentMessage.fileURL;
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+#elif TARGET_OS_MAC
+        [saveURL startAccessingSecurityScopedResource];
+#endif
+        if(saveURL != NULL)
+        {
+            _streamFileWriter = [[NSOutputStream alloc] initToFileAtPath:saveURL.path  append:YES];
+            [_streamFileWriter setDelegate:self];
+            [_streamFileWriter scheduleInRunLoop:[NSRunLoop currentRunLoop]
+                                         forMode:NSDefaultRunLoopMode];
+            [_streamFileWriter open];
+            
+            _streamBytesWrote = 0;
+        }
     } else {
         _dataBuffer = [[NSMutableData alloc] init];
     }
@@ -574,7 +588,13 @@
             _streamDataBufferWriter = [[NSMutableData data] retain];
         }
         [_streamDataBufferWriter appendData:data];
-        [self writeDataToFile];
+        
+        // DW: no error in stream writer, write data to file
+        if (_streamDataBufferWriter) {
+            [self writeDataToFile];
+        } else {
+            [self terminateTransfer];
+        }
     } else {
         [_dataBuffer appendData:data];
     }
@@ -590,6 +610,7 @@
 - (void)onSocket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err {
     if (err) {
         DLog(@"AsyncSocketDelegate willDisconnectWithError %@: %@", _currentMessage.state, err);
+        [self.delegate errorOccured:err];
     }
     [sock readDataWithTimeout:kWDBubbleTimeOut tag:0];
 }
@@ -651,7 +672,11 @@
             
             // DW: check if it's the user terminates the transfering
             if (_streamBytesWrote < _currentMessage.fileSize) {
+                DLog(@"WDBubble terminated receiver %@ received", [NSNumber numberWithInteger:_streamBytesWrote]);
+                _streamBytesWrote = 0;
+                [self closeStream:_streamFileWriter];
                 [self.delegate didTerminateReceiveMessage:_currentMessage];
+                
                 [_currentMessage release];
                 _currentMessage = nil;
                 return;
@@ -699,6 +724,9 @@
             if (_streamBytesRead >= _currentMessage.fileSize) {
                 [self.delegate didSendMessage:_currentMessage];
             } else {
+                DLog(@"WDBubble terminated sender %@ sent", [NSNumber numberWithInteger:_streamBytesRead]);
+                _streamBytesRead = 0;
+                [self closeStream:_streamFileReader];
                 [self.delegate didTerminateSendMessage:_currentMessage];
             }
             
@@ -749,32 +777,21 @@
     switch(streamEvent) {
         case NSStreamEventEndEncountered: {
             if (_streamFileReader) {
-                [theStream close];
-                [theStream removeFromRunLoop:[NSRunLoop currentRunLoop]
-                                     forMode:NSDefaultRunLoopMode];
-                [theStream release];
-                _streamFileReader = nil; // stream is ivar, so reinit it
-                
                 // DW: sender is complete
+                [self closeStream:_streamFileReader];
                 DLog(@"WDBubble NSStreamEventEndEncountered _streamFileReader");
             }
             
             if (_streamFileWriter) {
-                [theStream close];
-                [theStream removeFromRunLoop:[NSRunLoop currentRunLoop]
-                                     forMode:NSDefaultRunLoopMode];
-                [theStream release];
-                _streamFileWriter = nil; // oStream is instance variable
-                
                 // DW: receiver is complete
-                DLog(@"WDBubble NSStreamEventEndEncountered _streamFileWriter");
+                [self closeStream:_streamFileWriter];
+                DLog(@"WDBubble NSStreamEventEndEncountered _streamFileWriter %@", theStream);
             }
             break;
         } case NSStreamEventErrorOccurred: {
-            NSError *theError = [theStream streamError];
-            DLog(@"WDBubble steam %@ NSStreamEventErrorOccurred %@", theStream, theError);
-            [theStream close];
-            [theStream release];
+            DLog(@"WDBubble steam %@ NSStreamEventErrorOccurred %@", theStream, [theStream streamError]);
+            [self closeStream:theStream];
+            [self.delegate errorOccured:[theStream streamError]];
             break;
         } default: {
             

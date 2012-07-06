@@ -7,7 +7,11 @@
 //
 
 #import "HistoryPopOverViewController.h"
-
+#import "WDMessage.h"
+#import "NSImage+QuickLook.h"
+#import "AppDelegate.h"
+#import "TransparentTableView.h"
+#import "WDBubble.h"
 
 @implementation HistoryPopOverViewController
 @synthesize historyPopOver = _historyPopOver;
@@ -38,8 +42,31 @@
 - (void)deleteSelectedRow
 {
     if (0 <= [_fileHistoryTableView selectedRow] && [_fileHistoryTableView selectedRow] < [_fileHistoryArray count]) {
-        [_fileHistoryArray removeObjectAtIndex:[_fileHistoryTableView selectedRow]];
+        WDMessage *message = [_fileHistoryArray objectAtIndex:[_fileHistoryTableView selectedRow]];
+        
+        DLog(@"message state is %@",message.state);
+        
+        // Wu :Terminate 
+        if (!(([message.state isEqualToString:kWDMessageStateFile])
+              ||([message.state isEqualToString:kWDMessageStateText]))) {
+            [_bubbles terminateTransfer];
+            
+            // Wu:Remove all unstable 
+            NSArray *originalArray = [NSArray arrayWithArray:_fileHistoryArray];
+            for (WDMessage *m in originalArray) {
+                if (![m.state isEqualToString:kWDMessageStateFile] && ![m.state isEqualToString:kWDMessageStateText]) {
+                    [self deleteMessageFromHistory:m];
+                }
+            }
+        }
+        
+        // Wu:Delete
+        else {
+            [_fileHistoryArray removeObjectAtIndex:[_fileHistoryTableView selectedRow]];
+        }
+        
     }
+    
     if ([_fileHistoryArray count] == 0) {
         [_removeButton setHidden:YES];
         [_historyPopOver close];
@@ -78,6 +105,7 @@
 
 - (void)awakeFromNib
 {
+    
     // Wu:Set the customize the cell for the  only one column
     _imageAndTextCell = [[ImageAndTextCell alloc] init];
     _imageAndTextCell.delegate = self;
@@ -90,7 +118,6 @@
     [previewCell setImageScaling:NSImageScaleProportionallyDown];
     [previewCell setAction:@selector(previewSelectedRow)];
     [previewCell setTitle:@""];
-   // [previewCell highlightsBy:NSContentsCellMask];
     previewCell.highlightsBy = NSContentsCellMask;
     NSTableColumn *columnThree = [[_fileHistoryTableView tableColumns] objectAtIndex:kPreviewColumn];
     [columnThree setDataCell:previewCell];
@@ -106,11 +133,28 @@
     
     // Wu:Set the tableview can accept being dragged from
     [_fileHistoryTableView registerForDraggedTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType,NSFilenamesPboardType,NSTIFFPboardType,nil]];
+    
 	// Wu:Tell NSTableView we want to drag and drop accross applications the default is YES means can be only interact with current application
 	[_fileHistoryTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }
 
 #pragma mark - Public Method
+
+- (void)refreshButton
+{
+    if ([_fileHistoryArray count] != 0) {
+        
+        [_removeButton setHidden:NO];
+    } else
+    {
+        [_removeButton setHidden:YES];
+    }
+}
+
+- (void)reloadTableView
+{
+    [_fileHistoryTableView reloadData];
+}
 
 - (void)showHistoryPopOver:(NSView *)attachedView
 {
@@ -124,14 +168,23 @@
         _historyPopOver.delegate = self;
     }
     
-    if ([_fileHistoryArray count] != 0) {
-        [_removeButton setHidden:NO];
-    } else
-    {
-        [_removeButton setHidden:YES];
-    }
     // Wu:CGRectMaxXEdge means appear in the right of button
     [_historyPopOver showRelativeToRect:[attachedView bounds] ofView:attachedView preferredEdge:CGRectMinYEdge];
+    [self refreshButton];
+}
+
+- (void)deleteMessageFromHistory:(WDMessage *)aMessage
+{
+    NSArray *originArray = [NSArray arrayWithArray:_fileHistoryArray];
+    for (WDMessage *m in originArray) {
+        if ([m.fileURL.path.lastPathComponent isEqualToString:aMessage.fileURL.path.lastPathComponent]) {
+            [_fileHistoryArray removeObject:m];
+        }
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRestoreLabelAndImage object:nil];
+    [self refreshButton];
+    [_fileHistoryTableView reloadData];
 }
 
 #pragma mark - IBAction
@@ -141,9 +194,28 @@
     if ([_fileHistoryArray count] == 0) {
         return ;
     } else {
-        [_fileHistoryArray removeAllObjects];
-        [_fileHistoryTableView noteNumberOfRowsChanged];
-        [_fileHistoryTableView reloadData];
+        BOOL willTerminate = FALSE;
+        
+        // Wu:Remove all unstable at first
+        NSArray *originalArray = [NSArray arrayWithArray:_fileHistoryArray];
+        for (WDMessage *m in originalArray) {
+            if (![m.state isEqualToString:kWDMessageStateFile] && ![m.state isEqualToString:kWDMessageStateText]) {
+                DLog(@"gosh");
+                willTerminate = TRUE;
+                [self deleteMessageFromHistory:m];
+            }
+        }
+        
+        if (willTerminate) {
+            [_bubbles terminateTransfer];
+        }
+        
+        // Wu:Remove other files;
+        if ([_fileHistoryArray count] != 0) {
+            [_fileHistoryArray removeAllObjects];
+            [_fileHistoryTableView noteNumberOfRowsChanged];
+            [_fileHistoryTableView reloadData];
+        }
     }
     
     // Wu:Force it to close
@@ -169,11 +241,15 @@ writeRowsWithIndexes:(NSIndexSet *)pIndexSetOfRows
 {
 	// Wu:This is to allow us to drag files to save
 	// We don't do this if more than one row is selected
-	if ([pIndexSetOfRows count] > 1) {
-		return YES;
+	if ([pIndexSetOfRows count] > 1 ) {
+		return NO;
 	} 
 	NSInteger zIndex	= [pIndexSetOfRows firstIndex];
 	WDMessage *message	= [_fileHistoryArray objectAtIndex:zIndex];
+    
+    if ([message.state isEqualToString:kWDMessageStateText]) {
+        return YES;
+    }
     
     [pboard declareTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType, nil] owner:self];
     NSArray *propertyArray = [NSArray arrayWithObject:message.fileURL.pathExtension];
@@ -187,25 +263,13 @@ namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination
 forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     NSInteger zIndex = [indexSet firstIndex];
     WDMessage *message = [_fileHistoryArray objectAtIndex:zIndex];
-    
-    NSURL *newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
-                                          dropDestination.path, 
-                                          [message.fileURL.lastPathComponent stringByReplacingOccurrencesOfString:@" " 
-                                                                                                       withString:@"%20"]]];
-    
-    if (newURL == nil) {
-        NSString *escapedString = message.fileURL.path;
-        newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
-                                       dropDestination.path, 
-                                       [escapedString stringByReplacingOccurrencesOfString:@" " 
-                                                                                withString:@"%20"]]];
-        newURL = [newURL URLWithoutNameConflict];
-    } else {
-        newURL = [newURL URLWithoutNameConflict];
+    NSLog(@"dropDes is %@",dropDestination);
+    if ([message.state isEqualToString:kWDMessageStateText]) {
+        return nil;
     }
-
-    NSData *data = [NSData dataWithContentsOfURL:message.fileURL];
-    [[NSFileManager defaultManager] createFileAtPath:newURL.path contents:data attributes:nil];
+    NSURL *newURL = [[NSURL URLWithString:[message.fileURL.lastPathComponent stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] 
+                            relativeToURL:dropDestination] URLWithoutNameConflict];
+    [[NSFileManager defaultManager] copyItemAtURL:message.fileURL toURL:newURL error:nil];
     return [NSArray arrayWithObjects:newURL.lastPathComponent, nil];
 }
 
@@ -242,20 +306,20 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     WDMessage *message = (WDMessage *)data;
     if ([message.state isEqualToString: kWDMessageStateText]){
         NSString *string = [[[NSString alloc]initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
-        string = [string stringByReplacingOccurrencesOfString:@" " 
-                                                   withString:@"."];
         string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@"."];
-        if ([string length] >= 20) {
+        if ([string length] >= 25) {
+            NSString *temp = [string substringWithRange:NSMakeRange([string length] - 6 , 5)];
             string = [string substringWithRange:NSMakeRange(0,15)];
-            string = [string stringByAppendingString:@"......."];
+            string = [string stringByAppendingString:@"..."];
+            string = [string stringByAppendingString:temp];
         }
         return string;
     } else if ([message.state isEqualToString:kWDMessageStateFile]){
         if ([[message.fileURL lastPathComponent] length] >= 20) {
             NSInteger length = [[message.fileURL lastPathComponent] length];
             NSString *string = [[message.fileURL lastPathComponent] substringWithRange:NSMakeRange(0, 8)];
-            string = [string stringByAppendingString:@"..."];
-            string = [string stringByAppendingString:[[message.fileURL lastPathComponent] substringWithRange:NSMakeRange(length - 6, 3)]];
+            string = [string stringByAppendingString:@"......"];
+            string = [string stringByAppendingString:[[message.fileURL lastPathComponent] substringWithRange:NSMakeRange(length - 4, 3)]];
             return string;
         }  else {
             return [message.fileURL lastPathComponent];
@@ -271,7 +335,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
                 [self.bubbles percentTransfered]*100, 
                 [NSURL formattedFileSize:[self.bubbles bytesTransfered]]];
     }
-       
+    
     return nil;
 }
 
@@ -304,20 +368,20 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
     NSInteger selectedRow = [rows firstIndex];
     WDMessage *message = [_fileHistoryArray objectAtIndex:selectedRow];
     if ([message.state isEqualToString: kWDMessageStateText]) {
-        NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteSelectedRow) keyEquivalent:@""];
+        NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:NSLocalizedString(@"DELETE", @"Delete") action:@selector(deleteSelectedRow) keyEquivalent:@""];
         [menu addItem:deleteItem];
         [deleteItem release];
     } else {
         
-        NSMenuItem *previewItem = [[NSMenuItem alloc]initWithTitle:@"Show in Finder" action:@selector(previewSelectedRow) keyEquivalent:@""];
+        NSMenuItem *previewItem = [[NSMenuItem alloc]initWithTitle:NSLocalizedString(@"SHOW_IN_FINDER", @"Show in Finder") action:@selector(previewSelectedRow) keyEquivalent:@""];
         [menu addItem:previewItem];
         [previewItem release];
         
-        NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteSelectedRow) keyEquivalent:@""];
+        NSMenuItem *deleteItem = [[NSMenuItem alloc]initWithTitle:NSLocalizedString(@"DELETE", @"Delete") action:@selector(deleteSelectedRow) keyEquivalent:@""];
         [menu addItem:deleteItem];
         [deleteItem release];
         
-        NSMenuItem *quicklookItem = [[NSMenuItem alloc]initWithTitle:@"Quicklook" action:@selector(showItPreview) keyEquivalent:@""];
+        NSMenuItem *quicklookItem = [[NSMenuItem alloc]initWithTitle:NSLocalizedString(@"QUICKLOOK", @"Quicklook") action:@selector(showItPreview) keyEquivalent:@""];
         [menu addItem:quicklookItem];
         [quicklookItem release];
     }

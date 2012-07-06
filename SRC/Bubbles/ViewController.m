@@ -7,25 +7,12 @@
 //
 
 #import "ViewController.h"
+#import "AppDelegate.h"
 #import "UIImage+Resize.h"
 #import "UIImage+Normalize.h"
+#import "WDLocalization.h"
 #import <MobileCoreServices/UTType.h>
 #import <MobileCoreServices/UTCoreTypes.h>
-
-#define kActionSheetButtonCopy      @"Copy"
-#define kActionSheetButtonEmail     @"Email"
-#define kActionSheetButtonSend      @"Resend"
-#define kActionSheetButtonMessage   @"Message"
-#define kActionSheetButtonPreview   @"Preview"
-#define kActionSheetButtonSave      @"Save to Gallery"
-
-#define kActionSheetButtonCancel    @"Cancel"
-#define kActionSheetButtonDeleteAll @"Delete All"
-
-#define kActionSheetButtonHelpPDF       @"Help Document"
-#define kActionSheetButtonHelpSplash    @"Splash Screen"
-
-#define kActionSheetButtonTransferTerminate @"Terminate"
 
 #define kTableViewCellHeight        50
 
@@ -53,9 +40,9 @@
 - (void)refreshLockStatus {
     BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
     if (usePassword) {
-        _lockButton.image = [UIImage imageNamed:@"lock_on"];
+        _lockButton.image = [UIImage imageNamed:@"lock_on.png"];
     } else {
-        _lockButton.image = [UIImage imageNamed:@"lock_off"];
+        _lockButton.image = [UIImage imageNamed:@"lock_off.png"];
     }
 }
 
@@ -118,6 +105,13 @@
 - (BOOL)sendToSelectedServiceOfMessage:(WDMessage *)message {
     if (!_selectedServiceName || [_selectedServiceName isEqualToString:@""]) {
         // DW: there is actually no receiver, so we do not send
+        [self displayErrorMessage:kWDBubbleErrorMessageNoDeviceSelected];
+        return NO;
+    }
+    
+    // DW: if bubble is busy sending, skip the current send
+    if ([self.bubble isBusy]) {
+        [self displayErrorMessage:kWDBubbleErrorMessageDoNotSupportMultiple];
         return NO;
     }
     
@@ -146,6 +140,19 @@
     }
 }
 
+- (void)displayMailComposerSheetToDeveloepr {
+    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+    if (!picker) {
+        return;
+    }
+    picker.mailComposeDelegate = self;
+    [picker setToRecipients:[NSArray arrayWithObject:@"teamace.leavesoft@gmail.com"]];
+    [picker setSubject:kEmailToDeveloperSubject];
+    [picker setMessageBody:kEmailToDeveloperBody isHTML:NO];
+    [self presentModalViewController:picker animated:YES];
+	[picker release];
+}
+
 - (void)displayMailComposerSheetWithMessage:(WDMessage *)message {
 	MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
     if (!picker) {
@@ -154,7 +161,6 @@
     
 	picker.mailComposeDelegate = self;
     
-	// Set up recipients
     if ([message.state isEqualToString: kWDMessageStateText]) {
         NSString *emailBody = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
         [picker setMessageBody:emailBody isHTML:YES];
@@ -166,7 +172,7 @@
         DLog(@"VC displayMailComposerSheetWithMessage UTI %@", [res MIMEType]);
         [picker addAttachmentData:myData 
                          mimeType:[ViewController mimeTypeForFileAtPath:message.fileURL.path]
-                         fileName:[message.fileURL URLByDeletingPathExtension].lastPathComponent];
+                         fileName:message.fileURL.lastPathComponent];
 	}
     
 	[self presentModalViewController:picker animated:YES];
@@ -187,6 +193,50 @@
     picker.body = [[[NSString alloc] initWithData:message.content encoding:NSUTF8StringEncoding] autorelease];
 	[self presentModalViewController:picker animated:YES];
 	[picker release];
+}
+
+- (void)displayErrorMessage:(NSString *)message {
+    [_messagesView reloadData];
+    
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:kWDBubbleErrorMessageTitle
+                                                 message:message
+                                                delegate:nil 
+                                       cancelButtonTitle:kAlertViewOK
+                                       otherButtonTitles:nil];
+    [av show];
+    [av release];
+}
+
+- (void)displayHelpSplashScreen {
+    if (_helpViewController) {
+        [_helpViewController release];
+        _helpViewController = nil;
+    }
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+        _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil];
+        //[self.view addSubview:_helpViewController.view];
+        [self.navigationController.view addSubview:_helpViewController.view];
+    } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil];
+        [self.splitViewController.view addSubview:_helpViewController.view];
+    }
+    
+}
+
+- (void)dismissOtherPopovers {
+    // DW: we do not show multiple popovers at one time
+    if (_popover) {
+        [_popover dismissPopoverAnimated:YES];
+        [_popover release];
+        _popover = nil;
+    }
+    
+    if (_actionSheet) {
+        [_actionSheet dismissWithClickedButtonIndex:_actionSheet.cancelButtonIndex animated:YES];
+        [_actionSheet release];
+        _actionSheet = nil;
+    }
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
@@ -259,11 +309,11 @@
 #pragma mark - Public Methods
 
 - (void)lock {
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Lock" 
-                                                 message:@"Please input password:"
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:kLockTitle
+                                                 message:kLockContent
                                                 delegate:self 
-                                       cancelButtonTitle:@"Cancel" 
-                                       otherButtonTitles:@"OK", nil];
+                                       cancelButtonTitle:kAlertViewCancel
+                                       otherButtonTitles:kAlertViewOK, nil];
     av.alertViewStyle = UIAlertViewStyleSecureTextInput;
     [av textFieldAtIndex:0].keyboardType = UIKeyboardTypeNumberPad;
     [av textFieldAtIndex:0].delegate = self;
@@ -287,20 +337,15 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsShouldShowHelp]) {
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-            _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil];
-        } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil];
-        }
-        [[UIApplication sharedApplication].keyWindow addSubview:_helpViewController.view];
-    }
+    // DW: help
+    NSDictionary *t = [NSDictionary dictionaryWithObject:@"YES" forKey:kUserDefaultsShouldShowHelp];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:t];
     
     // DW: sound
     _sound = [[WDSound alloc] init];
     
     // DW: user defauts
-    NSDictionary *t = [NSDictionary dictionaryWithObject:@"NO" forKey:kUserDefaultsUsePassword];
+    t = [NSDictionary dictionaryWithObject:@"NO" forKey:kUserDefaultsUsePassword];
     [[NSUserDefaults standardUserDefaults] registerDefaults:t];
     
     // DW: NC
@@ -336,15 +381,17 @@
     }
     _currentNavigationItem.rightBarButtonItem = self.editButtonItem;
     
-    // DW: use password or not
-    BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
-    if (usePassword) {
-        [self lock];
-    } else {
-        [_bubble publishServiceWithPassword:@""];
-        [_bubble browseServices];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+        // DW: use password or not
+        BOOL usePassword = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsUsePassword];
+        if (usePassword) {
+            [self lock];
+        } else {
+            [_bubble publishServiceWithPassword:@""];
+            [_bubble browseServices];
+        }
+        [self refreshLockStatus];
     }
-    [self refreshLockStatus];
     
     [_messagesView reloadData];
 }
@@ -372,6 +419,9 @@
      DLog(@"VC viewDidLoad preview %d", [interactionController presentPreviewAnimated:YES]);
      }
      */
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsShouldShowHelp]) {
+        [self displayHelpSplashScreen];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -397,6 +447,7 @@
         [_currentNavigationItem setLeftBarButtonItem:_clearButton animated:YES];
     } else {
         [_currentNavigationItem setLeftBarButtonItem:nil animated:YES];
+        [self dismissOtherPopovers];
     }
 }
 
@@ -414,6 +465,8 @@
     
     UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:vc];
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [self dismissOtherPopovers];
+        
         _popover = [[UIPopoverController alloc] initWithContentViewController:nv];
         vc.popover = _popover;
         UIBarButtonItem *b = (UIBarButtonItem *)sender;
@@ -435,6 +488,8 @@
         t.delegate = self;
         
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            [self dismissOtherPopovers];
+            
             _popover = [[UIPopoverController alloc] initWithContentViewController:t];
             UIBarButtonItem *b = (UIBarButtonItem *)sender;
             [_popover presentPopoverFromBarButtonItem:b permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
@@ -458,14 +513,17 @@
 }
 
 - (IBAction)showHelp:(id)sender {
+    [self dismissOtherPopovers];
     
-    UIActionSheet *as = [[UIActionSheet alloc] initWithTitle:nil
-                                                    delegate:self 
-                                           cancelButtonTitle:kActionSheetButtonCancel
-                                      destructiveButtonTitle:nil
-                                           otherButtonTitles:kActionSheetButtonHelpPDF, kActionSheetButtonHelpSplash, nil];
-    [as showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
-    [as release];
+    _actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"%@ %@ (%@)", 
+                                                         kMainViewVersion, 
+                                                         [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], 
+                                                         [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]]
+                                               delegate:self 
+                                      cancelButtonTitle:kActionSheetButtonCancel
+                                 destructiveButtonTitle:nil
+                                      otherButtonTitles:kActionSheetButtonHelpEmail, kActionSheetButtonHelpRate, kActionSheetButtonHelpPDF, kActionSheetButtonHelpSplash, nil];
+    [_actionSheet showFromBarButtonItem:(UIBarButtonItem *)sender animated:YES];
 }
 
 - (IBAction)toggleUsePassword:(id)sender {
@@ -492,13 +550,14 @@
 }
 
 - (IBAction)clearButton:(id)sender {
-    UIActionSheet *as = [[UIActionSheet alloc] initWithTitle:nil
-                                                    delegate:self 
-                                           cancelButtonTitle:kActionSheetButtonCancel
-                                      destructiveButtonTitle:kActionSheetButtonDeleteAll
-                                           otherButtonTitles:nil];
-    [as showFromBarButtonItem:_clearButton animated:YES];
-    [as release];
+    [self dismissOtherPopovers];
+    
+    _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                               delegate:self 
+                                      cancelButtonTitle:kActionSheetButtonCancel
+                                 destructiveButtonTitle:kActionSheetButtonDeleteAll
+                                      otherButtonTitles:nil];
+    [_actionSheet showFromBarButtonItem:_clearButton animated:YES];
 }
 
 #pragma mark - WDBubbleDelegate
@@ -506,6 +565,10 @@
 - (void)percentUpdated {
     [_messagesView reloadData];
     //DLog(@"VC persent %f", [self.bubble percentTransfered]*100);
+}
+
+- (void)errorOccured:(NSError *)error {
+    [self displayErrorMessage:kWDBubbleErrorMessageDisconnectWithError];
 }
 
 - (void)willReceiveMessage:(WDMessage *)message {
@@ -524,11 +587,14 @@
 }
 
 - (void)didTerminateReceiveMessage:(WDMessage *)message {
+    [self displayErrorMessage:kWDBubbleErrorMessageTerminatedBySender];
     [self deleteDocumentAndMessageInURL:message.fileURL];
+    [_messagesView reloadData];
 }
 
 - (void)didTerminateSendMessage:(WDMessage *)message {
     [self deleteMessageInURL:message.fileURL];
+    [_messagesView reloadData];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -568,11 +634,11 @@
             [fileData writeToURL:storeURL atomically:YES];
             _fileURL = [storeURL retain];
         }
-        DLog(@"VC didFinishPickingMediaWithInfo URL is %@", _fileURL);
+        DLog(@"VC didFinishPickingMediaWithInfo URL is %@", _fileURL.path);
         [self sendFile];
     } else if ([mediaType isEqualToString:@"public.movie"]) {
         _fileURL = [[info valueForKey:UIImagePickerControllerMediaURL] retain];
-        DLog(@"VC didFinishPickingMediaWithInfo select %@", _fileURL);
+        DLog(@"VC didFinishPickingMediaWithInfo select %@", _fileURL.path);
         [self sendFile];
     } else {
         _fileURL = nil;
@@ -608,6 +674,17 @@
     [t release];
 }
 
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *NUMBERS = @"0123456789";
+    if ([NUMBERS rangeOfString:string].location == NSNotFound) {
+        return NO;
+    }
+    return YES;
+}
+
+
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -634,7 +711,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     WDMessage *t = nil;
-    UIActionSheet *as = nil;
+    [self dismissOtherPopovers];
     
     // DW: construct a WDMessage
     if (_segmentSwith.selectedSegmentIndex == kSegmentControlHistory) {
@@ -646,43 +723,42 @@
     
     // DW: chose an action
     if ([t.state isEqualToString: kWDMessageStateText]) {
-        as = [[UIActionSheet alloc] initWithTitle:nil
-                                         delegate:self 
-                                cancelButtonTitle:kActionSheetButtonCancel
-                           destructiveButtonTitle:nil
-                                otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonMessage, nil];
+        _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                   delegate:self 
+                                          cancelButtonTitle:kActionSheetButtonCancel
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonMessage, nil];
     } else if ([t.state isEqualToString:kWDMessageStateFile]) {
         if ([WDMessage isImageURL:t.fileURL]) {
-            as = [[UIActionSheet alloc] initWithTitle:nil
-                                             delegate:self 
-                                    cancelButtonTitle:kActionSheetButtonCancel
-                               destructiveButtonTitle:nil
-                                    otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonPreview, kActionSheetButtonSave, nil];
+            _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                       delegate:self 
+                                              cancelButtonTitle:kActionSheetButtonCancel
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:kActionSheetButtonCopy, kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonPreview, kActionSheetButtonSave, nil];
         } else {
-            as = [[UIActionSheet alloc] initWithTitle:nil
-                                             delegate:self 
-                                    cancelButtonTitle:kActionSheetButtonCancel
-                               destructiveButtonTitle:nil
-                                    otherButtonTitles:kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonPreview, nil];
+            _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                       delegate:self 
+                                              cancelButtonTitle:kActionSheetButtonCancel
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:kActionSheetButtonEmail, kActionSheetButtonSend, kActionSheetButtonPreview, nil];
         }
     } else  {
         // DW: states such as kWDMessageStateReadyToReceive, kWDMessageStateReadyToSend, kWDMessageStateSending
         // we can do a "Pause" feature here
-        NSLog(@"VC didSelectRowAtIndexPath %@", t.state);
-        as = [[UIActionSheet alloc] initWithTitle:nil
-                                         delegate:self 
-                                cancelButtonTitle:kActionSheetButtonCancel
-                           destructiveButtonTitle:kActionSheetButtonTransferTerminate
-                                otherButtonTitles:nil];
+        DLog(@"VC didSelectRowAtIndexPath %@", t.state);
+        _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                   delegate:self 
+                                          cancelButtonTitle:kActionSheetButtonCancel
+                                     destructiveButtonTitle:kActionSheetButtonTransferTerminate
+                                          otherButtonTitles:nil];
     }
     
-    if (as) {
+    if (_actionSheet) {
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            [as showFromRect:[tableView cellForRowAtIndexPath:indexPath].frame inView:_messagesView animated:YES];
+            [_actionSheet showFromRect:[tableView cellForRowAtIndexPath:indexPath].frame inView:_messagesView animated:YES];
         } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-            [as showInView:self.view];
+            [_actionSheet showFromToolbar:self.navigationController.toolbar];
         }
-        [as release];
     }
     
     [t release];
@@ -834,27 +910,32 @@
         [_messagesView reloadData];
         [self setEditing:NO animated:YES];
         return;
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonHelpEmail]) {
+        [self displayMailComposerSheetToDeveloepr];
+        return;
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonHelpRate]) {
+        NSString *url = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", @"506646552"];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        return;
     } else if ([buttonTitle isEqualToString:kActionSheetButtonHelpPDF]) {
-        NSURL *manualURL = [[NSBundle mainBundle] URLForResource:@"manual" withExtension:@"pdf"];
+        NSURL *manualURL = [[NSBundle mainBundle] URLForResource:@"Manual" withExtension:@"pdf"];
         UIDocumentInteractionController *interactionController = [[UIDocumentInteractionController interactionControllerWithURL:manualURL] retain];
         interactionController.delegate = self;
         [interactionController presentPreviewAnimated:YES];
         return;
     } else if ([buttonTitle isEqualToString:kActionSheetButtonHelpSplash]) {
-        if (_helpViewController) {
-            [_helpViewController release];
-            _helpViewController = nil;
-        }
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-            _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController" bundle:nil];
-            //[self.view addSubview:_helpViewController.view];
-        } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            _helpViewController = [[HelpViewController alloc] initWithNibName:@"HelpViewController_iPad" bundle:nil];
-            
-        }
-        [[UIApplication sharedApplication].keyWindow addSubview:_helpViewController.view];
+        [self displayHelpSplashScreen];
         return;
     } else if ([buttonTitle isEqualToString:kActionSheetButtonCancel]) {
+        // DW: just refresh to avoid a selected cell
+        [_messagesView reloadData];
+        if (_actionSheet) {
+            [_actionSheet release];
+            _actionSheet = nil;
+        }
+        return;
+    } else if ([buttonTitle isEqualToString:kActionSheetButtonMacApp]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.apple.com/us/app/deliver/id506655546?ls=1&mt=12"]];
         return;
     }
     
@@ -923,6 +1004,7 @@
                 [self deleteDocumentAndMessageInURL:m.fileURL];
             }
         }
+        [_messagesView reloadData];
     }
     
     [message release];
@@ -1007,23 +1089,6 @@
     [popoverController release];
 }
 
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    /*  limit to only numeric characters  */
-    NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
-    for (int i = 0; i < [string length]; i++) {
-        unichar c = [string characterAtIndex:i];
-        if (![myCharSet characterIsMember:c]) {
-            return NO;
-        }
-    }
-    
-    /*  limit the users input to only 9 characters  */
-    NSUInteger newLength = [textField.text length] + [string length] - range.length;
-    return (newLength > 9) ? NO : YES;
-}
-
 #pragma mark - Split view
 
 - (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
@@ -1050,13 +1115,21 @@
         
         // DW: if we already have one service selected, we do not update the selection now
         if (_selectedServiceName) {
-            return;
+            for (NSNetService *s in self.bubble.servicesFound) {
+                if ([_selectedServiceName isEqualToString:s.name]) {
+                    return;
+                }
+            }
+            
+            // DW: selected service name is not found in current services, it's no longer useful, release it
+            [_selectedServiceName release];
+            _selectedServiceName = nil;
         }
         
         for (NSNetService *s in self.bubble.servicesFound) {
+            
             if ([self.bubble isDifferentService:s]) {
-                //_selectedServiceName = [s.name retain];
-                _selectedServiceName = [WDBubble bubbleNameWithServiceName:s.name andType:s.type];
+                _selectedServiceName = [s.name retain];
             }
         }
     } else {

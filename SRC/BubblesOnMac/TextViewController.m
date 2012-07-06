@@ -7,7 +7,7 @@
 //
 
 #import "TextViewController.h"
-
+#import "WUTextView.h"
 
 @implementation TextViewController
 @synthesize textField = _textField;
@@ -16,7 +16,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        DLog(@"TextViewController");
+    
     }
     return self;
 }

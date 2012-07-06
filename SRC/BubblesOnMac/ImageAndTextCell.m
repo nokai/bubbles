@@ -86,4 +86,10 @@
 	[[NSGraphicsContext currentContext] restoreGraphicsState];	   
 }
 
+// Disable the mouse hover to show the tooltip You have to override is because the subclass of nstextfieldcell do not return zerorect
+- (NSRect)expansionFrameWithFrame:(NSRect)cellFrame inView:(NSView *)view
+{
+    return NSZeroRect;
+}
+
 @end

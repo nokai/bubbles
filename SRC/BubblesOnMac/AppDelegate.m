@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "WDBubble.h"
 
 @implementation AppDelegate
 
@@ -22,9 +22,9 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    //NSURL *url = [NSURL fileURLWithPath:@"/Library/Documentation/AirPort Acknowledgements.rtf"];
-    //_array = [[NSArray arrayWithObject:url] copy];
-    // Insert code here to initialize your application
+    NSNumber *firstUse = [NSNumber numberWithInt:0];
+    NSDictionary *registrationDefaults = [NSDictionary dictionaryWithObject:firstUse forKey:kFirstUseKey];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:registrationDefaults];
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
@@ -103,14 +103,12 @@
 // This delegate method provides the rect on screen from which the panel will zoom.
 - (NSRect)previewPanel:(QLPreviewPanel *)panel sourceFrameOnScreenForPreviewItem:(id <QLPreviewItem>)item
 {
-    DLog(@"previewPanel");
     return NSZeroRect;
 }
 
 // This delegate method provides a transition image between the table view and the preview panel
 - (id)previewPanel:(QLPreviewPanel *)panel transitionImageForPreviewItem:(id <QLPreviewItem>)item contentRect:(NSRect *)contentRect
 {
-    DLog(@"transitionImageForPreviewItem");
     return nil;
 }
 

@@ -7,15 +7,16 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "WDMessage.h"
+@class WDBubble;
+@class TransparentTableView;
+@class WDMessage;
+@class ImageAndTextCell;
 #import "ImageAndTextCell.h"
-#import "NSImage+QuickLook.h"
-#import "AppDelegate.h"
-#import "TransparentTableView.h"
 #import "NSTableView+ContextMenu.h"
 
 #define kPreviewColumn 1
 #define kDeleteColumn 2
+#define kRestoreLabelAndImage @"kRestoreLabelAndImage"
 
 @interface HistoryPopOverViewController : NSViewController<NSPopoverDelegate,NSTableViewDataSource,NSTableViewDelegate,ImageAndTextCellDelegate,ContextMenuDelegate>
 {
@@ -37,5 +38,8 @@
 
 // Wu:attachedView is the the view which popover attach to like the effect in Safari
 - (void)showHistoryPopOver:(NSView *)attachedView;
+- (void)deleteMessageFromHistory:(WDMessage *)aMessage;
+- (void)refreshButton;
+- (void)reloadTableView;
 
 @end

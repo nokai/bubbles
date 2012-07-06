@@ -8,6 +8,7 @@
 
 #import "PeersViewController.h"
 #import "ViewController.h"
+#import "WDLocalization.h"
 
 @implementation PeersViewController
 @synthesize dismissButton, lockButton, bubble = _bubble, viewController = _viewController;
@@ -37,7 +38,7 @@
     
     // DW: custom bar bg
     // this will appear as the title in the navigation bar
-    self.title = @"Peers";
+    self.title = kMainViewPeers;
     
     self.viewController.lockButton = self.lockButton;
     
@@ -51,7 +52,7 @@
                                              selector:@selector(servicesUpdated:) 
                                                  name:kWDBubbleNotificationServiceUpdated
                                                object:nil];
-    
+
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         // DW: if it's iPad, we do bubble here
         // DW: use password or not
@@ -127,14 +128,13 @@
     
     // DW: services with same name AND platform are seen as one
     if ([self.bubble isIdenticalService:t]) {
-        cell.textLabel.text = [t.name stringByAppendingString:@" (local)"];
+        cell.textLabel.text = [t.name stringByAppendingString:kMainViewLocal];
     } else {
         cell.textLabel.text = t.name;
     }
     
-    if ([t.name isEqualToString:[WDBubble serviceNameInBubbleName:self.viewController.selectedServiceName]]
-        &&[t.type isEqualToString:[WDBubble serviceTypeInBubbleName:self.viewController.selectedServiceName]]) {
-        //&&([self.bubble isDifferentService:t])) {
+    if (([t.name isEqualToString:self.viewController.selectedServiceName])
+        &&([self.bubble isDifferentService:t])) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -195,8 +195,7 @@
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         return;
     } 
-    //self.viewController.selectedServiceName = t.name;
-    self.viewController.selectedServiceName = [WDBubble bubbleNameWithServiceName:t.name andType:t.type];
+    self.viewController.selectedServiceName = t.name;
     [tableView reloadData];
 }
 

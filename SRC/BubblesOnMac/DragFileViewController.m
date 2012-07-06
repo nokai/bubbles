@@ -7,6 +7,7 @@
 //
 
 #import "DragFileViewController.h"
+#import "DragAndDropImageView.h"
 
 @implementation DragFileViewController
 @synthesize imageView = _imageView;

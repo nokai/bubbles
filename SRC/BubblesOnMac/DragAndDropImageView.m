@@ -7,6 +7,8 @@
 //
 
 #import "DragAndDropImageView.h"
+#import "AppDelegate.h"
+#import "WDBubble.h"
 
 @implementation DragAndDropImageView
 
@@ -37,7 +39,6 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
-    DLog(@"entered");
     if (([sender draggingSourceOperationMask] & NSDragOperationCopy) == NSDragOperationCopy) {
         
         //Wu:Means we offer the type the destination accepts
@@ -49,7 +50,6 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
-    DLog(@"haha exited!!!!!!!!!!!");
 }
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
@@ -63,21 +63,26 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     NSPasteboard *pboard = [sender draggingPasteboard];
 	
     if ( [[pboard types] containsObject:NSFilenamesPboardType] ) {
-		//  NSArray *files = [pboard propertyListForType:NSFilenamesPboardType];
-        //DLog(@"%@", files);
-        // Perform operation using the list of files
     }
     
-    //Wu:Set the files that can be accepted by NSImageView
+    // Wu:Set the files that can be accepted by NSImageView
     NSPasteboard *pasterboard = [sender draggingPasteboard];
     NSArray *allowedTypes = [NSArray arrayWithObjects:NSFilenamesPboardType,NSTIFFPboardType,nil];
     NSString *fileType = [pasterboard availableTypeFromArray:allowedTypes];
-    NSData *data = [pasterboard dataForType:fileType];
     
+    // Wu:Check whether the data is nil or multi files are selected
+    NSArray *urlArray = [pboard propertyListForType:NSFilenamesPboardType];
+    NSData *data = [pasterboard dataForType:fileType]; 
     NSURL *fileUrl = [NSURL URLFromPasteboard: [sender draggingPasteboard]];
     
-    if (data == nil) {
-        NSRunAlertPanel(@"Paste Error", @"The operation failed", @"Ok", nil, nil);
+    // Now we do not support the folder 
+    BOOL isFolder = FALSE;
+    [[NSFileManager defaultManager] fileExistsAtPath:[fileUrl path] isDirectory: &isFolder];
+    
+    if (data == nil || isFolder || ([urlArray count] > 1)) {
+        NSRunAlertPanel(NSLocalizedString(@"SORRY", @"Sorry"), 
+                        NSLocalizedString(@"NOT_MULTI", @"We do not support folders, application package or multiple files for now.\nWe will improve this in the new version, many thanks for your support."), 
+                        NSLocalizedString(@"OK", @"Ok"), nil, nil);
         return NO;
     } else {
         if ([fileType isEqualToString:NSPasteboardTypeTIFF]) {
@@ -100,7 +105,6 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
             DLog(@"Something error");
         }
     }
-    DLog(@"self.delegate is %@",self.delegate);
     [self.delegate dragDidFinished:fileUrl];
     [self setNeedsDisplay:YES];//Wu:Redraw at once
     return YES;
@@ -123,6 +127,8 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     
     NSPoint dragPosition;
     NSRect imageLocation;
+    NSLog(@"caoniamde");
+    
     
     dragPosition = [self convertPoint:[event locationInWindow] fromView:nil];
     dragPosition.x -= 16;
@@ -141,13 +147,20 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     // Wu: create a new image for our semi-transparent drag image
     NSImage* dragImage=[[NSImage alloc] initWithSize:[[self image] size]]; 
     
+    int factor = (dragImage.size.width  > dragImage.size.height) ?
+    (dragImage.size.height / [self bounds].size.height) : (dragImage.size.width / [self bounds].size.height) ;
+    NSSize size = (dragImage.size.width > dragImage.size.height) ?
+    CGSizeMake(dragImage.size.width / factor, [self bounds].size.height) : CGSizeMake([self bounds].size.width,dragImage.size.height / factor);
+    
     // DW: this makes dragging visible
     [dragImage lockFocus];// draw inside of our dragImage
+    
     // Wu: draw our original image as 50% transparent
     [[self image] dissolveToPoint: NSZeroPoint fraction: .5];
-    [dragImage unlockFocus];// finished drawing
-    [dragImage setScalesWhenResized:NO];// we want the image to resize
-    //[dragImage setSize:[self bounds].size];// change to the size we are displaying
+    [dragImage unlockFocus];// finished drawin
+    [dragImage setScalesWhenResized:NO];
+    //NSSize size = CGSizeMake(dragImage.size.width / factor, [self bounds].size.height);
+    [dragImage setSize:size];// change to the size we are displaying
     
     [super dragImage:dragImage at:self.bounds.origin offset:NSZeroSize event:event pasteboard:pboard source:sourceObj slideBack:slideFlag];
     [dragImage release];
@@ -155,29 +168,19 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
 
 // Wu: drag to save, dropDestination is destination, draggedDataURL is source
 - (NSArray *)namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination {
+    [dropDestination startAccessingSecurityScopedResource];
     NSURL *draggedDataURL = [self.delegate dataDraggedToSave];
+    [draggedDataURL startAccessingSecurityScopedResource];    
     if (draggedDataURL == nil) {
         return nil;
     }
+    NSURL *newURL = [[NSURL URLWithString:[draggedDataURL.lastPathComponent stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] relativeToURL:dropDestination] URLWithoutNameConflict];
     
-    NSURL *newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
-                                          dropDestination.path, 
-                                          [draggedDataURL.lastPathComponent stringByReplacingOccurrencesOfString:@" " 
-                                                                                                      withString:@"%20"]]];
-    if (newURL == nil) {
-        NSString *escapedString = draggedDataURL.path;
-        newURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", 
-                                       dropDestination.path, 
-                                       [escapedString stringByReplacingOccurrencesOfString:@" " 
-                                                                                withString:@"%20"]]];
-        newURL = [newURL URLWithoutNameConflict];
-        
-    } else {
-        newURL = [newURL URLWithoutNameConflict];
-    }
-    NSData *data = [NSData dataWithContentsOfURL:draggedDataURL];
-    [[NSFileManager defaultManager] createFileAtPath:newURL.path contents:data attributes:nil];
+    NSLog(@"new is %@",[newURL absoluteString]);
     
+    [[NSFileManager defaultManager] copyItemAtURL:draggedDataURL toURL:newURL error:nil];
+    [draggedDataURL stopAccessingSecurityScopedResource];
+    [dropDestination stopAccessingSecurityScopedResource];
     return [NSArray arrayWithObjects:newURL.lastPathComponent, nil];
 }
 
@@ -195,23 +198,10 @@ NSString *kPrivateDragUTI = @"com.yourcompany.cocoadraganddrop";
     }
 }
 
-//like qq ,the chosen windows do not have to be active
+//Like qq ,the chosen windows do not have to be active
 - (BOOL)acceptsFirstMouse:(NSEvent *)event 
 {
     return YES;
 }
 
-/*- (void)pasteboard:(NSPasteboard *)sender item:(NSPasteboardItem *)item provideDataForType:(NSString *)type
- {
- if ( [type compare: NSPasteboardTypeTIFF] == NSOrderedSame ) {
- 
- //set data for TIFF type on the pasteboard as requested
- [sender setData:[[self image] TIFFRepresentation] forType:NSPasteboardTypeTIFF];
- 
- } else if ( [type compare: NSFilenamesPboardType] == NSOrderedSame ) {
- 
- //set data for Other type on the pasteboard as requested
- [sender setData:[self dataWithPDFInsideRect:[self bounds]] forType:NSPasteboardTypePDF];
- }
- }*/
 @end

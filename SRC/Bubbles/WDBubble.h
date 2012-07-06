@@ -29,6 +29,8 @@
 
 @protocol WDBubbleDelegate
 - (void)percentUpdated;
+- (void)errorOccured:(NSError *)error;
+
 - (void)willReceiveMessage:(WDMessage *)message;
 - (void)didReceiveMessage:(WDMessage *)message;
 - (void)didSendMessage:(WDMessage *)message;
@@ -75,11 +77,6 @@
 + (NSString *)platformForNetService:(NSNetService *)netService;
 + (BOOL)isLockedNetService:(NSNetService *)netService;
 
-// DW: for a selected service info with name and type
-+ (NSString *)bubbleNameWithServiceName:(NSString *)serviceName andType:(NSString *)serviceType;
-+ (NSString *)serviceNameInBubbleName:(NSString *)bubbleName;
-+ (NSString *)serviceTypeInBubbleName:(NSString *)bubbleName;
-
 - (void)publishServiceWithPassword:(NSString *)pwd;
 - (void)browseServices;
 - (void)stopService;
@@ -88,6 +85,7 @@
 - (void)sendMessage:(WDMessage *)message toServiceNamed:(NSString *)name;
 
 // DW: transfer control
+- (BOOL)isBusy;
 - (float)percentTransfered;
 - (NSUInteger)bytesTransfered;
 - (void)terminateTransfer;

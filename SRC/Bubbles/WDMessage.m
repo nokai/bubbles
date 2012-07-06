@@ -96,8 +96,12 @@
     [_sender release];
     [_time release];
     [_state release];
-    [_fileURL release];
-    [_content release];
+    if (_fileURL) {
+        [_fileURL release];
+    }
+    if (_content) {
+        [_content release];
+    }
     
     [super dealloc];
 }

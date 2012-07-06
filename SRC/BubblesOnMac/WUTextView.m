@@ -10,6 +10,12 @@
 
 @implementation WUTextView
 
+- (void)awakeFromNib
+{
+    [[self enclosingScrollView] setHasHorizontalScroller:NO];
+    [self setHorizontallyResizable:NO];
+}
+
 - (BOOL)acceptsFirstResponder
 {
     return YES;
