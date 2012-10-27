@@ -20,6 +20,9 @@
 		C1F24BCF15A7025C00C9D076 /* DWBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F24BCE15A7025C00C9D076 /* DWBubble.m */; };
 		C1F24BD215A702DD00C9D076 /* DWPipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F24BD115A702DD00C9D076 /* DWPipe.m */; };
 		C1F24BD515A702F900C9D076 /* DWMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F24BD415A702F900C9D076 /* DWMessage.m */; };
+		C1F24BE315A7084300C9D076 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1F24BE215A7084300C9D076 /* CFNetwork.framework */; };
+		C1F24BE715A716FF00C9D076 /* NSURL+Bubbles.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F24BE615A716FF00C9D076 /* NSURL+Bubbles.m */; };
+		DBE45B09163A301E00245BF9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DBE45B08163A301E00245BF9 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +48,10 @@
 		C1F24BD115A702DD00C9D076 /* DWPipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DWPipe.m; sourceTree = "<group>"; };
 		C1F24BD315A702F900C9D076 /* DWMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DWMessage.h; sourceTree = "<group>"; };
 		C1F24BD415A702F900C9D076 /* DWMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DWMessage.m; sourceTree = "<group>"; };
+		C1F24BE215A7084300C9D076 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		C1F24BE515A716FF00C9D076 /* NSURL+Bubbles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+Bubbles.h"; path = "extension/NSURL+Bubbles.h"; sourceTree = "<group>"; };
+		C1F24BE615A716FF00C9D076 /* NSURL+Bubbles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+Bubbles.m"; path = "extension/NSURL+Bubbles.m"; sourceTree = "<group>"; };
+		DBE45B08163A301E00245BF9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1F24BE315A7084300C9D076 /* CFNetwork.framework in Frameworks */,
 				C1F24BAA15A701D800C9D076 /* UIKit.framework in Frameworks */,
 				C1F24BAC15A701D800C9D076 /* Foundation.framework in Frameworks */,
 				C1F24BAE15A701D800C9D076 /* CoreGraphics.framework in Frameworks */,
@@ -64,9 +72,10 @@
 		C1F24B9A15A701D800C9D076 = {
 			isa = PBXGroup;
 			children = (
+				DBE45B08163A301E00245BF9 /* Default-568h@2x.png */,
+				C1F24BE415A716CE00C9D076 /* extension */,
 				C1F24BC915A7021C00C9D076 /* common */,
 				C1F24BAF15A701D800C9D076 /* bubbles */,
-				C1F24BA815A701D800C9D076 /* Frameworks */,
 				C1F24BA615A701D800C9D076 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -82,11 +91,13 @@
 		C1F24BA815A701D800C9D076 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C1F24BE215A7084300C9D076 /* CFNetwork.framework */,
 				C1F24BA915A701D800C9D076 /* UIKit.framework */,
 				C1F24BAB15A701D800C9D076 /* Foundation.framework */,
 				C1F24BAD15A701D800C9D076 /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		C1F24BAF15A701D800C9D076 /* bubbles */ = {
@@ -98,6 +109,7 @@
 				C1F24BBE15A701D800C9D076 /* MainStoryboard_iPad.storyboard */,
 				C1F24BC115A701D800C9D076 /* BubblesViewController.h */,
 				C1F24BC215A701D800C9D076 /* BubblesViewController.m */,
+				C1F24BA815A701D800C9D076 /* Frameworks */,
 				C1F24BB015A701D800C9D076 /* Supporting Files */,
 			);
 			path = bubbles;
@@ -127,6 +139,15 @@
 				C1F24BD415A702F900C9D076 /* DWMessage.m */,
 			);
 			path = common;
+			sourceTree = "<group>";
+		};
+		C1F24BE415A716CE00C9D076 /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				C1F24BE515A716FF00C9D076 /* NSURL+Bubbles.h */,
+				C1F24BE615A716FF00C9D076 /* NSURL+Bubbles.m */,
+			);
+			name = extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,6 +205,7 @@
 				C1F24BB415A701D800C9D076 /* InfoPlist.strings in Resources */,
 				C1F24BBD15A701D800C9D076 /* MainStoryboard_iPhone.storyboard in Resources */,
 				C1F24BC015A701D800C9D076 /* MainStoryboard_iPad.storyboard in Resources */,
+				DBE45B09163A301E00245BF9 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +223,7 @@
 				C1F24BCF15A7025C00C9D076 /* DWBubble.m in Sources */,
 				C1F24BD215A702DD00C9D076 /* DWPipe.m in Sources */,
 				C1F24BD515A702F900C9D076 /* DWMessage.m in Sources */,
+				C1F24BE715A716FF00C9D076 /* NSURL+Bubbles.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +345,7 @@
 				C1F24BC815A701D800C9D076 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

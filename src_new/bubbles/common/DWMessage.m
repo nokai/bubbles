@@ -10,4 +10,22 @@
 
 @implementation DWMessage
 
+#pragma mark - Public Methods
+
++ (id)messageWithText:(NSString *)text {
+    return nil;
+}
+
++ (id)messageWithFile:(NSURL *)url andState:(NSString *)state {
+    return nil;
+}
+
+- (NSUInteger)fileSize {
+    return 0;
+}
+
+- (void)setFileSize:(NSUInteger)fileSize {
+
+}
+
 @end

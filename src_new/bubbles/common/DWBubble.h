@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DWMessage.h"
 
 @interface DWBubble : NSObject
+
+- (void)publishServiceWithPassword:(NSString *)pwd;
+- (void)browseServices;
+- (void)stopService;
+
+- (void)sendMessage:(DWMessage *)message toServiceNamed:(NSString *)name;
 
 @end

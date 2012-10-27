@@ -12,3 +12,11 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+// DW: We use DLog and ALog, not NSLog.
+#ifdef DEBUG
+#   define DLog(...) NSLog(__VA_ARGS__)
+#else
+#   define DLog(...) /* */
+#endif
+#define ALog(...) NSLog(__VA_ARGS__)

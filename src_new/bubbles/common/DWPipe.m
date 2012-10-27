@@ -10,4 +10,22 @@
 
 @implementation DWPipe
 
+#pragma mark - Public Methods
+
+- (BOOL)isBusy {
+    return YES;
+}
+
+- (float)percentTransfered {
+    return 0;
+}
+
+- (NSUInteger)bytesTransfered {
+    return 0;
+}
+
+- (void)terminateTransfer {
+    
+}
+
 @end
