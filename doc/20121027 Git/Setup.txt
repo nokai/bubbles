@@ -1,0 +1,17 @@
+General:
+teamace/bubbles
+wanderseeme
+SatanWoo
+
+URL:
+git@github.com:teamace/bubbles.git
+
+Commands:
+git remote add origin git@github.com:teamace/bubbles.git
+git push -u origin master
+
+Deliver Test for Sandbox
+1. Double click to install;
+2. The password is "deliver";
+3. In "Xcode", "Build Settings", "Code Signing Identiy", select "Test for Sandbox";
+4. Build and run.
