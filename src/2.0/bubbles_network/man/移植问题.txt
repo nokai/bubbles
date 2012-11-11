@@ -1,0 +1,59 @@
+Socket 编程 windows到Linux代码移植遇到的问题  
+
+1、一些常用函数的移植  
+http://www.vckbase.com/document/viewdoc/?id=1586  
+
+2、网络 ------ 转载 & 修改（待整理）  
+socket相关程序从windows移植到linux下需要注意的  
+
+
+1)头文件  
+windows下winsock.h/winsock2.h  
+linux下sys/socket.h  
+错误处理：errno.h  
+
+2)初始化  
+windows下需要用WSAStartup  
+linux下不需要  
+
+3)关闭socket  
+windows下closesocket(...)  
+linux下close(...)  
+
+4)类型  
+windows下SOCKET  
+linux下int  
+如我用到的一些宏：  
+#ifdef WIN32  
+typedef int socklen_t;  
+typedef int ssize_t;  
+#endif  
+
+#ifdef __LINUX__  
+typedef int SOCKET;  
+typedef unsigned char BYTE;  
+typedef unsigned long DWORD;  
+#define FALSE 0  
+#define SOCKET_ERROR (-1)  
+#endif  
+
+5)获取错误码  
+windows下getlasterror()/WSAGetLastError()  
+linux下errno变量  
+
+6)设置非阻塞  
+windows下ioctlsocket()  
+linux下fcntl() <fcntl.h>  
+
+7)send函数最后一个参数  
+windows下一般设置为0  
+linux下最好设置为MSG_NOSIGNAL，如果不设置，在发送出错后有可 能会导致程序退出。  
+
+8)毫秒级时间获取  
+windows下GetTickCount()  
+linux下gettimeofday()  
+
+3、多线程  
+多线程: (win)process.h --〉(linux)pthread.h  
+_beginthread --> pthread_create  
+_endthread --> pthread_exit
