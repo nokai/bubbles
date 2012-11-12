@@ -12,6 +12,15 @@
 # Xcode noise
 
 build/*
+<<<<<<< HEAD
+=======
+
+# Necessary RHMI Editor files
+
+!build/*.xml
+!build/*.zip
+
+>>>>>>> 32a8de81e3449003e9731074983e00cb5415aaab
 *.mode1v3
 *.mode3v3
 *.pbxuser
