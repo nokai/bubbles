@@ -7,10 +7,35 @@
 //
 
 #import "PreferenceViewContoller.h"
+#import "WDHeader.h"
+#import "WDLocalization.h"
 
 #define kGeneralIdentifier @"GeneralIdentifier"
 
 @implementation PreferenceViewContoller
+
+#pragma mark - Private Methods
+
+- (void)refreshSavePathButton {
+    // DW: 20121126 construct folder icon
+    NSImage *folderIcon = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
+    [folderIcon setScalesWhenResized:YES];
+    [folderIcon setSize:NSMakeSize(16, 16)];
+    
+    // DW: 20121126 get folder name
+    NSString *string = [[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultMacSavingPath];
+    string = [[NSURL URLWithString:string] path];
+    string = [[NSFileManager defaultManager] displayNameAtPath:string];
+    
+    [_savePathButton removeAllItems];
+    [_savePathButton addItemWithTitle:string];
+    [[_savePathButton itemAtIndex:0] setImage:folderIcon];
+    
+    [[_savePathButton menu] addItem:[NSMenuItem separatorItem]];
+    [_savePathButton addItemWithTitle:kWDBubblePreferenceOther];
+    
+    [_toolBar setSelectedItemIdentifier:kGeneralIdentifier];
+}
 
 - (id)init {
     if (![super initWithWindowNibName:@"PreferenceViewController"]) {
@@ -29,19 +54,8 @@
     return self;
 }
 
-- (void)awakeFromNib
-{
-    NSImage *folderIcon = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
-    [folderIcon setScalesWhenResized:YES];
-    [folderIcon setSize:NSMakeSize(16, 16)];
-    NSString *string = [[[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultMacSavingPath] lastPathComponent];
-    [_savePathButton addItemWithTitle:string];
-    [[_savePathButton itemAtIndex:0] setImage:folderIcon];
-    
-    [[_savePathButton menu] addItem:[NSMenuItem separatorItem]];
-    [_savePathButton addItemWithTitle:@"Other..."];
-    
-    [_toolBar setSelectedItemIdentifier:kGeneralIdentifier];
+- (void)awakeFromNib {
+    [self refreshSavePathButton];
 }
 
 - (void)windowDidLoad
@@ -75,16 +89,12 @@
                 // Means Select
                 NSURL *selectedFileURL = [_selectDirectoryOpenPanel URL];
                 
-                if(selectedFileURL)
-                {
-                    NSImage *folderIcon = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
-                    //[[NSUserDefaults standardUserDefaults] setValue:selectedFileURL.absoluteString forKey:kUserDefaultMacSavingPath];
+                if(selectedFileURL) {
+                    // DW: 20121126 save current path
+                    [[NSUserDefaults standardUserDefaults] setValue:selectedFileURL.absoluteString forKey:kUserDefaultMacSavingPath];
                     [[NSUserDefaults standardUserDefaults] synchronize];
-                    [_savePathButton insertItemWithTitle:[selectedFileURL lastPathComponent] atIndex:0];
-                    [[_savePathButton itemAtIndex:0] setImage:folderIcon];
-                    [_savePathButton selectItemAtIndex:0];
-                    [_savePathButton removeItemAtIndex:1];
-                    [_selectDirectoryOpenPanel orderOut:nil];
+                    
+                    [self refreshSavePathButton];
                 }
             }
             [NSApp stopModal];

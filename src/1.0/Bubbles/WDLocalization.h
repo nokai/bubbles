@@ -43,6 +43,9 @@
 #define kWDBubbleErrorMessageDoNotSupportMultiple   [WDLocalization stringForKey:@"kWDBubbleErrorMessageDoNotSupportMultiple"]
 #define kWDBubbleErrorMessageNoDeviceSelected       [WDLocalization stringForKey:@"kWDBubbleErrorMessageNoDeviceSelected"]
 
+// DW: OS X, Others...
+#define kWDBubblePreferenceOther    [WDLocalization stringForKey:@"kWDBubblePreferenceOther"]
+
 // DW: lock
 #define kLockTitle      [WDLocalization stringForKey:@"kLockTitle"]
 #define kLockContent    [WDLocalization stringForKey:@"kLockContent"]
