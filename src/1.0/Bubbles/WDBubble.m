@@ -142,7 +142,7 @@
                         currentFileName, 
                         [[self pathExtension] lowercaseString]]];
     while ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path]) {
-        currentFileName = [NSString stringWithFormat:@"%@%%20%i", originalFileName, currentFileNamePostfix++];
+        currentFileName = [NSString stringWithFormat:@"%@%%20%li", originalFileName, currentFileNamePostfix++];
         storeURL = [NSURL URLWithString:
                     [NSString stringWithFormat:@"%@%@.%@", 
                      [defaultURL absoluteString], 

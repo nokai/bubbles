@@ -34,8 +34,8 @@
     NSImage *folderIcon = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
     [folderIcon setScalesWhenResized:YES];
     [folderIcon setSize:NSMakeSize(16, 16)];
-    //NSString *string = [[[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultMacSavingPath] lastPathComponent];
-    //[_savePathButton addItemWithTitle:string];
+    NSString *string = [[[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultMacSavingPath] lastPathComponent];
+    [_savePathButton addItemWithTitle:string];
     [[_savePathButton itemAtIndex:0] setImage:folderIcon];
     
     [[_savePathButton menu] addItem:[NSMenuItem separatorItem]];

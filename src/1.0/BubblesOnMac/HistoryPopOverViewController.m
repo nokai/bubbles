@@ -356,7 +356,7 @@ forDraggedRowsWithIndexes:(NSIndexSet *)indexSet {
 - (NSInteger)indexForCell:(NSObject *)data
 {
     WDMessage *message = (WDMessage *)data;
-    DLog(@"index is %@",[_fileHistoryArray indexOfObject:message]);
+    DLog(@"index is %lu",[_fileHistoryArray indexOfObject:message]);
     return [_fileHistoryArray indexOfObject:message];
 }
 

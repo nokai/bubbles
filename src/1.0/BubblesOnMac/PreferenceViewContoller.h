@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-//#import "WDHeader.h"
+#import "WDHeader.h"
 #import "AppDelegate.h"
 
 @interface PreferenceViewContoller : NSWindowController <NSToolbarDelegate>
