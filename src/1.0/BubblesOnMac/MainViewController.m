@@ -82,6 +82,7 @@
     
     [[NSUserDefaults standardUserDefaults] setInteger:++firstUser forKey:kFirstUseKey];
 }
+
 // Wu: NO for can not send, YES for will send
 - (BOOL)sendToSelectedServiceOfMessage:(WDMessage *)message {
     if (!_selectedServiceName || [_selectedServiceName isEqualToString:@""]) {
@@ -310,6 +311,8 @@
     
     // [_addFileItem setEnabled:NO];
 }
+
+
 
 #pragma mark - IBActions
 

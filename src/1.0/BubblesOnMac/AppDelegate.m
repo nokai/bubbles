@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "SandboxWindowController.h"
 #import "WDBubble.h"
 
 @implementation AppDelegate
@@ -25,10 +26,26 @@
     NSNumber *firstUse = [NSNumber numberWithInt:0];
     NSDictionary *registrationDefaults = [NSDictionary dictionaryWithObject:firstUse forKey:kFirstUseKey];
     [[NSUserDefaults standardUserDefaults] registerDefaults:registrationDefaults];
+    
+    _window.delegate = self;
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
     return YES;
+}
+
+- (void)windowDidBecomeKey:(NSNotification *)notification {
+    // DW: user turned password on.
+    if (_sandboxController == nil) {
+        _sandboxController = [[SandboxWindowController alloc]init];
+        //_sandboxController.delegate = self;
+        // Wu: show as a sheet window to force users to set usable password
+        [NSApp beginSheet:[_sandboxController window]
+           modalForWindow:_window
+            modalDelegate:nil
+           didEndSelector:NULL
+              contextInfo:NULL];
+    }
 }
 
 #pragma mark - Show Preview

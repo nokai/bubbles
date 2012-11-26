@@ -160,10 +160,12 @@
 		C1F80FC714BA7A1B006F0779 /* PeersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F80FC514BA7A1B006F0779 /* PeersViewController.xib */; };
 		C1F950CB14FBE50700482ECF /* WDSound.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F950CA14FBE50700482ECF /* WDSound.m */; };
 		C1F950D114FBE6FE00482ECF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1F950D014FBE6FE00482ECF /* AudioToolbox.framework */; };
-		DB5C5A0B1663601E00856149 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DB5C5A0A1663601E00856149 /* Default-Portrait@2x~ipad.png */; };
-		DB5C5A0D1663602C00856149 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DB5C5A0C1663602C00856149 /* Default-Landscape@2x~ipad.png */; };
-		DB5C5A0F1663618200856149 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB5C5A0E1663618200856149 /* Icon-72@2x.png */; };
-		DB944EFC166287F8000CDAEE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB944EFB166287F8000CDAEE /* Default-568h@2x.png */; };
+		DB5C5A1A1663665800856149 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB5C5A161663665800856149 /* Default-568h@2x.png */; };
+		DB5C5A1B1663665800856149 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DB5C5A171663665800856149 /* Default-Landscape@2x~ipad.png */; };
+		DB5C5A1C1663665800856149 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DB5C5A181663665800856149 /* Default-Portrait@2x~ipad.png */; };
+		DB5C5A1D1663665800856149 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB5C5A191663665800856149 /* Icon-72@2x.png */; };
+		DB5C5A261663687900856149 /* SandboxWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB5C5A241663687900856149 /* SandboxWindowController.m */; };
+		DB5C5A28166368AA00856149 /* SandboxWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB5C5A2A166368AA00856149 /* SandboxWindowController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -364,10 +366,14 @@
 		C1F950C914FBE50700482ECF /* WDSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WDSound.h; path = Bubbles/WDSound.h; sourceTree = "<group>"; };
 		C1F950CA14FBE50700482ECF /* WDSound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WDSound.m; path = Bubbles/WDSound.m; sourceTree = "<group>"; };
 		C1F950D014FBE6FE00482ECF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		DB5C5A0A1663601E00856149 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x~ipad.png"; path = "../Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
-		DB5C5A0C1663602C00856149 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x~ipad.png"; path = "../Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
-		DB5C5A0E1663618200856149 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "../Icon-72@2x.png"; sourceTree = "<group>"; };
-		DB944EFB166287F8000CDAEE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		DB5C5A161663665800856149 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
+		DB5C5A171663665800856149 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = SOURCE_ROOT; };
+		DB5C5A181663665800856149 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = SOURCE_ROOT; };
+		DB5C5A191663665800856149 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = SOURCE_ROOT; };
+		DB5C5A231663687900856149 /* SandboxWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandboxWindowController.h; sourceTree = "<group>"; };
+		DB5C5A241663687900856149 /* SandboxWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SandboxWindowController.m; sourceTree = "<group>"; };
+		DB5C5A29166368AA00856149 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SandboxWindowController.xib; sourceTree = "<group>"; };
+		DB5C5A2B166368B000856149 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/SandboxWindowController.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -474,6 +480,9 @@
 				03E70ADA14FD228000BF0B59 /* AboutWindowController.h */,
 				03E70ADB14FD228000BF0B59 /* AboutWindowController.m */,
 				032E7C141520C3B300D9CCA6 /* AboutWindowController.xib */,
+				DB5C5A231663687900856149 /* SandboxWindowController.h */,
+				DB5C5A241663687900856149 /* SandboxWindowController.m */,
+				DB5C5A2A166368AA00856149 /* SandboxWindowController.xib */,
 			);
 			name = Window;
 			sourceTree = "<group>";
@@ -566,14 +575,14 @@
 				C111265414DE2C7800884F7D /* DirectoryWatcher.h */,
 				C111265514DE2C7800884F7D /* DirectoryWatcher.m */,
 				C15859C714FA33250097FD41 /* Default-Landscape~ipad.png */,
+				DB5C5A161663665800856149 /* Default-568h@2x.png */,
+				DB5C5A171663665800856149 /* Default-Landscape@2x~ipad.png */,
+				DB5C5A181663665800856149 /* Default-Portrait@2x~ipad.png */,
+				DB5C5A191663665800856149 /* Icon-72@2x.png */,
 				C15859C414FA31CD0097FD41 /* Default-Portrait~ipad.png */,
-				DB5C5A0C1663602C00856149 /* Default-Landscape@2x~ipad.png */,
-				DB5C5A0A1663601E00856149 /* Default-Portrait@2x~ipad.png */,
 				C1CFCD2C14B986CB008A1B1F /* Default.png */,
 				C1CFCD2D14B986CB008A1B1F /* Default@2x.png */,
-				DB944EFB166287F8000CDAEE /* Default-568h@2x.png */,
 				C19DB61714FDB6CF00C61A1E /* Icon-72.png */,
-				DB5C5A0E1663618200856149 /* Icon-72@2x.png */,
 				C19DB61814FDB6CF00C61A1E /* Icon-Small-50.png */,
 				C19DB61914FDB6CF00C61A1E /* Icon-Small.png */,
 				C19DB61A14FDB6CF00C61A1E /* Icon-Small@2x.png */,
@@ -874,10 +883,10 @@
 				C15151A11515DA49009CE9A0 /* Localizable.strings in Resources */,
 				C15151B11515DBC0009CE9A0 /* InfoPlist.strings in Resources */,
 				C15151BE1515DCB8009CE9A0 /* ViewController.xib in Resources */,
-				DB944EFC166287F8000CDAEE /* Default-568h@2x.png in Resources */,
-				DB5C5A0B1663601E00856149 /* Default-Portrait@2x~ipad.png in Resources */,
-				DB5C5A0D1663602C00856149 /* Default-Landscape@2x~ipad.png in Resources */,
-				DB5C5A0F1663618200856149 /* Icon-72@2x.png in Resources */,
+				DB5C5A1A1663665800856149 /* Default-568h@2x.png in Resources */,
+				DB5C5A1B1663665800856149 /* Default-Landscape@2x~ipad.png in Resources */,
+				DB5C5A1C1663665800856149 /* Default-Portrait@2x~ipad.png in Resources */,
+				DB5C5A1D1663665800856149 /* Icon-72@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -925,6 +934,7 @@
 				033C49F914FFC95D00723D77 /* right_normal.png in Resources */,
 				033C49FA14FFC95D00723D77 /* right_hover.png in Resources */,
 				037346071520B5FA0018E63F /* Localizable.strings in Resources */,
+				DB5C5A28166368AA00856149 /* SandboxWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -984,6 +994,7 @@
 				03BF24DE14F930A6002809A3 /* NSPageControl.m in Sources */,
 				03A8F4D114FA556F0065F057 /* DuxScrollViewAnimation.m in Sources */,
 				03E70ADC14FD228000BF0B59 /* AboutWindowController.m in Sources */,
+				DB5C5A261663687900856149 /* SandboxWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1137,6 +1148,15 @@
 				0320227015220767009E1815 /* zh-Hans */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		DB5C5A2A166368AA00856149 /* SandboxWindowController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB5C5A29166368AA00856149 /* en */,
+				DB5C5A2B166368B000856149 /* zh-Hans */,
+			);
+			name = SandboxWindowController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

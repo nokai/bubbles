@@ -31,7 +31,7 @@
     NSURL *_fileURL;
     NSString *_selectedServiceName;
     NSOpenPanel *_selectFileOpenPanel;
-        
+    
     // Wu:NSView for adding two subView and constrain their bound
     IBOutlet NSView *_superView;
     
@@ -45,7 +45,7 @@
     IBOutlet NSToolbar *_toolBar;
     
     BOOL _isView;
-       
+    
     // Wu:The window controller : for password sheet window and preference window
     PasswordMacViewController *_passwordController;
     PreferenceViewContoller *_preferenceController;
@@ -56,7 +56,7 @@
     DragFileViewController *_dragFileController;
     TextViewController *_textViewController;
     
-    // Wu:Two Popover 
+    // Wu:Two Popover
     HistoryPopOverViewController *_historyPopOverController;
     NetworkFoundPopOverViewController *_networkPopOverController;
     
