@@ -1,0 +1,29 @@
+1、
+开始，点开应用
+
+2、
+Mac->iPad
+文字，Hello puppy!
+
+3、
+iPad->Mac
+文字，Hello kitty!
+发邮件，
+再次传输，
+发短信
+
+4、
+Mac->iPad
+图片，狗
+
+5、
+iPad->Mac
+图片，猫
+
+6、
+Mac：预览、拖拽
+iPad：
+复制“Hello Mac!”
+发邮件，
+再次传输，
+发短信
